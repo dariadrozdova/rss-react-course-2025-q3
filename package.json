@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "format:fix": "prettier --write .",
-    "prepare": "husky && chmod ug+x .husky/*"
+    "prepare": "husky"
   },
   "dependencies": {
     "@babel/plugin-transform-private-methods": "^7.27.1",
