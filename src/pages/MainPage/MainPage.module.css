@@ -17,6 +17,10 @@
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
 }
 
 .resultsSection {
@@ -25,6 +29,11 @@
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
 }
 
 .errorMessage {
@@ -36,18 +45,44 @@
   margin-top: 15px;
   font-weight: bold;
   text-align: center;
+  width: 100%;
+  max-width: 500px;
 }
 
-.resultsSection ul {
+.loaderContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px;
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-top: 4px solid #00796b;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.bookList {
   list-style: none;
   padding: 0;
   margin: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 20px;
+  width: 100%;
 }
 
-.resultsSection li {
+.bookListItem {
   background-color: #f9f9f9;
   padding: 15px;
   border-radius: 8px;
@@ -59,20 +94,20 @@
   transition: transform 0.2s ease-in-out;
 }
 
-.resultsSection li:hover {
+.bookListItem:hover {
   transform: translateY(-3px);
 }
 
-.resultsSection li strong {
+.bookListItem strong {
   font-size: 1.1em;
   color: #00796b;
   margin-bottom: 5px;
 }
 
-.resultsSection li img {
+.bookCover {
   border-radius: 4px;
   margin-top: 10px;
-  max-width: 100%;
+  max-width: 100px;
   height: auto;
   display: block;
 }

@@ -1,21 +1,27 @@
 import { Component } from 'react';
 import styles from './MainPage.module.css';
-import type { MainPageState } from '../../types/types';
+import type { MainPageState, PokemonItem } from '../../types/types';
+import Search from '../../components/Search/Search';
 
 class MainPage extends Component<Record<string, never>, MainPageState> {
+  private readonly LOCAL_STORAGE_SEARCH_TERM_KEY = 'lastSearchTerm';
+
   constructor(props: Record<string, never>) {
     super(props);
 
+    const initialSearchTerm =
+      localStorage.getItem(this.LOCAL_STORAGE_SEARCH_TERM_KEY) || '';
+
     this.state = {
-      searchTerm: '',
-      books: [],
+      searchTerm: initialSearchTerm,
+      pokemonItems: [],
       isLoading: false,
       error: null,
     };
   }
 
   async componentDidMount() {
-    this.fetchBooks('');
+    this.fetchPokemonItems(this.state.searchTerm);
   }
 
   private async _handleHttpResponse(response: Response): Promise<Response> {
@@ -24,82 +30,115 @@ class MainPage extends Component<Record<string, never>, MainPageState> {
       try {
         const errorData = await response.json();
         errorMessage = errorData.error || errorData.message || errorMessage;
-      } catch (error) {
-        console.error('Error fetching books:', error);
+      } catch (e) {
+        console.error('Failed to parse error response:', e);
       }
       throw new Error(errorMessage);
     }
     return response;
   }
 
-  fetchBooks = async (query: string) => {
+  fetchPokemonItems = async (query: string) => {
+    // Renamed method
     this.setState({ isLoading: true, error: null });
 
-    const baseUrl = 'https://openlibrary.org/search.json';
-    const limit = 20;
+    const baseUrl = 'https://pokeapi.co/api/v2/pokemon/';
+    const limit = 10;
     const offset = 0;
 
-    const actualQuery = query || 'the';
-
-    const url = `${baseUrl}?q=${encodeURIComponent(actualQuery)}&limit=${limit}&offset=${offset}`;
+    const url = `${baseUrl}?limit=${limit}&offset=${offset}`;
 
     try {
       const response = await fetch(url);
-
       const validatedResponse = await this._handleHttpResponse(response);
-
       const data = await validatedResponse.json();
 
+      let filteredItems = data.results;
+
+      if (query) {
+        const lowerCaseQuery = query.toLowerCase();
+        filteredItems = data.results.filter(
+          (item: { name: string; url: string }) =>
+            item.name.toLowerCase().includes(lowerCaseQuery)
+        );
+      }
+
+      const itemsWithDetails: PokemonItem[] = await Promise.all(
+        filteredItems.map(async (item: { name: string; url: string }) => {
+          const detailResponse = await fetch(item.url);
+          const detailData = await await this._handleHttpResponse(
+            detailResponse
+          ).then((res) => res.json());
+          return {
+            name: item.name,
+            url: item.url,
+            imageUrl: detailData.sprites.front_default,
+            id: detailData.id,
+          };
+        })
+      );
+
       this.setState({
-        books: data.docs,
+        pokemonItems: itemsWithDetails,
         isLoading: false,
       });
+
+      localStorage.setItem(this.LOCAL_STORAGE_SEARCH_TERM_KEY, query);
     } catch (error) {
-      console.error('Error fetching books:', error);
+      console.error('Error fetching Pokemon:', error);
       this.setState({
         error:
           error instanceof Error
             ? error.message
-            : 'An unknown error occurred while fetching books.',
+            : 'An unknown error occurred while fetching Pokemon.',
         isLoading: false,
       });
     }
   };
 
+  handleSearch = (searchTerm: string) => {
+    if (searchTerm !== this.state.searchTerm) {
+      this.setState({ searchTerm }, () => {
+        this.fetchPokemonItems(searchTerm); // Call the new fetch method
+      });
+    }
+  };
+
   render() {
-    const { books, isLoading, error } = this.state;
+    const { pokemonItems, isLoading, error, searchTerm } = this.state;
 
     return (
       <div className={styles.mainPageContainer}>
         <section className={styles.topSection}>
-          <h2>Top Controls</h2>
+          <Search initialSearchTerm={searchTerm} onSearch={this.handleSearch} />
         </section>
 
         <section className={styles.resultsSection}>
-          <h2>Search Results</h2>
-
-          {isLoading && <p>Loading books...</p>}
+          {isLoading && (
+            <div className={styles.loaderContainer}>
+              <div className={styles.spinner}></div>
+              <p>Loading Pokemon...</p>
+            </div>
+          )}
 
           {error && <p className={styles.errorMessage}>Error: {error}</p>}
 
-          {!isLoading && !error && books.length === 0 && (
-            <p>No books found. Try a different search!</p>
+          {!isLoading && !error && pokemonItems.length === 0 && (
+            <p>No Pokemon found. Try a different search!</p>
           )}
 
-          {!isLoading && !error && books.length > 0 && (
+          {!isLoading && !error && pokemonItems.length > 0 && (
             <div>
-              <h3>Displaying {books.length} Books:</h3>
-              <ul>
-                {books.map((book) => (
-                  <li key={book.key}>
-                    <strong>{book.title}</strong>
-                    {book.author_name && ` by ${book.author_name.join(', ')}`}
-                    {book.first_publish_year && ` (${book.first_publish_year})`}
-                    {book.cover_i && (
+              <h3>Displaying {pokemonItems.length} Pokemon:</h3>
+              <ul className={styles.bookList}>
+                {pokemonItems.map((item) => (
+                  <li key={item.id} className={styles.bookListItem}>
+                    <strong>{item.name}</strong>
+                    {item.imageUrl && (
                       <img
-                        src={`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`}
-                        alt={`Cover of ${book.title}`}
-                        style={{ width: '100px', marginLeft: '10px' }}
+                        src={item.imageUrl}
+                        alt={item.name}
+                        className={styles.bookCover} // Reusing bookCover style
                       />
                     )}
                   </li>
