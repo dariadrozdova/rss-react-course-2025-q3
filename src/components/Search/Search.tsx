@@ -39,7 +39,7 @@ class Search extends Component<SearchProps, SearchState> {
       <div className={styles.searchContainer}>
         <input
           type="text"
-          placeholder="Search for books..."
+          placeholder="Search for Pokemons..."
           value={this.state.inputValue}
           onChange={this.handleInputChange}
           onKeyDown={this.handleKeyPress}

@@ -39,11 +39,10 @@ class MainPage extends Component<Record<string, never>, MainPageState> {
   }
 
   fetchPokemonItems = async (query: string) => {
-    // Renamed method
     this.setState({ isLoading: true, error: null });
 
     const baseUrl = 'https://pokeapi.co/api/v2/pokemon/';
-    const limit = 10;
+    const limit = 20;
     const offset = 0;
 
     const url = `${baseUrl}?limit=${limit}&offset=${offset}`;
