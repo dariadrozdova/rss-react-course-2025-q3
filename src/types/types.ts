@@ -14,3 +14,12 @@ export interface MainPageState {
   isLoading: boolean; // Flag to indicate if data is currently being fetched
   error: string | null; // Stores any error message, or null if no error
 }
+
+export interface SearchProps {
+  onSearch: (searchTerm: string) => void;
+  initialSearchTerm: string;
+}
+
+export interface SearchState {
+  inputValue: string;
+}
