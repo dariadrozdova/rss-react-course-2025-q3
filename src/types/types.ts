@@ -17,6 +17,7 @@ export interface MainPageState {
   pokemonItems: PokemonItem[];
   isLoading: boolean;
   error: string | null;
+  throwError: boolean;
 }
 
 export interface SearchProps {

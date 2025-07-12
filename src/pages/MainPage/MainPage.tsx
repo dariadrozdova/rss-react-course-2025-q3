@@ -17,6 +17,7 @@ class MainPage extends Component<Record<string, never>, MainPageState> {
       pokemonItems: [],
       isLoading: false,
       error: null,
+      throwError: false,
     };
   }
 
@@ -104,11 +105,16 @@ class MainPage extends Component<Record<string, never>, MainPageState> {
   };
 
   throwTestError = () => {
+    this.setState({ throwError: true });
     throw new Error('This is a test error thrown from MainPage!');
   };
 
   render() {
     const { pokemonItems, isLoading, error, searchTerm } = this.state;
+
+    if (this.state.throwError) {
+      throw new Error('This is a test error thrown from the render method!');
+    }
 
     return (
       <div className={styles.mainPageContainer}>
@@ -141,7 +147,7 @@ class MainPage extends Component<Record<string, never>, MainPageState> {
                       <img
                         src={item.imageUrl}
                         alt={item.name}
-                        className={styles.pokemonImage} // Reusing bookCover style
+                        className={styles.pokemonImage}
                       />
                     )}
                   </li>
