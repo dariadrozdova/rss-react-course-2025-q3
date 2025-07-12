@@ -138,7 +138,6 @@ class MainPage extends Component<Record<string, never>, MainPageState> {
 
           {!isLoading && !error && pokemonItems.length > 0 && (
             <div>
-              <h3>Displaying {pokemonItems.length} Pokemon:</h3>
               <ul className={styles.pokemonGrid}>
                 {pokemonItems.map((item) => (
                   <li key={item.id} className={styles.pokemonCard}>

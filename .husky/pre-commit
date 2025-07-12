@@ -1,4 +1,1 @@
-# #!/bin/bash
-# "$(git rev-parse --show-toplevel)/node_modules/.bin/eslint" "$(git rev-parse --show-toplevel)"
-
 npm run lint
