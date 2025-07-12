@@ -3,6 +3,7 @@
   flex-direction: column;
   min-height: 100vh;
   padding: 30px;
+  padding-bottom: 70px;
   font-family: 'Inter', sans-serif;
   background: linear-gradient(to bottom right, #e0f7fa, #b2ebf2);
   color: #263238;
@@ -11,6 +12,7 @@
   max-width: 1400px;
   margin: 0 auto;
   box-sizing: border-box;
+  position: relative;
 }
 
 .topSection {
@@ -81,18 +83,18 @@
   100% { transform: rotate(360deg); }
 }
 
-.bookList {
+.pokemonGrid {
   list-style: none;
   padding: 0;
   margin: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 25px;
   width: 100%;
   box-sizing: border-box;
 }
 
-.bookListItem {
+.pokemonCard {
   background-color: #fcfcfc;
   padding: 25px;
   border-radius: 10px;
@@ -106,12 +108,12 @@
   box-sizing: border-box;
 }
 
-.bookListItem:hover {
+.pokemonCard:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
-.bookListItem strong {
+.pokemonCard strong {
   font-size: 1.3em;
   color: #00796b;
   margin-bottom: 10px;
@@ -119,7 +121,7 @@
   font-weight: 700;
 }
 
-.bookCover {
+.pokemonImage {
   border-radius: 8px;
   margin-top: 15px;
   max-width: 150px;
@@ -128,15 +130,40 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
+.errorTestButton {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  background-color: #ef5350;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.errorTestButton:hover {
+  background-color: #c62828;
+  transform: translateY(-1px);
+}
+
+.errorTestButton:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
 
 @media (min-width: 1200px) {
-  .bookList {
+  .pokemonGrid {
     grid-template-columns: repeat(5, 1fr);
   }
 }
 
 @media (min-width: 769px) and (max-width: 1199px) {
-  .bookList {
+  .pokemonGrid {
     grid-template-columns: repeat(4, 1fr);
   }
 }
@@ -144,6 +171,7 @@
 @media (max-width: 768px) {
   .mainPageContainer {
     padding: 20px;
+    padding-bottom: 60px;
   }
 
   .topSection, .resultsSection {
@@ -151,27 +179,35 @@
     margin-bottom: 20px;
   }
 
-  .bookList {
+  .pokemonGrid {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px;
   }
 
-  .bookListItem {
+  .pokemonCard {
     padding: 20px;
   }
 
-  .bookListItem strong {
+  .pokemonCard strong {
     font-size: 1.2em;
   }
 
-  .bookCover {
+  .pokemonImage {
     max-width: 120px;
+  }
+
+  .errorTestButton {
+    bottom: 15px;
+    right: 15px;
+    padding: 8px 15px;
+    font-size: 0.9em;
   }
 }
 
 @media (max-width: 480px) {
   .mainPageContainer {
     padding: 15px;
+    padding-bottom: 50px;
   }
 
   .topSection, .resultsSection {
@@ -179,20 +215,20 @@
     margin-bottom: 15px;
   }
 
-  .bookList {
+  .pokemonGrid {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 15px;
   }
 
-  .bookListItem {
+  .pokemonCard {
     padding: 15px;
   }
 
-  .bookListItem strong {
+  .pokemonCard strong {
     font-size: 1em;
   }
 
-  .bookCover {
+  .pokemonImage {
     max-width: 100px;
   }
 
@@ -205,5 +241,12 @@
     width: 40px;
     height: 40px;
     border-width: 4px;
+  }
+
+  .errorTestButton {
+    bottom: 10px;
+    right: 10px;
+    padding: 6px 12px;
+    font-size: 0.8em;
   }
 }

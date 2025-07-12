@@ -98,9 +98,13 @@ class MainPage extends Component<Record<string, never>, MainPageState> {
   handleSearch = (searchTerm: string) => {
     if (searchTerm !== this.state.searchTerm) {
       this.setState({ searchTerm }, () => {
-        this.fetchPokemonItems(searchTerm); // Call the new fetch method
+        this.fetchPokemonItems(searchTerm);
       });
     }
+  };
+
+  throwTestError = () => {
+    throw new Error('This is a test error thrown from MainPage!');
   };
 
   render() {
@@ -129,15 +133,15 @@ class MainPage extends Component<Record<string, never>, MainPageState> {
           {!isLoading && !error && pokemonItems.length > 0 && (
             <div>
               <h3>Displaying {pokemonItems.length} Pokemon:</h3>
-              <ul className={styles.bookList}>
+              <ul className={styles.pokemonGrid}>
                 {pokemonItems.map((item) => (
-                  <li key={item.id} className={styles.bookListItem}>
+                  <li key={item.id} className={styles.pokemonCard}>
                     <strong>{item.name}</strong>
                     {item.imageUrl && (
                       <img
                         src={item.imageUrl}
                         alt={item.name}
-                        className={styles.bookCover} // Reusing bookCover style
+                        className={styles.pokemonImage} // Reusing bookCover style
                       />
                     )}
                   </li>
@@ -146,6 +150,13 @@ class MainPage extends Component<Record<string, never>, MainPageState> {
             </div>
           )}
         </section>
+
+        <button
+          onClick={this.throwTestError}
+          className={styles.errorTestButton}
+        >
+          Throw Test Error
+        </button>
       </div>
     );
   }
