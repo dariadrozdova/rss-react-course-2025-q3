@@ -22,7 +22,9 @@ class MainPage extends Component<Record<string, never>, MainPageState> {
   }
 
   async componentDidMount() {
-    this.fetchPokemonItems(this.state.searchTerm);
+    await this.fetchPokemonItems(this.state.searchTerm).catch((error) =>
+      console.error('Error during initial fetch:', error)
+    );
   }
 
   private async _handleHttpResponse(response: Response): Promise<Response> {
@@ -66,9 +68,10 @@ class MainPage extends Component<Record<string, never>, MainPageState> {
       const itemsWithDetails: PokemonItem[] = await Promise.all(
         filteredItems.map(async (item: { name: string; url: string }) => {
           const detailResponse = await fetch(item.url);
-          const detailData = await await this._handleHttpResponse(
-            detailResponse
-          ).then((res) => res.json());
+          const verifiedResponse =
+            await this._handleHttpResponse(detailResponse);
+          const detailData = await verifiedResponse.json();
+
           return {
             name: item.name,
             url: item.url,
@@ -99,7 +102,9 @@ class MainPage extends Component<Record<string, never>, MainPageState> {
   handleSearch = (searchTerm: string) => {
     if (searchTerm !== this.state.searchTerm) {
       this.setState({ searchTerm }, () => {
-        this.fetchPokemonItems(searchTerm);
+        void this.fetchPokemonItems(searchTerm).catch((error) =>
+          console.error('Error during search fetch:', error)
+        );
       });
     }
   };
