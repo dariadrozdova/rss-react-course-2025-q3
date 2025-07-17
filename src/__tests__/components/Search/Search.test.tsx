@@ -3,34 +3,12 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import Search from '../../../components/Search/Search';
 import type { SearchProps } from '../../../types/types';
 
-const localStorageMock = (function () {
-  let store: { [key: string]: string | undefined } = {};
-
-  return {
-    getItem: vi.fn((key: string) => store[key] || null),
-    setItem: vi.fn((key: string, value: string) => {
-      store[key] = value.toString();
-    }),
-    clear: vi.fn(() => {
-      store = {};
-    }),
-    removeItem: vi.fn((key: string) => {
-      store[key] = undefined;
-    }),
-  };
-})();
-
-Object.defineProperty(window, 'localStorage', { value: localStorageMock });
-
 describe('Search Component Tests', () => {
   let mockOnSearch: (searchTerm: string) => void;
   let defaultProps: SearchProps;
 
   beforeEach(() => {
     mockOnSearch = vi.fn();
-    localStorageMock.clear();
-    localStorageMock.getItem.mockClear();
-    localStorageMock.setItem.mockClear();
     defaultProps = {
       initialSearchTerm: '',
       onSearch: mockOnSearch,
