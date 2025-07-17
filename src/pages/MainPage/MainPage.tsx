@@ -2,6 +2,8 @@ import { Component } from 'react';
 import styles from './MainPage.module.css';
 import type { MainPageState, PokemonItem } from '../../types/types';
 import Search from '../../components/Search/Search';
+import CardList from '../../components/CardList/CardList';
+import Loader from '../../components/Loader/Loader';
 
 class MainPage extends Component<Record<string, never>, MainPageState> {
   private readonly LOCAL_STORAGE_SEARCH_TERM_KEY = 'lastSearchTerm';
@@ -128,12 +130,7 @@ class MainPage extends Component<Record<string, never>, MainPageState> {
         </section>
 
         <section className={styles.resultsSection}>
-          {isLoading && (
-            <div className={styles.loaderContainer}>
-              <div className={styles.spinner}></div>
-              <p>Loading Pokemon...</p>
-            </div>
-          )}
+          {isLoading && <Loader />}
 
           {error && <p className={styles.errorMessage}>Error: {error}</p>}
 
@@ -142,22 +139,7 @@ class MainPage extends Component<Record<string, never>, MainPageState> {
           )}
 
           {!isLoading && !error && pokemonItems.length > 0 && (
-            <div>
-              <ul className={styles.pokemonGrid}>
-                {pokemonItems.map((item) => (
-                  <li key={item.id} className={styles.pokemonCard}>
-                    <strong>{item.name}</strong>
-                    {item.imageUrl && (
-                      <img
-                        src={item.imageUrl}
-                        alt={item.name}
-                        className={styles.pokemonImage}
-                      />
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <CardList pokemonItems={pokemonItems} />
           )}
         </section>
 

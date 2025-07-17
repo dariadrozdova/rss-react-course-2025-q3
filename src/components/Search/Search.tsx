@@ -25,9 +25,7 @@ class Search extends Component<SearchProps, SearchState> {
 
   handleSearchClick = () => {
     const trimmedSearchTerm = this.state.inputValue.trim();
-    if (trimmedSearchTerm) {
-      this.props.onSearch(trimmedSearchTerm);
-    }
+    this.props.onSearch(trimmedSearchTerm);
   };
 
   handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
