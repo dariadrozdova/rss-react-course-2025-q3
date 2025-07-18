@@ -24,7 +24,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
           <h1 className={styles.errorTitle}>Oops! Something went wrong.</h1>
           <p className={styles.errorMessage}>
             We are sorry, but an unexpected error occurred. Please try
-            refreshing refreshing the page.
+            refreshing the page.
           </p>
           <button
             className={styles.refreshButton}
