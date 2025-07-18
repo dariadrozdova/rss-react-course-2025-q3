@@ -1,4 +1,3 @@
-// vite.config.ts
 /// <reference types="vitest" />
 /// <reference types="vite/client" />
 
@@ -22,6 +21,7 @@ export default defineConfig({
         'src/main.{js,jsx,ts,tsx}',
         'src/setupTests.{js,ts}',
         'src/**/*.d.ts',
+        'src/types/types.ts',
       ],
       thresholds: {
         global: {
