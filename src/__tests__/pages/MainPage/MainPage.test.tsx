@@ -1,7 +1,7 @@
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import MainPage from '../../pages/MainPage/MainPage';
-import type { PokemonItem } from '../../types/types';
+import MainPage from '../../../pages/MainPage/MainPage';
+import type { PokemonItem } from '../../../types/types';
 
 const mockFetch = vi.fn();
 
