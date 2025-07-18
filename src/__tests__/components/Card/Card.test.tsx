@@ -1,43 +1,30 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import Card from '../../../components/Card/Card';
-import type { PokemonItem } from '../../../types/types';
+
+import {
+  mockPokemonItemWithImage,
+  mockPokemonItemWithoutImage,
+  mockPokemonItemUndefinedImage,
+} from '../../utils/mockData';
 
 describe('Card', () => {
-  const mockPokemonItem: PokemonItem = {
-    id: 1,
-    name: 'Pikachu',
-    imageUrl: 'https://example.com/pikachu.png',
-    url: 'https://pokeapi.co/api/v2/pokemon/pikachu',
-  };
-
-  const mockPokemonItemWithoutImage: PokemonItem = {
-    id: 2,
-    name: 'Charmander',
-    imageUrl: '',
-    url: 'https://pokeapi.co/api/v2/pokemon/charmander',
-  };
-
-  const mockPokemonItemNullImage: PokemonItem = {
-    id: 3,
-    name: 'Squirtle',
-    url: 'https://pokeapi.co/api/v2/pokemon/squirtle',
-  };
-
   it('renders the item name', () => {
-    render(<Card item={mockPokemonItem} />);
+    render(<Card item={mockPokemonItemWithImage} />);
 
-    expect(screen.getByText(mockPokemonItem.name)).toBeInTheDocument();
+    expect(screen.getByText(mockPokemonItemWithImage.name)).toBeInTheDocument();
   });
 
   it('renders the image when imageUrl is provided', () => {
-    render(<Card item={mockPokemonItem} />);
+    render(<Card item={mockPokemonItemWithImage} />);
 
-    const image = screen.getByRole('img', { name: mockPokemonItem.name });
+    const image = screen.getByRole('img', {
+      name: mockPokemonItemWithImage.name,
+    });
 
     expect(image).toBeInTheDocument();
-    expect(image).toHaveAttribute('src', mockPokemonItem.imageUrl);
-    expect(image).toHaveAttribute('alt', mockPokemonItem.name);
+    expect(image).toHaveAttribute('src', mockPokemonItemWithImage.imageUrl);
+    expect(image).toHaveAttribute('alt', mockPokemonItemWithImage.name);
   });
 
   it('does not render the image when imageUrl is an empty string', () => {
@@ -49,10 +36,10 @@ describe('Card', () => {
   });
 
   it('does not render the image when imageUrl is undefined', () => {
-    render(<Card item={mockPokemonItemNullImage} />);
+    render(<Card item={mockPokemonItemUndefinedImage} />);
 
     expect(
-      screen.queryByRole('img', { name: mockPokemonItemNullImage.name })
+      screen.queryByRole('img', { name: mockPokemonItemUndefinedImage.name })
     ).not.toBeInTheDocument();
   });
 });
