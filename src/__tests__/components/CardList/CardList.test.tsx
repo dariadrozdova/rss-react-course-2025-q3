@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import CardList from '../../../components/CardList/CardList';
 
-import { mockPokemonItemsList } from '../../utils/mockData';
+import { mockPokemonItemsList } from '../../utils/cardComponentsMockData';
 
 describe('CardList', () => {
   it('renders the correct number of Card components for a given list of items', () => {

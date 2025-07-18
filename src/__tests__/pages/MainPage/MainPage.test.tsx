@@ -2,6 +2,10 @@ import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import MainPage from '../../../pages/MainPage/MainPage';
 import type { PokemonItem } from '../../../types/types';
+import {
+  mockPokeApiListResponse,
+  mockPokemonDetailResponses,
+} from '../../utils/mainPageMockData';
 
 const mockFetch = vi.fn();
 
@@ -48,65 +52,12 @@ vi.mock('../../../components/CardList/CardList', () => ({
   )),
 }));
 
-// Explicitly mock the Search component with data-testid
-vi.mock('../../../components/Search/Search', () => {
-  const MockSearch = vi.fn(({ initialSearchTerm, onSearch }) => (
-    <input
-      data-testid="search-input" // This is what the test looks for
-      value={initialSearchTerm}
-      onChange={() => {}} // No-op, we'll use fireEvent.change directly
-      onKeyDown={(e) => {
-        if (e.key === 'Enter') onSearch(e.currentTarget.value);
-      }}
-    />
-  ));
-  // Keep the original properties if any are needed, otherwise this is fine.
-  return {
-    default: MockSearch,
-  };
-});
-
-// Explicitly mock the Loader component with data-testid
 vi.mock('../../../components/Loader/Loader', () => {
   const MockLoader = vi.fn(() => <div data-testid="loader">Loading...</div>);
   return {
     default: MockLoader,
   };
 });
-
-const mockPokeApiListResponse = {
-  results: [
-    { name: 'bulbasaur', url: 'https://pokeapi.co/api/v2/pokemon/bulbasaur/' },
-    {
-      name: 'charmander',
-      url: 'https://pokeapi.co/api/v2/pokemon/charmander/',
-    },
-    { name: 'squirtle', url: 'https://pokeapi.co/api/v2/pokemon/squirtle/' },
-  ],
-};
-
-const mockPokemonDetailResponses = {
-  bulbasaur: {
-    id: 1,
-    name: 'bulbasaur',
-    sprites: { front_default: 'https://example.com/bulbasaur.png' },
-  },
-  charmander: {
-    id: 4,
-    name: 'charmander',
-    sprites: { front_default: 'https://example.com/charmander.png' },
-  },
-  squirtle: {
-    id: 7,
-    name: 'squirtle',
-    sprites: { front_default: 'https://example.com/squirtle.png' },
-  },
-  pikachu: {
-    id: 25,
-    name: 'pikachu',
-    sprites: { front_default: 'https://example.com/pikachu.png' },
-  },
-};
 
 describe('MainPage', () => {
   let consoleErrorSpy: ReturnType<typeof vi.spyOn>;

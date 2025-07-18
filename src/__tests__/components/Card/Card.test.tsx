@@ -6,7 +6,7 @@ import {
   mockPokemonItemWithImage,
   mockPokemonItemWithoutImage,
   mockPokemonItemUndefinedImage,
-} from '../../utils/mockData';
+} from '../../utils/cardComponentsMockData';
 
 describe('Card', () => {
   it('renders the item name', () => {
