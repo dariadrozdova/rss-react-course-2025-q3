@@ -111,9 +111,8 @@ class MainPage extends Component<Record<string, never>, MainPageState> {
     }
   };
 
-  throwTestError = () => {
+  triggerErrorState = () => {
     this.setState({ throwError: true });
-    throw new Error('This is a test error thrown from MainPage!');
   };
 
   render() {
@@ -144,7 +143,7 @@ class MainPage extends Component<Record<string, never>, MainPageState> {
         </section>
 
         <button
-          onClick={this.throwTestError}
+          onClick={this.triggerErrorState}
           className={styles.errorTestButton}
         >
           Throw Test Error
