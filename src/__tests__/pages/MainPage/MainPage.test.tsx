@@ -222,7 +222,7 @@ describe('MainPage', () => {
         ok: false,
         status: 404,
         json: () =>
-          Promise.resolve({ message: 'Test Pokemon details not found' }), // Explicit error message
+          Promise.resolve({ message: 'Test Pokemon details not found' }),
       } as Response)
     );
 
