@@ -36,3 +36,11 @@ export interface ErrorBoundaryProps {
 export interface ErrorBoundaryState {
   hasError: boolean;
 }
+
+export interface CardProps {
+  item: PokemonItem;
+}
+
+export interface CardListProps {
+  pokemonItems: PokemonItem[];
+}
