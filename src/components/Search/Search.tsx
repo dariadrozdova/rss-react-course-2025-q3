@@ -1,4 +1,4 @@
-import { Component, type ChangeEvent } from 'react';
+import { Component, type ChangeEvent, type KeyboardEvent } from 'react';
 import styles from './Search.module.css';
 import type { SearchProps, SearchState } from '../../types/types';
 
@@ -28,7 +28,7 @@ class Search extends Component<SearchProps, SearchState> {
     this.props.onSearch(trimmedSearchTerm);
   };
 
-  handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  handleKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       this.handleSearchClick();
     }
