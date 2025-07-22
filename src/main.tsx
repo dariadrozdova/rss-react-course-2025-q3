@@ -25,9 +25,15 @@ const router = createBrowserRouter([
   },
 ]);
 
-// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <RouterProvider router={router} />
-  </StrictMode>
-);
+const rootElement = document.getElementById('root');
+
+if (rootElement) {
+  createRoot(rootElement).render(
+    <StrictMode>
+      <RouterProvider router={router} />
+    </StrictMode>
+  );
+} else {
+  console.error('Root element with ID "root" not found in the document.');
+  throw new Error('Root element not found!');
+}
