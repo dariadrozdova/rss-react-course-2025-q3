@@ -1,8 +1,5 @@
+import ErrorBoundary from '@components/ErrorBoundary';
 import { NavLink, Outlet } from 'react-router-dom';
-
-import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
-
-import './index.css';
 
 function App() {
   return (

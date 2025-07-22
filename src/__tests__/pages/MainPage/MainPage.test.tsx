@@ -4,7 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import useLocalStorage from '../../../hooks/useLocalStorage';
 import { usePokemonData } from '../../../hooks/usePokemonData';
 import MainPage from '../../../pages/MainPage/MainPage';
-import type { PokemonItem } from '../../../types/types';
+import type { PokemonItem } from '../../../types/index';
 
 vi.mock('../../../hooks/usePokemonData', () => ({
   usePokemonData: vi.fn(),
