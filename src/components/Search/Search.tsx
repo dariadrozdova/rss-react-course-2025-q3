@@ -1,4 +1,10 @@
-import { useState, useEffect, useRef, type ChangeEvent } from 'react';
+import {
+  useState,
+  useEffect,
+  useRef,
+  type ChangeEvent,
+  type KeyboardEvent,
+} from 'react';
 import styles from './Search.module.css';
 import type { SearchProps } from '../../types/types';
 
@@ -31,7 +37,7 @@ const Search = ({ initialSearchTerm, onSearch }: SearchProps) => {
     onSearch(trimmedSearchTerm);
   };
 
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       handleSearchClick();
     }
