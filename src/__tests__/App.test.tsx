@@ -1,8 +1,9 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import App from '../App';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { act } from 'react';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+
+import App from '../App';
 import MainPage from '../pages/MainPage/MainPage';
 
 vi.mock('../components/ErrorBoundary/ErrorBoundary', async (importOriginal) => {
@@ -29,7 +30,9 @@ vi.mock('../pages/MainPage/MainPage', async () => {
       <div data-testid="main-page">
         <button
           data-testid="throw-mainpage-error-button"
-          onClick={() => setShouldThrow(true)}
+          onClick={() => {
+            setShouldThrow(true);
+          }}
         >
           Throw Error in MainPage
         </button>
@@ -59,8 +62,8 @@ describe('App', () => {
     render(
       <MemoryRouter initialEntries={['/']}>
         <Routes>
-          <Route path="/" element={<App />}>
-            <Route index element={<MainPage />} />
+          <Route element={<App />} path="/">
+            <Route element={<MainPage />} index />
           </Route>
         </Routes>
       </MemoryRouter>
@@ -73,8 +76,8 @@ describe('App', () => {
     render(
       <MemoryRouter initialEntries={['/']}>
         <Routes>
-          <Route path="/" element={<App />}>
-            <Route index element={<MainPage />} />
+          <Route element={<App />} path="/">
+            <Route element={<MainPage />} index />
           </Route>
         </Routes>
       </MemoryRouter>
@@ -111,9 +114,9 @@ describe('App', () => {
 
     const calls = consoleErrorSpy.mock.calls.flat();
     const error = calls.find(
-      (arg) =>
-        arg instanceof Error &&
-        arg.message === 'Test error from MainPage for App.test'
+      (argument) =>
+        argument instanceof Error &&
+        argument.message === 'Test error from MainPage for App.test'
     );
 
     expect(error).toBeDefined();

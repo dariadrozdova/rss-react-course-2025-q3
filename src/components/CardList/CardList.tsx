@@ -1,6 +1,7 @@
-import styles from './CardList.module.css';
 import type { CardListProps } from '../../types/types';
 import Card from '../Card/Card';
+
+import styles from './CardList.module.css';
 
 function CardList(props: CardListProps) {
   const { pokemonItems } = props;
@@ -9,7 +10,7 @@ function CardList(props: CardListProps) {
     <div className={styles.cardListContainer}>
       <ul className={styles.pokemonGrid}>
         {pokemonItems.map((item) => (
-          <Card key={item.id} item={item} />
+          <Card item={item} key={item.id} />
         ))}
       </ul>
     </div>

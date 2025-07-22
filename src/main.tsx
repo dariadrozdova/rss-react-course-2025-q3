@@ -1,27 +1,29 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import './index.css';
-import App from './App.tsx';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+
+import App from './App.tsx';
 import AboutPage from './pages/AboutPage/AboutPage.tsx';
 import MainPage from './pages/MainPage/MainPage.tsx';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage.tsx';
 
+import './index.css';
+
 const router = createBrowserRouter([
   {
-    path: '/',
-    element: <App />,
-    errorElement: <NotFoundPage />,
     children: [
       {
-        index: true,
         element: <MainPage />,
+        index: true,
       },
       {
-        path: 'about',
         element: <AboutPage />,
+        path: 'about',
       },
     ],
+    element: <App />,
+    errorElement: <NotFoundPage />,
+    path: '/',
   },
 ]);
 
@@ -34,6 +36,6 @@ if (rootElement) {
     </StrictMode>
   );
 } else {
-  console.error('Root element with ID "root" not found in the document.');
+  console.warn('Root element with ID "root" not found in the document.');
   throw new Error('Root element not found!');
 }

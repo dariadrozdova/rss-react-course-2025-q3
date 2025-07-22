@@ -1,5 +1,6 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+
 import Search from '../../../components/Search/Search';
 import type { SearchProps } from '../../../types/types';
 
@@ -45,9 +46,7 @@ describe('Search Component Tests', () => {
     const { rerender } = render(
       <Search {...defaultProps} initialSearchTerm="initial" />
     );
-    const searchInput = screen.getByPlaceholderText(
-      /search for pokemons.../i
-    ) as HTMLInputElement;
+    const searchInput = screen.getByPlaceholderText(/search for pokemons.../i);
 
     expect(searchInput).toHaveValue('initial');
 
@@ -59,9 +58,7 @@ describe('Search Component Tests', () => {
     const { rerender } = render(
       <Search {...defaultProps} initialSearchTerm="same term" />
     );
-    const searchInput = screen.getByPlaceholderText(
-      /search for pokemons.../i
-    ) as HTMLInputElement;
+    const searchInput = screen.getByPlaceholderText(/search for pokemons.../i);
 
     expect(searchInput).toHaveValue('same term');
 
@@ -75,9 +72,7 @@ describe('Search Component Tests', () => {
 
   it('updates input value as the user types', () => {
     render(<Search {...defaultProps} />);
-    const searchInput = screen.getByPlaceholderText(
-      /search for pokemons.../i
-    ) as HTMLInputElement;
+    const searchInput = screen.getByPlaceholderText(/search for pokemons.../i);
 
     fireEvent.change(searchInput, { target: { value: 'Charizard' } });
     expect(searchInput.value).toBe('Charizard');
@@ -85,9 +80,7 @@ describe('Search Component Tests', () => {
 
   it('triggers onSearch callback with trimmed value when search button is clicked', async () => {
     render(<Search {...defaultProps} />);
-    const searchInput = screen.getByPlaceholderText(
-      /search for pokemons.../i
-    ) as HTMLInputElement;
+    const searchInput = screen.getByPlaceholderText(/search for pokemons.../i);
     const searchButton = screen.getByRole('button', { name: /search/i });
 
     fireEvent.change(searchInput, { target: { value: '  Mewtwo  ' } });
@@ -99,12 +92,10 @@ describe('Search Component Tests', () => {
 
   it('triggers onSearch callback with trimmed value when Enter key is pressed in the input', async () => {
     render(<Search {...defaultProps} />);
-    const searchInput = screen.getByPlaceholderText(
-      /search for pokemons.../i
-    ) as HTMLInputElement;
+    const searchInput = screen.getByPlaceholderText(/search for pokemons.../i);
 
     fireEvent.change(searchInput, { target: { value: '  Squirtle  ' } });
-    fireEvent.keyDown(searchInput, { key: 'Enter', code: 'Enter' });
+    fireEvent.keyDown(searchInput, { code: 'Enter', key: 'Enter' });
 
     expect(mockOnSearch).toHaveBeenCalledTimes(1);
     expect(mockOnSearch).toHaveBeenCalledWith('Squirtle');

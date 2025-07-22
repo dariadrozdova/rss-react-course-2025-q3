@@ -1,32 +1,11 @@
 import type { ReactNode } from 'react';
 
-export interface PokemonListItem {
-  name: string;
-  url: string;
-}
-
-export interface PokemonItem {
-  name: string;
-  url: string;
-  imageUrl?: string;
-  id: number;
-}
-
-export interface MainPageState {
-  searchTerm: string;
+export interface CardListProps {
   pokemonItems: PokemonItem[];
-  isLoading: boolean;
-  error: string | null;
-  throwError: boolean;
 }
 
-export interface SearchProps {
-  onSearch: (searchTerm: string) => void;
-  initialSearchTerm: string;
-}
-
-export interface SearchState {
-  inputValue: string;
+export interface CardProps {
+  item: PokemonItem;
 }
 
 export interface ErrorBoundaryProps {
@@ -37,10 +16,31 @@ export interface ErrorBoundaryState {
   hasError: boolean;
 }
 
-export interface CardProps {
-  item: PokemonItem;
+export interface MainPageState {
+  error: null | string;
+  isLoading: boolean;
+  pokemonItems: PokemonItem[];
+  searchTerm: string;
+  throwError: boolean;
 }
 
-export interface CardListProps {
-  pokemonItems: PokemonItem[];
+export interface PokemonItem {
+  id: number;
+  imageUrl?: string;
+  name: string;
+  url: string;
+}
+
+export interface PokemonListItem {
+  name: string;
+  url: string;
+}
+
+export interface SearchProps {
+  initialSearchTerm: string;
+  onSearch: (searchTerm: string) => void;
+}
+
+export interface SearchState {
+  inputValue: string;
 }

@@ -1,6 +1,8 @@
-import './index.css';
-import { Outlet, NavLink } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
+
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
+
+import './index.css';
 
 function App() {
   return (
@@ -8,12 +10,12 @@ function App() {
       <nav className="main-nav">
         <ul className="nav-list">
           <li className="nav-item">
-            <NavLink to="/" className="nav-link">
+            <NavLink className="nav-link" to="/">
               Home
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink to="/about" className="nav-link">
+            <NavLink className="nav-link" to="/about">
               About
             </NavLink>
           </li>

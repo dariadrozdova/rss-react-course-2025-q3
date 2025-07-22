@@ -1,17 +1,18 @@
-import styles from './Card.module.css';
 import type { CardProps } from '../../types/types';
+
+import styles from './Card.module.css';
 
 function Card(props: CardProps) {
   const { item } = props;
 
   return (
-    <li key={item.id} className={styles.pokemonCard}>
+    <li className={styles.pokemonCard} key={item.id}>
       <strong>{item.name}</strong>
       {item.imageUrl && (
         <img
-          src={item.imageUrl}
           alt={item.name}
           className={styles.pokemonImage}
+          src={item.imageUrl}
         />
       )}
     </li>

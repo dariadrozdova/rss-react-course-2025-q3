@@ -1,36 +1,36 @@
-import { useState, useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
-type UseLocalStorageResult<T> = [T, (value: T | ((prev: T) => T)) => void];
+type UseLocalStorageResult<T> = [T, (value: ((previous: T) => T) | T) => void];
 
 function useLocalStorage<T extends string>(
   key: string,
-  initialValue: T | (() => T)
+  initialValue: (() => T) | T
 ): UseLocalStorageResult<T> {
   const [storedValue, setStoredValue] = useState<T>(() => {
     try {
       const item = localStorage.getItem(key);
-      return item !== null
-        ? (item as T)
-        : initialValue instanceof Function
+      return item === null
+        ? typeof initialValue === 'function'
           ? initialValue()
-          : initialValue;
+          : initialValue
+        : (item as T);
     } catch (error) {
-      console.error(`Error reading localStorage key "${key}":`, error);
-      return initialValue instanceof Function ? initialValue() : initialValue;
+      console.warn(`Error reading localStorage key "${key}":`, error);
+      return typeof initialValue === 'function' ? initialValue() : initialValue;
     }
   });
 
   const setValue = useCallback(
-    (value: T | ((prev: T) => T)) => {
+    (value: ((previous: T) => T) | T) => {
       try {
-        setStoredValue((prevValue) => {
+        setStoredValue((previousValue) => {
           const valueToStore =
-            value instanceof Function ? value(prevValue) : value;
+            typeof value === 'function' ? value(previousValue) : value;
           localStorage.setItem(key, String(valueToStore));
           return valueToStore;
         });
       } catch (error) {
-        console.error(`Error writing to localStorage key "${key}":`, error);
+        console.warn(`Error writing to localStorage key "${key}":`, error);
       }
     },
     [key]

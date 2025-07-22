@@ -1,6 +1,8 @@
 import { Component, type ErrorInfo } from 'react';
-import styles from './ErrorBoundary.module.css';
+
 import type { ErrorBoundaryProps, ErrorBoundaryState } from '../../types/types';
+
+import styles from './ErrorBoundary.module.css';
 
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
@@ -9,12 +11,12 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   }
 
   static getDerivedStateFromError(error: Error): ErrorBoundaryState {
-    console.log('getDerivedStateFromError called:', error);
+    console.warn('getDerivedStateFromError called:', error);
     return { hasError: true };
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('ErrorBoundary caught an error:', error, errorInfo);
+    console.warn('ErrorBoundary caught an error:', error, errorInfo);
   }
 
   render() {
@@ -28,7 +30,9 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
           </p>
           <button
             className={styles.refreshButton}
-            onClick={() => window.location.reload()}
+            onClick={() => {
+              window.location.reload();
+            }}
           >
             Refresh Page
           </button>

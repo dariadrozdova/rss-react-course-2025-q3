@@ -2,8 +2,8 @@ import styles from './Loader.module.css';
 
 function Loader() {
   return (
-    <div className={styles.loaderContainer} role="status" aria-live="polite">
-      <div className={styles.spinner}></div>
+    <div aria-live="polite" className={styles.loaderContainer} role="status">
+      <div className={styles.spinner} />
       <p>Loading Pokemon...</p>
     </div>
   );

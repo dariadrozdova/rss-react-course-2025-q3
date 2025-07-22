@@ -1,23 +1,26 @@
 import {
-  useState,
-  useEffect,
-  useRef,
   type ChangeEvent,
   type KeyboardEvent,
+  useEffect,
+  useRef,
+  useState,
 } from 'react';
-import styles from './Search.module.css';
+
 import type { SearchProps } from '../../types/types';
+
+import styles from './Search.module.css';
 
 const Search = ({ initialSearchTerm, onSearch }: SearchProps) => {
   const [inputValue, setInputValue] = useState(initialSearchTerm);
 
-  const prevInitialSearchTermRef = useRef(initialSearchTerm);
+  const previousInitialSearchTermReference = useRef(initialSearchTerm);
 
   useEffect(() => {
-    const prevInitialSearchTerm = prevInitialSearchTermRef.current;
+    const previousInitialSearchTerm =
+      previousInitialSearchTermReference.current;
 
     const hasInitialSearchTermChanged =
-      prevInitialSearchTerm !== initialSearchTerm;
+      previousInitialSearchTerm !== initialSearchTerm;
 
     const initialSearchTermDiffersFromInput = initialSearchTerm !== inputValue;
 
@@ -25,7 +28,7 @@ const Search = ({ initialSearchTerm, onSearch }: SearchProps) => {
       setInputValue(initialSearchTerm);
     }
 
-    prevInitialSearchTermRef.current = initialSearchTerm;
+    previousInitialSearchTermReference.current = initialSearchTerm;
   }, [initialSearchTerm, inputValue]);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -46,14 +49,14 @@ const Search = ({ initialSearchTerm, onSearch }: SearchProps) => {
   return (
     <div className={styles.searchContainer}>
       <input
-        type="text"
-        placeholder="Search for Pokemons..."
-        value={inputValue}
+        className={styles.searchInput}
         onChange={handleInputChange}
         onKeyDown={handleKeyPress}
-        className={styles.searchInput}
+        placeholder="Search for Pokemons..."
+        type="text"
+        value={inputValue}
       />
-      <button onClick={handleSearchClick} className={styles.searchButton}>
+      <button className={styles.searchButton} onClick={handleSearchClick}>
         Search
       </button>
     </div>

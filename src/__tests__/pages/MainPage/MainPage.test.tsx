@@ -1,5 +1,6 @@
-import { render, screen, waitFor, fireEvent } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+
 import MainPage from '../../../pages/MainPage/MainPage';
 import type { PokemonItem } from '../../../types/types';
 import {
@@ -12,15 +13,15 @@ const mockFetch = vi.fn();
 const localStorageMock = (() => {
   const store = new Map<string, string>();
   return {
-    getItem: vi.fn((key: string) => store.get(key) || null),
-    setItem: vi.fn((key: string, value: string) => {
-      store.set(key, value);
-    }),
     clear: vi.fn(() => {
       store.clear();
     }),
+    getItem: vi.fn((key: string) => store.get(key) || null),
     removeItem: vi.fn((key: string) => {
       store.delete(key);
+    }),
+    setItem: vi.fn((key: string, value: string) => {
+      store.set(key, value);
     }),
   };
 })();
@@ -31,11 +32,13 @@ vi.mock('../../../components/Search/Search', () => ({
   default: vi.fn(({ initialSearchTerm, onSearch }) => (
     <input
       data-testid="search-input"
-      value={initialSearchTerm}
       onChange={() => {}}
       onKeyDown={(e) => {
-        if (e.key === 'Enter') onSearch(e.currentTarget.value);
+        if (e.key === 'Enter') {
+          onSearch(e.currentTarget.value);
+        }
       }}
+      value={initialSearchTerm}
     />
   )),
 }));
@@ -44,7 +47,7 @@ vi.mock('../../../components/CardList/CardList', () => ({
   default: vi.fn(({ pokemonItems }) => (
     <ul data-testid="card-list">
       {pokemonItems.map((item: PokemonItem) => (
-        <li key={item.id} data-testid={`card-item-${item.id}`}>
+        <li data-testid={`card-item-${item.id}`} key={item.id}>
           {item.name}
         </li>
       ))}
@@ -81,26 +84,20 @@ describe('MainPage', () => {
     mockFetch.mockImplementation(async (url: RequestInfo | URL) => {
       const urlString = url.toString();
       if (urlString.includes('limit=20')) {
-        return Promise.resolve({
-          ok: true,
+        return {
           json: () => Promise.resolve(listResponse),
-        } as Response);
+          ok: true,
+        } as Response;
       } else if (urlString.includes('/pokemon/')) {
-        const nameMatch = urlString.match(/\/pokemon\/([^/]+)\/?$/);
-        if (
-          nameMatch &&
-          detailResponses[nameMatch[1] as keyof typeof detailResponses]
-        ) {
-          return Promise.resolve({
+        const nameMatch = /\/pokemon\/([^/]+)\/?$/.exec(urlString);
+        if (nameMatch && detailResponses[nameMatch[1]]) {
+          return {
+            json: () => Promise.resolve(detailResponses[nameMatch[1]]),
             ok: true,
-            json: () =>
-              Promise.resolve(
-                detailResponses[nameMatch[1] as keyof typeof detailResponses]
-              ),
-          } as Response);
+          } as Response;
         }
       }
-      return Promise.reject(new Error(`Unhandled fetch URL: ${urlString}`));
+      throw new Error(`Unhandled fetch URL: ${urlString}`);
     });
   };
 
@@ -165,16 +162,16 @@ describe('MainPage', () => {
 
     mockFetch.mockImplementationOnce(() =>
       Promise.resolve({
-        ok: true,
         json: () => Promise.resolve(singleItemResponse),
+        ok: true,
       } as Response)
     );
 
     mockFetch.mockImplementationOnce(() =>
       Promise.resolve({
+        json: () => Promise.resolve({ error: 'Internal Server Error' }),
         ok: false,
         status: 500,
-        json: () => Promise.resolve({ error: 'Internal Server Error' }),
       } as Response)
     );
 
@@ -212,17 +209,17 @@ describe('MainPage', () => {
 
     mockFetch.mockImplementationOnce(() =>
       Promise.resolve({
-        ok: true,
         json: () => Promise.resolve(singleItemResponse),
+        ok: true,
       } as Response)
     );
 
     mockFetch.mockImplementationOnce(() =>
       Promise.resolve({
-        ok: false,
-        status: 404,
         json: () =>
           Promise.resolve({ message: 'Test Pokemon details not found' }),
+        ok: false,
+        status: 404,
       } as Response)
     );
 

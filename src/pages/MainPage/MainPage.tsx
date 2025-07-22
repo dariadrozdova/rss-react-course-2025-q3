@@ -1,10 +1,12 @@
-import { useState, useEffect, useCallback } from 'react';
-import styles from './MainPage.module.css';
-import type { PokemonItem } from '../../types/types';
-import Search from '../../components/Search/Search';
+import { useCallback, useEffect, useState } from 'react';
+
 import CardList from '../../components/CardList/CardList';
 import Loader from '../../components/Loader/Loader';
+import Search from '../../components/Search/Search';
 import useLocalStorage from '../../hooks/useLocalStorage';
+import type { PokemonItem } from '../../types/types';
+
+import styles from './MainPage.module.css';
 
 function MainPage() {
   const [searchTerm, setSearchTerm] = useLocalStorage<string>(
@@ -14,7 +16,7 @@ function MainPage() {
 
   const [pokemonItems, setPokemonItems] = useState<PokemonItem[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<null | string>(null);
   const [throwError, setThrowError] = useState<boolean>(false);
 
   const _handleHttpResponse = useCallback(
@@ -24,8 +26,8 @@ function MainPage() {
         try {
           const errorData = await response.json();
           errorMessage = errorData.error || errorData.message || errorMessage;
-        } catch (e) {
-          console.error('Failed to parse error response:', e);
+        } catch (error_) {
+          console.warn('Failed to parse error response:', error_);
         }
         throw new Error(errorMessage);
       }
@@ -74,21 +76,21 @@ function MainPage() {
             const detailData = await verifiedResponse.json();
 
             return {
+              id: detailData.id,
+              imageUrl: detailData.sprites.front_default,
               name: item.name,
               url: item.url,
-              imageUrl: detailData.sprites.front_default,
-              id: detailData.id,
             };
           })
         );
 
         setPokemonItems(itemsWithDetails);
         setSearchTerm(query);
-      } catch (err) {
-        console.error('Error fetching Pokemon:', err);
+      } catch (error_) {
+        console.warn('Error fetching Pokemon:', error_);
         setError(
-          err instanceof Error
-            ? err.message
+          error_ instanceof Error
+            ? error_.message
             : 'An unknown error occurred while fetching Pokemon.'
         );
       } finally {
@@ -100,9 +102,9 @@ function MainPage() {
 
   useEffect(() => {
     const runSearch = async () => {
-      await fetchPokemonItems(searchTerm).catch((err) =>
-        console.error('Error during search fetch:', err)
-      );
+      await fetchPokemonItems(searchTerm).catch((error_) => {
+        console.warn('Error during search fetch:', error_);
+      });
     };
     void runSearch();
   }, [searchTerm, fetchPokemonItems]);
@@ -144,7 +146,7 @@ function MainPage() {
         )}
       </section>
 
-      <button onClick={triggerErrorState} className={styles.errorTestButton}>
+      <button className={styles.errorTestButton} onClick={triggerErrorState}>
         Throw Test Error
       </button>
     </div>
