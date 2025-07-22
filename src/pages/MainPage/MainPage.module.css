@@ -79,8 +79,12 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .errorTestButton {
@@ -94,7 +98,9 @@
   border-radius: 6px;
   font-size: 1em;
   cursor: pointer;
-  transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+  transition:
+    background-color 0.2s ease-in-out,
+    transform 0.1s ease-in-out;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 10;
 }
@@ -115,7 +121,8 @@
     padding-bottom: 60px;
   }
 
-  .topSection, .resultsSection {
+  .topSection,
+  .resultsSection {
     padding: 20px;
     margin-bottom: 20px;
   }
@@ -134,7 +141,8 @@
     padding-bottom: 50px;
   }
 
-  .topSection, .resultsSection {
+  .topSection,
+  .resultsSection {
     padding: 15px;
     margin-bottom: 15px;
   }

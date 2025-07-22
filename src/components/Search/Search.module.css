@@ -19,7 +19,9 @@
   flex-grow: 1;
   max-width: 100%;
   outline: none;
-  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  transition:
+    border-color 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
 }
 
 .searchInput:focus {
@@ -35,7 +37,9 @@
   border-radius: 6px;
   font-size: 1em;
   cursor: pointer;
-  transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+  transition:
+    background-color 0.2s ease-in-out,
+    transform 0.1s ease-in-out;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 

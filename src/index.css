@@ -75,13 +75,15 @@ h1 {
   font-size: 1.1em;
   padding: 0.6rem 1.2rem;
   border-radius: 8px;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
   display: block;
 }
 
 .nav-link:hover {
   background-color: #e0f2f7;
-  color: #00796B;
+  color: #00796b;
 }
 
 .nav-link.active {

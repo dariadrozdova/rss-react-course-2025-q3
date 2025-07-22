@@ -24,6 +24,14 @@ export interface MainPageState {
   throwError: boolean;
 }
 
+export interface PokemonDetailResponse {
+  id: number;
+  name: string;
+  sprites: {
+    front_default: string;
+  };
+}
+
 export interface PokemonItem {
   id: number;
   imageUrl?: string;
@@ -34,6 +42,13 @@ export interface PokemonItem {
 export interface PokemonListItem {
   name: string;
   url: string;
+}
+
+export interface PokemonListResponse {
+  count: number;
+  next: null | string;
+  previous: null | string;
+  results: { name: string; url: string }[];
 }
 
 export interface SearchProps {

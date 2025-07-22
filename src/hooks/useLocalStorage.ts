@@ -23,12 +23,11 @@ function useLocalStorage<T extends string>(
   const setValue = useCallback(
     (value: ((previous: T) => T) | T) => {
       try {
-        setStoredValue((previousValue) => {
-          const valueToStore =
-            typeof value === 'function' ? value(previousValue) : value;
-          localStorage.setItem(key, String(valueToStore));
-          return valueToStore;
-        });
+        const newValue =
+          typeof value === 'function' ? value(storedValue) : value;
+
+        setStoredValue(newValue);
+        localStorage.setItem(key, String(newValue));
       } catch (error) {
         console.warn(`Error writing to localStorage key "${key}":`, error);
       }
