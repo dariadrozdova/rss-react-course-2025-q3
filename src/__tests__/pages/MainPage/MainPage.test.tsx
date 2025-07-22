@@ -63,17 +63,17 @@ vi.mock('../../../components/Loader/Loader', () => {
 });
 
 describe('MainPage', () => {
-  let consoleErrorSpy: ReturnType<typeof vi.spyOn>;
+  let consoleWarnSpy: ReturnType<typeof vi.spyOn>;
 
   beforeEach(() => {
     vi.stubGlobal('fetch', mockFetch);
-    consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
     localStorageMock.clear();
     mockFetch.mockClear();
   });
 
   afterEach(() => {
-    consoleErrorSpy.mockRestore();
+    consoleWarnSpy.mockRestore();
     vi.restoreAllMocks();
   });
 
@@ -186,11 +186,11 @@ describe('MainPage', () => {
     ).toBeInTheDocument();
     expect(screen.queryByTestId('card-list')).not.toBeInTheDocument();
 
-    expect(consoleErrorSpy).toHaveBeenCalledWith(
+    expect(consoleWarnSpy).toHaveBeenCalledWith(
       'Error fetching Pokemon:',
       expect.any(Error)
     );
-    expect((consoleErrorSpy.mock.calls[0][1] as Error).message).toBe(
+    expect((consoleWarnSpy.mock.calls[0][1] as Error).message).toBe(
       'Internal Server Error'
     );
 
@@ -234,11 +234,11 @@ describe('MainPage', () => {
     ).toBeInTheDocument();
     expect(screen.queryByTestId('card-list')).not.toBeInTheDocument();
 
-    expect(consoleErrorSpy).toHaveBeenCalledWith(
+    expect(consoleWarnSpy).toHaveBeenCalledWith(
       'Error fetching Pokemon:',
       expect.any(Error)
     );
-    expect((consoleErrorSpy.mock.calls[0][1] as Error).message).toBe(
+    expect((consoleWarnSpy.mock.calls[0][1] as Error).message).toBe(
       'Test Pokemon details not found'
     );
 
@@ -275,7 +275,7 @@ describe('MainPage', () => {
       name: /throw test error/i,
     });
 
-    consoleErrorSpy.mockClear();
+    consoleWarnSpy.mockClear();
 
     expect(() => {
       fireEvent.click(errorButton);

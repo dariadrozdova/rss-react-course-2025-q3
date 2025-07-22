@@ -6,6 +6,7 @@ import ThrowingComponent from '../../utils/ThrowingComponent';
 
 describe('ErrorBoundary', () => {
   let consoleErrorSpy: ReturnType<typeof vi.spyOn>;
+  let consoleWarnSpy: ReturnType<typeof vi.spyOn>;
   let mockWindowReload: ReturnType<typeof vi.fn>;
   let originalWindowLocation: Location;
 
@@ -13,6 +14,7 @@ describe('ErrorBoundary', () => {
     originalWindowLocation = window.location;
 
     consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
     mockWindowReload = vi.fn();
     Object.defineProperty(window, 'location', {
@@ -26,6 +28,7 @@ describe('ErrorBoundary', () => {
 
   afterEach(() => {
     consoleErrorSpy.mockRestore();
+    consoleWarnSpy.mockRestore();
     Object.defineProperty(window, 'location', {
       configurable: true,
       value: originalWindowLocation,
@@ -44,44 +47,40 @@ describe('ErrorBoundary', () => {
       screen.queryByText('Oops! Something went wrong.')
     ).not.toBeInTheDocument();
     expect(consoleErrorSpy).not.toHaveBeenCalled();
+    expect(consoleWarnSpy).not.toHaveBeenCalled();
   });
 
   it('displays the fallback UI when a child component throws an error', () => {
-    const { rerender } = render(
-      <ErrorBoundary>
-        <ThrowingComponent shouldThrow={false} />
-      </ErrorBoundary>
-    );
-
-    rerender(
+    render(
       <ErrorBoundary>
         <ThrowingComponent shouldThrow />
       </ErrorBoundary>
     );
 
     expect(screen.getByText('Oops! Something went wrong.')).toBeInTheDocument();
-    expect(screen.getByText(/unexpected error occurred/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        'We are sorry, but an unexpected error occurred. Please try refreshing the page.'
+      )
+    ).toBeInTheDocument();
     expect(
       screen.getByRole('button', { name: /refresh page/i })
     ).toBeInTheDocument();
     expect(screen.queryByText('Normal Child Content')).not.toBeInTheDocument();
   });
 
-  it('logs the error to console.error when an error occurs', () => {
-    const { rerender } = render(
-      <ErrorBoundary>
-        <ThrowingComponent shouldThrow={false} />
-      </ErrorBoundary>
-    );
-
-    rerender(
+  it('logs the error to console.warn when an error occurs', () => {
+    render(
       <ErrorBoundary>
         <ThrowingComponent shouldThrow />
       </ErrorBoundary>
     );
 
-    expect(consoleErrorSpy).toHaveBeenCalledTimes(2);
+    const EXPECTED_CONSOLE_ERROR_CALLS = 1;
+    const EXPECTED_CONSOLE_WARN_CALLS = 3;
+    const ERROR_MESSAGE_CALL_INDEX = 2;
 
+    expect(consoleErrorSpy).toHaveBeenCalledTimes(EXPECTED_CONSOLE_ERROR_CALLS);
     expect(consoleErrorSpy).toHaveBeenCalledWith(
       expect.any(String),
       expect.any(Error),
@@ -91,25 +90,24 @@ describe('ErrorBoundary', () => {
       )
     );
 
-    expect(consoleErrorSpy).toHaveBeenCalledWith(
+    expect(consoleWarnSpy).toHaveBeenCalledTimes(EXPECTED_CONSOLE_WARN_CALLS);
+    expect(consoleWarnSpy).toHaveBeenCalledWith(
+      'getDerivedStateFromError called:',
+      expect.any(Error)
+    );
+    expect(consoleWarnSpy).toHaveBeenCalledWith(
       'ErrorBoundary caught an error:',
       expect.any(Error),
       expect.any(Object)
     );
 
-    expect((consoleErrorSpy.mock.calls[1][1] as Error).message).toBe(
-      'Test error from ThrowingComponent'
-    );
+    expect(
+      (consoleWarnSpy.mock.calls[ERROR_MESSAGE_CALL_INDEX][1] as Error).message
+    ).toBe('Test error from ThrowingComponent');
   });
 
   it('calls window.location.reload when the refresh button is clicked', () => {
-    const { rerender } = render(
-      <ErrorBoundary>
-        <ThrowingComponent shouldThrow={false} />
-      </ErrorBoundary>
-    );
-
-    rerender(
+    render(
       <ErrorBoundary>
         <ThrowingComponent shouldThrow />
       </ErrorBoundary>
