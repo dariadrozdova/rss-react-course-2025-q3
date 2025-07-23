@@ -3,8 +3,7 @@ function Loader() {
     <div
       aria-live="polite"
       className="
-        flex flex-col items-center justify-center
-        gap-[15px] p-[30px] box-border
+      flex flex-col items-center justify-center gap-[15px] p-[30px] box-border w-full max-w-[700px] mx-auto text-center
       "
       role="status"
     >

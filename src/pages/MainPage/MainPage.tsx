@@ -100,7 +100,6 @@ function MainPage() {
           border-none rounded-md text-base
           cursor-pointer
           transition-colors duration-200 ease-in-out
-          transition-transform duration-100 ease-in-out
           shadow-sm shadow-[hsla(0,0%,0%,0.1)] z-10
           hover:bg-[hsl(0,70%,39%)] hover:-translate-y-px
           active:translate-y-0 active:shadow-xs

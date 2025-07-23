@@ -25,7 +25,8 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
             flex flex-col items-center justify-center
             min-h-[80vh] text-center p-5
             bg-[hsl(0,100%,97%)] border-2 border-[hsl(0,60%,82%)] rounded-lg
-            shadow-md shadow-[hsla(0,0%,0%,0.1)] m-5 font-sans
+            shadow-md shadow-[hsla(0,0%,0%,0.1)] font-sans
+            w-full
           "
         >
           <h1 className="text-[hsl(0,64%,47%)] text-[2.5em] mb-[15px]">
