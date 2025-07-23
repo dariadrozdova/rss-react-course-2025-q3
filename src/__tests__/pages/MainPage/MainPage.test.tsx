@@ -168,9 +168,13 @@ describe('MainPage', () => {
 
     const searchInput = screen.getByTestId('search-input');
 
-    searchInput.value = 'pikachu';
-    fireEvent.change(searchInput);
-    fireEvent.keyDown(searchInput, { key: 'Enter' });
+    if (searchInput instanceof HTMLInputElement) {
+      searchInput.value = 'pikachu';
+      fireEvent.change(searchInput);
+      fireEvent.keyDown(searchInput, { key: 'Enter' });
+    } else {
+      console.warn('searchInput is not an HTMLInputElement');
+    }
 
     expect(mockSetSearchTerm).toHaveBeenCalledWith('pikachu');
   });
