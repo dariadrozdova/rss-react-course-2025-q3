@@ -7,8 +7,6 @@ import {
   useState,
 } from 'react';
 
-import styles from './Search.module.css';
-
 const Search = ({ initialSearchTerm, onSearch }: SearchProps) => {
   const [inputValue, setInputValue] = useState(initialSearchTerm);
 
@@ -46,16 +44,39 @@ const Search = ({ initialSearchTerm, onSearch }: SearchProps) => {
   };
 
   return (
-    <div className={styles.searchContainer}>
+    <div
+      className="
+        flex gap-2.5 justify-center items-center p-[15px]
+        bg-[hsl(190,100%,94%)] rounded-lg
+        shadow-sm shadow-[hsla(0,0%,0%,0.05)]
+        w-full max-w-[700px]
+      "
+    >
       <input
-        className={styles.searchInput}
+        className="
+          px-[15px] py-[10px] border border-[hsl(187,70%,82%)] rounded-md
+          text-base flex-grow max-w-full outline-none
+          transition-all duration-200 ease-in-out
+          focus:border-[hsl(187,100%,42%)] focus:shadow-[0_0_0_3px_hsla(187,100%,42%,0.2)]
+        "
         onChange={handleInputChange}
         onKeyDown={handleKeyPress}
         placeholder="Search for Pokemons..."
         type="text"
         value={inputValue}
       />
-      <button className={styles.searchButton} onClick={handleSearchClick}>
+      <button
+        className="
+          px-5 py-[10px]
+          bg-[hsl(173,100%,23%)] text-[hsl(0,0%,100%)]
+          border-none rounded-md text-base cursor-pointer
+          transition-all duration-200 ease-in-out transform-gpu
+          shadow-sm shadow-[hsla(0,0%,0%,0.1)]
+          hover:bg-[hsl(173,100%,15%)] hover:-translate-y-[1px]
+          active:translate-y-0 active:shadow-xs active:shadow-[hsla(0,0%,0%,0.1)]
+        "
+        onClick={handleSearchClick}
+      >
         Search
       </button>
     </div>
