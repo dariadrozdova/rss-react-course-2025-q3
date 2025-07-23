@@ -1,9 +1,10 @@
-import { act, renderHook, waitFor } from '@testing-library/react';
+import { renderHook, waitFor } from '@testing-library/react';
+import type { PokemonItem } from '@types';
+import { act } from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { fetchPokemonList } from '../../api/pokemonApi';
-import { usePokemonData } from '../../hooks/usePokemonData';
-import type { PokemonItem } from '../../types/types';
+import { fetchPokemonList } from '@api/pokemonApi';
+import { usePokemonData } from '@hooks/usePokemonData';
 
 vi.mock('../../api/pokemonApi', () => ({
   fetchPokemonList: vi.fn(),

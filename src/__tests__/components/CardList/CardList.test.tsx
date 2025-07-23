@@ -1,8 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import CardList from '../../../components/CardList/CardList';
-import { mockPokemonItemsList } from '../../utils/cardComponentsMockData';
+import CardList from '@components/CardList';
+
+import { mockPokemonItemsList } from '@/__tests__/utils/cardComponentsMockData';
 
 describe('CardList', () => {
   it('renders the correct number of Card components for a given list of items', () => {

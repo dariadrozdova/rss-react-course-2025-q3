@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { fetchPokemonList } from '../../api/pokemonApi';
+import { fetchPokemonList } from '@api/pokemonApi';
+
 import {
   mockPokeApiListResponse,
   mockPokemonDetailResponses,

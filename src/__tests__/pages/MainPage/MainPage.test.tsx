@@ -1,10 +1,10 @@
 import { fireEvent, render, screen } from '@testing-library/react';
+import type { PokemonItem } from '@types';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import useLocalStorage from '../../../hooks/useLocalStorage';
-import { usePokemonData } from '../../../hooks/usePokemonData';
-import MainPage from '../../../pages/MainPage/MainPage';
-import type { PokemonItem } from '../../../types/index';
+import useLocalStorage from '@hooks/useLocalStorage';
+import { usePokemonData } from '@hooks/usePokemonData';
+import MainPage from '@pages/MainPage';
 
 vi.mock('../../../hooks/usePokemonData', () => ({
   usePokemonData: vi.fn(),

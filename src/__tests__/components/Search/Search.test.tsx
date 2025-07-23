@@ -1,8 +1,8 @@
 import { fireEvent, render, screen } from '@testing-library/react';
+import type { SearchProps } from '@types';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import Search from '../../../components/Search/Search';
-import type { SearchProps } from '../../../types/types';
+import Search from '@components/Search';
 
 describe('Search Component Tests', () => {
   let mockOnSearch: (searchTerm: string) => void;
@@ -75,7 +75,7 @@ describe('Search Component Tests', () => {
     const searchInput = screen.getByPlaceholderText(/search for pokemons.../i);
 
     fireEvent.change(searchInput, { target: { value: 'Charizard' } });
-    expect(searchInput.value).toBe('Charizard');
+    expect((searchInput as HTMLInputElement).value).toBe('Charizard');
   });
 
   it('triggers onSearch callback with trimmed value when search button is clicked', async () => {

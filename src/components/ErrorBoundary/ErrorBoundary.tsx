@@ -1,6 +1,6 @@
-import { Component, type ErrorInfo } from 'react';
-
-import type { ErrorBoundaryProps, ErrorBoundaryState } from '../../types/types';
+import type { ErrorBoundaryProps, ErrorBoundaryState } from '@types';
+import type { ErrorInfo } from 'react';
+import { Component } from 'react';
 
 import styles from './ErrorBoundary.module.css';
 

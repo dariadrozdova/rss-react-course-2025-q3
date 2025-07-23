@@ -1,5 +1,10 @@
 /** @type {import("eslint").Linter.RulesRecord} */
 export const myEslintRules = {
+  quotes: [
+    'error',
+    'single',
+    { avoidEscape: true, allowTemplateLiterals: true },
+  ],
   '@typescript-eslint/consistent-type-assertions': 'off',
   '@typescript-eslint/explicit-function-return-type': 'off',
   '@typescript-eslint/explicit-member-accessibility': 'off',

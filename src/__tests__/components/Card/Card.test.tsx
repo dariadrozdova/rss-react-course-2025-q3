@@ -1,12 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import Card from '../../../components/Card/Card';
+import Card from '@components/Card';
+
 import {
   mockPokemonItemUndefinedImage,
   mockPokemonItemWithImage,
   mockPokemonItemWithoutImage,
-} from '../../utils/cardComponentsMockData';
+} from '@/__tests__/utils/cardComponentsMockData';
 
 describe('Card', () => {
   it('renders the item name', () => {

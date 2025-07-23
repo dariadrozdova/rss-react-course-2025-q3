@@ -57,6 +57,24 @@ export default tseslint.config(
     ],
     rules: {
       ...myEslintRules,
+      'unused-imports/no-unused-imports': 'error',
+      'unused-imports/no-unused-vars': [
+        'warn',
+        {
+          vars: 'all',
+          varsIgnorePattern: '^_',
+          args: 'after-used',
+          argsIgnorePattern: '^_',
+        },
+      ],
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        {
+          prefer: 'type-imports',
+          disallowTypeAnnotations: false,
+          fixStyle: 'separate-type-imports',
+        },
+      ],
       'simple-import-sort/imports': [
         'error',
         {
@@ -64,7 +82,7 @@ export default tseslint.config(
             ['^\\u0000'],
             ['^node:'],
             ['^@?\\w'],
-            ['^(@/.*)$'],
+            ['^(@types|@components|@hooks|@pages|@utils|@api)(/.*)?$'],
             ['^\\.\\.(?!/?$)', '^\\.\\./?$'],
             [
               '^\\./(?=.*/)(?!.*\\.(css|less|scss|sass|styl))$',
@@ -76,6 +94,16 @@ export default tseslint.config(
         },
       ],
       'simple-import-sort/exports': 'error',
+      'unused-imports/no-unused-imports': 'error',
+      'unused-imports/no-unused-vars': [
+        'warn',
+        {
+          vars: 'all',
+          varsIgnorePattern: '^_',
+          args: 'after-used',
+          argsIgnorePattern: '^_',
+        },
+      ],
     },
     settings: {
       react: {

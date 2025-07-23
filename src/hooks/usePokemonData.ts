@@ -1,7 +1,7 @@
+import type { PokemonItem } from '@types';
 import { useCallback, useEffect, useState } from 'react';
 
 import { fetchPokemonList } from '../api/pokemonApi';
-import type { PokemonItem } from '../types/types';
 
 interface UsePokemonDataResult {
   error: null | string;

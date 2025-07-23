@@ -1,7 +1,8 @@
-import { act, renderHook } from '@testing-library/react';
+import { renderHook } from '@testing-library/react';
+import { act } from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import useLocalStorage from '../../hooks/useLocalStorage';
+import useLocalStorage from '@hooks/useLocalStorage';
 
 describe('useLocalStorage', () => {
   let localStorageMock: {

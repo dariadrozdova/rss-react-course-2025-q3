@@ -2,7 +2,7 @@ import type {
   PokemonDetailResponse,
   PokemonItem,
   PokemonListResponse,
-} from '../types/types';
+} from '@types';
 
 const BASE_URL = 'https://pokeapi.co/api/v2/pokemon/';
 const DEFAULT_LIMIT = 20;

@@ -1,4 +1,4 @@
-import type { PokemonItem } from '../../types/types';
+import type { PokemonItem } from '@types';
 
 export const mockPokeApiListResponse = {
   results: [

@@ -1,4 +1,4 @@
-import type { CardProps } from '../../types/types';
+import type { CardProps } from '@types';
 
 import styles from './Card.module.css';
 

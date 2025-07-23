@@ -1,5 +1,6 @@
-import type { CardListProps } from '../../types/types';
-import Card from '../Card/Card';
+import type { CardListProps } from '@types';
+
+import Card from '@components/Card/Card';
 
 import styles from './CardList.module.css';
 

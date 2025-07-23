@@ -1,10 +1,10 @@
 import { useCallback, useState } from 'react';
 
-import CardList from '../../components/CardList/CardList';
-import Loader from '../../components/Loader/Loader';
-import Search from '../../components/Search/Search';
-import useLocalStorage from '../../hooks/useLocalStorage';
-import { usePokemonData } from '../../hooks/usePokemonData';
+import CardList from '@components/CardList';
+import Loader from '@components/Loader';
+import Search from '@components/Search';
+import useLocalStorage from '@hooks/useLocalStorage';
+import { usePokemonData } from '@hooks/usePokemonData';
 
 import styles from './MainPage.module.css';
 
