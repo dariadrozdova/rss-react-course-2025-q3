@@ -8,6 +8,8 @@
   --color-black-alpha-10: hsla(0, 0%, 0%, 0.1);
   --color-black-alpha-15: hsla(0, 0%, 0%, 0.15);
 
+  --color-primary-red: hsl(1, 84%, 63%);
+  --color-primary-red-hover: hsl(0, 70%, 39%);
   --color-primary-green: hsl(173, 100%, 23%);
   --color-primary-green-hover: hsl(173, 100%, 15%);
   --color-white: hsl(0, 0%, 100%);
