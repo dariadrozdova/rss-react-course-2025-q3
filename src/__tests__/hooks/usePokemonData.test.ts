@@ -6,7 +6,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { fetchPokemonList } from '@api/pokemonApi';
 import { usePokemonData } from '@hooks/usePokemonData';
 
-vi.mock('../../api/pokemonApi', () => ({
+vi.mock('@api/pokemonApi', () => ({
   fetchPokemonList: vi.fn(),
 }));
 

@@ -6,11 +6,11 @@ import useLocalStorage from '@hooks/useLocalStorage';
 import { usePokemonData } from '@hooks/usePokemonData';
 import MainPage from '@pages/MainPage';
 
-vi.mock('../../../hooks/usePokemonData', () => ({
+vi.mock('@hooks/usePokemonData', () => ({
   usePokemonData: vi.fn(),
 }));
 
-vi.mock('../../../hooks/useLocalStorage', () => ({
+vi.mock('@hooks/useLocalStorage', () => ({
   default: vi.fn(),
 }));
 
@@ -32,7 +32,7 @@ const localStorageMock = (() => {
 
 Object.defineProperty(window, 'localStorage', { value: localStorageMock });
 
-vi.mock('../../../components/Search/Search', () => ({
+vi.mock('@components/Search', () => ({
   default: vi.fn(({ initialSearchTerm, onSearch }) => (
     <input
       data-testid="search-input"
@@ -46,7 +46,7 @@ vi.mock('../../../components/Search/Search', () => ({
   )),
 }));
 
-vi.mock('../../../components/CardList/CardList', () => ({
+vi.mock('@components/CardList', () => ({
   default: vi.fn(({ pokemonItems }) => (
     <ul data-testid="card-list">
       {pokemonItems.map((item: PokemonItem) => (
@@ -58,7 +58,7 @@ vi.mock('../../../components/CardList/CardList', () => ({
   )),
 }));
 
-vi.mock('../../../components/Loader/Loader', () => ({
+vi.mock('@components/Loader', () => ({
   default: vi.fn(() => <div data-testid="loader">Loading...</div>),
 }));
 
