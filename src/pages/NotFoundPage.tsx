@@ -1,6 +1,13 @@
 import { NavLink } from 'react-router-dom';
 
+import {
+  BUTTON_BASE_CLASSES,
+  BUTTON_COLOR_GREEN,
+} from '@utils/stylesConstants';
+
 function NotFoundPage() {
+  const navLinkClasses = `${BUTTON_BASE_CLASSES} ${BUTTON_COLOR_GREEN}`;
+
   return (
     <div
       className="
@@ -10,13 +17,15 @@ function NotFoundPage() {
     >
       <div
         className="
-        bg-white p-8 mb-8 rounded-xl shadow-md shadow-[hsla(0,0%,0%,0.1)]
-        text-center flex flex-col items-center justify-center
-        w-full max-w-4xl mx-auto min-h-[60vh] box-border
-        md:p-10 lg:p-12
-        text-[hsl(200,15%,30%)] font-['Inter']
-      "
+          bg-white p-8 mb-8 rounded-xl shadow-md shadow-[hsla(0,0%,0%,0.1)]
+          text-center flex flex-col items-center justify-center
+          w-full max-w-4xl mx-auto box-border
+          md:p-10 lg:p-12
+          text-[hsl(200,15%,30%)] font-['Inter']
+        "
       >
+        <h1 className="text-6xl font-bold text-[hsl(0, 83%, 63%)] mb-4">404</h1>
+
         <div className="flex items-center justify-center gap-4 mb-6">
           <span className="text-8xl font-bold text-[hsl(200,25%,18%)]">4</span>
           <img
@@ -34,14 +43,7 @@ function NotFoundPage() {
           Go back to home and continue exploring.
         </p>
 
-        <NavLink
-          className="
-          inline-block px-8 py-3 bg-[hsl(173,100%,23%)] text-white font-semibold
-          rounded-lg shadow-md hover:bg-[hsl(173,100%,15%)] transition-colors
-          uppercase tracking-wide text-lg
-        "
-          to="/"
-        >
+        <NavLink className={navLinkClasses} to="/">
           Return to Main Page
         </NavLink>
       </div>

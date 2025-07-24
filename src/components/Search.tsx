@@ -7,6 +7,8 @@ import {
   useState,
 } from 'react';
 
+import Button from './Button';
+
 const Search = ({ initialSearchTerm, onSearch }: SearchProps) => {
   const [inputValue, setInputValue] = useState(initialSearchTerm);
 
@@ -65,20 +67,18 @@ const Search = ({ initialSearchTerm, onSearch }: SearchProps) => {
         type="text"
         value={inputValue}
       />
-      <button
+      <Button
         className="
-          px-5 py-[10px]
-          bg-[hsl(173,100%,23%)] text-[hsl(0,0%,100%)]
-          border-none rounded-md text-base cursor-pointer
-          transition-all duration-200 ease-in-out transform-gpu
-          shadow-sm shadow-[hsla(0,0%,0%,0.1)]
-          hover:bg-[hsl(173,100%,15%)] hover:-translate-y-[1px]
-          active:translate-y-0 active:shadow-xs active:shadow-[hsla(0,0%,0%,0.1)]
-        "
+    px-5 py-[10px] rounded-md text-base normal-case
+    shadow-sm shadow-black/10
+    hover:-translate-y-[1px]
+    active:shadow-black/10
+  "
+        color="green"
         onClick={handleSearchClick}
       >
         Search
-      </button>
+      </Button>
     </div>
   );
 };

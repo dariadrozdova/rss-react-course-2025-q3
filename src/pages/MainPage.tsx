@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
 
+import Button from '@components/Button';
 import CardList from '@components/CardList';
 import Loader from '@components/Loader';
 import Search from '@components/Search';
@@ -92,24 +93,18 @@ function MainPage() {
         )}
       </section>
 
-      <button
+      <Button
         className="
           absolute bottom-[20px] right-[20px]
-          p-[10px] px-[20px]
-          bg-[hsl(1,84%,63%)] text-white
-          border-none rounded-md text-base
-          cursor-pointer
-          transition-colors duration-200 ease-in-out
-          shadow-sm shadow-[hsla(0,0%,0%,0.1)] z-10
-          hover:bg-[hsl(0,70%,39%)] hover:-translate-y-px
-          active:translate-y-0 active:shadow-xs
+          p-[10px] px-[20px] text-base
           md:bottom-[15px] md:right-[15px] md:p-[8px] md:px-[15px] md:text-[0.9em]
           lg:bottom-[20px] lg:right-[20px] lg:p-[10px] lg:px-[20px] lg:text-base
         "
+        color="red"
         onClick={triggerErrorState}
       >
         Throw Test Error
-      </button>
+      </Button>
     </div>
   );
 }
