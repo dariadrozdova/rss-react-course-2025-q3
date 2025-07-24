@@ -4,13 +4,11 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import App from '../App';
-import MainPage from '../pages/MainPage/MainPage';
+import MainPage from '../pages/MainPage';
 
 vi.mock('../components/ErrorBoundary/ErrorBoundary', async (importOriginal) => {
   const actual =
-    await importOriginal<
-      typeof import('../components/ErrorBoundary/ErrorBoundary')
-    >();
+    await importOriginal<typeof import('../components/ErrorBoundary')>();
   return {
     default: actual.default,
   };

@@ -1,6 +1,6 @@
 import type { CardListProps } from '@types';
 
-import Card from '@components/Card/Card';
+import Card from '@components/Card';
 
 function CardList(props: CardListProps) {
   const { pokemonItems } = props;
