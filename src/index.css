@@ -5,14 +5,28 @@
   --color-error-border: hsl(0, 60%, 82%);
   --color-error-text-dark: hsl(0, 64%, 47%);
   --color-error-text-medium: hsl(0, 70%, 51%);
-  --color-black-alpha-10: hsla(0, 0%, 0%, 0.1);
-  --color-black-alpha-15: hsla(0, 0%, 0%, 0.15);
+  --color-error-border-light: hsl(0, 57%, 76%);
 
   --color-primary-red: hsl(1, 84%, 63%);
   --color-primary-red-hover: hsl(0, 70%, 39%);
+
+  --color-black-alpha-08: hsla(0, 0%, 0%, 0.08);
+  --color-black-alpha-10: hsla(0, 0%, 0%, 0.1);
+  --color-black-alpha-15: hsla(0, 0%, 0%, 0.15);
+
   --color-primary-green: hsl(173, 100%, 23%);
   --color-primary-green-hover: hsl(173, 100%, 15%);
+  --color-primary-green-light: hsl(187, 100%, 38%);
+
   --color-white: hsl(0, 0%, 100%);
+  --color-neutral-card-background: hsl(0, 0%, 99%);
+
+  --color-gradient-start-light-blue: hsl(187, 72%, 93%);
+  --color-gradient-end-light-blue: hsl(187, 71%, 82%);
+  --color-text-light-blue-gray: hsl(200, 15%, 30%);
+  --color-text-dark-blue-gray: hsl(200, 25%, 18%);
+  --color-border-light-gray: hsl(207, 17%, 94%);
+
   --shadow-xs: 0 0px 0px 0px;
 }
 

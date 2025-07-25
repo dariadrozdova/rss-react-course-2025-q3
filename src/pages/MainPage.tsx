@@ -1,36 +1,21 @@
-import { useCallback, useState } from 'react';
-
-import Button from '@components/Button';
-import CardList from '@components/CardList';
-import Loader from '@components/Loader';
+import { PokemonContent } from '@components/PokemonContent';
 import Search from '@components/Search';
-import useLocalStorage from '@hooks/useLocalStorage';
+import { usePaginationAndSearch } from '@hooks/usePaginationAndSearch';
 import { usePokemonData } from '@hooks/usePokemonData';
 
+const ITEMS_PER_PAGE = 20;
+
 function MainPage() {
-  const [searchTerm, setSearchTerm] = useLocalStorage<string>(
-    'lastSearchTerm',
-    ''
+  const { currentPage, effectiveSearchTerm, handlePageChange, handleSearch } =
+    usePaginationAndSearch();
+
+  const { error, isLoading, pokemonItems, totalItems } = usePokemonData(
+    effectiveSearchTerm,
+    currentPage,
+    ITEMS_PER_PAGE
   );
 
-  const { error, isLoading, pokemonItems } = usePokemonData(searchTerm);
-
-  const [throwError, setThrowError] = useState<boolean>(false);
-
-  const handleSearch = useCallback(
-    (newSearchTerm: string) => {
-      setSearchTerm(newSearchTerm);
-    },
-    [setSearchTerm]
-  );
-
-  const triggerErrorState = useCallback(() => {
-    setThrowError(true);
-  }, []);
-
-  if (throwError) {
-    throw new Error('This is a test error thrown from the render method!');
-  }
+  const totalPages = totalItems ? Math.ceil(totalItems / ITEMS_PER_PAGE) : 0;
 
   return (
     <div
@@ -39,9 +24,13 @@ function MainPage() {
         p-[30px] pb-[70px]
         md:p-[20px] md:pb-[60px]
         lg:p-[30px] lg:pb-[70px]
-        font-['Inter'] text-[hsl(200,25%,18%)]
-        bg-gradient-to-br from-[hsl(187,72%,93%)] to-[hsl(187,71%,82%)]
-        rounded-xl shadow-lg shadow-[hsla(0,0%,0%,0.15)]
+        font-['Inter']
+
+        text-[var(--color-text-dark-blue-gray)]
+
+        bg-gradient-to-br from-[var(--color-gradient-start-light-blue)] to-[var(--color-gradient-end-light-blue)]
+
+        rounded-xl shadow-[var(--color-black-alpha-15)]
         box-border relative
         w-full
       "
@@ -49,62 +38,38 @@ function MainPage() {
       <section
         className="
           bg-white p-[25px] mb-[30px]
-          rounded-lg shadow-md shadow-[hsla(0,0%,0%,0.1)]
+          rounded-lg shadow-[var(--color-black-alpha-10)]
           text-center flex flex-col items-center gap-[20px]
           box-border w-full
           md:p-[20px] md:mb-[20px]
         "
       >
-        <Search initialSearchTerm={searchTerm} onSearch={handleSearch} />
+        <Search
+          initialSearchTerm={effectiveSearchTerm}
+          onSearch={handleSearch}
+        />
       </section>
 
       <section
         className="
           flex-grow bg-white p-[30px]
-          rounded-lg shadow-md shadow-[hsla(0,0%,0%,0.1)]
+          rounded-lg shadow-[var(--color-black-alpha-10)]
           flex flex-col items-center justify-center
           min-h-[250px] box-border w-full
           md:p-[20px] md:mb-[20px]
         "
       >
-        {isLoading && <Loader />}
-
-        {error && (
-          <p
-            className="
-              text-[hsl(0,70%,39%)] bg-[hsl(0,100%,97%)]
-              border border-[hsl(0,57%,76%)]
-              p-[15px] rounded-md mt-[20px]
-              font-semibold text-center w-full max-w-[550px]
-              box-border
-              md:p-[10px] md:text-[0.9em]
-            "
-          >
-            Error: {error}
-          </p>
-        )}
-
-        {!isLoading && !error && pokemonItems.length === 0 && (
-          <p>No Pokemon found. Try a different search!</p>
-        )}
-
-        {!isLoading && !error && pokemonItems.length > 0 && (
-          <CardList pokemonItems={pokemonItems} />
-        )}
+        <PokemonContent
+          currentPage={currentPage}
+          effectiveSearchTerm={effectiveSearchTerm}
+          error={error}
+          isLoading={isLoading}
+          onPageChange={handlePageChange}
+          pokemonItems={pokemonItems}
+          totalItems={totalItems}
+          totalPages={totalPages}
+        />
       </section>
-
-      <Button
-        className="
-          absolute bottom-[20px] right-[20px]
-          p-[10px] px-[20px] text-base
-          md:bottom-[15px] md:right-[15px] md:p-[8px] md:px-[15px] md:text-[0.9em]
-          lg:bottom-[20px] lg:right-[20px] lg:p-[10px] lg:px-[20px] lg:text-base
-        "
-        color="red"
-        onClick={triggerErrorState}
-      >
-        Throw Test Error
-      </Button>
     </div>
   );
 }

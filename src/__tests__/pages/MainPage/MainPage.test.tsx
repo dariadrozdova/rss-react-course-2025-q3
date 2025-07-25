@@ -1,18 +1,18 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import type { PokemonItem } from '@types';
+import { MemoryRouter } from 'react-router-dom';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
+import { PokemonContent as MockPokemonContent } from '@components/PokemonContent';
 import useLocalStorage from '@hooks/useLocalStorage';
+import { usePaginationAndSearch } from '@hooks/usePaginationAndSearch';
 import { usePokemonData } from '@hooks/usePokemonData';
 import MainPage from '@pages/MainPage';
 
-vi.mock('@hooks/usePokemonData', () => ({
-  usePokemonData: vi.fn(),
-}));
+const ITEMS_PER_PAGE = 20;
 
-vi.mock('@hooks/useLocalStorage', () => ({
-  default: vi.fn(),
-}));
+vi.mock('@hooks/usePokemonData', () => ({ usePokemonData: vi.fn() }));
+vi.mock('@hooks/useLocalStorage', () => ({ default: vi.fn() }));
 
 const localStorageMock = (() => {
   const store = new Map<string, string>();
@@ -46,25 +46,72 @@ vi.mock('@components/Search', () => ({
   )),
 }));
 
-vi.mock('@components/CardList', () => ({
-  default: vi.fn(({ pokemonItems }) => (
-    <ul data-testid="card-list">
-      {pokemonItems.map((item: PokemonItem) => (
-        <li data-testid={`card-item-${item.id}`} key={item.id}>
-          {item.name}
-        </li>
-      ))}
-    </ul>
-  )),
+vi.mock('@hooks/usePaginationAndSearch', () => ({
+  usePaginationAndSearch: vi.fn(),
 }));
 
-vi.mock('@components/Loader', () => ({
-  default: vi.fn(() => <div data-testid="loader">Loading...</div>),
+vi.mock('@components/PokemonContent', () => ({
+  PokemonContent: vi.fn(
+    ({
+      currentPage,
+      effectiveSearchTerm,
+      error,
+      isLoading,
+      onPageChange,
+      pokemonItems,
+      totalPages,
+    }: {
+      currentPage: number;
+      effectiveSearchTerm: string;
+      error: null | string;
+      isLoading: boolean;
+      onPageChange: (page: number) => void;
+      pokemonItems: PokemonItem[];
+      totalPages: number;
+    }) => {
+      if (isLoading) {
+        return <div data-testid="loader">Loading...</div>;
+      }
+      if (error) {
+        return <div data-testid="error-message">Error: {error}</div>;
+      }
+      if (pokemonItems.length === 0 && effectiveSearchTerm) {
+        return (
+          <div data-testid="no-results-message">
+            No Pokemon found for "{effectiveSearchTerm}". Try a different
+            search!
+          </div>
+        );
+      }
+
+      return (
+        <>
+          <ul data-testid="card-list">
+            {pokemonItems.map((item: PokemonItem) => (
+              <li data-testid={`card-item-${item.id}`} key={item.id}>
+                {item.name}
+              </li>
+            ))}
+          </ul>
+          <div data-testid="pagination-mock">
+            Page {currentPage} of {totalPages}
+            <button
+              onClick={() => {
+                onPageChange(currentPage + 1);
+              }}
+            >
+              Next
+            </button>
+          </div>
+        </>
+      );
+    }
+  ),
 }));
 
 describe('MainPage', () => {
-  let mockFetchData: ReturnType<typeof vi.fn>;
   let mockSetSearchTerm: ReturnType<typeof vi.fn>;
+  let mockUsePaginationAndSearch: ReturnType<typeof vi.fn>;
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -75,96 +122,63 @@ describe('MainPage', () => {
       mockSetSearchTerm,
     ]);
 
-    mockFetchData = vi.fn(() => Promise.resolve());
-
     (usePokemonData as ReturnType<typeof vi.fn>).mockReturnValue({
       error: null,
-      fetchData: mockFetchData,
       isLoading: false,
       pokemonItems: [],
+      totalItems: 0,
     });
+
+    mockUsePaginationAndSearch = vi.fn(() => ({
+      currentPage: 1,
+      effectiveSearchTerm: '',
+      handlePageChange: vi.fn(),
+      handleSearch: vi.fn(),
+    }));
+    (usePaginationAndSearch as ReturnType<typeof vi.fn>).mockImplementation(
+      mockUsePaginationAndSearch
+    );
   });
 
   afterEach(() => {
     vi.restoreAllMocks();
   });
 
-  it('displays loader when data is loading', () => {
-    (usePokemonData as ReturnType<typeof vi.fn>).mockReturnValue({
-      error: null,
-      fetchData: mockFetchData,
-      isLoading: true,
-      pokemonItems: [],
-    });
+  const renderWithRouter = (ui: React.ReactElement) =>
+    render(<MemoryRouter>{ui}</MemoryRouter>);
 
-    render(<MainPage />);
-    expect(screen.getByTestId('loader')).toBeInTheDocument();
-    expect(screen.queryByTestId('card-list')).not.toBeInTheDocument();
-    expect(screen.queryByText(/error:/i)).not.toBeInTheDocument();
+  it('renders Search and PokemonContent components', () => {
+    renderWithRouter(<MainPage />);
+    expect(screen.getByTestId('search-input')).toBeInTheDocument();
+    expect(MockPokemonContent).toHaveBeenCalled();
   });
 
-  it('displays Pokemon items when data is loaded successfully', async () => {
-    const mockPokemonItems: PokemonItem[] = [
-      { id: 1, imageUrl: 'url1', name: 'bulbasaur', url: 'url1' },
-      { id: 2, imageUrl: 'url2', name: 'charmander', url: 'url2' },
-    ];
-    (usePokemonData as ReturnType<typeof vi.fn>).mockReturnValue({
-      error: null,
-      fetchData: mockFetchData,
-      isLoading: false,
-      pokemonItems: mockPokemonItems,
+  it('passes correct props to usePokemonData hook', () => {
+    (usePaginationAndSearch as ReturnType<typeof vi.fn>).mockReturnValue({
+      currentPage: 2,
+      effectiveSearchTerm: 'charmander',
+      handlePageChange: vi.fn(),
+      handleSearch: vi.fn(),
     });
 
-    render(<MainPage />);
-
-    expect(screen.queryByTestId('loader')).not.toBeInTheDocument();
-    expect(screen.getByTestId('card-list')).toBeInTheDocument();
-    expect(screen.getByText('bulbasaur')).toBeInTheDocument();
-    expect(screen.getByText('charmander')).toBeInTheDocument();
-    expect(screen.queryByText(/error:/i)).not.toBeInTheDocument();
+    renderWithRouter(<MainPage />);
+    expect(usePokemonData).toHaveBeenCalledWith(
+      'charmander',
+      2,
+      ITEMS_PER_PAGE
+    );
   });
 
-  it('displays an error message when data fetching fails', () => {
-    (usePokemonData as ReturnType<typeof vi.fn>).mockReturnValue({
-      error: 'Failed to load Pokemon',
-      fetchData: mockFetchData,
-      isLoading: false,
-      pokemonItems: [],
+  it('calls handleSearch with the correct term when search input changes and Enter is pressed', async () => {
+    const mockHandleSearch = vi.fn();
+    (usePaginationAndSearch as ReturnType<typeof vi.fn>).mockReturnValue({
+      currentPage: 1,
+      effectiveSearchTerm: '',
+      handlePageChange: vi.fn(),
+      handleSearch: mockHandleSearch,
     });
 
-    render(<MainPage />);
-
-    expect(screen.queryByTestId('loader')).not.toBeInTheDocument();
-    expect(screen.queryByTestId('card-list')).not.toBeInTheDocument();
-    expect(
-      screen.getByText('Error: Failed to load Pokemon')
-    ).toBeInTheDocument();
-  });
-
-  it('displays "No Pokemon found" message when search yields no results', () => {
-    (usePokemonData as ReturnType<typeof vi.fn>).mockReturnValue({
-      error: null,
-      fetchData: mockFetchData,
-      isLoading: false,
-      pokemonItems: [],
-    });
-
-    render(<MainPage />);
-
-    expect(screen.queryByTestId('loader')).not.toBeInTheDocument();
-    expect(screen.queryByTestId('card-list')).not.toBeInTheDocument();
-    expect(
-      screen.getByText('No Pokemon found. Try a different search!')
-    ).toBeInTheDocument();
-  });
-
-  it('calls fetchData with the correct term when search input changes and Enter is pressed', async () => {
-    (useLocalStorage as ReturnType<typeof vi.fn>).mockReturnValue([
-      'initialTerm',
-      mockSetSearchTerm,
-    ]);
-
-    render(<MainPage />);
+    renderWithRouter(<MainPage />);
 
     const searchInput = screen.getByTestId('search-input');
 
@@ -176,7 +190,7 @@ describe('MainPage', () => {
       console.warn('searchInput is not an HTMLInputElement');
     }
 
-    expect(mockSetSearchTerm).toHaveBeenCalledWith('pikachu');
+    expect(mockHandleSearch).toHaveBeenCalledWith('pikachu');
   });
 
   it('loads search term from localStorage on initial render via useLocalStorage', async () => {
@@ -187,29 +201,28 @@ describe('MainPage', () => {
       mockSetSearchTerm,
     ]);
 
-    render(<MainPage />);
-
-    expect(usePokemonData).toHaveBeenCalledWith('charizard');
-
-    expect(screen.getByTestId('search-input')).toHaveValue('charizard');
-  });
-
-  it('throws an error when "Throw Test Error" button is clicked', async () => {
     (usePokemonData as ReturnType<typeof vi.fn>).mockReturnValue({
       error: null,
-      fetchData: mockFetchData,
       isLoading: false,
       pokemonItems: [],
+      totalItems: 0,
     });
 
-    render(<MainPage />);
-
-    const errorButton = screen.getByRole('button', {
-      name: /throw test error/i,
+    (usePaginationAndSearch as ReturnType<typeof vi.fn>).mockReturnValue({
+      currentPage: 1,
+      effectiveSearchTerm: 'charizard',
+      handlePageChange: vi.fn(),
+      handleSearch: vi.fn(),
     });
 
-    expect(() => {
-      fireEvent.click(errorButton);
-    }).toThrow('This is a test error thrown from the render method!');
+    renderWithRouter(<MainPage />);
+
+    expect(usePokemonData).toHaveBeenCalledWith(
+      'charizard',
+      expect.any(Number),
+      expect.any(Number)
+    );
+
+    expect(screen.getByTestId('search-input')).toHaveValue('charizard');
   });
 });

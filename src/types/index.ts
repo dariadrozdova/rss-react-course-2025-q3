@@ -16,25 +16,23 @@ export interface ErrorBoundaryState {
   hasError: boolean;
 }
 
-export interface MainPageState {
-  error: null | string;
-  isLoading: boolean;
-  pokemonItems: PokemonItem[];
-  searchTerm: string;
-  throwError: boolean;
+export interface PaginationProps {
+  currentPage: number;
+  onPageChange: (page: number) => void;
+  totalPages: number;
 }
 
 export interface PokemonDetailResponse {
   id: number;
   name: string;
   sprites: {
-    front_default: string;
+    front_default: null | string;
   };
 }
 
 export interface PokemonItem {
   id: number;
-  imageUrl?: string;
+  imageUrl: string | undefined;
   name: string;
   url: string;
 }
@@ -48,7 +46,7 @@ export interface PokemonListResponse {
   count: number;
   next: null | string;
   previous: null | string;
-  results: { name: string; url: string }[];
+  results: PokemonListItem[];
 }
 
 export interface SearchProps {
@@ -58,4 +56,11 @@ export interface SearchProps {
 
 export interface SearchState {
   inputValue: string;
+}
+
+export interface UsePokemonDataResult {
+  error: null | string;
+  isLoading: boolean;
+  pokemonItems: PokemonItem[];
+  totalItems: null | number;
 }

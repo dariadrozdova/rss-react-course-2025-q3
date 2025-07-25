@@ -9,7 +9,7 @@ function Loader() {
     >
       <div
         className="
-          border-[4px] border-[hsla(0,0%,0%,0.1)] border-t-[4px] border-t-[hsl(187,100%,38%)]
+          border-[4px] border-[hsla(0,0%,0%,0.1)] border-t-[4px] border-t-[var(--color-primary-green-light)]
           rounded-full w-10 h-10
           sm:border-[5px] sm:w-[50px] sm:h-[50px]
           animate-spin

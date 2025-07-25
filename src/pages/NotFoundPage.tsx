@@ -17,29 +17,35 @@ function NotFoundPage() {
     >
       <div
         className="
-          bg-white p-8 mb-8 rounded-xl shadow-md shadow-[hsla(0,0%,0%,0.1)]
+          bg-white p-8 mb-8 rounded-xl shadow-[var(--color-black-alpha-10)]
           text-center flex flex-col items-center justify-center
           w-full max-w-4xl mx-auto box-border
           md:p-10 lg:p-12
-          text-[hsl(200,15%,30%)] font-['Inter']
+          text-[var(--color-text-light-blue-gray)] font-['Inter']
         "
       >
-        <h1 className="text-6xl font-bold text-[hsl(0, 83%, 63%)] mb-4">404</h1>
+        <h1 className="text-6xl font-bold text-[var(--color-primary-red)] mb-4">
+          404
+        </h1>
 
         <div className="flex items-center justify-center gap-4 mb-6">
-          <span className="text-8xl font-bold text-[hsl(200,25%,18%)]">4</span>
+          <span className="text-8xl font-bold text-[var(--color-text-dark-blue-gray)]">
+            4
+          </span>
           <img
             alt="Poké Ball"
             className="w-20 h-20"
             src="/icons/pokeball.png"
           />
-          <span className="text-8xl font-bold text-[hsl(200,25%,18%)]">4</span>
+          <span className="text-8xl font-bold text-[var(--color-text-dark-blue-gray)]">
+            4
+          </span>
         </div>
 
-        <p className="text-xl text-[hsl(200,15%,30%)] mb-2">
+        <p className="text-xl text-[var(--color-text-light-blue-gray)] mb-2">
           Looks like this page doesn't exist!
         </p>
-        <p className="text-lg text-[hsl(200,15%,30%)] mb-8">
+        <p className="text-lg text-[var(--color-text-light-blue-gray)] mb-8">
           Go back to home and continue exploring.
         </p>
 
