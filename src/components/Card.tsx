@@ -40,7 +40,9 @@ function Card(props: CardProps) {
             sm:max-w-[120px]
             md:max-w-[150px]
           "
+          height={150}
           src={item.imageUrl}
+          width={150}
         />
       )}
     </li>
