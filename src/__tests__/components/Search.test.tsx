@@ -8,6 +8,10 @@ describe('Search Component Tests', () => {
   let mockOnSearch: (searchTerm: string) => void;
   let defaultProps: SearchProps;
 
+  const renderSearch = (props?: Partial<SearchProps>) => {
+    return render(<Search {...defaultProps} {...props} />);
+  };
+
   beforeEach(() => {
     mockOnSearch = vi.fn();
     defaultProps = {
@@ -17,8 +21,7 @@ describe('Search Component Tests', () => {
   });
 
   it('renders search input and search button', () => {
-    render(<Search {...defaultProps} />);
-
+    renderSearch();
     const searchInput = screen.getByPlaceholderText(/search for pokemons.../i);
     expect(searchInput).toBeInTheDocument();
     expect(searchInput).toHaveAttribute('type', 'text');
@@ -27,20 +30,21 @@ describe('Search Component Tests', () => {
     expect(searchButton).toBeInTheDocument();
   });
 
-  it('displays the initial search term provided via props in the input on mount', () => {
-    const initialTerm = 'Bulbasaur';
-    render(<Search {...defaultProps} initialSearchTerm={initialTerm} />);
-
-    const searchInput = screen.getByDisplayValue(initialTerm);
-    expect(searchInput).toBeInTheDocument();
-  });
-
-  it('shows an empty input when no initial search term is provided via props', () => {
-    render(<Search {...defaultProps} initialSearchTerm={''} />);
-
-    const searchInput = screen.getByPlaceholderText(/search for pokemons.../i);
-    expect(searchInput).toHaveValue('');
-  });
+  describe.each([
+    ['Bulbasaur', 'Bulbasaur'],
+    ['', ''],
+  ])(
+    'displays input with initial search term "%s"',
+    (initialTerm, expectedValue) => {
+      it(`value is "${expectedValue}"`, () => {
+        renderSearch({ initialSearchTerm: initialTerm });
+        const searchInput = screen.getByPlaceholderText(
+          /search for pokemons.../i
+        );
+        expect(searchInput).toHaveValue(expectedValue);
+      });
+    }
+  );
 
   it('updates input value when initialSearchTerm prop changes (simulating parent update)', () => {
     const { rerender } = render(
@@ -71,33 +75,43 @@ describe('Search Component Tests', () => {
   });
 
   it('updates input value as the user types', () => {
-    render(<Search {...defaultProps} />);
+    renderSearch();
     const searchInput = screen.getByPlaceholderText(/search for pokemons.../i);
 
     fireEvent.change(searchInput, { target: { value: 'Charizard' } });
     expect((searchInput as HTMLInputElement).value).toBe('Charizard');
   });
 
-  it('triggers onSearch callback with trimmed value when search button is clicked', async () => {
-    render(<Search {...defaultProps} />);
-    const searchInput = screen.getByPlaceholderText(/search for pokemons.../i);
-    const searchButton = screen.getByRole('button', { name: /search/i });
+  describe.each([
+    [
+      'clicking the search button',
+      'Mewtwo',
+      (_input: Element, button: Element) => fireEvent.click(button),
+    ],
+    [
+      'pressing Enter key in the input',
+      'Squirtle',
+      (input: Element) =>
+        fireEvent.keyDown(input, { code: 'Enter', key: 'Enter' }),
+    ],
+  ])(
+    'triggers onSearch callback with trimmed value when %s',
+    (_triggerDesc, searchTerm, triggerAction) => {
+      it(`calls onSearch with trimmed "${searchTerm}"`, () => {
+        renderSearch();
+        const searchInput = screen.getByPlaceholderText(
+          /search for pokemons.../i
+        );
+        const searchButton = screen.getByRole('button', { name: /search/i });
 
-    fireEvent.change(searchInput, { target: { value: '  Mewtwo  ' } });
-    fireEvent.click(searchButton);
+        fireEvent.change(searchInput, {
+          target: { value: `  ${searchTerm}  ` },
+        });
+        triggerAction(searchInput, searchButton);
 
-    expect(mockOnSearch).toHaveBeenCalledTimes(1);
-    expect(mockOnSearch).toHaveBeenCalledWith('Mewtwo');
-  });
-
-  it('triggers onSearch callback with trimmed value when Enter key is pressed in the input', async () => {
-    render(<Search {...defaultProps} />);
-    const searchInput = screen.getByPlaceholderText(/search for pokemons.../i);
-
-    fireEvent.change(searchInput, { target: { value: '  Squirtle  ' } });
-    fireEvent.keyDown(searchInput, { code: 'Enter', key: 'Enter' });
-
-    expect(mockOnSearch).toHaveBeenCalledTimes(1);
-    expect(mockOnSearch).toHaveBeenCalledWith('Squirtle');
-  });
+        expect(mockOnSearch).toHaveBeenCalledTimes(1);
+        expect(mockOnSearch).toHaveBeenCalledWith(searchTerm);
+      });
+    }
+  );
 });
