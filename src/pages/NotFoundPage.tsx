@@ -24,10 +24,6 @@ function NotFoundPage() {
           text-[var(--color-text-light-blue-gray)] font-['Inter']
         "
       >
-        <h1 className="text-6xl font-bold text-[var(--color-primary-red)] mb-4">
-          404
-        </h1>
-
         <div className="flex items-center justify-center gap-4 mb-6">
           <span className="text-8xl font-bold text-[var(--color-text-dark-blue-gray)]">
             4

@@ -8,28 +8,98 @@ const Pagination: React.FC<PaginationProps> = ({
   onPageChange,
   totalPages,
 }) => {
+  if (totalPages <= 1) {
+    return null;
+  }
+
+  const showFirstPage = currentPage > 3;
+  const showLastPage = currentPage < totalPages - 2;
+
+  const handlePaginationClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+  };
+
+  const handlePageClick = (page: number) => (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onPageChange(page);
+  };
+
   return (
-    <div className="flex justify-center items-center gap-4 mt-8">
+    <div
+      className="flex justify-center items-center gap-2 mt-8"
+      onClick={handlePaginationClick}
+    >
       <Button
         className="px-4 py-2 rounded-md shadow-sm hover:shadow-md transition-shadow duration-200"
         color="green"
         disabled={currentPage === 1}
-        onClick={() => {
-          onPageChange(currentPage - 1);
-        }}
+        onClick={handlePageClick(currentPage - 1)}
       >
         Previous
       </Button>
-      <span className="text-lg font-medium text-[var(--color-text-dark-blue-gray)]">
-        Page {currentPage} of {totalPages === 0 ? 1 : totalPages}{' '}
-      </span>
+
+      {showFirstPage && (
+        <>
+          <Button
+            className="px-3 py-2 rounded-md shadow-sm hover:shadow-md transition-shadow duration-200"
+            color="green"
+            onClick={handlePageClick(1)}
+          >
+            1
+          </Button>
+          <span className="px-2 text-[var(--color-text-dark-blue-gray)]">
+            ...
+          </span>
+        </>
+      )}
+
+      {currentPage > 1 && (
+        <Button
+          className="px-3 py-2 rounded-md shadow-sm hover:shadow-md transition-shadow duration-200"
+          color="green"
+          onClick={handlePageClick(currentPage - 1)}
+        >
+          {currentPage - 1}
+        </Button>
+      )}
+
+      <Button
+        className="px-3 py-2 rounded-md shadow-sm bg-green-100 border-green-300"
+        color="green"
+      >
+        {currentPage}
+      </Button>
+
+      {currentPage < totalPages && (
+        <Button
+          className="px-3 py-2 rounded-md shadow-sm hover:shadow-md transition-shadow duration-200"
+          color="green"
+          onClick={handlePageClick(currentPage + 1)}
+        >
+          {currentPage + 1}
+        </Button>
+      )}
+
+      {showLastPage && (
+        <>
+          <span className="px-2 text-[var(--color-text-dark-blue-gray)]">
+            ...
+          </span>
+          <Button
+            className="px-3 py-2 rounded-md shadow-sm hover:shadow-md transition-shadow duration-200"
+            color="green"
+            onClick={handlePageClick(totalPages)}
+          >
+            {totalPages}
+          </Button>
+        </>
+      )}
+
       <Button
         className="px-4 py-2 rounded-md shadow-sm hover:shadow-md transition-shadow duration-200"
         color="green"
         disabled={currentPage === totalPages || totalPages === 0}
-        onClick={() => {
-          onPageChange(currentPage + 1);
-        }}
+        onClick={handlePageClick(currentPage + 1)}
       >
         Next
       </Button>

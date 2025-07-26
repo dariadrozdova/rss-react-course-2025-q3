@@ -8,6 +8,7 @@ interface UsePaginationAndSearchResult {
   effectiveSearchTerm: string;
   handlePageChange: (page: number) => void;
   handleSearch: (newSearchTerm: string) => void;
+  isValidPage: boolean;
 }
 
 export const usePaginationAndSearch = (): UsePaginationAndSearchResult => {
@@ -24,12 +25,24 @@ export const usePaginationAndSearch = (): UsePaginationAndSearchResult => {
     ? searchTermFromUrl
     : '';
 
-  const currentPageFromUrl = Number.parseInt(
-    searchParameters.get('page') || '1',
-    10
-  );
+  const pageParameter = searchParameters.get('page') || '1';
+  const currentPageFromUrl = Number.parseInt(pageParameter, 10);
+
+  const isValidPageParameter = () => {
+    if (pageParameter === '1' && !searchParameters.has('page')) {
+      return true;
+    }
+
+    const parsed = Number.parseInt(pageParameter, 10);
+    return (
+      !Number.isNaN(parsed) && parsed >= 1 && pageParameter === String(parsed)
+    );
+  };
+
+  const isValidPage = isValidPageParameter();
+
   const [currentPage, setCurrentPage] = useState<number>(
-    Math.max(1, currentPageFromUrl)
+    isValidPage ? Math.max(1, currentPageFromUrl) : 1
   );
 
   useEffect(() => {
@@ -50,10 +63,13 @@ export const usePaginationAndSearch = (): UsePaginationAndSearchResult => {
   ]);
 
   useEffect(() => {
-    if (Math.max(1, currentPageFromUrl) !== currentPage) {
-      setCurrentPage(Math.max(1, currentPageFromUrl));
+    if (isValidPage) {
+      const validPage = Math.max(1, currentPageFromUrl);
+      if (validPage !== currentPage) {
+        setCurrentPage(validPage);
+      }
     }
-  }, [currentPageFromUrl, currentPage]);
+  }, [currentPageFromUrl, currentPage, isValidPage]);
 
   const handleSearch = useCallback(
     (newSearchTerm: string) => {
@@ -90,5 +106,6 @@ export const usePaginationAndSearch = (): UsePaginationAndSearchResult => {
     effectiveSearchTerm,
     handlePageChange,
     handleSearch,
+    isValidPage,
   };
 };
