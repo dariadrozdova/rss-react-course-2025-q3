@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, it } from 'vitest';
 
 import CardList from '@components/CardList';
@@ -7,7 +8,11 @@ import { mockPokemonItemsList } from '@/__tests__/utils/cardComponentsMockData';
 
 describe('CardList', () => {
   it('renders the correct number of Card components for a given list of items', () => {
-    render(<CardList pokemonItems={mockPokemonItemsList} />);
+    render(
+      <MemoryRouter>
+        <CardList currentPage={1} pokemonItems={mockPokemonItemsList} />
+      </MemoryRouter>
+    );
 
     const listItems = screen.getAllByRole('listitem');
 
@@ -19,7 +24,11 @@ describe('CardList', () => {
   });
 
   it('renders an empty list and no cards when pokemonItems array is empty', () => {
-    render(<CardList pokemonItems={[]} />);
+    render(
+      <MemoryRouter>
+        <CardList currentPage={1} pokemonItems={[]} />
+      </MemoryRouter>
+    );
 
     const listItems = screen.queryAllByRole('listitem');
 
@@ -30,6 +39,12 @@ describe('CardList', () => {
   });
 
   it('renders successfully when pokemonItems prop is an empty array', () => {
-    expect(() => render(<CardList pokemonItems={[]} />)).not.toThrow();
+    expect(() =>
+      render(
+        <MemoryRouter>
+          <CardList currentPage={1} pokemonItems={[]} />
+        </MemoryRouter>
+      )
+    ).not.toThrow();
   });
 });

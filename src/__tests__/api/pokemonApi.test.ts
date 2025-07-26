@@ -2,10 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { fetchPokemonDetails, fetchPokemonList } from '@api/pokemonApi';
 
-import {
-  mockPokeApiListResponse,
-  mockPokemonDetailResponses,
-} from '../utils/mainPageMockData';
+import { mockPokeApiListResponse } from '../utils/mainPageMockData';
 
 const DEFAULT_LIMIT = 20;
 const DEFAULT_OFFSET = 0;
@@ -110,9 +107,19 @@ describe('pokemonApi', () => {
   describe('fetchPokemonDetails', () => {
     it('should fetch Pokemon details successfully', async () => {
       const testUrl = 'https://pokeapi.co/api/v2/pokemon/bulbasaur/';
+      const mockDetailResponse = {
+        id: 1,
+        name: 'bulbasaur',
+        sprites: {
+          front_default: 'https://pokeapi.co/sprites/bulbasaur.png',
+        },
+        stats: [{ base_stat: 45, stat: { name: 'hp' } }],
+        types: [{ type: { name: 'grass' } }],
+      };
+
       mockFetch.mockImplementationOnce(() =>
         Promise.resolve({
-          json: () => Promise.resolve(mockPokemonDetailResponses.bulbasaur),
+          json: () => Promise.resolve(mockDetailResponse),
           ok: true,
         } as Response)
       );
@@ -122,10 +129,13 @@ describe('pokemonApi', () => {
       expect(mockFetch).toHaveBeenCalledTimes(1);
       expect(mockFetch).toHaveBeenCalledWith(testUrl);
       expect(result).toEqual({
-        id: mockPokemonDetailResponses.bulbasaur.id,
-        imageUrl: mockPokemonDetailResponses.bulbasaur.sprites.front_default,
-        name: mockPokemonDetailResponses.bulbasaur.name,
-        url: testUrl,
+        id: 1,
+        name: 'bulbasaur',
+        sprites: {
+          front_default: 'https://pokeapi.co/sprites/bulbasaur.png',
+        },
+        stats: [{ base_stat: 45, stat: { name: 'hp' } }],
+        types: [{ type: { name: 'grass' } }],
       });
       expect(consoleWarnSpy).not.toHaveBeenCalled();
     });
@@ -133,8 +143,11 @@ describe('pokemonApi', () => {
     it('should handle missing sprite image', async () => {
       const testUrl = 'https://pokeapi.co/api/v2/pokemon/test/';
       const mockResponse = {
-        ...mockPokemonDetailResponses.bulbasaur,
+        id: 999,
+        name: 'testmon',
         sprites: { front_default: null },
+        stats: [],
+        types: [],
       };
 
       mockFetch.mockImplementationOnce(() =>
@@ -146,7 +159,7 @@ describe('pokemonApi', () => {
 
       const result = await fetchPokemonDetails(testUrl);
 
-      expect(result.imageUrl).toBeUndefined();
+      expect(result.sprites.front_default).toBeNull();
     });
 
     it('should throw an error if detail fetch fails', async () => {
@@ -179,9 +192,17 @@ describe('pokemonApi', () => {
 
       const listResult = await fetchPokemonList(DEFAULT_OFFSET, DEFAULT_LIMIT);
 
+      const mockDetailResponse = {
+        id: 1,
+        name: 'bulbasaur',
+        sprites: { front_default: 'url' },
+        stats: [],
+        types: [],
+      };
+
       mockFetch.mockImplementationOnce(() =>
         Promise.resolve({
-          json: () => Promise.resolve(mockPokemonDetailResponses.bulbasaur),
+          json: () => Promise.resolve(mockDetailResponse),
           ok: true,
         } as Response)
       );

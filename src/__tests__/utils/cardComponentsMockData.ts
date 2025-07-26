@@ -16,6 +16,7 @@ export const mockPokemonItemWithoutImage: PokemonItem = {
 
 export const mockPokemonItemUndefinedImage: PokemonItem = {
   id: 3,
+  imageUrl: undefined,
   name: 'Squirtle',
   url: 'https://pokeapi.co/api/v2/pokemon/squirtle',
 };
@@ -35,6 +36,7 @@ export const mockPokemonItemsList: PokemonItem[] = [
   },
   {
     id: 30,
+    imageUrl: undefined,
     name: 'Charmander',
     url: 'https://pokeapi.co/api/v2/pokemon/charmander',
   },
