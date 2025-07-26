@@ -11,7 +11,9 @@ interface PokemonContentProps {
   error: null | string;
   isLoading: boolean;
   onPageChange: (page: number) => void;
+  onPokemonClick?: (pokemonId: number) => void;
   pokemonItems: PokemonItem[];
+  selectedPokemonId?: number;
   totalItems: null | number;
   totalPages: number;
 }
@@ -22,12 +24,18 @@ export const PokemonContent: React.FC<PokemonContentProps> = ({
   error,
   isLoading,
   onPageChange,
+  onPokemonClick,
   pokemonItems,
+  selectedPokemonId,
   totalItems,
   totalPages,
 }) => {
   if (isLoading) {
-    return <Loader />;
+    return (
+      <div className="min-h-[600px] w-full">
+        <Loader />
+      </div>
+    );
   }
 
   if (error) {
@@ -57,7 +65,12 @@ export const PokemonContent: React.FC<PokemonContentProps> = ({
 
   return (
     <>
-      <CardList pokemonItems={pokemonItems} />
+      <CardList
+        currentPage={currentPage}
+        {...(onPokemonClick ? { onPokemonClick } : {})}
+        pokemonItems={pokemonItems}
+        {...(selectedPokemonId === undefined ? {} : { selectedPokemonId })}
+      />
       {totalItems !== null && totalItems > 0 && totalPages > 1 && (
         <Pagination
           currentPage={currentPage}

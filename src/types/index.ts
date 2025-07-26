@@ -1,11 +1,17 @@
 import type { ReactNode } from 'react';
 
 export interface CardListProps {
+  currentPage: number;
+  onPokemonClick?: (pokemonId: number) => void;
   pokemonItems: PokemonItem[];
+  selectedPokemonId?: number;
 }
 
 export interface CardProps {
+  currentPage: number;
+  isSelected?: boolean;
   item: PokemonItem;
+  onPokemonClick?: (pokemonId: number) => void;
 }
 
 export interface ErrorBoundaryProps {
@@ -28,6 +34,36 @@ export interface PokemonDetailResponse {
   sprites: {
     front_default: null | string;
   };
+  stats: {
+    base_stat: number;
+    stat: {
+      name: string;
+    };
+  }[];
+  types: {
+    type: {
+      name: string;
+    };
+  }[];
+}
+
+export interface PokemonDetails {
+  id: number;
+  name: string;
+  sprites: {
+    front_default: null | string;
+  };
+  stats: {
+    base_stat: number;
+    stat: {
+      name: string;
+    };
+  }[];
+  types: {
+    type: {
+      name: string;
+    };
+  }[];
 }
 
 export interface PokemonItem {

@@ -2,9 +2,12 @@ import type { CardListProps } from '@types';
 
 import Card from '@components/Card';
 
-function CardList(props: CardListProps) {
-  const { pokemonItems } = props;
-
+function CardList({
+  currentPage,
+  onPokemonClick,
+  pokemonItems,
+  selectedPokemonId,
+}: CardListProps) {
   return (
     <div className="w-full box-border">
       <ul
@@ -17,7 +20,13 @@ function CardList(props: CardListProps) {
         "
       >
         {pokemonItems.map((item) => (
-          <Card item={item} key={item.id} />
+          <Card
+            currentPage={currentPage}
+            isSelected={selectedPokemonId === item.id}
+            item={item}
+            key={item.id}
+            {...(onPokemonClick ? { onPokemonClick } : {})}
+          />
         ))}
       </ul>
     </div>

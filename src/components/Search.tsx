@@ -53,6 +53,9 @@ const Search = ({ initialSearchTerm, onSearch }: SearchProps) => {
         shadow-sm shadow-[hsla(0,0%,0%,0.05)]
         w-full max-w-[700px]
       "
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
     >
       <input
         className="

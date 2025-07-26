@@ -1,5 +1,6 @@
 import type {
   PokemonDetailResponse,
+  PokemonDetails,
   PokemonItem,
   PokemonListItem,
   PokemonListResponse,
@@ -41,9 +42,8 @@ export const fetchPokemonList = async (
   }
 };
 
-export const fetchPokemonDetails = async (
-  url: string
-): Promise<PokemonItem> => {
+// This function returns PokemonItem (for list items with basic info)
+export const fetchPokemonItem = async (url: string): Promise<PokemonItem> => {
   try {
     const detailResponse = await fetch(url);
     const verifiedResponse = await handleHttpResponse(detailResponse);
@@ -54,6 +54,39 @@ export const fetchPokemonDetails = async (
       imageUrl: detailData.sprites.front_default || undefined,
       name: detailData.name,
       url: url,
+    };
+  } catch (error) {
+    console.warn(`Could not fetch details for ${url}:`, error);
+    throw error;
+  }
+};
+
+// This function returns PokemonDetails (for detailed view with stats, types, etc.)
+export const fetchPokemonDetails = async (
+  url: string
+): Promise<PokemonDetails> => {
+  try {
+    const detailResponse = await fetch(url);
+    const verifiedResponse = await handleHttpResponse(detailResponse);
+    const detailData: PokemonDetailResponse = await verifiedResponse.json();
+
+    return {
+      id: detailData.id,
+      name: detailData.name,
+      sprites: {
+        front_default: detailData.sprites.front_default,
+      },
+      stats: detailData.stats.map((stat) => ({
+        base_stat: stat.base_stat,
+        stat: {
+          name: stat.stat.name,
+        },
+      })),
+      types: detailData.types.map((type) => ({
+        type: {
+          name: type.type.name,
+        },
+      })),
     };
   } catch (error) {
     console.warn(`Could not fetch details for ${url}:`, error);
