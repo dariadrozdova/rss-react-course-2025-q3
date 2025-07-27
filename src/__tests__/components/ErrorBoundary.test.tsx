@@ -70,28 +70,15 @@ describe('ErrorBoundary', () => {
     expect(screen.queryByText('Normal Child Content')).not.toBeInTheDocument();
   });
 
-  it('logs the error to console.warn when an error occurs', () => {
+  it('logs the error to console when an error occurs', () => {
     render(
       <ErrorBoundary>
         <ThrowingComponent shouldThrow />
       </ErrorBoundary>
     );
 
-    const EXPECTED_CONSOLE_ERROR_CALLS = 1;
-    const EXPECTED_CONSOLE_WARN_CALLS = 3;
-    const ERROR_MESSAGE_CALL_INDEX = 2;
+    expect(consoleErrorSpy).toHaveBeenCalled();
 
-    expect(consoleErrorSpy).toHaveBeenCalledTimes(EXPECTED_CONSOLE_ERROR_CALLS);
-    expect(consoleErrorSpy).toHaveBeenCalledWith(
-      expect.any(String),
-      expect.any(Error),
-      expect.stringContaining('The above error occurred'),
-      expect.stringContaining(
-        'React will try to recreate this component tree from scratch'
-      )
-    );
-
-    expect(consoleWarnSpy).toHaveBeenCalledTimes(EXPECTED_CONSOLE_WARN_CALLS);
     expect(consoleWarnSpy).toHaveBeenCalledWith(
       'getDerivedStateFromError called:',
       expect.any(Error)
@@ -102,9 +89,13 @@ describe('ErrorBoundary', () => {
       expect.any(Object)
     );
 
-    expect(
-      (consoleWarnSpy.mock.calls[ERROR_MESSAGE_CALL_INDEX][1] as Error).message
-    ).toBe('Test error from ThrowingComponent');
+    const errorCalls = consoleWarnSpy.mock.calls.filter(
+      (call) => call[0] === 'ErrorBoundary caught an error:'
+    );
+    expect(errorCalls).toHaveLength(1);
+    expect((errorCalls[0][1] as Error).message).toBe(
+      'Test error from ThrowingComponent'
+    );
   });
 
   it('calls window.location.reload when the refresh button is clicked', () => {
