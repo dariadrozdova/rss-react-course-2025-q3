@@ -26,12 +26,13 @@
   --color-text-light-blue-gray: hsl(200, 15%, 30%);
   --color-text-dark-blue-gray: hsl(200, 25%, 18%);
   --color-border-light-gray: hsl(207, 17%, 94%);
+  --color-light-gray-bg: hsl(220, 14%, 96%);
 
   --shadow-xs: 0 0px 0px 0px;
 }
 
 :root {
-  --theme-bg-primary: var(--color-white);
+  --theme-bg-primary: var(--color-light-gray-bg);
   --theme-bg-secondary: var(--color-neutral-card-background);
   --theme-text-primary: var(--color-text-dark-blue-gray);
   --theme-text-secondary: var(--color-text-light-blue-gray);
@@ -39,7 +40,7 @@
 }
 
 .light {
-  --theme-bg-primary: var(--color-white);
+  --theme-bg-primary: var(--color-light-gray-bg);
   --theme-bg-secondary: var(--color-neutral-card-background);
   --theme-text-primary: var(--color-text-dark-blue-gray);
   --theme-text-secondary: var(--color-text-light-blue-gray);

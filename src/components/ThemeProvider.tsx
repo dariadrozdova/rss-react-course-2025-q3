@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 
-import useLocalStorage from '../hooks/useLocalStorage';
-import { selectTheme } from '../store';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import type { Theme } from '../store/slices/themeSlice';
-import { initializeTheme } from '../store/slices/themeSlice';
+import useLocalStorage from '@hooks/useLocalStorage';
+
+import { selectTheme } from '@/store';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import type { Theme } from '@/store/slices/themeSlice';
+import { initializeTheme } from '@/store/slices/themeSlice';
 
 interface ThemeProviderProps {
   children: React.ReactNode;
