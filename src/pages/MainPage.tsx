@@ -77,6 +77,7 @@ function MainPage() {
           className="
             bg-white p-6 rounded-lg shadow-md text-center
             flex flex-col items-center gap-5 box-border w-full
+            flex-shrink-0
           "
         >
           <Search
@@ -89,7 +90,8 @@ function MainPage() {
           className="
             flex-grow bg-white p-6 rounded-lg shadow-md
             flex flex-col items-center justify-start
-            min-h-[250px] box-border w-full
+            box-border w-full
+            min-h-[900px]
           "
         >
           <PokemonContent
