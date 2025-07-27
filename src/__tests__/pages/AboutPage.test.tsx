@@ -1,11 +1,23 @@
 import { render, screen } from '@testing-library/react';
+import { Provider } from 'react-redux';
 import { beforeEach, describe, expect, it } from 'vitest';
 
+import ThemeProvider from '@components/ThemeProvider';
 import AboutPage from '@pages/AboutPage';
+
+import { store } from '@/store';
+
+const AboutPageWithProviders = () => (
+  <Provider store={store}>
+    <ThemeProvider>
+      <AboutPage />
+    </ThemeProvider>
+  </Provider>
+);
 
 describe('AboutPage', () => {
   beforeEach(() => {
-    render(<AboutPage />);
+    render(<AboutPageWithProviders />);
   });
 
   describe('content display', () => {

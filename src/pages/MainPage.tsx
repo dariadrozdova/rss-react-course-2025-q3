@@ -75,7 +75,7 @@ function MainPage() {
       >
         <section
           className="
-            bg-white p-6 rounded-lg shadow-md text-center
+            theme-card p-6 rounded-lg shadow-md text-center
             flex flex-col items-center gap-5 box-border w-full
             flex-shrink-0
           "
@@ -88,7 +88,7 @@ function MainPage() {
 
         <section
           className="
-            flex-grow bg-white p-6 rounded-lg shadow-md
+            flex-grow theme-card p-6 rounded-lg shadow-md
             flex flex-col items-center justify-start
             box-border w-full
             min-h-[900px]
@@ -113,7 +113,7 @@ function MainPage() {
 
       {detailsId && (
         <div className="hidden md:block md:w-1/2 lg:w-1/3 sticky top-8 self-start">
-          <div className="bg-white rounded-lg shadow-md p-6 relative">
+          <div className="theme-card rounded-lg shadow-md p-6 relative">
             <Outlet context={{ handleCloseDetails }} />
           </div>
         </div>

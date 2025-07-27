@@ -1,11 +1,14 @@
+import { useTheme } from '@hooks/useTheme';
+
 function AboutPage() {
+  const { isDark } = useTheme();
+
   return (
     <div
       className="
-        bg-white p-6 rounded-lg shadow-md
+        theme-card p-6 rounded-lg shadow-md
         text-center flex flex-col items-center justify-start
         w-full box-border font-['Inter']
-        text-gray-700
         min-h-[1016px]
       "
     >
@@ -16,15 +19,19 @@ function AboutPage() {
           src="/icons/favicon.svg"
         />
 
-        <h1 className="text-4xl lg:text-5xl font-bold text-gray-800 mb-8">
+        <h1
+          className={`text-4xl lg:text-5xl font-bold mb-8 ${isDark ? 'text-gray-100' : 'text-gray-800'}`}
+        >
           About This App
         </h1>
 
         <div className="space-y-6 mb-10">
-          <h2 className="text-2xl lg:text-3xl font-semibold text-gray-800">
+          <h2
+            className={`text-2xl lg:text-3xl font-semibold ${isDark ? 'text-gray-100' : 'text-gray-800'}`}
+          >
             App Overview
           </h2>
-          <p className="text-lg leading-relaxed max-w-prose mx-auto">
+          <p className="text-lg leading-relaxed max-w-prose mx-auto text-theme-secondary">
             This is a Pokémon Explorer application, built as part of the{' '}
             <a
               className="text-green-600 hover:underline font-semibold"
@@ -40,10 +47,14 @@ function AboutPage() {
         </div>
 
         <div className="space-y-6 mb-10">
-          <h2 className="text-2xl lg:text-3xl font-semibold text-gray-800">
+          <h2
+            className={`text-2xl lg:text-3xl font-semibold ${isDark ? 'text-gray-100' : 'text-gray-800'}`}
+          >
             Author
           </h2>
-          <p className="text-xl font-medium">Daria Tkachenko</p>
+          <p className="text-xl font-medium text-theme-primary">
+            Daria Tkachenko
+          </p>
           <p className="text-lg">
             <a
               className="text-green-600 hover:underline font-semibold"
@@ -57,10 +68,12 @@ function AboutPage() {
         </div>
 
         <div className="space-y-6">
-          <h2 className="text-2xl lg:text-3xl font-semibold text-gray-800">
+          <h2
+            className={`text-2xl lg:text-3xl font-semibold ${isDark ? 'text-gray-100' : 'text-gray-800'}`}
+          >
             The Course
           </h2>
-          <p className="text-lg leading-relaxed max-w-prose mx-auto">
+          <p className="text-lg leading-relaxed max-w-prose mx-auto text-theme-secondary">
             This project is a practical assignment from the{' '}
             <a
               className="text-green-600 hover:underline font-semibold"
