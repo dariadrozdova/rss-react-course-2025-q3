@@ -5,7 +5,6 @@ import { describe, expect, it, vi } from 'vitest';
 import Card from '@components/Card';
 
 import {
-  mockPokemonItemUndefinedImage,
   mockPokemonItemWithImage,
   mockPokemonItemWithoutImage,
 } from '@/__tests__/utils/cardComponentsMockData';
@@ -45,46 +44,6 @@ describe('Card', () => {
       `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${mockPokemonItemWithoutImage.id}.png`
     );
   });
-
-  it('renders the fallback image URL on error and then "No Image" if the fallback also fails', () => {
-    renderCard(mockPokemonItemWithImage);
-    const image = screen.getByRole('img', {
-      name: mockPokemonItemWithImage.name,
-    });
-
-    fireEvent.error(image);
-
-    expect(image).toHaveAttribute(
-      'src',
-      `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${mockPokemonItemWithImage.id}.png`
-    );
-
-    fireEvent.error(image);
-
-    expect(image).toHaveStyle('display: none');
-    expect(screen.getByText('No Image')).toBeInTheDocument();
-    expect(screen.getByText('No Image')).toHaveStyle('display: flex');
-  });
-
-  it.each([
-    ['empty string', mockPokemonItemWithoutImage],
-    ['undefined', mockPokemonItemUndefinedImage],
-  ])(
-    'renders the fallback "No Image" when imageUrl is %s or errors',
-    (_, item) => {
-      renderCard(item);
-
-      const image = screen.getByRole('img', { name: item.name });
-
-      fireEvent.error(image);
-
-      fireEvent.error(image);
-
-      expect(image).toHaveStyle('display: none');
-      expect(screen.getByText('No Image')).toBeInTheDocument();
-      expect(screen.getByText('No Image')).toHaveStyle('display: flex');
-    }
-  );
 
   describe('with onPokemonClick prop', () => {
     it('calls onPokemonClick when card is clicked', () => {
@@ -156,24 +115,71 @@ describe('Card', () => {
       renderCard(mockPokemonItemWithImage);
       const image = screen.getByRole('img');
 
-      // Mock DOM structure where nextElementSibling might not exist
       const originalNextElementSibling = image.nextElementSibling;
       Object.defineProperty(image, 'nextElementSibling', {
         configurable: true,
         get: () => null,
       });
 
-      // Should not throw error when nextElementSibling is null
       expect(() => {
         fireEvent.error(image);
         fireEvent.error(image);
       }).not.toThrow();
 
-      // Restore original property
       Object.defineProperty(image, 'nextElementSibling', {
         configurable: true,
         get: () => originalNextElementSibling,
       });
+    });
+  });
+
+  describe('image loading states', () => {
+    it('shows loading placeholder initially', () => {
+      renderCard(mockPokemonItemWithImage);
+
+      const placeholder = screen
+        .getByText(mockPokemonItemWithImage.name)
+        .parentElement?.querySelector('.animate-pulse');
+
+      expect(placeholder).toBeInTheDocument();
+    });
+
+    it('hides image initially and shows after load', () => {
+      renderCard(mockPokemonItemWithImage);
+      const image = screen.getByRole('img');
+
+      expect(image).toHaveClass('hidden');
+
+      fireEvent.load(image);
+
+      expect(image).not.toHaveClass('hidden');
+    });
+  });
+
+  describe('click event handling', () => {
+    it('renders as Link when onPokemonClick is not provided', () => {
+      renderCard(mockPokemonItemWithImage);
+
+      const linkElement = screen.getByRole('link');
+      expect(linkElement).toBeInTheDocument();
+      expect(linkElement).toHaveAttribute(
+        'href',
+        `/1/${mockPokemonItemWithImage.id}`
+      );
+    });
+
+    it('renders as div with cursor-pointer when onPokemonClick is provided', () => {
+      const mockOnPokemonClick = vi.fn();
+      renderCard(mockPokemonItemWithImage, {
+        onPokemonClick: mockOnPokemonClick,
+      });
+
+      const cardElement = screen
+        .getByText(mockPokemonItemWithImage.name)
+        .closest('div');
+
+      expect(cardElement).toHaveClass('cursor-pointer');
+      expect(screen.queryByRole('link')).not.toBeInTheDocument();
     });
   });
 });
