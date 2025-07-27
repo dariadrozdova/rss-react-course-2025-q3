@@ -64,8 +64,9 @@ const Pagination: React.FC<PaginationProps> = ({
       )}
 
       <Button
-        className="px-3 py-2 rounded-md shadow-sm bg-green-100 border-green-300"
+        className="px-3 py-2 rounded-md shadow-lg bg-green-600 text-white border-green-600 font-semibold ring-2 ring-green-300 ring-offset-1 cursor-default"
         color="green"
+        disabled
       >
         {currentPage}
       </Button>
