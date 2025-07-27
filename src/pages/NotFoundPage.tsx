@@ -46,7 +46,7 @@ function NotFoundPage() {
         </p>
 
         <NavLink className={navLinkClasses} to="/">
-          Return to Main Page
+          Return to main page
         </NavLink>
       </div>
     </div>
