@@ -1,13 +1,10 @@
 import React from 'react';
-import { Provider } from 'react-redux';
 import { NavLink, Outlet } from 'react-router-dom';
 
 import ErrorBoundary from '@components/ErrorBoundary';
-import ThemeProvider from '@components/ThemeProvider';
 import ThemeSwitch from '@components/ThemeSwitch';
-import { useTheme } from '@hooks/useTheme';
 
-import { store } from './store';
+import { ThemeProvider, useTheme } from './context/ThemeContext';
 
 import './index.css';
 
@@ -105,11 +102,9 @@ const AppContent: React.FC = () => {
 
 const App: React.FC = () => {
   return (
-    <Provider store={store}>
-      <ThemeProvider>
-        <AppContent />
-      </ThemeProvider>
-    </Provider>
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 };
 

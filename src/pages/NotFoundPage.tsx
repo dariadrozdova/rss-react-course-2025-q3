@@ -1,10 +1,11 @@
 import { NavLink } from 'react-router-dom';
 
-import { useTheme } from '@hooks/useTheme';
 import {
   BUTTON_BASE_CLASSES,
   BUTTON_COLOR_GREEN,
 } from '@utils/stylesConstants';
+
+import { useTheme } from '@/context/ThemeContext';
 
 function NotFoundPage() {
   const { isDark } = useTheme();

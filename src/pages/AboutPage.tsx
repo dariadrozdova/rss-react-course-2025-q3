@@ -1,4 +1,4 @@
-import { useTheme } from '@hooks/useTheme';
+import { useTheme } from '@/context/ThemeContext';
 
 function AboutPage() {
   const { isDark } = useTheme();

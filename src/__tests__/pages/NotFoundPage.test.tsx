@@ -3,9 +3,9 @@ import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import ThemeProvider from '@components/ThemeProvider';
 import NotFoundPage from '@pages/NotFoundPage';
 
+import { ThemeProvider } from '@/context/ThemeContext';
 import { store } from '@/store';
 
 const NotFoundPageWithProviders = () => (

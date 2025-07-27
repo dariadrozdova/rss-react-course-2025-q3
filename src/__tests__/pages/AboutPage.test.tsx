@@ -2,9 +2,9 @@ import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import ThemeProvider from '@components/ThemeProvider';
 import AboutPage from '@pages/AboutPage';
 
+import { ThemeProvider } from '@/context/ThemeContext';
 import { store } from '@/store';
 
 const AboutPageWithProviders = () => (
