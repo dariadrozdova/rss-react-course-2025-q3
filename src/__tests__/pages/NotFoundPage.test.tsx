@@ -25,7 +25,7 @@ describe('NotFoundPage', () => {
 
     it.each([
       ["Looks like this page doesn't exist!"],
-      ['Go back to home and continue exploring.'],
+      ['Go back to the homepage and continue exploring.'],
     ])('displays error message: %s', (message) => {
       expect(screen.getByText(message)).toBeInTheDocument();
     });
@@ -34,7 +34,7 @@ describe('NotFoundPage', () => {
   describe('navigation', () => {
     it('displays return link with correct text and destination', () => {
       const returnLink = screen.getByRole('link', {
-        name: 'Return to main page',
+        name: 'Back to Homepage',
       });
 
       expect(returnLink).toBeInTheDocument();
