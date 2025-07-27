@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import type { PokemonItem } from '@types';
 import { MemoryRouter } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import useLocalStorage from '@hooks/useLocalStorage';
@@ -34,7 +35,9 @@ vi.mock('@components/PokemonContent', () => ({
       error,
       isLoading,
       onPageChange,
+      onPokemonClick,
       pokemonItems,
+      selectedPokemonId,
       totalPages,
     }: {
       currentPage: number;
@@ -42,7 +45,9 @@ vi.mock('@components/PokemonContent', () => ({
       error: null | string;
       isLoading: boolean;
       onPageChange: (page: number) => void;
+      onPokemonClick?: (id: number) => void;
       pokemonItems: PokemonItem[];
+      selectedPokemonId?: number;
       totalPages: number;
     }) => {
       return (
@@ -60,7 +65,12 @@ vi.mock('@components/PokemonContent', () => ({
           {pokemonItems.length > 0 && (
             <ul data-testid="card-list">
               {pokemonItems.map((item) => (
-                <li data-testid={`card-item-${item.id}`} key={item.id}>
+                <li
+                  className={selectedPokemonId === item.id ? 'selected' : ''}
+                  data-testid={`card-item-${item.id}`}
+                  key={item.id}
+                  onClick={() => onPokemonClick?.(item.id)}
+                >
                   {item.name}
                 </li>
               ))}
@@ -82,11 +92,24 @@ vi.mock('@components/PokemonContent', () => ({
   ),
 }));
 
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual('react-router-dom');
+  return {
+    ...actual,
+    Outlet: vi.fn(() => <div data-testid="outlet">Outlet</div>),
+    useLocation: vi.fn(),
+    useNavigate: vi.fn(),
+    useParams: vi.fn(),
+  };
+});
+
 const ITEMS_PER_PAGE = 20;
 
-describe('MainPage', () => {
+describe('MainPage - Basic Functionality', () => {
   let mockSetSearchTerm: ReturnType<typeof vi.fn>;
   let mockHandleSearch: ReturnType<typeof vi.fn>;
+  let mockHandlePageChange: ReturnType<typeof vi.fn>;
+  let mockNavigate: ReturnType<typeof vi.fn>;
 
   const renderWithRouter = () =>
     render(<MainPage />, { wrapper: MemoryRouter });
@@ -96,6 +119,15 @@ describe('MainPage', () => {
 
     mockSetSearchTerm = vi.fn();
     mockHandleSearch = vi.fn();
+    mockHandlePageChange = vi.fn();
+    mockNavigate = vi.fn();
+
+    (useParams as ReturnType<typeof vi.fn>).mockReturnValue({});
+    (useNavigate as ReturnType<typeof vi.fn>).mockReturnValue(mockNavigate);
+    (useLocation as ReturnType<typeof vi.fn>).mockReturnValue({
+      pathname: '/',
+      search: '',
+    });
 
     (useLocalStorage as ReturnType<typeof vi.fn>).mockReturnValue([
       '',
@@ -105,7 +137,7 @@ describe('MainPage', () => {
     (usePaginationAndSearch as ReturnType<typeof vi.fn>).mockReturnValue({
       currentPage: 1,
       effectiveSearchTerm: '',
-      handlePageChange: vi.fn(),
+      handlePageChange: mockHandlePageChange,
       handleSearch: mockHandleSearch,
       isValidPage: true,
     });
@@ -132,7 +164,7 @@ describe('MainPage', () => {
     (usePaginationAndSearch as ReturnType<typeof vi.fn>).mockReturnValue({
       currentPage: 2,
       effectiveSearchTerm: 'charmander',
-      handlePageChange: vi.fn(),
+      handlePageChange: mockHandlePageChange,
       handleSearch: mockHandleSearch,
       isValidPage: true,
     });
@@ -146,7 +178,7 @@ describe('MainPage', () => {
     );
   });
 
-  it('calls handleSearch with the correct term when search input changes and Enter is pressed', () => {
+  it('calls handleSearch when search input changes and Enter is pressed', () => {
     renderWithRouter();
 
     const searchInput = screen.getByTestId('search-input');
@@ -156,7 +188,7 @@ describe('MainPage', () => {
     expect(mockHandleSearch).toHaveBeenCalledWith('pikachu');
   });
 
-  it('loads search term from localStorage on initial render via useLocalStorage', () => {
+  it('loads search term from localStorage on initial render', () => {
     (useLocalStorage as ReturnType<typeof vi.fn>).mockReturnValue([
       'charizard',
       mockSetSearchTerm,
@@ -164,12 +196,19 @@ describe('MainPage', () => {
     (usePaginationAndSearch as ReturnType<typeof vi.fn>).mockReturnValue({
       currentPage: 1,
       effectiveSearchTerm: 'charizard',
-      handlePageChange: vi.fn(),
+      handlePageChange: mockHandlePageChange,
       handleSearch: mockHandleSearch,
       isValidPage: true,
     });
+
+    renderWithRouter();
+
+    expect(screen.getByTestId('search-input')).toHaveValue('charizard');
+  });
+
+  it('displays error message when data fetch fails', () => {
     (usePokemonData as ReturnType<typeof vi.fn>).mockReturnValue({
-      error: null,
+      error: 'Failed to fetch Pokemon data',
       isLoading: false,
       pokemonItems: [],
       totalItems: 0,
@@ -177,7 +216,24 @@ describe('MainPage', () => {
 
     renderWithRouter();
 
-    expect(screen.getByTestId('search-input')).toHaveValue('charizard');
-    expect(usePokemonData).toHaveBeenCalledWith('charizard', 1, ITEMS_PER_PAGE);
+    expect(screen.getByTestId('error-message')).toHaveTextContent(
+      'Error: Failed to fetch Pokemon data'
+    );
+  });
+
+  it('displays no results message when search yields no results', () => {
+    (usePaginationAndSearch as ReturnType<typeof vi.fn>).mockReturnValue({
+      currentPage: 1,
+      effectiveSearchTerm: 'nonexistentpokemon',
+      handlePageChange: mockHandlePageChange,
+      handleSearch: mockHandleSearch,
+      isValidPage: true,
+    });
+
+    renderWithRouter();
+
+    expect(screen.getByTestId('no-results-message')).toHaveTextContent(
+      'No Pokemon found for "nonexistentpokemon"'
+    );
   });
 });
