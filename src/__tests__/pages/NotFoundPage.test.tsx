@@ -1,21 +1,17 @@
 import { render, screen } from '@testing-library/react';
-import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import NotFoundPage from '@pages/NotFoundPage';
 
 import { ThemeProvider } from '@/context/ThemeContext';
-import { store } from '@/store';
 
 const NotFoundPageWithProviders = () => (
-  <Provider store={store}>
-    <MemoryRouter>
-      <ThemeProvider>
-        <NotFoundPage />
-      </ThemeProvider>
-    </MemoryRouter>
-  </Provider>
+  <MemoryRouter>
+    <ThemeProvider>
+      <NotFoundPage />
+    </ThemeProvider>
+  </MemoryRouter>
 );
 
 describe('NotFoundPage', () => {
