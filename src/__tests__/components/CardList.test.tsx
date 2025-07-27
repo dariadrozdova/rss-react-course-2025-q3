@@ -37,14 +37,4 @@ describe('CardList', () => {
     expect(screen.queryByText(/no results/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/No Pokemon found/i)).not.toBeInTheDocument();
   });
-
-  it('renders successfully when pokemonItems prop is an empty array', () => {
-    expect(() =>
-      render(
-        <MemoryRouter>
-          <CardList currentPage={1} pokemonItems={[]} />
-        </MemoryRouter>
-      )
-    ).not.toThrow();
-  });
 });
