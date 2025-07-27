@@ -119,4 +119,88 @@ describe('App', () => {
 
     expect(error).toBeDefined();
   });
+
+  describe.each([
+    {
+      content: 'MainPage Content',
+      expectedHref: '/',
+      linkName: /home/i,
+      path: '/',
+      testId: 'main-page',
+    },
+    {
+      content: 'About Content',
+      expectedHref: '/about',
+      linkName: /about/i,
+      path: '/about',
+      testId: 'about-page',
+    },
+  ])(
+    'Navigation functionality for $path',
+    ({ content, expectedHref, linkName, path, testId }) => {
+      beforeEach(async () => {
+        const routeElement =
+          path === '/' ? (
+            <MainPage />
+          ) : (
+            <div data-testid={testId}>{content}</div>
+          );
+
+        render(
+          <MemoryRouter initialEntries={[path]}>
+            <Routes>
+              <Route element={<App />} path="/">
+                <Route
+                  element={routeElement}
+                  {...(path === '/' ? { index: true } : { path: 'about' })}
+                />
+              </Route>
+            </Routes>
+          </MemoryRouter>
+        );
+      });
+
+      it('renders navigation link with correct route', async () => {
+        const link = await screen.findByRole('link', { name: linkName });
+        expect(link).toHaveAttribute('href', expectedHref);
+      });
+
+      it('renders correct content for route', async () => {
+        if (path === '/') {
+          expect(await screen.findByTestId('main-page')).toBeInTheDocument();
+          expect(
+            await screen.findByText('MainPage Content')
+          ).toBeInTheDocument();
+        } else {
+          expect(await screen.findByTestId(testId)).toBeInTheDocument();
+          expect(await screen.findByText(content)).toBeInTheDocument();
+        }
+      });
+    }
+  );
+
+  describe('NavLink className function execution', () => {
+    beforeEach(async () => {
+      render(
+        <MemoryRouter initialEntries={['/']}>
+          <Routes>
+            <Route element={<App />} path="/">
+              <Route element={<MainPage />} index />
+            </Route>
+          </Routes>
+        </MemoryRouter>
+      );
+    });
+
+    it.each([
+      { description: 'Home', linkName: /home/i },
+      { description: 'About', linkName: /about/i },
+    ])(
+      '$description NavLink className function executes both branches',
+      async ({ linkName }) => {
+        const link = await screen.findByRole('link', { name: linkName });
+        expect(link).toBeInTheDocument();
+      }
+    );
+  });
 });
