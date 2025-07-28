@@ -9,8 +9,11 @@ import {
 
 import Button from './Button';
 
+import { useTheme } from '@/context/ThemeContext';
+
 const Search = ({ initialSearchTerm, onSearch }: SearchProps) => {
   const [inputValue, setInputValue] = useState(initialSearchTerm);
+  const { isDark } = useTheme();
 
   const previousInitialSearchTermReference = useRef(initialSearchTerm);
 
@@ -47,23 +50,29 @@ const Search = ({ initialSearchTerm, onSearch }: SearchProps) => {
 
   return (
     <div
-      className="
+      className={`
         flex gap-2.5 justify-center items-center p-[15px]
-        bg-[hsl(190,100%,94%)] rounded-lg
+        rounded-lg
         shadow-sm shadow-[hsla(0,0%,0%,0.05)]
         w-full max-w-[700px]
-      "
+        ${isDark ? 'bg-gray-700' : 'bg-[hsl(190,100%,94%)]'}
+      `}
       onClick={(e) => {
         e.stopPropagation();
       }}
     >
       <input
-        className="
-          px-[15px] py-[10px] border border-[hsl(187,70%,82%)] rounded-md
+        className={`
+          px-[15px] py-[10px] border rounded-md
           text-base flex-grow max-w-full outline-none
           transition-all duration-200 ease-in-out
           focus:border-[hsl(187,100%,42%)] focus:shadow-[0_0_0_3px_hsla(187,100%,42%,0.2)]
-        "
+          ${
+            isDark
+              ? 'bg-gray-800 text-gray-100 border-gray-600 placeholder-gray-400'
+              : 'bg-white text-gray-800 border-[hsl(187,70%,82%)] placeholder-gray-500'
+          }
+        `}
         onChange={handleInputChange}
         onKeyDown={handleKeyPress}
         placeholder="Search for Pokemons..."
@@ -76,7 +85,7 @@ const Search = ({ initialSearchTerm, onSearch }: SearchProps) => {
     shadow-sm shadow-black/10
     hover:-translate-y-[1px]
     active:shadow-black/10
-  "
+    "
         color="green"
         onClick={handleSearchClick}
       >

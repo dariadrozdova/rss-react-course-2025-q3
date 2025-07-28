@@ -4,6 +4,10 @@ import { useOutletContext, useParams } from 'react-router-dom';
 import { useLoaderTimeout } from '@hooks/useLoaderTimeout';
 import { usePokemonDetails } from '@hooks/usePokemonDetails';
 
+import PokemonDetailsContent from './PokemonDetailsContent';
+
+import { useTheme } from '@/context/ThemeContext';
+
 const MIN_CONTAINER_HEIGHT = 'min-h-[600px]';
 
 const PokemonContainer = ({
@@ -16,17 +20,33 @@ const PokemonContainer = ({
   onClose: () => void;
   title?: string;
   titleClassName?: string;
-}) => (
-  <div className={`bg-white rounded-lg shadow-md p-6 ${MIN_CONTAINER_HEIGHT}`}>
-    <div className="flex justify-between items-center mb-4">
-      <h2 className={titleClassName}>{title}</h2>
-      <button className="p-2 hover:bg-gray-100 rounded" onClick={onClose}>
-        <X size={20} />
-      </button>
+}) => {
+  const { isDark } = useTheme();
+  return (
+    <div
+      className={`rounded-lg shadow-md p-6 ${MIN_CONTAINER_HEIGHT} ${
+        isDark ? 'bg-gray-800' : 'bg-white'
+      }`}
+    >
+      <div className="flex justify-between items-center mb-4">
+        <h2
+          className={`${titleClassName} ${isDark ? 'text-gray-100' : 'text-gray-800'}`}
+        >
+          {title}
+        </h2>
+        <button
+          className={`p-2 rounded ${
+            isDark ? 'hover:bg-gray-700 text-gray-300' : 'hover:bg-gray-100'
+          }`}
+          onClick={onClose}
+        >
+          <X size={20} />
+        </button>
+      </div>
+      {children}
     </div>
-    {children}
-  </div>
-);
+  );
+};
 
 interface OutletContext {
   handleCloseDetails: () => void;
@@ -37,6 +57,7 @@ function PokemonDetails() {
   const { handleCloseDetails } = useOutletContext<OutletContext>();
   const { error, isLoading, pokemon } = usePokemonDetails(detailsId);
   const showLoader = useLoaderTimeout(detailsId);
+  const { isDark } = useTheme();
 
   if (isLoading || showLoader) {
     return (
@@ -72,7 +93,9 @@ function PokemonDetails() {
     return (
       <PokemonContainer onClose={handleCloseDetails} title="Not Found">
         <div className="text-center py-8">
-          <p className="mb-4">Pokémon not found</p>
+          <p className={`${isDark ? 'text-gray-300' : 'text-gray-700'} mb-4`}>
+            Pokémon not found
+          </p>
           <button
             className="px-4 py-2 bg-blue-600 text-white rounded"
             onClick={handleCloseDetails}
@@ -85,57 +108,28 @@ function PokemonDetails() {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 min-h-[600px]">
+    <div
+      className={`rounded-lg shadow-md p-6 min-h-[600px] ${
+        isDark ? 'bg-gray-800' : 'bg-white'
+      }`}
+    >
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold capitalize">{pokemon.name}</h2>
+        <h2
+          className={`text-2xl font-bold capitalize ${isDark ? 'text-gray-100' : 'text-gray-800'}`}
+        >
+          {pokemon.name}
+        </h2>
         <button
-          className="p-2 hover:bg-gray-100 rounded"
+          className={`p-2 rounded ${
+            isDark ? 'hover:bg-gray-700 text-gray-300' : 'hover:bg-gray-100'
+          }`}
           onClick={handleCloseDetails}
         >
           <X size={20} />
         </button>
       </div>
 
-      <div className="text-center mb-6">
-        {pokemon.sprites.front_default ? (
-          <img
-            alt={pokemon.name}
-            className="w-48 h-48 mx-auto"
-            src={pokemon.sprites.front_default}
-          />
-        ) : (
-          <div className="w-48 h-48 mx-auto bg-gray-200 flex items-center justify-center">
-            No image
-          </div>
-        )}
-        <p className="mt-2 text-gray-500">#{pokemon.id}</p>
-      </div>
-
-      <div className="mb-6">
-        <h3 className="font-semibold mb-2">Types</h3>
-        <div className="flex gap-2">
-          {pokemon.types.map((typeInfo, index) => (
-            <span
-              className="px-3 py-1 bg-blue-500 text-white rounded capitalize"
-              key={index}
-            >
-              {typeInfo.type.name}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      <div>
-        <h3 className="font-semibold mb-2">Stats</h3>
-        <div className="space-y-2">
-          {pokemon.stats.map((statInfo, index) => (
-            <div className="flex justify-between" key={index}>
-              <span className="capitalize">{statInfo.stat.name}:</span>
-              <span className="font-bold">{statInfo.base_stat}</span>
-            </div>
-          ))}
-        </div>
-      </div>
+      <PokemonDetailsContent isDark={isDark} pokemon={pokemon} />
     </div>
   );
 }

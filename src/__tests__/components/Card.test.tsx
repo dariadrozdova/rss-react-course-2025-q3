@@ -8,11 +8,14 @@ import {
   mockPokemonItemWithImage,
   mockPokemonItemWithoutImage,
 } from '@/__tests__/utils/cardComponentsMockData';
+import { ThemeProvider } from '@/context/ThemeContext';
 
 const renderCard = (item: typeof mockPokemonItemWithImage, props = {}) =>
   render(
     <MemoryRouter>
-      <Card currentPage={1} item={item} {...props} />
+      <ThemeProvider>
+        <Card currentPage={1} item={item} {...props} />
+      </ThemeProvider>
     </MemoryRouter>
   );
 

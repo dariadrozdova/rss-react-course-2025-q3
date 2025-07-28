@@ -4,12 +4,18 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import Search from '@components/Search';
 
+import { ThemeProvider } from '@/context/ThemeContext';
+
 describe('Search Component Tests', () => {
   let mockOnSearch: (searchTerm: string) => void;
   let defaultProps: SearchProps;
 
   const renderSearch = (props?: Partial<SearchProps>) => {
-    return render(<Search {...defaultProps} {...props} />);
+    return render(
+      <ThemeProvider>
+        <Search {...defaultProps} {...props} />
+      </ThemeProvider>
+    );
   };
 
   beforeEach(() => {
@@ -47,21 +53,21 @@ describe('Search Component Tests', () => {
   );
 
   it('updates input value when initialSearchTerm prop changes (simulating parent update)', () => {
-    const { rerender } = render(
-      <Search {...defaultProps} initialSearchTerm="initial" />
-    );
+    const { rerender } = renderSearch({ initialSearchTerm: 'initial' });
     const searchInput = screen.getByPlaceholderText(/search for pokemons.../i);
 
     expect(searchInput).toHaveValue('initial');
 
-    rerender(<Search {...defaultProps} initialSearchTerm="updated term" />);
+    rerender(
+      <ThemeProvider>
+        <Search {...defaultProps} initialSearchTerm="updated term" />
+      </ThemeProvider>
+    );
     expect(searchInput).toHaveValue('updated term');
   });
 
   it('retains user-typed input if a subsequent prop update contains the same value as the initial prop', () => {
-    const { rerender } = render(
-      <Search {...defaultProps} initialSearchTerm="same term" />
-    );
+    const { rerender } = renderSearch({ initialSearchTerm: 'same term' });
     const searchInput = screen.getByPlaceholderText(/search for pokemons.../i);
 
     expect(searchInput).toHaveValue('same term');
@@ -69,7 +75,11 @@ describe('Search Component Tests', () => {
     fireEvent.change(searchInput, { target: { value: 'user typed' } });
     expect(searchInput).toHaveValue('user typed');
 
-    rerender(<Search {...defaultProps} initialSearchTerm="same term" />);
+    rerender(
+      <ThemeProvider>
+        <Search {...defaultProps} initialSearchTerm="same term" />
+      </ThemeProvider>
+    );
 
     expect(searchInput).toHaveValue('user typed');
   });
@@ -105,7 +115,7 @@ describe('Search Component Tests', () => {
         const searchButton = screen.getByRole('button', { name: /search/i });
 
         fireEvent.change(searchInput, {
-          target: { value: `  ${searchTerm}  ` },
+          target: { value: `   ${searchTerm}   ` },
         });
         triggerAction(searchInput, searchButton);
 
