@@ -36,6 +36,7 @@
       "@pages/*": ["pages/*"],
       "@utils/*": ["utils/*"],
       "@types": ["types/index"],
+      "@store/*": ["store/*"],
       "@/*": ["*"]
     }
   },

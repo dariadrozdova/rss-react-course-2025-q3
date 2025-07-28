@@ -1,8 +1,10 @@
+import { store } from '@store/index';
 import { fireEvent, render, screen } from '@testing-library/react';
+import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, it, vi } from 'vitest';
 
-import Card from '@components/Card';
+import Card from '@components/Card/Card';
 
 import {
   mockPokemonItemWithImage,
@@ -12,11 +14,13 @@ import { ThemeProvider } from '@/context/ThemeContext';
 
 const renderCard = (item: typeof mockPokemonItemWithImage, props = {}) =>
   render(
-    <MemoryRouter>
-      <ThemeProvider>
-        <Card currentPage={1} item={item} {...props} />
-      </ThemeProvider>
-    </MemoryRouter>
+    <Provider store={store}>
+      <MemoryRouter>
+        <ThemeProvider>
+          <Card currentPage={1} item={item} {...props} />
+        </ThemeProvider>
+      </MemoryRouter>
+    </Provider>
   );
 
 describe('Card', () => {

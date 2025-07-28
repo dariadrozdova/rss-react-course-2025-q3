@@ -1,14 +1,19 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { NavLink, Outlet } from 'react-router-dom';
 
 import ErrorBoundary from '@components/ErrorBoundary';
 import ThemeSwitch from '@components/ThemeSwitch';
+import { useSelectedItemsStorage } from '@hooks/useSelectedItemsStorage';
 
 import { ThemeProvider, useTheme } from './context/ThemeContext';
+import { store } from './store';
 
 import './index.css';
 
 const AppContent: React.FC = () => {
+  useSelectedItemsStorage();
+
   const { isDark } = useTheme();
 
   return (
@@ -102,9 +107,11 @@ const AppContent: React.FC = () => {
 
 const App: React.FC = () => {
   return (
-    <ThemeProvider>
-      <AppContent />
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider>
+        <AppContent />
+      </ThemeProvider>
+    </Provider>
   );
 };
 
