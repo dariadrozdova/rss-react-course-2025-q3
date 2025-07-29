@@ -37,7 +37,8 @@
       "@utils/*": ["utils/*"],
       "@types": ["types/index"],
       "@store/*": ["store/*"],
-      "@/*": ["*"]
+      "@/*": ["*"],
+      "@__test__/*": ["__test__/*"]
     }
   },
   "include": ["src"]

@@ -1,15 +1,10 @@
-import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import AboutPage from '@pages/AboutPage';
 
-import { ThemeProvider } from '@/context/ThemeContext';
+import { render, screen } from '@/__tests__/utils/TestUtilities';
 
-const AboutPageWithProviders = () => (
-  <ThemeProvider>
-    <AboutPage />
-  </ThemeProvider>
-);
+const AboutPageWithProviders = () => <AboutPage />;
 
 describe('AboutPage', () => {
   beforeEach(() => {

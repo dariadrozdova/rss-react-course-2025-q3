@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { fetchPokemonDetails, fetchPokemonList } from '@api/pokemonApi';
 
-import { mockPokeApiListResponse } from '../utils/mainPageMockData';
+import { mockPokeApiListResponse } from '@/__tests__/utils/mainPageMockData';
 
 const DEFAULT_LIMIT = 20;
 const DEFAULT_OFFSET = 0;

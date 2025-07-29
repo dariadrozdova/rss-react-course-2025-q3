@@ -1,6 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
 import type { PokemonItem } from '@types';
-import { MemoryRouter } from 'react-router-dom';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -8,6 +6,8 @@ import useLocalStorage from '@hooks/useLocalStorage';
 import { usePaginationAndSearch } from '@hooks/usePaginationAndSearch';
 import { usePokemonData } from '@hooks/usePokemonData';
 import MainPage from '@pages/MainPage';
+
+import { fireEvent, render, screen } from '@/__tests__/utils/TestUtilities';
 
 vi.mock('@hooks/usePokemonData', () => ({ usePokemonData: vi.fn() }));
 vi.mock('@hooks/useLocalStorage', () => ({ default: vi.fn() }));
@@ -111,8 +111,7 @@ describe('MainPage - Basic Functionality', () => {
   let mockHandlePageChange: ReturnType<typeof vi.fn>;
   let mockNavigate: ReturnType<typeof vi.fn>;
 
-  const renderWithRouter = () =>
-    render(<MainPage />, { wrapper: MemoryRouter });
+  const renderWithRouter = () => render(<MainPage />);
 
   beforeEach(() => {
     vi.clearAllMocks();
