@@ -120,7 +120,7 @@ function PokemonDetails() {
           {pokemon.name}
         </h2>
         <button
-          className={`p-2 rounded ${
+          className={`p-2 rounded cursor-pointer ${
             isDark ? 'hover:bg-gray-700 text-gray-300' : 'hover:bg-gray-100'
           }`}
           onClick={handleCloseDetails}

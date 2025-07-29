@@ -60,7 +60,7 @@ function Card({
     transition-all duration-300 ease-in-out h-[280px] border
     ${isDark ? 'bg-gray-800' : 'bg-white'}
     ${
-      isSelected || isItemSelected
+      isSelected
         ? 'border-teal-400 shadow-lg ring-2 ring-teal-200 -translate-y-1'
         : isDark
           ? 'border-gray-600 hover:-translate-y-1 hover:shadow-lg hover:border-teal-400'

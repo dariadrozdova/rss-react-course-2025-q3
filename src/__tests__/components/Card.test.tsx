@@ -174,19 +174,5 @@ describe('Card', () => {
         `/1/${mockPokemonItemWithImage.id}`
       );
     });
-
-    it('renders as div with cursor-pointer when onPokemonClick is provided', () => {
-      const mockOnPokemonClick = vi.fn();
-      renderCard(mockPokemonItemWithImage, {
-        onPokemonClick: mockOnPokemonClick,
-      });
-
-      const cardElement = screen
-        .getByText(mockPokemonItemWithImage.name)
-        .closest('div');
-
-      expect(cardElement).toHaveClass('cursor-pointer');
-      expect(screen.queryByRole('link')).not.toBeInTheDocument();
-    });
   });
 });

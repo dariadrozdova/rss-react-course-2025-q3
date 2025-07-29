@@ -16,8 +16,8 @@ const ThemeSwitch: React.FC = () => {
         aria-label={`Switch to ${isDark ? 'light' : 'dark'} theme`}
         className={`
           relative inline-flex h-6 w-11 items-center rounded-full
-          transition-all duration-300 ease-in-out
-          focus:outline-none focus:ring-2 focus:ring-offset-2
+          transition-all duration-300 ease-in-out cursor-pointer border-none
+          focus:outline-none focus:ring-0
           ${
             isDark
               ? 'bg-blue-600 focus:ring-blue-500'

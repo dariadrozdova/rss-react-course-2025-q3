@@ -1,8 +1,11 @@
+import { useAppSelector } from '@store/hooks';
+import { selectHasSelectedItems } from '@store/selectors';
 import { useEffect } from 'react';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { PokemonContent } from '@components/PokemonContent';
 import Search from '@components/Search';
+import SelectionFlyout from '@components/SelectionFlyout'; // Add this import
 import { usePaginationAndSearch } from '@hooks/usePaginationAndSearch';
 import { usePokemonData } from '@hooks/usePokemonData';
 import NotFoundPage from '@pages/NotFoundPage';
@@ -13,6 +16,7 @@ function MainPage() {
   const { detailsId } = useParams<{ detailsId: string }>();
   const navigate = useNavigate();
   const location = useLocation();
+  const hasSelectedItems = useAppSelector(selectHasSelectedItems);
 
   const {
     currentPage,
@@ -65,60 +69,56 @@ function MainPage() {
   };
 
   return (
-    <div className="flex flex-row gap-8 w-full">
+    <>
       <div
-        className={`
-          flex flex-col gap-5 w-full transition-all duration-300
-          ${detailsId ? 'md:w-1/2 lg:w-2/3' : 'md:w-full'}
-        `}
-        onClick={detailsId ? handleCloseDetails : undefined}
+        className={`flex flex-row gap-8 w-full transition-all duration-300 ${
+          hasSelectedItems ? 'pb-20' : ''
+        }`}
       >
-        <section
-          className="
-            theme-card p-6 rounded-lg shadow-md text-center
-            flex flex-col items-center gap-5 box-border w-full
-            flex-shrink-0
-          "
+        <div
+          className={`
+            flex flex-col gap-5 w-full transition-all duration-300
+            ${detailsId ? 'md:w-1/2 lg:w-2/3' : 'md:w-full'}
+          `}
         >
-          <Search
-            initialSearchTerm={effectiveSearchTerm}
-            onSearch={handleSearch}
-          />
-        </section>
+          <section className="theme-card p-6 rounded-lg shadow-md text-center flex flex-col items-center gap-5 box-border w-full flex-shrink-0">
+            <Search
+              initialSearchTerm={effectiveSearchTerm}
+              onSearch={handleSearch}
+            />
+          </section>
 
-        <section
-          className="
-            flex-grow theme-card p-6 rounded-lg shadow-md
-            flex flex-col items-center justify-start
-            box-border w-full
-            min-h-[900px]
-          "
-        >
-          <PokemonContent
-            currentPage={currentPage}
-            effectiveSearchTerm={effectiveSearchTerm}
-            error={error}
-            isLoading={isLoading}
-            onPageChange={handlePageChange}
-            onPokemonClick={handlePokemonClick}
-            pokemonItems={pokemonItems}
-            {...(detailsId
-              ? { selectedPokemonId: Number.parseInt(detailsId, 10) }
-              : {})}
-            totalItems={totalItems}
-            totalPages={totalPages}
-          />
-        </section>
-      </div>
-
-      {detailsId && (
-        <div className="hidden md:block md:w-1/2 lg:w-1/3 sticky top-8 self-start">
-          <div className="theme-card rounded-lg shadow-md p-6 relative">
-            <Outlet context={{ handleCloseDetails }} />
-          </div>
+          <section
+            className="flex-grow theme-card p-6 rounded-lg shadow-md flex flex-col items-center justify-start box-border w-full min-h-[900px]"
+            onClick={detailsId ? handleCloseDetails : undefined}
+          >
+            <PokemonContent
+              currentPage={currentPage}
+              effectiveSearchTerm={effectiveSearchTerm}
+              error={error}
+              isLoading={isLoading}
+              onPageChange={handlePageChange}
+              onPokemonClick={handlePokemonClick}
+              pokemonItems={pokemonItems}
+              {...(detailsId
+                ? { selectedPokemonId: Number.parseInt(detailsId, 10) }
+                : {})}
+              totalItems={totalItems}
+              totalPages={totalPages}
+            />
+          </section>
         </div>
-      )}
-    </div>
+
+        {detailsId && (
+          <div className="hidden md:block md:w-1/2 lg:w-1/3 sticky top-8 self-start">
+            <div className="theme-card rounded-lg shadow-md p-6 relative">
+              <Outlet context={{ handleCloseDetails }} />
+            </div>
+          </div>
+        )}
+      </div>
+      <SelectionFlyout />
+    </>
   );
 }
 
