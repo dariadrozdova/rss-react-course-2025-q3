@@ -2,31 +2,31 @@
 
 @theme {
   --color-error-background: hsl(0, 100%, 97%);
-  --color-error-border: hsl(0, 60%, 82%);
-  --color-error-text-dark: hsl(0, 64%, 47%);
-  --color-error-text-medium: hsl(0, 70%, 51%);
-  --color-error-border-light: hsl(0, 57%, 76%);
+  --color-error-border: hsl(0, 75%, 75%);
+  --color-error-text-dark: hsl(0, 80%, 40%);
+  --color-error-text-medium: hsl(0, 75%, 55%);
+  --color-error-border-light: hsl(0, 70%, 88%);
 
-  --color-primary-red: hsl(1, 84%, 63%);
+  --color-primary-red: hsl(0, 84%, 63%);
   --color-primary-red-hover: hsl(0, 70%, 39%);
 
   --color-black-alpha-08: hsla(0, 0%, 0%, 0.08);
   --color-black-alpha-10: hsla(0, 0%, 0%, 0.1);
   --color-black-alpha-15: hsla(0, 0%, 0%, 0.15);
 
-  --color-primary-green: hsl(173, 100%, 23%);
-  --color-primary-green-hover: hsl(173, 100%, 15%);
-  --color-primary-green-light: hsl(187, 100%, 38%);
+  --color-primary-green: hsl(173, 90%, 30%);
+  --color-primary-green-hover: hsl(173, 95%, 20%);
+  --color-primary-green-light: hsl(173, 70%, 65%);
 
   --color-white: hsl(0, 0%, 100%);
-  --color-neutral-card-background: hsl(0, 0%, 99%);
+  --color-neutral-card-background: hsl(220, 10%, 98%);
 
-  --color-gradient-start-light-blue: hsl(187, 72%, 93%);
-  --color-gradient-end-light-blue: hsl(187, 71%, 82%);
-  --color-text-light-blue-gray: hsl(200, 15%, 30%);
-  --color-text-dark-blue-gray: hsl(200, 25%, 18%);
-  --color-border-light-gray: hsl(207, 17%, 94%);
-  --color-light-gray-bg: hsl(220, 14%, 96%);
+  --color-gradient-start-light-blue: hsl(200, 60%, 90%);
+  --color-gradient-end-light-blue: hsl(200, 65%, 75%);
+  --color-text-light-blue-gray: hsl(220, 10%, 40%);
+  --color-text-dark-blue-gray: hsl(220, 15%, 20%);
+  --color-border-light-gray: hsl(220, 10%, 90%);
+  --color-light-gray-bg: hsl(220, 12%, 96%);
 
   --shadow-xs: 0 0px 0px 0px;
 }
@@ -37,6 +37,11 @@
   --theme-text-primary: var(--color-text-dark-blue-gray);
   --theme-text-secondary: var(--color-text-light-blue-gray);
   --theme-border: var(--color-border-light-gray);
+
+  --scrollbar-width: 8px;
+  --scrollbar-track-color: hsl(220, 14%, 96%);
+  --scrollbar-thumb-color: hsl(200, 15%, 70%);
+  --scrollbar-thumb-hover-color: hsl(200, 15%, 60%);
 }
 
 .light {
@@ -45,6 +50,10 @@
   --theme-text-primary: var(--color-text-dark-blue-gray);
   --theme-text-secondary: var(--color-text-light-blue-gray);
   --theme-border: var(--color-border-light-gray);
+
+  --scrollbar-track-color: hsl(220, 14%, 96%);
+  --scrollbar-thumb-color: hsl(200, 15%, 70%);
+  --scrollbar-thumb-hover-color: hsl(200, 15%, 60%);
 }
 
 .dark {
@@ -60,6 +69,10 @@
   --color-text-light-blue-gray: hsl(0, 0%, 75%);
   --color-gradient-start-light-blue: hsl(187, 30%, 25%);
   --color-gradient-end-light-blue: hsl(187, 30%, 20%);
+
+  --scrollbar-track-color: hsl(210, 15%, 16%);
+  --scrollbar-thumb-color: hsl(210, 15%, 35%);
+  --scrollbar-thumb-hover-color: hsl(210, 15%, 45%);
 }
 
 html,
@@ -125,19 +138,19 @@ body {
   transition: all 0.3s ease;
 }
 
-.dark ::-webkit-scrollbar {
-  width: 8px;
+::-webkit-scrollbar {
+  width: var(--scrollbar-width);
 }
 
-.dark ::-webkit-scrollbar-track {
-  background: hsl(210, 15%, 16%);
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track-color);
 }
 
-.dark ::-webkit-scrollbar-thumb {
-  background: hsl(210, 15%, 35%);
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb-color);
   border-radius: 4px;
 }
 
-.dark ::-webkit-scrollbar-thumb:hover {
-  background: hsl(210, 15%, 45%);
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover-color);
 }

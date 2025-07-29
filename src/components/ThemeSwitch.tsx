@@ -1,14 +1,15 @@
+import { Moon, Sun } from 'lucide-react';
 import React from 'react';
 
 import { useTheme } from '../context/ThemeContext';
 
 const ThemeSwitch: React.FC = () => {
-  const { isDark, theme, toggleTheme } = useTheme();
+  const { isDark, toggleTheme } = useTheme();
 
   return (
     <div className="flex items-center space-x-2">
       <span className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-        {isDark ? '🌙' : '☀️'}
+        {isDark ? <Moon size={16} /> : <Sun size={16} />}
       </span>
 
       <button
@@ -37,14 +38,6 @@ const ThemeSwitch: React.FC = () => {
           `}
         />
       </button>
-
-      <span
-        className={`text-xs font-medium ${
-          isDark ? 'text-gray-300' : 'text-gray-600'
-        }`}
-      >
-        {theme === 'light' ? 'Light' : 'Dark'}
-      </span>
     </div>
   );
 };

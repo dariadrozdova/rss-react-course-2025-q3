@@ -12,7 +12,8 @@
     "format": "prettier --write src",
     "format:fix": "prettier --write .",
     "prepare": "husky",
-    "test": "vitest"
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@babel/plugin-transform-private-methods": "^7.27.1",
