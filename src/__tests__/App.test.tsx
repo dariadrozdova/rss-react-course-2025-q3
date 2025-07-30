@@ -1,3 +1,5 @@
+import { store } from '@store/index';
+import { unselectAllItems } from '@store/slices/selectedItemsSlice';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { act } from 'react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
@@ -9,9 +11,7 @@ import MainPage from '../pages/MainPage';
 vi.mock('@components/ErrorBoundary', async (importOriginal) => {
   const actual =
     await importOriginal<typeof import('@components/ErrorBoundary')>();
-  return {
-    default: actual.default,
-  };
+  return { default: actual.default };
 });
 
 vi.mock('@pages/MainPage', async () => {
@@ -39,16 +39,44 @@ vi.mock('@pages/MainPage', async () => {
     );
   });
 
-  return {
-    default: MockMainPage,
-  };
+  return { default: MockMainPage };
 });
 
 let consoleErrorSpy: ReturnType<typeof vi.spyOn>;
+let localStorageMock: Record<string, ReturnType<typeof vi.fn>>;
+
+const renderApp = (
+  initialEntries = ['/'],
+  customRoutes?: React.ReactElement[]
+) => {
+  const defaultRoutes = <Route element={<MainPage />} index />;
+
+  return render(
+    <MemoryRouter initialEntries={initialEntries}>
+      <Routes>
+        <Route element={<App />} path="/">
+          {customRoutes || defaultRoutes}
+        </Route>
+      </Routes>
+    </MemoryRouter>
+  );
+};
 
 describe('App', () => {
   beforeEach(() => {
+    const storeMap = new Map<string, string>();
+    localStorageMock = {
+      clear: vi.fn(() => {
+        storeMap.clear();
+      }),
+      getItem: vi.fn((key: string) => storeMap.get(key) || null),
+      removeItem: vi.fn((key: string) => storeMap.delete(key)),
+      setItem: vi.fn((key: string, value: string) => storeMap.set(key, value)),
+    };
+
+    Object.defineProperty(window, 'localStorage', { value: localStorageMock });
     consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    store.dispatch(unselectAllItems());
   });
 
   afterEach(() => {
@@ -57,30 +85,13 @@ describe('App', () => {
   });
 
   it('renders MainPage component inside ErrorBoundary', async () => {
-    render(
-      <MemoryRouter initialEntries={['/']}>
-        <Routes>
-          <Route element={<App />} path="/">
-            <Route element={<MainPage />} index />
-          </Route>
-        </Routes>
-      </MemoryRouter>
-    );
+    renderApp();
     expect(await screen.findByTestId('main-page')).toBeInTheDocument();
     expect(await screen.findByText('MainPage Content')).toBeInTheDocument();
   });
 
   it('displays ErrorBoundary fallback when MainPage throws an error', async () => {
-    render(
-      <MemoryRouter initialEntries={['/']}>
-        <Routes>
-          <Route element={<App />} path="/">
-            <Route element={<MainPage />} index />
-          </Route>
-        </Routes>
-      </MemoryRouter>
-    );
-    expect(await screen.findByTestId('main-page')).toBeInTheDocument();
+    renderApp();
 
     const throwButton = await screen.findByTestId(
       'throw-mainpage-error-button'
@@ -108,16 +119,35 @@ describe('App', () => {
     expect(screen.queryByTestId('main-page')).not.toBeInTheDocument();
     expect(screen.queryByText('MainPage Content')).not.toBeInTheDocument();
 
-    expect(consoleErrorSpy).toHaveBeenCalled();
-
     const calls = consoleErrorSpy.mock.calls.flat();
     const error = calls.find(
       (argument) =>
         argument instanceof Error &&
         argument.message === 'Test error from MainPage for App.test'
     );
-
     expect(error).toBeDefined();
+  });
+
+  it('initializes Redux store from localStorage if items are present', async () => {
+    const mockPokemonItem = {
+      id: 1,
+      imageUrl: 'url',
+      name: 'bulbasaur',
+      url: 'url',
+    };
+    localStorageMock.setItem(
+      'pokemonSelectedItems',
+      JSON.stringify([mockPokemonItem])
+    );
+
+    renderApp();
+
+    await waitFor(() => {
+      expect(store.getState().selectedItems.items).toEqual([mockPokemonItem]);
+    });
+    expect(localStorageMock.getItem).toHaveBeenCalledWith(
+      'pokemonSelectedItems'
+    );
   });
 
   describe.each([
@@ -136,28 +166,20 @@ describe('App', () => {
       testId: 'about-page',
     },
   ])(
-    'Navigation functionality for $path',
+    'Navigation for $path',
     ({ content, expectedHref, linkName, path, testId }) => {
-      beforeEach(async () => {
-        const routeElement =
+      beforeEach(() => {
+        const routes =
           path === '/' ? (
-            <MainPage />
+            <Route element={<MainPage />} index />
           ) : (
-            <div data-testid={testId}>{content}</div>
+            <Route
+              element={<div data-testid={testId}>{content}</div>}
+              path="about"
+            />
           );
 
-        render(
-          <MemoryRouter initialEntries={[path]}>
-            <Routes>
-              <Route element={<App />} path="/">
-                <Route
-                  element={routeElement}
-                  {...(path === '/' ? { index: true } : { path: 'about' })}
-                />
-              </Route>
-            </Routes>
-          </MemoryRouter>
-        );
+        renderApp([path], [routes]);
       });
 
       it('renders navigation link with correct route', async () => {
@@ -166,41 +188,19 @@ describe('App', () => {
       });
 
       it('renders correct content for route', async () => {
-        if (path === '/') {
-          expect(await screen.findByTestId('main-page')).toBeInTheDocument();
-          expect(
-            await screen.findByText('MainPage Content')
-          ).toBeInTheDocument();
-        } else {
-          expect(await screen.findByTestId(testId)).toBeInTheDocument();
-          expect(await screen.findByText(content)).toBeInTheDocument();
-        }
+        expect(await screen.findByTestId(testId)).toBeInTheDocument();
+        expect(await screen.findByText(content)).toBeInTheDocument();
       });
     }
   );
 
-  describe('NavLink className function execution', () => {
-    beforeEach(async () => {
-      render(
-        <MemoryRouter initialEntries={['/']}>
-          <Routes>
-            <Route element={<App />} path="/">
-              <Route element={<MainPage />} index />
-            </Route>
-          </Routes>
-        </MemoryRouter>
-      );
-    });
+  it('NavLink className functions execute for both Home and About links', async () => {
+    renderApp();
 
-    it.each([
-      { description: 'Home', linkName: /home/i },
-      { description: 'About', linkName: /about/i },
-    ])(
-      '$description NavLink className function executes both branches',
-      async ({ linkName }) => {
-        const link = await screen.findByRole('link', { name: linkName });
-        expect(link).toBeInTheDocument();
-      }
-    );
+    const homeLink = await screen.findByRole('link', { name: /home/i });
+    const aboutLink = await screen.findByRole('link', { name: /about/i });
+
+    expect(homeLink).toBeInTheDocument();
+    expect(aboutLink).toBeInTheDocument();
   });
 });

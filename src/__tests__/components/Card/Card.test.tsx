@@ -1,8 +1,12 @@
 import { store } from '@store/index';
+import {
+  setSelectedItems,
+  unselectAllItems,
+} from '@store/slices/selectedItemsSlice';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
-import { describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import Card from '@components/Card/Card';
 
@@ -21,6 +25,10 @@ const renderCard = (item: typeof mockPokemonItemWithImage, props = {}) =>
   );
 
 describe('Card', () => {
+  beforeEach(() => {
+    store.dispatch(unselectAllItems());
+  });
+
   it('renders the item name', () => {
     renderCard(mockPokemonItemWithImage);
     expect(screen.getByText(mockPokemonItemWithImage.name)).toBeInTheDocument();
@@ -71,47 +79,33 @@ describe('Card', () => {
     });
   });
 
-  describe('isSelected prop', () => {
-    it('applies selected styles when isSelected is true', () => {
-      renderCard(mockPokemonItemWithImage, { isSelected: true });
-
-      const nameElement = screen.getByText(mockPokemonItemWithImage.name);
-      expect(nameElement).toHaveClass('text-[var(--color-primary-green)]');
-
-      const container = nameElement.closest('a') || nameElement.closest('div');
-      expect(container).toHaveClass('bg-theme-secondary');
-      expect(container).toHaveClass(
-        'border-teal-400',
-        'shadow-lg',
-        'ring-2',
-        'ring-teal-200',
-        '-translate-y-1'
-      );
-    });
-
-    it('applies default styles when isSelected is false', () => {
-      renderCard(mockPokemonItemWithImage, { isSelected: false });
-
-      const nameElement = screen.getByText(mockPokemonItemWithImage.name);
-      expect(nameElement).toHaveClass(
-        'text-theme-primary',
-        'group-hover:text-[var(--theme-text-hover-teal)]'
-      );
-
-      const container = nameElement.closest('a') || nameElement.closest('div');
-      expect(container).toHaveClass('border-theme');
-      expect(container).not.toHaveClass(
-        'border-teal-400',
-        'shadow-lg',
-        'ring-2'
-      );
-    });
-
-    it('uses false as default when isSelected is not provided', () => {
+  describe('Redux store integration for selection', () => {
+    it('adds item to selectedItems when checkbox is clicked', () => {
       renderCard(mockPokemonItemWithImage);
 
-      const nameElement = screen.getByText(mockPokemonItemWithImage.name);
-      expect(nameElement).toHaveClass('text-theme-primary');
+      expect(store.getState().selectedItems.items).toEqual([]);
+
+      const checkbox = screen.getByRole('checkbox');
+      fireEvent.click(checkbox);
+
+      expect(store.getState().selectedItems.items).toEqual([
+        mockPokemonItemWithImage,
+      ]);
+    });
+
+    it('removes item from selectedItems when checkbox is clicked', () => {
+      store.dispatch(setSelectedItems([mockPokemonItemWithImage]));
+
+      renderCard(mockPokemonItemWithImage);
+
+      expect(store.getState().selectedItems.items).toEqual([
+        mockPokemonItemWithImage,
+      ]);
+
+      const checkbox = screen.getByRole('checkbox');
+      fireEvent.click(checkbox);
+
+      expect(store.getState().selectedItems.items).toEqual([]);
     });
   });
 
