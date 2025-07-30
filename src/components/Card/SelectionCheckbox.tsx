@@ -1,5 +1,3 @@
-import { useTheme } from '@/context/ThemeContext';
-
 interface SelectionCheckboxProps {
   isItemSelected: boolean;
   onCheckboxChange: () => void;
@@ -9,8 +7,6 @@ function SelectionCheckbox({
   isItemSelected,
   onCheckboxChange,
 }: SelectionCheckboxProps) {
-  const { isDark } = useTheme();
-
   return (
     <div
       className="mt-auto pt-3 flex items-center justify-center"
@@ -28,13 +24,7 @@ function SelectionCheckbox({
         <div
           className={`
             w-5 h-5 rounded border-2 flex items-center justify-center transition-all duration-200
-            ${
-              isItemSelected
-                ? 'bg-teal-500 border-teal-500'
-                : isDark
-                  ? 'border-gray-400 hover:border-teal-400'
-                  : 'border-gray-300 hover:border-teal-500'
-            }
+            ${isItemSelected ? 'bg-teal-500 border-teal-500' : 'border-theme hover:border-teal-400'}
           `}
         >
           {isItemSelected && (
@@ -55,9 +45,7 @@ function SelectionCheckbox({
           className={`ml-2 text-sm transition-colors ${
             isItemSelected
               ? 'text-teal-600 font-medium'
-              : isDark
-                ? 'text-gray-300'
-                : 'text-gray-600'
+              : 'text-theme-secondary'
           }`}
         >
           Select

@@ -1,5 +1,4 @@
 interface PokemonDetailsContentProps {
-  isDark: boolean;
   pokemon: {
     id: number;
     name: string;
@@ -9,10 +8,7 @@ interface PokemonDetailsContentProps {
   };
 }
 
-const PokemonDetailsContent = ({
-  isDark,
-  pokemon,
-}: PokemonDetailsContentProps) => (
+const PokemonDetailsContent = ({ pokemon }: PokemonDetailsContentProps) => (
   <>
     <div className="text-center mb-6">
       {pokemon.sprites.front_default ? (
@@ -23,24 +19,16 @@ const PokemonDetailsContent = ({
         />
       ) : (
         <div
-          className={`w-48 h-48 mx-auto flex items-center justify-center ${
-            isDark ? 'bg-gray-700 text-gray-300' : 'bg-gray-200'
-          }`}
+          className={`w-48 h-48 mx-auto flex items-center justify-center bg-theme-image-placeholder text-theme-secondary`}
         >
           No image
         </div>
       )}
-      <p className={`mt-2 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-        #{pokemon.id}
-      </p>
+      <p className={`mt-2 text-theme-secondary-alt`}>#{pokemon.id}</p>
     </div>
 
     <div className="mb-6">
-      <h3
-        className={`font-semibold mb-2 ${isDark ? 'text-gray-100' : 'text-gray-800'}`}
-      >
-        Types
-      </h3>
+      <h3 className={`font-semibold mb-2 text-theme-primary`}>Types</h3>
       <div className="flex gap-2">
         {pokemon.types.map((typeInfo, index) => (
           <span
@@ -54,22 +42,14 @@ const PokemonDetailsContent = ({
     </div>
 
     <div>
-      <h3
-        className={`font-semibold mb-2 ${isDark ? 'text-gray-100' : 'text-gray-800'}`}
-      >
-        Stats
-      </h3>
+      <h3 className={`font-semibold mb-2 text-theme-primary`}>Stats</h3>
       <div className="space-y-2">
         {pokemon.stats.map((statInfo, index) => (
           <div className="flex justify-between" key={index}>
-            <span
-              className={`capitalize ${isDark ? 'text-gray-300' : 'text-gray-700'}`}
-            >
+            <span className={`capitalize text-theme-text-light`}>
               {statInfo.stat.name}:
             </span>
-            <span
-              className={`font-bold ${isDark ? 'text-gray-100' : 'text-gray-800'}`}
-            >
+            <span className={`font-bold text-theme-primary`}>
               {statInfo.base_stat}
             </span>
           </div>

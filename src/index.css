@@ -37,6 +37,7 @@
   --theme-text-primary: var(--color-text-dark-blue-gray);
   --theme-text-secondary: var(--color-text-light-blue-gray);
   --theme-border: var(--color-border-light-gray);
+  --theme-text-hover-teal: var(--color-primary-green);
 
   --scrollbar-width: 8px;
   --scrollbar-track-color: hsl(220, 14%, 96%);
@@ -50,6 +51,7 @@
   --theme-text-primary: var(--color-text-dark-blue-gray);
   --theme-text-secondary: var(--color-text-light-blue-gray);
   --theme-border: var(--color-border-light-gray);
+  --theme-text-hover-teal: var(--color-primary-green);
 
   --scrollbar-track-color: hsl(220, 14%, 96%);
   --scrollbar-thumb-color: hsl(200, 15%, 70%);
@@ -62,6 +64,7 @@
   --theme-text-primary: hsl(0, 0%, 95%);
   --theme-text-secondary: hsl(0, 0%, 75%);
   --theme-border: hsl(210, 15%, 25%);
+  --theme-text-hover-teal: var(--color-primary-green-light);
 
   --color-neutral-card-background: hsl(210, 15%, 16%);
   --color-border-light-gray: hsl(210, 15%, 25%);

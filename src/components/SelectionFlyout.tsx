@@ -9,13 +9,10 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import Button from '@components/Button';
 
-import { useTheme } from '@/context/ThemeContext';
-
 const SelectionFlyout: React.FC = () => {
   const dispatch = useAppDispatch();
   const selectedItems = useAppSelector(selectSelectedItems);
   const selectedCount = useAppSelector(selectSelectedItemsCount);
-  const { isDark } = useTheme();
   const downloadLinkReference = useRef<HTMLAnchorElement>(null);
   const [downloadUrl, setDownloadUrl] = useState<string>('');
 
@@ -63,10 +60,10 @@ const SelectionFlyout: React.FC = () => {
     <AnimatePresence>
       <motion.div
         animate={{ opacity: 1, y: 0 }}
-        className={`
+        className="
           fixed bottom-0 left-0 right-0 z-[9999] p-3 shadow-2xl border-t
-          ${isDark ? 'bg-gray-800 border-gray-600' : 'bg-white border-gray-200'}
-        `}
+          bg-theme-secondary border-theme
+        "
         exit={{ opacity: 0, y: 100 }}
         initial={{ opacity: 0, y: 100 }}
         style={{
@@ -78,10 +75,10 @@ const SelectionFlyout: React.FC = () => {
         <div className="max-w-7xl mx-auto flex items-center justify-between h-full">
           <div className="flex items-center">
             <span
-              className={`
+              className="
                 text-sm font-medium
-                ${isDark ? 'text-gray-200' : 'text-gray-700'}
-              `}
+                text-theme-secondary
+              "
             >
               {selectedCount} item{selectedCount === 1 ? '' : 's'} selected
             </span>

@@ -9,10 +9,6 @@ import SelectionFlyout from '@components/SelectionFlyout';
 
 import { mockPokemonDetailResponses } from '@/__tests__/utils/mainPageMockData';
 
-vi.mock('@/context/ThemeContext', () => ({
-  useTheme: () => ({ isDark: false }),
-}));
-
 global.URL.createObjectURL = vi.fn(() => 'mock-blob-url');
 global.URL.revokeObjectURL = vi.fn();
 

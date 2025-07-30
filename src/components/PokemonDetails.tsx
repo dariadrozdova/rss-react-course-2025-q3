@@ -6,8 +6,6 @@ import { usePokemonDetails } from '@hooks/usePokemonDetails';
 
 import PokemonDetailsContent from './PokemonDetailsContent';
 
-import { useTheme } from '@/context/ThemeContext';
-
 const MIN_CONTAINER_HEIGHT = 'min-h-[600px]';
 
 const PokemonContainer = ({
@@ -21,23 +19,14 @@ const PokemonContainer = ({
   title?: string;
   titleClassName?: string;
 }) => {
-  const { isDark } = useTheme();
   return (
     <div
-      className={`rounded-lg shadow-md p-6 ${MIN_CONTAINER_HEIGHT} ${
-        isDark ? 'bg-gray-800' : 'bg-white'
-      }`}
+      className={`rounded-lg shadow-md p-6 ${MIN_CONTAINER_HEIGHT} bg-theme-secondary`}
     >
       <div className="flex justify-between items-center mb-4">
-        <h2
-          className={`${titleClassName} ${isDark ? 'text-gray-100' : 'text-gray-800'}`}
-        >
-          {title}
-        </h2>
+        <h2 className={`${titleClassName} text-theme-primary`}>{title}</h2>
         <button
-          className={`p-2 rounded ${
-            isDark ? 'hover:bg-gray-700 text-gray-300' : 'hover:bg-gray-100'
-          }`}
+          className="p-2 rounded hover:bg-theme-hover-secondary text-theme-secondary"
           onClick={onClose}
         >
           <X size={20} />
@@ -57,7 +46,6 @@ function PokemonDetails() {
   const { handleCloseDetails } = useOutletContext<OutletContext>();
   const { error, isLoading, pokemon } = usePokemonDetails(detailsId);
   const showLoader = useLoaderTimeout(detailsId);
-  const { isDark } = useTheme();
 
   if (isLoading || showLoader) {
     return (
@@ -93,9 +81,7 @@ function PokemonDetails() {
     return (
       <PokemonContainer onClose={handleCloseDetails} title="Not Found">
         <div className="text-center py-8">
-          <p className={`${isDark ? 'text-gray-300' : 'text-gray-700'} mb-4`}>
-            Pokémon not found
-          </p>
+          <p className="text-theme-secondary mb-4">Pokémon not found</p>
           <button
             className="px-4 py-2 bg-blue-600 text-white rounded"
             onClick={handleCloseDetails}
@@ -109,27 +95,21 @@ function PokemonDetails() {
 
   return (
     <div
-      className={`rounded-lg shadow-md p-6 min-h-[600px] ${
-        isDark ? 'bg-gray-800' : 'bg-white'
-      }`}
+      className={`rounded-lg shadow-md p-6 min-h-[600px] bg-theme-secondary`}
     >
       <div className="flex justify-between items-center mb-6">
-        <h2
-          className={`text-2xl font-bold capitalize ${isDark ? 'text-gray-100' : 'text-gray-800'}`}
-        >
+        <h2 className="text-2xl font-bold capitalize text-theme-primary">
           {pokemon.name}
         </h2>
         <button
-          className={`p-2 rounded cursor-pointer ${
-            isDark ? 'hover:bg-gray-700 text-gray-300' : 'hover:bg-gray-100'
-          }`}
+          className="p-2 rounded cursor-pointer hover:bg-theme-hover-secondary text-theme-secondary"
           onClick={handleCloseDetails}
         >
           <X size={20} />
         </button>
       </div>
 
-      <PokemonDetailsContent isDark={isDark} pokemon={pokemon} />
+      <PokemonDetailsContent pokemon={pokemon} />
     </div>
   );
 }

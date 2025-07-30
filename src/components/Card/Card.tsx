@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 
 import CardContent from './CardContent';
 
-import { useTheme } from '@/context/ThemeContext';
 import { selectIsItemSelected } from '@/store/selectors';
 
 function Card({
@@ -17,7 +16,6 @@ function Card({
 }: CardProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
-  const { isDark } = useTheme();
   const dispatch = useAppDispatch();
 
   const isItemSelected = useAppSelector((state) =>
@@ -58,13 +56,11 @@ function Card({
   const baseClass = `
     group p-4 sm:p-5 rounded-lg shadow-sm flex flex-col items-center text-center
     transition-all duration-300 ease-in-out h-[280px] border
-    ${isDark ? 'bg-gray-800' : 'bg-white'}
+    bg-theme-secondary
     ${
       isSelected
         ? 'border-teal-400 shadow-lg ring-2 ring-teal-200 -translate-y-1'
-        : isDark
-          ? 'border-gray-600 hover:-translate-y-1 hover:shadow-lg hover:border-teal-400'
-          : 'border-gray-200 hover:-translate-y-1 hover:shadow-lg hover:border-teal-400'
+        : 'border-theme hover:-translate-y-1 hover:shadow-lg hover:border-teal-400'
     }
   `;
 

@@ -10,15 +10,12 @@ import {
   mockPokemonItemWithImage,
   mockPokemonItemWithoutImage,
 } from '@/__tests__/utils/cardComponentsMockData';
-import { ThemeProvider } from '@/context/ThemeContext';
 
 const renderCard = (item: typeof mockPokemonItemWithImage, props = {}) =>
   render(
     <Provider store={store}>
       <MemoryRouter>
-        <ThemeProvider>
-          <Card currentPage={1} item={item} {...props} />
-        </ThemeProvider>
+        <Card currentPage={1} item={item} {...props} />
       </MemoryRouter>
     </Provider>
   );
@@ -79,9 +76,10 @@ describe('Card', () => {
       renderCard(mockPokemonItemWithImage, { isSelected: true });
 
       const nameElement = screen.getByText(mockPokemonItemWithImage.name);
-      expect(nameElement).toHaveClass('text-teal-600');
+      expect(nameElement).toHaveClass('text-[var(--color-primary-green)]');
 
       const container = nameElement.closest('a') || nameElement.closest('div');
+      expect(container).toHaveClass('bg-theme-secondary');
       expect(container).toHaveClass(
         'border-teal-400',
         'shadow-lg',
@@ -96,12 +94,12 @@ describe('Card', () => {
 
       const nameElement = screen.getByText(mockPokemonItemWithImage.name);
       expect(nameElement).toHaveClass(
-        'text-gray-800',
-        'group-hover:text-teal-600'
+        'text-theme-primary',
+        'group-hover:text-[var(--theme-text-hover-teal)]'
       );
 
       const container = nameElement.closest('a') || nameElement.closest('div');
-      expect(container).toHaveClass('border-gray-200');
+      expect(container).toHaveClass('border-theme');
       expect(container).not.toHaveClass(
         'border-teal-400',
         'shadow-lg',
@@ -113,7 +111,7 @@ describe('Card', () => {
       renderCard(mockPokemonItemWithImage);
 
       const nameElement = screen.getByText(mockPokemonItemWithImage.name);
-      expect(nameElement).toHaveClass('text-gray-800');
+      expect(nameElement).toHaveClass('text-theme-primary');
     });
   });
 

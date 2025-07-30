@@ -6,15 +6,13 @@ import ErrorBoundary from '@components/ErrorBoundary';
 import ThemeSwitch from '@components/ThemeSwitch';
 import { useSelectedItemsStorage } from '@hooks/useSelectedItemsStorage';
 
-import { ThemeProvider, useTheme } from './context/ThemeContext';
+import { ThemeProvider } from './context/ThemeContext';
 import { store } from './store';
 
 import './index.css';
 
 const AppContent: React.FC = () => {
   useSelectedItemsStorage();
-
-  const { isDark } = useTheme();
 
   return (
     <div
@@ -24,12 +22,12 @@ const AppContent: React.FC = () => {
       "
     >
       <nav
-        className={`
+        className="
           py-3.5 rounded-lg shadow-sm mb-8 w-full
           max-w-[1400px] border box-border
           md:rounded-xl md:shadow-lg
-          ${isDark ? 'bg-gray-800 border-gray-600' : 'bg-white border-blue-200'}
-        `}
+          bg-theme-secondary border-theme
+        "
       >
         <div className="flex justify-end px-4 pb-2">
           <ThemeSwitch />
@@ -52,11 +50,7 @@ const AppContent: React.FC = () => {
                 px-6 py-3 text-center
                 sm:text-base
                 md:px-4 md:py-2 md:text-lg
-                ${
-                  isDark
-                    ? 'text-gray-200 hover:bg-gray-700 hover:text-teal-400'
-                    : 'text-gray-800 hover:bg-blue-100 hover:text-teal-700'
-                }
+                text-theme-primary hover:bg-theme-primary/20 hover:text-teal-500
                 ${
                   isActive
                     ? 'bg-green-600 text-white font-bold shadow-md shadow-green-600/40'
@@ -78,11 +72,7 @@ const AppContent: React.FC = () => {
                 px-6 py-3 text-center
                 sm:text-base
                 md:px-4 md:py-2 md:text-lg
-                ${
-                  isDark
-                    ? 'text-gray-200 hover:bg-gray-700 hover:text-teal-400'
-                    : 'text-gray-800 hover:bg-blue-100 hover:text-teal-700'
-                }
+                text-theme-primary hover:bg-theme-primary/20 hover:text-teal-500
                 ${
                   isActive
                     ? 'bg-green-600 text-white font-bold shadow-md shadow-green-600/40'

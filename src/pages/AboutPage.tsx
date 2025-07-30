@@ -1,8 +1,4 @@
-import { useTheme } from '@/context/ThemeContext';
-
 function AboutPage() {
-  const { isDark } = useTheme();
-
   return (
     <div
       className="
@@ -19,16 +15,12 @@ function AboutPage() {
           src="/icons/favicon.svg"
         />
 
-        <h1
-          className={`text-4xl lg:text-5xl font-bold mb-8 ${isDark ? 'text-gray-100' : 'text-gray-800'}`}
-        >
+        <h1 className="text-4xl lg:text-5xl font-bold mb-8 text-theme-primary">
           About This App
         </h1>
 
         <div className="space-y-6 mb-10">
-          <h2
-            className={`text-2xl lg:text-3xl font-semibold ${isDark ? 'text-gray-100' : 'text-gray-800'}`}
-          >
+          <h2 className="text-2xl lg:text-3xl font-semibold text-theme-primary">
             App Overview
           </h2>
           <p className="text-lg leading-relaxed max-w-prose mx-auto text-theme-secondary">
@@ -47,9 +39,7 @@ function AboutPage() {
         </div>
 
         <div className="space-y-6 mb-10">
-          <h2
-            className={`text-2xl lg:text-3xl font-semibold ${isDark ? 'text-gray-100' : 'text-gray-800'}`}
-          >
+          <h2 className="text-2xl lg:text-3xl font-semibold text-theme-primary">
             Author
           </h2>
           <p className="text-xl font-medium text-theme-primary">
@@ -68,9 +58,7 @@ function AboutPage() {
         </div>
 
         <div className="space-y-6">
-          <h2
-            className={`text-2xl lg:text-3xl font-semibold ${isDark ? 'text-gray-100' : 'text-gray-800'}`}
-          >
+          <h2 className="text-2xl lg:text-3xl font-semibold text-theme-primary">
             The Course
           </h2>
           <p className="text-lg leading-relaxed max-w-prose mx-auto text-theme-secondary">

@@ -4,8 +4,6 @@ import React from 'react';
 import PokemonImage from './PokemonImage';
 import SelectionCheckbox from './SelectionCheckbox';
 
-import { useTheme } from '@/context/ThemeContext';
-
 interface CardContentProps {
   imageError: boolean;
   imageLoaded: boolean;
@@ -29,8 +27,6 @@ function CardContent({
   onImageError,
   onImageLoad,
 }: CardContentProps) {
-  const { isDark } = useTheme();
-
   return (
     <>
       <strong
@@ -38,10 +34,8 @@ function CardContent({
           mb-2.5 capitalize font-bold text-base md:text-lg transition-colors
           ${
             isSelected
-              ? 'text-teal-600'
-              : isDark
-                ? 'text-gray-100 group-hover:text-teal-400'
-                : 'text-gray-800 group-hover:text-teal-600'
+              ? 'text-[var(--color-primary-green)]'
+              : 'text-theme-primary group-hover:text-[var(--theme-text-hover-teal)]'
           }
         `}
       >

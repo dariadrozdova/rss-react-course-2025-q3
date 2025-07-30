@@ -9,11 +9,8 @@ import {
 
 import Button from './Button';
 
-import { useTheme } from '@/context/ThemeContext';
-
 const Search = ({ initialSearchTerm, onSearch }: SearchProps) => {
   const [inputValue, setInputValue] = useState(initialSearchTerm);
-  const { isDark } = useTheme();
 
   const previousInitialSearchTermReference = useRef(initialSearchTerm);
 
@@ -55,7 +52,7 @@ const Search = ({ initialSearchTerm, onSearch }: SearchProps) => {
         rounded-lg
         shadow-sm shadow-[hsla(0,0%,0%,0.05)]
         w-full max-w-[700px]
-        ${isDark ? 'bg-gray-700' : 'bg-[hsl(190,100%,94%)]'}
+        bg-theme-secondary-alt
       `}
       onClick={(e) => {
         e.stopPropagation();
@@ -66,12 +63,8 @@ const Search = ({ initialSearchTerm, onSearch }: SearchProps) => {
           px-[15px] py-[10px] border rounded-md
           text-base flex-grow max-w-full outline-none
           transition-all duration-200 ease-in-out
-          focus:border-[hsl(187,100%,42%)] focus:shadow-[0_0_0_3px_hsla(187,100%,42%,0.2)]
-          ${
-            isDark
-              ? 'bg-gray-800 text-gray-100 border-gray-600 placeholder-gray-400'
-              : 'bg-white text-gray-800 border-[hsl(187,70%,82%)] placeholder-gray-500'
-          }
+          focus:border-[var(--color-primary-cyan)] focus:shadow-[0_0_0_3px_hsla(187,100%,42%,0.2)]
+          bg-theme-primary text-theme-primary border-theme-input placeholder-theme-input-placeholder
         `}
         onChange={handleInputChange}
         onKeyDown={handleKeyPress}
@@ -81,11 +74,11 @@ const Search = ({ initialSearchTerm, onSearch }: SearchProps) => {
       />
       <Button
         className="
-    px-5 py-[10px] rounded-md text-base normal-case
-    shadow-sm shadow-black/10
-    hover:-translate-y-[1px]
-    active:shadow-black/10
-    "
+          px-5 py-[10px] rounded-md text-base normal-case
+          shadow-sm shadow-black/10
+          hover:-translate-y-[1px]
+          active:shadow-black/10
+        "
         color="green"
         onClick={handleSearchClick}
       >
