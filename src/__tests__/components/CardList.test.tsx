@@ -1,12 +1,15 @@
+import { store } from '@store/index';
 import { render, screen } from '@testing-library/react';
+import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
-import { describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import CardList from '@components/CardList';
 
 import { mockPokemonItemsList } from '@/__tests__/utils/cardComponentsMockData';
+import { ThemeProvider } from '@/context/ThemeContext';
 
-vi.mock('@components/Card', () => ({
+vi.mock('@components/Card/Card', () => ({
   default: vi.fn(({ currentPage, isSelected, item, onPokemonClick }) => (
     <li
       data-current-page={currentPage}
@@ -20,12 +23,29 @@ vi.mock('@components/Card', () => ({
 }));
 
 describe('CardList', () => {
-  it('renders the correct number of Card components for a given list of items', () => {
+  const defaultProps = {
+    currentPage: 1,
+    pokemonItems: mockPokemonItemsList,
+  };
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  const renderCardList = (props = {}) => {
     render(
-      <MemoryRouter>
-        <CardList currentPage={1} pokemonItems={mockPokemonItemsList} />
-      </MemoryRouter>
+      <Provider store={store}>
+        <MemoryRouter>
+          <ThemeProvider>
+            <CardList {...defaultProps} {...props} />
+          </ThemeProvider>
+        </MemoryRouter>
+      </Provider>
     );
+  };
+
+  it('renders the correct number of Card components for a given list of items', () => {
+    renderCardList();
 
     const listItems = screen.getAllByRole('listitem');
 
@@ -37,11 +57,7 @@ describe('CardList', () => {
   });
 
   it('renders an empty list when pokemonItems array is empty', () => {
-    render(
-      <MemoryRouter>
-        <CardList currentPage={1} pokemonItems={[]} />
-      </MemoryRouter>
-    );
+    renderCardList({ pokemonItems: [] });
 
     const listItems = screen.queryAllByRole('listitem');
     expect(listItems).toHaveLength(0);
@@ -52,16 +68,7 @@ describe('CardList', () => {
 
   it('passes onPokemonClick prop to Card when provided', () => {
     const mockOnPokemonClick = vi.fn();
-
-    render(
-      <MemoryRouter>
-        <CardList
-          currentPage={1}
-          onPokemonClick={mockOnPokemonClick}
-          pokemonItems={mockPokemonItemsList}
-        />
-      </MemoryRouter>
-    );
+    renderCardList({ onPokemonClick: mockOnPokemonClick });
 
     const cards = screen.getAllByTestId(/^card-/);
     for (const card of cards) {
@@ -71,16 +78,7 @@ describe('CardList', () => {
 
   it('passes selectedPokemonId correctly to determine isSelected prop', () => {
     const selectedId = mockPokemonItemsList[0].id;
-
-    render(
-      <MemoryRouter>
-        <CardList
-          currentPage={1}
-          pokemonItems={mockPokemonItemsList}
-          selectedPokemonId={selectedId}
-        />
-      </MemoryRouter>
-    );
+    renderCardList({ selectedPokemonId: selectedId });
 
     expect(screen.getByTestId(`card-${selectedId}`)).toHaveAttribute(
       'data-selected',

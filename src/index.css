@@ -2,39 +2,80 @@
 
 @theme {
   --color-error-background: hsl(0, 100%, 97%);
-  --color-error-border: hsl(0, 60%, 82%);
-  --color-error-text-dark: hsl(0, 64%, 47%);
-  --color-error-text-medium: hsl(0, 70%, 51%);
-  --color-error-border-light: hsl(0, 57%, 76%);
+  --color-error-border: hsl(0, 75%, 75%);
+  --color-error-text-dark: hsl(0, 80%, 40%);
+  --color-error-text-medium: hsl(0, 75%, 55%);
+  --color-error-border-light: hsl(0, 70%, 88%);
 
-  --color-primary-red: hsl(1, 84%, 63%);
+  --color-primary-red: hsl(0, 84%, 63%);
   --color-primary-red-hover: hsl(0, 70%, 39%);
 
   --color-black-alpha-08: hsla(0, 0%, 0%, 0.08);
   --color-black-alpha-10: hsla(0, 0%, 0%, 0.1);
   --color-black-alpha-15: hsla(0, 0%, 0%, 0.15);
 
-  --color-primary-green: hsl(173, 100%, 23%);
-  --color-primary-green-hover: hsl(173, 100%, 15%);
-  --color-primary-green-light: hsl(187, 100%, 38%);
+  --color-primary-green: hsl(173, 90%, 30%);
+  --color-primary-green-hover: hsl(173, 95%, 20%);
+  --color-primary-green-light: hsl(173, 70%, 65%);
 
   --color-white: hsl(0, 0%, 100%);
-  --color-neutral-card-background: hsl(0, 0%, 99%);
+  --color-neutral-card-background: hsl(220, 10%, 98%);
 
-  --color-gradient-start-light-blue: hsl(187, 72%, 93%);
-  --color-gradient-end-light-blue: hsl(187, 71%, 82%);
-  --color-text-light-blue-gray: hsl(200, 15%, 30%);
-  --color-text-dark-blue-gray: hsl(200, 25%, 18%);
-  --color-border-light-gray: hsl(207, 17%, 94%);
+  --color-gradient-start-light-blue: hsl(200, 60%, 90%);
+  --color-gradient-end-light-blue: hsl(200, 65%, 75%);
+  --color-text-light-blue-gray: hsl(220, 10%, 40%);
+  --color-text-dark-blue-gray: hsl(220, 15%, 20%);
+  --color-border-light-gray: hsl(220, 10%, 90%);
+  --color-light-gray-bg: hsl(220, 12%, 96%);
 
   --shadow-xs: 0 0px 0px 0px;
 }
 
 :root {
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-osx-smoothing: grayscale;
+  --theme-bg-primary: var(--color-light-gray-bg);
+  --theme-bg-secondary: var(--color-neutral-card-background);
+  --theme-text-primary: var(--color-text-dark-blue-gray);
+  --theme-text-secondary: var(--color-text-light-blue-gray);
+  --theme-border: var(--color-border-light-gray);
+  --theme-text-hover-teal: var(--color-primary-green);
+
+  --scrollbar-width: 8px;
+  --scrollbar-track-color: hsl(220, 14%, 96%);
+  --scrollbar-thumb-color: hsl(200, 15%, 70%);
+  --scrollbar-thumb-hover-color: hsl(200, 15%, 60%);
+}
+
+.light {
+  --theme-bg-primary: var(--color-light-gray-bg);
+  --theme-bg-secondary: var(--color-neutral-card-background);
+  --theme-text-primary: var(--color-text-dark-blue-gray);
+  --theme-text-secondary: var(--color-text-light-blue-gray);
+  --theme-border: var(--color-border-light-gray);
+  --theme-text-hover-teal: var(--color-primary-green);
+
+  --scrollbar-track-color: hsl(220, 14%, 96%);
+  --scrollbar-thumb-color: hsl(200, 15%, 70%);
+  --scrollbar-thumb-hover-color: hsl(200, 15%, 60%);
+}
+
+.dark {
+  --theme-bg-primary: hsl(210, 15%, 12%);
+  --theme-bg-secondary: hsl(210, 15%, 16%);
+  --theme-text-primary: hsl(0, 0%, 95%);
+  --theme-text-secondary: hsl(0, 0%, 75%);
+  --theme-border: hsl(210, 15%, 25%);
+  --theme-text-hover-teal: var(--color-primary-green-light);
+
+  --color-neutral-card-background: hsl(210, 15%, 16%);
+  --color-border-light-gray: hsl(210, 15%, 25%);
+  --color-text-dark-blue-gray: hsl(0, 0%, 95%);
+  --color-text-light-blue-gray: hsl(0, 0%, 75%);
+  --color-gradient-start-light-blue: hsl(187, 30%, 25%);
+  --color-gradient-end-light-blue: hsl(187, 30%, 20%);
+
+  --scrollbar-track-color: hsl(210, 15%, 16%);
+  --scrollbar-thumb-color: hsl(210, 15%, 35%);
+  --scrollbar-thumb-hover-color: hsl(210, 15%, 45%);
 }
 
 html,
@@ -44,4 +85,75 @@ body,
   padding: 0;
   width: 100%;
   height: 100%;
+}
+
+html {
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+body {
+  background-color: var(--theme-bg-primary);
+  color: var(--theme-text-primary);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.bg-theme-primary {
+  background-color: var(--theme-bg-primary);
+}
+
+.bg-theme-secondary {
+  background-color: var(--theme-bg-secondary);
+}
+
+.text-theme-primary {
+  color: var(--theme-text-primary);
+}
+
+.text-theme-secondary {
+  color: var(--theme-text-secondary);
+}
+
+.border-theme {
+  border-color: var(--theme-border);
+}
+
+.theme-card {
+  background-color: var(--theme-bg-secondary);
+  color: var(--theme-text-primary);
+  border: 1px solid var(--theme-border);
+  transition: all 0.3s ease;
+}
+
+.theme-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px hsla(0, 0%, 0%, 0.1);
+}
+
+.dark .theme-card:hover {
+  box-shadow: 0 8px 25px hsla(0, 0%, 0%, 0.4);
+}
+
+.nav-item a {
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar {
+  width: var(--scrollbar-width);
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover-color);
 }

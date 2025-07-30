@@ -4,13 +4,19 @@ import { beforeEach, describe, expect, it } from 'vitest';
 
 import NotFoundPage from '@pages/NotFoundPage';
 
+import { ThemeProvider } from '@/context/ThemeContext';
+
+const NotFoundPageWithProviders = () => (
+  <MemoryRouter>
+    <ThemeProvider>
+      <NotFoundPage />
+    </ThemeProvider>
+  </MemoryRouter>
+);
+
 describe('NotFoundPage', () => {
   beforeEach(() => {
-    render(
-      <MemoryRouter>
-        <NotFoundPage />
-      </MemoryRouter>
-    );
+    render(<NotFoundPageWithProviders />);
   });
 
   describe('content display', () => {

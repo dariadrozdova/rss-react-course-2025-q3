@@ -1,11 +1,14 @@
-import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import AboutPage from '@pages/AboutPage';
 
+import { render, screen } from '@/__tests__/utils/TestUtilities';
+
+const AboutPageWithProviders = () => <AboutPage />;
+
 describe('AboutPage', () => {
   beforeEach(() => {
-    render(<AboutPage />);
+    render(<AboutPageWithProviders />);
   });
 
   describe('content display', () => {

@@ -1,6 +1,6 @@
-# RS School React Course: Functional Routing & Hooks
+# RS School React Course: State Management & Context API
 
-This project is a part of the [Rolling Scopes School (RS School) React Course](https://rs.school/courses/reactjs) focusing on building a simple React application with client-side routing using React Router. It demonstrates the use of functional components, React Hooks, and navigation between a Main Page, an About Page, and a Not Found Page. Each task in the course builds upon the previous one, allowing for incremental development and learning.
+This project is a continuation of the [Rolling Scopes School (RS School) React Course](https://rs.school/courses/reactjs), now focusing on advanced state management techniques and context API for theme management. It builds upon previous tasks, demonstrating the integration of a state management solution (Redux Toolkit) for managing selected items and a Context API for dynamic theme switching.
 
 ## Installation & Setup
 

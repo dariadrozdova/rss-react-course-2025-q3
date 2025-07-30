@@ -11,27 +11,27 @@ function NotFoundPage() {
   return (
     <div
       className="
-        bg-white p-6 rounded-lg shadow-md
+        theme-card p-6 rounded-lg shadow-md
         text-center flex flex-col items-center justify-center
-        w-full box-border font-['Inter'] text-gray-700
+        w-full box-border font-['Inter']
         min-h-[1016px]
       "
     >
       <div className="max-w-4xl w-full">
         <div className="flex items-center justify-center gap-4 mb-6">
-          <span className="text-8xl font-bold text-gray-800">4</span>
+          <span className="text-8xl font-bold text-theme-primary">4</span>
           <img
             alt="Poké Ball"
             className="w-20 h-20"
             src="/icons/pokeball.png"
           />
-          <span className="text-8xl font-bold text-gray-800">4</span>
+          <span className="text-8xl font-bold text-theme-primary">4</span>
         </div>
 
-        <p className="text-xl text-gray-600 mb-2">
+        <p className="text-xl mb-2 text-theme-secondary">
           Looks like this page doesn't exist!
         </p>
-        <p className="text-lg text-gray-600 mb-8">
+        <p className="text-lg mb-8 text-theme-secondary">
           Go back to the homepage and continue exploring.
         </p>
 

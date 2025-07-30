@@ -1,10 +1,19 @@
+import React from 'react';
+import { Provider } from 'react-redux';
 import { NavLink, Outlet } from 'react-router-dom';
 
 import ErrorBoundary from '@components/ErrorBoundary';
+import ThemeSwitch from '@components/ThemeSwitch';
+import { useSelectedItemsStorage } from '@hooks/useSelectedItemsStorage';
+
+import { ThemeProvider } from './context/ThemeContext';
+import { store } from './store';
 
 import './index.css';
 
-function App() {
+const AppContent: React.FC = () => {
+  useSelectedItemsStorage();
+
   return (
     <div
       className="
@@ -14,11 +23,16 @@ function App() {
     >
       <nav
         className="
-          bg-white py-3.5 rounded-lg shadow-sm mb-8 w-full
-          max-w-[1400px] border border-blue-200 box-border
+          py-3.5 rounded-lg shadow-sm mb-8 w-full
+          max-w-[1400px] border box-border
           md:rounded-xl md:shadow-lg
+          bg-theme-secondary border-theme
         "
       >
+        <div className="flex justify-end px-4 pb-2">
+          <ThemeSwitch />
+        </div>
+
         <ul
           className="
             list-none p-0 m-0 flex justify-center flex-wrap
@@ -31,12 +45,12 @@ function App() {
             <NavLink
               className={({ isActive }) =>
                 `
-                block no-underline font-semibold text-gray-800 rounded-lg
+                block no-underline font-semibold rounded-lg
                 transition-colors duration-300
                 px-6 py-3 text-center
                 sm:text-base
                 md:px-4 md:py-2 md:text-lg
-                hover:bg-blue-100 hover:text-teal-700
+                text-theme-primary hover:bg-theme-primary/20 hover:text-teal-500
                 ${
                   isActive
                     ? 'bg-green-600 text-white font-bold shadow-md shadow-green-600/40'
@@ -53,12 +67,12 @@ function App() {
             <NavLink
               className={({ isActive }) =>
                 `
-                block no-underline font-semibold text-gray-800 rounded-lg
+                block no-underline font-semibold rounded-lg
                 transition-colors duration-300
                 px-6 py-3 text-center
                 sm:text-base
                 md:px-4 md:py-2 md:text-lg
-                hover:bg-blue-100 hover:text-teal-700
+                text-theme-primary hover:bg-theme-primary/20 hover:text-teal-500
                 ${
                   isActive
                     ? 'bg-green-600 text-white font-bold shadow-md shadow-green-600/40'
@@ -79,6 +93,16 @@ function App() {
       </ErrorBoundary>
     </div>
   );
-}
+};
+
+const App: React.FC = () => {
+  return (
+    <Provider store={store}>
+      <ThemeProvider>
+        <AppContent />
+      </ThemeProvider>
+    </Provider>
+  );
+};
 
 export default App;

@@ -1,5 +1,3 @@
-import { render, screen, waitFor } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -7,6 +5,8 @@ import useLocalStorage from '@hooks/useLocalStorage';
 import { usePaginationAndSearch } from '@hooks/usePaginationAndSearch';
 import { usePokemonData } from '@hooks/usePokemonData';
 import MainPage from '@pages/MainPage';
+
+import { render, screen, waitFor } from '@/__tests__/utils/TestUtilities';
 
 vi.mock('@hooks/usePokemonData', () => ({ usePokemonData: vi.fn() }));
 vi.mock('@hooks/useLocalStorage', () => ({ default: vi.fn() }));
@@ -38,8 +38,7 @@ vi.mock('react-router-dom', async () => {
 describe('MainPage - Validation', () => {
   let mockNavigate: ReturnType<typeof vi.fn>;
 
-  const renderWithRouter = () =>
-    render(<MainPage />, { wrapper: MemoryRouter });
+  const renderWithRouter = () => render(<MainPage />);
 
   beforeEach(() => {
     vi.clearAllMocks();

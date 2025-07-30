@@ -20,6 +20,8 @@ import { useOutletContext, useParams } from 'react-router-dom';
 import { useLoaderTimeout } from '@hooks/useLoaderTimeout';
 import { usePokemonDetails } from '@hooks/usePokemonDetails';
 
+import { ThemeProvider } from '@/context/ThemeContext';
+
 const mockUseLoaderTimeout = vi.mocked(useLoaderTimeout);
 const mockUsePokemonDetails = vi.mocked(usePokemonDetails);
 const mockUseParameters = vi.mocked(useParams);
@@ -53,7 +55,9 @@ describe('PokemonDetails', () => {
   const renderComponent = () =>
     render(
       <MemoryRouter>
-        <PokemonDetails />
+        <ThemeProvider>
+          <PokemonDetails />
+        </ThemeProvider>
       </MemoryRouter>
     );
 
