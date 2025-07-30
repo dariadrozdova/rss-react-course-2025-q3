@@ -55,7 +55,7 @@ function Card({
 
   const baseClass = `
     group p-4 sm:p-5 rounded-lg shadow-sm flex flex-col items-center text-center
-    transition-all duration-300 ease-in-out h-[280px] border
+    transition-all duration-300 ease-in-out min-h-[280px] border
     bg-theme-secondary
     ${
       isSelected

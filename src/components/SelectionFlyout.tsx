@@ -72,7 +72,7 @@ const SelectionFlyout: React.FC = () => {
         }}
         transition={{ damping: 30, stiffness: 300, type: 'spring' }}
       >
-        <div className="max-w-7xl mx-auto flex items-center justify-between h-full">
+        <div className="max-w-5xl mx-auto flex items-center justify-between h-full">
           <div className="flex items-center">
             <span
               className="
