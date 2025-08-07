@@ -9,6 +9,7 @@ import { usePokemonData } from '@hooks/usePokemonData';
 import NotFoundPage from '@pages/NotFoundPage';
 import { useAppSelector } from '@store/hooks';
 import { selectHasSelectedItems } from '@store/selectors';
+import { cn } from '@utils/cn';
 
 const ITEMS_PER_PAGE = 20;
 
@@ -71,17 +72,22 @@ function MainPage() {
   return (
     <>
       <div
-        className={`flex flex-row gap-8 w-full transition-all duration-300 ${
-          hasSelectedItems ? 'pb-20' : ''
-        }`}
+        className={cn(
+          'flex flex-row gap-8 w-full transition-all duration-300',
+          hasSelectedItems && 'pb-20'
+        )}
       >
         <div
-          className={`
-            flex flex-col gap-5 w-full transition-all duration-300
-            ${detailsId ? 'md:w-1/2 lg:w-2/3' : 'md:w-full'}
-          `}
+          className={cn(
+            'flex flex-col gap-5 w-full transition-all duration-300',
+            detailsId ? 'md:w-1/2 lg:w-2/3' : 'md:w-full'
+          )}
         >
-          <section className="theme-card p-6 rounded-lg shadow-md text-center flex flex-col items-center gap-5 box-border w-full flex-shrink-0">
+          <section
+            className={cn(
+              'theme-card p-6 rounded-lg shadow-md text-center flex flex-col items-center gap-5 box-border w-full flex-shrink-0'
+            )}
+          >
             <Search
               initialSearchTerm={effectiveSearchTerm}
               onSearch={handleSearch}
@@ -89,7 +95,9 @@ function MainPage() {
           </section>
 
           <section
-            className="flex-grow theme-card p-6 rounded-lg shadow-md flex flex-col items-center justify-start box-border w-full min-h-[900px]"
+            className={cn(
+              'flex-grow theme-card p-6 rounded-lg shadow-md flex flex-col items-center justify-start box-border w-full min-h-[900px]'
+            )}
             onClick={detailsId ? handleCloseDetails : undefined}
           >
             <PokemonContent
@@ -110,8 +118,12 @@ function MainPage() {
         </div>
 
         {detailsId && (
-          <div className="hidden md:block md:w-1/2 lg:w-1/3 sticky top-8 self-start">
-            <div className="theme-card rounded-lg shadow-md p-6 relative">
+          <div
+            className={cn(
+              'hidden md:block md:w-1/2 lg:w-1/3 sticky top-8 self-start'
+            )}
+          >
+            <div className={cn('theme-card rounded-lg shadow-md p-6 relative')}>
               <Outlet context={{ handleCloseDetails }} />
             </div>
           </div>

@@ -4,6 +4,7 @@ import { X } from 'lucide-react';
 
 import { useLoaderTimeout } from '@hooks/useLoaderTimeout';
 import { usePokemonDetails } from '@hooks/usePokemonDetails';
+import { cn } from '@utils/cn';
 
 import PokemonDetailsContent from './PokemonDetailsContent';
 
@@ -22,12 +23,18 @@ const PokemonContainer = ({
 }) => {
   return (
     <div
-      className={`rounded-lg shadow-md p-6 ${MIN_CONTAINER_HEIGHT} bg-theme-secondary`}
+      className={cn(
+        'rounded-lg shadow-md p-6',
+        MIN_CONTAINER_HEIGHT,
+        'bg-theme-secondary'
+      )}
     >
-      <div className="flex justify-between items-center mb-4">
-        <h2 className={`${titleClassName} text-theme-primary`}>{title}</h2>
+      <div className={cn('flex justify-between items-center mb-4')}>
+        <h2 className={cn(titleClassName, 'text-theme-primary')}>{title}</h2>
         <button
-          className="p-2 rounded hover:bg-theme-hover-secondary text-theme-secondary"
+          className={cn(
+            'p-2 rounded hover:bg-theme-hover-secondary text-theme-secondary'
+          )}
           onClick={onClose}
         >
           <X size={20} />
@@ -51,8 +58,12 @@ function PokemonDetails() {
   if (isLoading || showLoader) {
     return (
       <PokemonContainer onClose={handleCloseDetails}>
-        <div className="flex justify-center items-center py-8">
-          <div className="border-4 border-gray-200 border-t-blue-500 rounded-full w-10 h-10 animate-spin" />
+        <div className={cn('flex justify-center items-center py-8')}>
+          <div
+            className={cn(
+              'border-4 border-gray-200 border-t-blue-500 rounded-full w-10 h-10 animate-spin'
+            )}
+          />
         </div>
       </PokemonContainer>
     );
@@ -63,12 +74,12 @@ function PokemonDetails() {
       <PokemonContainer
         onClose={handleCloseDetails}
         title="Error"
-        titleClassName="text-xl font-bold text-red-600"
+        titleClassName={cn('text-xl font-bold text-red-600')}
       >
-        <div className="text-center py-8">
-          <p className="text-red-600 mb-4">{error}</p>
+        <div className={cn('text-center py-8')}>
+          <p className={cn('text-red-600 mb-4')}>{error}</p>
           <button
-            className="px-4 py-2 bg-blue-600 text-white rounded"
+            className={cn('px-4 py-2 bg-blue-600 text-white rounded')}
             onClick={handleCloseDetails}
           >
             Go Back
@@ -81,10 +92,10 @@ function PokemonDetails() {
   if (!pokemon) {
     return (
       <PokemonContainer onClose={handleCloseDetails} title="Not Found">
-        <div className="text-center py-8">
-          <p className="text-theme-secondary mb-4">Pokémon not found</p>
+        <div className={cn('text-center py-8')}>
+          <p className={cn('text-theme-secondary mb-4')}>Pokémon not found</p>
           <button
-            className="px-4 py-2 bg-blue-600 text-white rounded"
+            className={cn('px-4 py-2 bg-blue-600 text-white rounded')}
             onClick={handleCloseDetails}
           >
             Go Back
@@ -98,12 +109,14 @@ function PokemonDetails() {
     <div
       className={`rounded-lg shadow-md p-6 min-h-[600px] bg-theme-secondary`}
     >
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold capitalize text-theme-primary">
+      <div className={cn('flex justify-between items-center mb-6')}>
+        <h2 className={cn('text-2xl font-bold capitalize text-theme-primary')}>
           {pokemon.name}
         </h2>
         <button
-          className="p-2 rounded cursor-pointer hover:bg-theme-hover-secondary text-theme-secondary"
+          className={cn(
+            'p-2 rounded cursor-pointer hover:bg-theme-hover-secondary text-theme-secondary'
+          )}
           onClick={handleCloseDetails}
         >
           <X size={20} />

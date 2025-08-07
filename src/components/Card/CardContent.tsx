@@ -2,6 +2,8 @@ import React from 'react';
 
 import type { PokemonItem } from '@types';
 
+import { cn } from '@utils/cn';
+
 import PokemonImage from './PokemonImage';
 import SelectionCheckbox from './SelectionCheckbox';
 
@@ -31,14 +33,12 @@ function CardContent({
   return (
     <>
       <strong
-        className={`
-          mb-2.5 capitalize font-bold text-base md:text-lg transition-colors
-          ${
-            isSelected
-              ? 'text-[var(--color-primary-green)]'
-              : 'text-theme-primary group-hover:text-[var(--theme-text-hover-teal)]'
-          }
-        `}
+        className={cn(
+          'mb-2.5 capitalize font-bold text-base md:text-lg transition-colors',
+          isSelected
+            ? 'text-[var(--color-primary-green)]'
+            : 'text-theme-primary group-hover:text-[var(--theme-text-hover-teal)]'
+        )}
       >
         {item.name}
       </strong>

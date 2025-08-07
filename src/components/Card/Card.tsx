@@ -5,6 +5,7 @@ import type { CardProps } from '@types';
 
 import { useAppDispatch, useAppSelector } from '@store/hooks';
 import { toggleItemSelection } from '@store/slices/selectedItemsSlice';
+import { cn } from '@utils/cn';
 
 import CardContent from './CardContent';
 
@@ -79,11 +80,11 @@ function Card({
   };
 
   return onPokemonClick ? (
-    <div className={baseClass + ' cursor-pointer'} onClick={handleClick}>
+    <div className={cn(baseClass, 'cursor-pointer')} onClick={handleClick}>
       <CardContent {...cardContentProps} />
     </div>
   ) : (
-    <Link className={baseClass} to={`/${currentPage}/${item.id}`}>
+    <Link className={cn(baseClass)} to={`/${currentPage}/${item.id}`}>
       <CardContent {...cardContentProps} />
     </Link>
   );

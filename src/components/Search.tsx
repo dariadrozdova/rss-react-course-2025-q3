@@ -8,6 +8,8 @@ import {
 
 import type { SearchProps } from '@types';
 
+import { cn } from '@utils/cn';
+
 import Button from './Button';
 
 const Search = ({ initialSearchTerm, onSearch }: SearchProps) => {
@@ -48,25 +50,25 @@ const Search = ({ initialSearchTerm, onSearch }: SearchProps) => {
 
   return (
     <div
-      className={`
-        flex gap-2.5 justify-center items-center p-[15px]
-        rounded-lg
-        shadow-sm shadow-[hsla(0,0%,0%,0.05)]
-        w-full max-w-[700px]
-        bg-theme-secondary-alt
-      `}
+      className={cn(
+        'flex gap-2.5 justify-center items-center p-[15px]',
+        'rounded-lg',
+        'shadow-sm shadow-[hsla(0,0%,0%,0.05)]',
+        'w-full max-w-[700px]',
+        'bg-theme-secondary-alt'
+      )}
       onClick={(e) => {
         e.stopPropagation();
       }}
     >
       <input
-        className={`
-          px-[15px] py-[10px] border rounded-md
-          text-base flex-grow max-w-full outline-none
-          transition-all duration-200 ease-in-out
-          focus:border-[var(--color-primary-cyan)] focus:shadow-[0_0_0_3px_hsla(187,100%,42%,0.2)]
-          bg-theme-primary text-theme-primary border-theme-input placeholder-theme-input-placeholder
-        `}
+        className={cn(
+          'px-[15px] py-[10px] border rounded-md',
+          'text-base flex-grow max-w-full outline-none',
+          'transition-all duration-200 ease-in-out',
+          'focus:border-[var(--color-primary-cyan)] focus:shadow-[0_0_0_3px_hsla(187,100%,42%,0.2)]',
+          'bg-theme-primary text-theme-primary border-theme-input placeholder-theme-input-placeholder'
+        )}
         onChange={handleInputChange}
         onKeyDown={handleKeyPress}
         placeholder="Search for Pokemons..."
@@ -74,12 +76,10 @@ const Search = ({ initialSearchTerm, onSearch }: SearchProps) => {
         value={inputValue}
       />
       <Button
-        className="
-          px-5 py-[10px] rounded-md text-base normal-case
+        className={cn(`px-5 py-[10px] rounded-md text-base normal-case
           shadow-sm shadow-black/10
           hover:-translate-y-[1px]
-          active:shadow-black/10
-        "
+          active:shadow-black/10`)}
         color="green"
         onClick={handleSearchClick}
       >
