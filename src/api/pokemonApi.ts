@@ -42,7 +42,6 @@ export const fetchPokemonList = async (
   }
 };
 
-// This function returns PokemonItem (for list items with basic info)
 export const fetchPokemonItem = async (url: string): Promise<PokemonItem> => {
   try {
     const detailResponse = await fetch(url);

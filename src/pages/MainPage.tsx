@@ -1,5 +1,3 @@
-import { useAppSelector } from '@store/hooks';
-import { selectHasSelectedItems } from '@store/selectors';
 import { useEffect } from 'react';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 
@@ -9,6 +7,8 @@ import SelectionFlyout from '@components/SelectionFlyout'; // Add this import
 import { usePaginationAndSearch } from '@hooks/usePaginationAndSearch';
 import { usePokemonData } from '@hooks/usePokemonData';
 import NotFoundPage from '@pages/NotFoundPage';
+import { useAppSelector } from '@store/hooks';
+import { selectHasSelectedItems } from '@store/selectors';
 
 const ITEMS_PER_PAGE = 20;
 

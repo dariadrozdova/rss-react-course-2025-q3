@@ -1,5 +1,6 @@
-import type { PokemonItem } from '@types';
 import React from 'react';
+
+import type { PokemonItem } from '@types';
 
 import PokemonImage from './PokemonImage';
 import SelectionCheckbox from './SelectionCheckbox';

@@ -1,5 +1,6 @@
-import type { PokemonDetails } from '@types';
 import { useEffect, useState } from 'react';
+
+import type { PokemonDetails } from '@types';
 
 import { fetchPokemonDetails } from '@api/pokemonApi';
 

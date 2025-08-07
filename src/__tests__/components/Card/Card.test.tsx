@@ -1,14 +1,15 @@
+import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router-dom';
+
+import { fireEvent, render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+
+import Card from '@components/Card/Card';
 import { store } from '@store/index';
 import {
   setSelectedItems,
   unselectAllItems,
 } from '@store/slices/selectedItemsSlice';
-import { fireEvent, render, screen } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
-
-import Card from '@components/Card/Card';
 
 import {
   mockPokemonItemWithImage,

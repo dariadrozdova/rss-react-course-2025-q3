@@ -1,9 +1,10 @@
+import { useEffect, useMemo, useState } from 'react';
+
 import type {
   PokemonItem,
   PokemonListItem,
   UsePokemonDataResult,
 } from '@types';
-import { useEffect, useMemo, useState } from 'react';
 
 import { fetchPokemonDetails, fetchPokemonList } from '@api/pokemonApi';
 

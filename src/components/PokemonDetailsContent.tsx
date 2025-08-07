@@ -24,7 +24,7 @@ const PokemonDetailsContent = ({ pokemon }: PokemonDetailsContentProps) => (
           No image
         </div>
       )}
-      <p className={`mt-2 text-theme-secondary-alt`}>#{pokemon.id}</p>
+      <p className={`mt-2 text-theme-secondary`}>#{pokemon.id}</p>
     </div>
 
     <div className="mb-6">

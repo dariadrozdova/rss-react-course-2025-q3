@@ -1,10 +1,11 @@
-import { store } from '@store/index';
-import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
+
+import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import CardList from '@components/CardList';
+import { store } from '@store/index';
 
 import { mockPokemonItemsList } from '@/__tests__/utils/cardComponentsMockData';
 import { ThemeProvider } from '@/context/ThemeContext';

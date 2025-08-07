@@ -1,4 +1,3 @@
-import type { SearchProps } from '@types';
 import {
   type ChangeEvent,
   type KeyboardEvent,
@@ -6,6 +5,8 @@ import {
   useRef,
   useState,
 } from 'react';
+
+import type { SearchProps } from '@types';
 
 import Button from './Button';
 

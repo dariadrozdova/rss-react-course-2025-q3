@@ -52,8 +52,7 @@ export const myEslintRules = {
   '@typescript-eslint/use-unknown-in-catch-callback-variable': 'off',
   '@typescript-eslint/no-base-to-string': 'off',
   '@typescript-eslint/require-await': 'off',
-  '@typescript-eslint/no-misused-spread': 'off', // This rule is explicitly off here
-
+  '@typescript-eslint/no-misused-spread': 'off',
   'react/prop-types': 'off',
   'react/display-name': 'error',
   'react/jsx-uses-react': 'off',
@@ -68,8 +67,6 @@ export const myEslintRules = {
   'import/prefer-default-export': 'off',
   'import/no-unresolved': 'off',
   'import/no-duplicates': 'off',
-  'import/order': 'off',
-
   'class-methods-use-this': 'off',
   curly: ['error', 'all'],
   'dot-notation': 'off',

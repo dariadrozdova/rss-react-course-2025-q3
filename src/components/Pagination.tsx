@@ -1,5 +1,6 @@
-import type { PaginationProps } from '@types';
 import React from 'react';
+
+import type { PaginationProps } from '@types';
 
 import Button from '@components/Button';
 

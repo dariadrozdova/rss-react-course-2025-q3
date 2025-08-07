@@ -1,12 +1,14 @@
-import { store } from '@store/index';
-import { unselectAllItems } from '@store/slices/selectedItemsSlice';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { act } from 'react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
+
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import App from '../App';
-import MainPage from '../pages/MainPage';
+import MainPage from '@pages/MainPage';
+import { store } from '@store/index';
+import { unselectAllItems } from '@store/slices/selectedItemsSlice';
+
+import App from '@/App';
 
 vi.mock('@components/ErrorBoundary', async (importOriginal) => {
   const actual =

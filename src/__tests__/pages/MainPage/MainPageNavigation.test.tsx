@@ -1,5 +1,6 @@
-import type { PokemonItem } from '@types';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+
+import type { PokemonItem } from '@types';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import useLocalStorage from '@hooks/useLocalStorage';

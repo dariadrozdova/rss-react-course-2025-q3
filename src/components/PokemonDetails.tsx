@@ -1,5 +1,6 @@
-import { X } from 'lucide-react';
 import { useOutletContext, useParams } from 'react-router-dom';
+
+import { X } from 'lucide-react';
 
 import { useLoaderTimeout } from '@hooks/useLoaderTimeout';
 import { usePokemonDetails } from '@hooks/usePokemonDetails';

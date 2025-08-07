@@ -1,6 +1,7 @@
+import React from 'react';
+
 import type { PokemonItem } from '@types';
 import { AnimatePresence, motion } from 'framer-motion';
-import React from 'react';
 
 import CardList from './CardList';
 import Pagination from './Pagination';

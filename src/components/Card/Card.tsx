@@ -1,8 +1,10 @@
-import { useAppDispatch, useAppSelector } from '@store/hooks';
-import { toggleItemSelection } from '@store/slices/selectedItemsSlice';
-import type { CardProps } from '@types';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+
+import type { CardProps } from '@types';
+
+import { useAppDispatch, useAppSelector } from '@store/hooks';
+import { toggleItemSelection } from '@store/slices/selectedItemsSlice';
 
 import CardContent from './CardContent';
 

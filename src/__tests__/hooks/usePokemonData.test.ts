@@ -8,7 +8,7 @@ import { usePokemonData } from '@hooks/usePokemonData';
 import {
   mockPokeApiListResponse,
   mockPokemonDetailResponses,
-} from '../utils/mainPageMockData';
+} from '@/__tests__/utils/mainPageMockData';
 
 vi.mock('@api/pokemonApi', () => ({
   fetchPokemonDetails: vi.fn(),
