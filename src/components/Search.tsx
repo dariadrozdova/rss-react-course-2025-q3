@@ -54,7 +54,7 @@ const Search = ({ initialSearchTerm, onSearch }: SearchProps) => {
         'flex gap-2.5 justify-center items-center p-[15px]',
         'rounded-lg',
         'shadow-sm shadow-[hsla(0,0%,0%,0.05)]',
-        'w-full max-w-[700px]',
+        'w-full max-w-2xl',
         'bg-theme-secondary-alt'
       )}
       onClick={(e) => {

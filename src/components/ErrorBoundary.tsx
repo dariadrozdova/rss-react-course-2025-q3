@@ -32,12 +32,12 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
             shadow-md shadow-black-alpha-10 font-sans
             w-full`)}
         >
-          <h1 className={cn('text-error-text-dark text-[2.5em] mb-[15px]')}>
+          <h1 className={cn('text-error-text-dark text-[2.5em] mb-[0.9em]')}>
             Oops! Something went wrong.
           </h1>
           <p
             className={cn(
-              'text-error-text-medium text-[1.2em] mb-[25px] max-w-[600px] leading-relaxed'
+              'text-error-text-medium text-[1.2em] mb-[1.56em] max-w-xl leading-relaxed'
             )}
           >
             We are sorry, but an unexpected error occurred. Please try

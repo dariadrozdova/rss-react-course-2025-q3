@@ -65,7 +65,7 @@ export const PokemonContent: React.FC<PokemonContentProps> = ({
           >
             <p
               className={cn(
-                'text-[var(--color-primary-red-hover)] bg-[var(--color-error-background)] border border-[var(--color-error-border-light)] p-[15px] rounded-md font-semibold text-center w-full max-w-[550px] box-border md:p-[10px] md:text-[0.9em]'
+                'text-[var(--color-primary-red-hover)] bg-[var(--color-error-background)] border border-[var(--color-error-border-light)] p-[15px] rounded-md font-semibold text-center w-full max-w-xl box-border md:p-[10px] md:text-[0.9em]'
               )}
             >
               Error: {error}
@@ -81,7 +81,7 @@ export const PokemonContent: React.FC<PokemonContentProps> = ({
           >
             <p
               className={cn(
-                'bg-[var(--color-black-alpha-10)] border border-[var(--color-black-alpha-15)] p-[15px] rounded-md text-gray-800 text-center w-full max-w-[550px] box-border md:p-[10px] md:text-[0.9em]'
+                'bg-[var(--color-black-alpha-10)] border border-[var(--color-black-alpha-15)] p-[15px] rounded-md text-gray-800 text-center w-full max-w-xl box-border md:p-[10px] md:text-[0.9em]'
               )}
             >
               {message}

@@ -5,7 +5,7 @@ function Loader() {
     <div
       aria-live="polite"
       className={cn(
-        `      flex flex-col items-center justify-center gap-[15px] p-[30px] box-border w-full max-w-[700px] mx-auto text-center`
+        `      flex flex-col items-center justify-center gap-[15px] p-[30px] box-border w-full max-w-2xl mx-auto text-center`
       )}
       role="status"
     >

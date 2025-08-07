@@ -22,7 +22,7 @@ const AppContent: React.FC = () => {
     >
       <nav
         className={cn(`py-4 rounded-lg shadow-sm mb-8 w-full
-          max-w-[1400px] border box-border
+          max-w-7xl border box-border
           md:rounded-xl md:shadow-lg
           bg-theme-secondary border-theme`)}
       >
