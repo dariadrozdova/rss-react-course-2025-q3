@@ -1,5 +1,6 @@
 import { useOutletContext, useParams } from 'react-router-dom';
 
+import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { X } from 'lucide-react';
 
 import { useLoaderTimeout } from '@hooks/useLoaderTimeout';
@@ -49,6 +50,12 @@ interface OutletContext {
   handleCloseDetails: () => void;
 }
 
+const isFetchBaseQueryError = (
+  error: unknown
+): error is FetchBaseQueryError => {
+  return typeof error === 'object' && error !== null && 'status' in error;
+};
+
 function PokemonDetails() {
   const { detailsId } = useParams<{ detailsId: string }>();
   const { handleCloseDetails } = useOutletContext<OutletContext>();
@@ -70,6 +77,14 @@ function PokemonDetails() {
   }
 
   if (error) {
+    let errorMessage = 'An unknown error occurred.';
+
+    if (isFetchBaseQueryError(error)) {
+      errorMessage = `Failed to fetch data: ${error.status}`;
+    } else if ('message' in error && typeof error.message === 'string') {
+      errorMessage = `Error: ${error.message}`;
+    }
+
     return (
       <PokemonContainer
         onClose={handleCloseDetails}
@@ -77,7 +92,7 @@ function PokemonDetails() {
         titleClassName={cn('text-xl font-bold text-red-600')}
       >
         <div className={cn('text-center py-8')}>
-          <p className={cn('text-red-600 mb-4')}>{error}</p>
+          <p className={cn('text-red-600 mb-4')}>{errorMessage}</p>
           <button
             className={cn('px-4 py-2 bg-blue-600 text-white rounded')}
             onClick={handleCloseDetails}

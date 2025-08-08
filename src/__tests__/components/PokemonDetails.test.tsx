@@ -47,7 +47,7 @@ describe('PokemonDetails', () => {
     });
     mockUseLoaderTimeout.mockReturnValue(false);
     mockUsePokemonDetails.mockReturnValue({
-      error: null,
+      error: undefined,
       isLoading: false,
       pokemon: mockPokemon,
     });
@@ -68,9 +68,9 @@ describe('PokemonDetails', () => {
       ['showLoader is true', { isLoading: false, showLoader: true }],
     ])('displays loading content when %s', (_, { isLoading, showLoader }) => {
       mockUsePokemonDetails.mockReturnValue({
-        error: null,
+        error: undefined,
         isLoading,
-        pokemon: null,
+        pokemon: undefined,
       });
       mockUseLoaderTimeout.mockReturnValue(showLoader);
 
@@ -85,11 +85,13 @@ describe('PokemonDetails', () => {
   });
 
   describe('error state', () => {
+    const mockError = { data: 'Not Found', status: 404 };
+
     beforeEach(() => {
       mockUsePokemonDetails.mockReturnValue({
-        error: 'Failed to fetch Pokemon',
+        error: mockError,
         isLoading: false,
-        pokemon: null,
+        pokemon: undefined,
       });
     });
 
@@ -97,7 +99,9 @@ describe('PokemonDetails', () => {
       renderComponent();
 
       expect(screen.getByText('Error')).toBeInTheDocument();
-      expect(screen.getByText('Failed to fetch Pokemon')).toBeInTheDocument();
+      expect(
+        screen.getByText(`Failed to fetch data: ${mockError.status}`)
+      ).toBeInTheDocument();
     });
 
     it.each([
@@ -116,9 +120,9 @@ describe('PokemonDetails', () => {
   describe('not found state', () => {
     beforeEach(() => {
       mockUsePokemonDetails.mockReturnValue({
-        error: null,
+        error: undefined,
         isLoading: false,
-        pokemon: null,
+        pokemon: undefined,
       });
     });
 
@@ -163,7 +167,7 @@ describe('PokemonDetails', () => {
 
     it('displays placeholder when image not available', () => {
       mockUsePokemonDetails.mockReturnValue({
-        error: null,
+        error: undefined,
         isLoading: false,
         pokemon: { ...mockPokemon, sprites: { front_default: null } },
       });
