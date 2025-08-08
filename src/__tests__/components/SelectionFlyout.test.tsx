@@ -1,11 +1,12 @@
+import { Provider } from 'react-redux';
+
 import { configureStore } from '@reduxjs/toolkit';
-import selectedItemsReducer from '@store/slices/selectedItemsSlice';
 import { fireEvent, render, screen } from '@testing-library/react';
 import type { PokemonItem } from '@types';
-import { Provider } from 'react-redux';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import SelectionFlyout from '@components/SelectionFlyout';
+import selectedItemsReducer from '@store/slices/selectedItemsSlice';
 
 import { mockPokemonDetailResponses } from '@/__tests__/utils/mainPageMockData';
 

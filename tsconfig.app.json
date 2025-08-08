@@ -37,6 +37,7 @@
       "@utils/*": ["utils/*"],
       "@types": ["types/index"],
       "@store/*": ["store/*"],
+      "@context/*": ["context/*"],
       "@/*": ["*"],
       "@__test__/*": ["__test__/*"]
     }

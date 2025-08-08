@@ -1,3 +1,5 @@
+import { cn } from '@utils/cn';
+
 interface SelectionCheckboxProps {
   isItemSelected: boolean;
   onCheckboxChange: () => void;
@@ -9,27 +11,29 @@ function SelectionCheckbox({
 }: SelectionCheckboxProps) {
   return (
     <div
-      className="mt-auto pt-3 flex items-center justify-center"
+      className={cn('mt-auto pt-3 flex items-center justify-center')}
       onClick={(e) => {
         e.stopPropagation();
       }}
     >
-      <label className="flex items-center cursor-pointer select-none">
+      <label className={cn('flex items-center cursor-pointer select-none')}>
         <input
           checked={isItemSelected}
-          className="sr-only"
+          className={cn('sr-only')}
           onChange={onCheckboxChange}
           type="checkbox"
         />
         <div
-          className={`
-            w-5 h-5 rounded border-2 flex items-center justify-center transition-all duration-200
-            ${isItemSelected ? 'bg-teal-500 border-teal-500' : 'border-theme hover:border-teal-400'}
-          `}
+          className={cn(
+            'w-5 h-5 rounded border-2 flex items-center justify-center transition-all duration-200',
+            isItemSelected
+              ? 'bg-teal-500 border-teal-500'
+              : 'border-theme hover:border-teal-400'
+          )}
         >
           {isItemSelected && (
             <svg
-              className="w-3 h-3 text-white"
+              className={cn('w-3 h-3 text-white')}
               fill="currentColor"
               viewBox="0 0 20 20"
             >
@@ -42,11 +46,12 @@ function SelectionCheckbox({
           )}
         </div>
         <span
-          className={`ml-2 text-sm transition-colors ${
+          className={cn(
+            'ml-2 text-sm transition-colors',
             isItemSelected
               ? 'text-teal-600 font-medium'
               : 'text-theme-secondary'
-          }`}
+          )}
         >
           Select
         </span>

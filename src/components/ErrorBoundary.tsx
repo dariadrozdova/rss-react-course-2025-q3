@@ -1,6 +1,9 @@
-import type { ErrorBoundaryProps, ErrorBoundaryState } from '@types';
 import type { ErrorInfo } from 'react';
 import { Component } from 'react';
+
+import type { ErrorBoundaryProps, ErrorBoundaryState } from '@types';
+
+import { cn } from '@utils/cn';
 
 import Button from './Button';
 
@@ -23,28 +26,28 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     if (this.state.hasError) {
       return (
         <div
-          className="
-            flex flex-col items-center justify-center
+          className={cn(`flex flex-col items-center justify-center
             min-h-[80vh] text-center p-5
             bg-error-background border-2 border-error-border rounded-lg
             shadow-md shadow-black-alpha-10 font-sans
-            w-full
-          "
+            w-full`)}
         >
-          <h1 className="text-error-text-dark text-[2.5em] mb-[15px]">
+          <h1 className={cn('text-error-text-dark text-[2.5em] mb-[0.9em]')}>
             Oops! Something went wrong.
           </h1>
-          <p className="text-error-text-medium text-[1.2em] mb-[25px] max-w-[600px] leading-relaxed">
+          <p
+            className={cn(
+              'text-error-text-medium text-[1.2em] mb-[1.56em] max-w-xl leading-relaxed'
+            )}
+          >
             We are sorry, but an unexpected error occurred. Please try
             refreshing the page.
           </p>
           <Button
-            className="
-              px-[25px] py-3 rounded-lg text-[1.1em] normal-case
+            className={cn(`px-[25px] py-3 rounded-lg text-[1.1em] normal-case
               shadow-md shadow-black-alpha-15
               hover:-translate-y-0.5
-              active:shadow-black-alpha-15
-            "
+              active:shadow-black-alpha-15`)}
             color="green"
             onClick={() => {
               window.location.reload();

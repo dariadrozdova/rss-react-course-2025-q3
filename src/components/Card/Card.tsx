@@ -1,8 +1,12 @@
-import { useAppDispatch, useAppSelector } from '@store/hooks';
-import { toggleItemSelection } from '@store/slices/selectedItemsSlice';
-import type { CardProps } from '@types';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+
+import type { CardProps } from '@types';
+
+import { useGetPokemonDetailsQuery } from '@api/pokemonApiSlice';
+import { useAppDispatch, useAppSelector } from '@store/hooks';
+import { toggleItemSelection } from '@store/slices/selectedItemsSlice';
+import { cn } from '@utils/cn';
 
 import CardContent from './CardContent';
 
@@ -22,6 +26,11 @@ function Card({
     selectIsItemSelected(state, item.id)
   );
 
+  const { data: pokemonDetails, error: pokemonDetailsError } =
+    useGetPokemonDetailsQuery(item.name, {
+      skip: !item.name,
+    });
+
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (onPokemonClick) {
@@ -34,9 +43,19 @@ function Card({
     dispatch(toggleItemSelection(item));
   };
 
-  const imageUrl =
-    item.imageUrl ||
-    `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${item.id}.png`;
+  const getImageUrl = () => {
+    if (item.imageUrl) {
+      return item.imageUrl;
+    }
+
+    if (pokemonDetails?.sprites?.front_default && !pokemonDetailsError) {
+      return pokemonDetails.sprites.front_default;
+    }
+
+    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${item.id}.png`;
+  };
+
+  const imageUrl = getImageUrl();
 
   const handleImageLoad = () => {
     setImageLoaded(true);
@@ -77,11 +96,11 @@ function Card({
   };
 
   return onPokemonClick ? (
-    <div className={baseClass + ' cursor-pointer'} onClick={handleClick}>
+    <div className={cn(baseClass, 'cursor-pointer')} onClick={handleClick}>
       <CardContent {...cardContentProps} />
     </div>
   ) : (
-    <Link className={baseClass} to={`/${currentPage}/${item.id}`}>
+    <Link className={cn(baseClass)} to={`/${currentPage}/${item.id}`}>
       <CardContent {...cardContentProps} />
     </Link>
   );

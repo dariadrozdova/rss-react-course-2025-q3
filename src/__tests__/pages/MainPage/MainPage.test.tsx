@@ -1,11 +1,13 @@
-import type { PokemonItem } from '@types';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+
+import type { PokemonItem } from '@types';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import useLocalStorage from '@hooks/useLocalStorage';
 import { usePaginationAndSearch } from '@hooks/usePaginationAndSearch';
 import { usePokemonData } from '@hooks/usePokemonData';
 import MainPage from '@pages/MainPage';
+import { cn } from '@utils/cn';
 
 import { fireEvent, render, screen } from '@/__tests__/utils/TestUtilities';
 
@@ -66,7 +68,7 @@ vi.mock('@components/PokemonContent', () => ({
             <ul data-testid="card-list">
               {pokemonItems.map((item) => (
                 <li
-                  className={selectedPokemonId === item.id ? 'selected' : ''}
+                  className={cn(selectedPokemonId === item.id && 'selected')}
                   data-testid={`card-item-${item.id}`}
                   key={item.id}
                   onClick={() => onPokemonClick?.(item.id)}

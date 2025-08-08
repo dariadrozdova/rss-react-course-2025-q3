@@ -21,8 +21,8 @@
   --color-white: hsl(0, 0%, 100%);
   --color-neutral-card-background: hsl(220, 10%, 98%);
 
-  --color-gradient-start-light-blue: hsl(200, 60%, 90%);
-  --color-gradient-end-light-blue: hsl(200, 65%, 75%);
+  --color-gradient-start-gray-blue: hsl(200, 60%, 90%);
+  --color-gradient-end-gray-blue: hsl(200, 65%, 75%);
   --color-text-light-blue-gray: hsl(220, 10%, 40%);
   --color-text-dark-blue-gray: hsl(220, 15%, 20%);
   --color-border-light-gray: hsl(220, 10%, 90%);

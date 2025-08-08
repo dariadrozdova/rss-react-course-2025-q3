@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { cn } from '@utils/cn';
 import { BUTTON_COLOR_GREEN, BUTTON_COLOR_RED } from '@utils/stylesConstants';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -42,7 +43,7 @@ const Button: React.FC<ButtonProps> = ({
 
   return (
     <button
-      className={`${baseClasses} ${sizeClasses} ${colorClasses} ${className || ''}`}
+      className={cn(baseClasses, sizeClasses, colorClasses, className)}
       {...rest}
     >
       {children}
