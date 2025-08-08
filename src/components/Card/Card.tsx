@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import type { CardProps } from '@types';
 
+import { useGetPokemonDetailsQuery } from '@api/pokemonApiSlice';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
 import { toggleItemSelection } from '@store/slices/selectedItemsSlice';
 import { cn } from '@utils/cn';
@@ -25,6 +26,11 @@ function Card({
     selectIsItemSelected(state, item.id)
   );
 
+  const { data: pokemonDetails, error: pokemonDetailsError } =
+    useGetPokemonDetailsQuery(item.name, {
+      skip: !item.name,
+    });
+
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (onPokemonClick) {
@@ -37,9 +43,19 @@ function Card({
     dispatch(toggleItemSelection(item));
   };
 
-  const imageUrl =
-    item.imageUrl ||
-    `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${item.id}.png`;
+  const getImageUrl = () => {
+    if (item.imageUrl) {
+      return item.imageUrl;
+    }
+
+    if (pokemonDetails?.sprites?.front_default && !pokemonDetailsError) {
+      return pokemonDetails.sprites.front_default;
+    }
+
+    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${item.id}.png`;
+  };
+
+  const imageUrl = getImageUrl();
 
   const handleImageLoad = () => {
     setImageLoaded(true);

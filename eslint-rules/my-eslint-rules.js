@@ -104,6 +104,7 @@ export const myEslintRules = {
   'unicorn/no-null': 'off',
   'unicorn/prefer-global-this': 'off',
   'unicorn/prefer-query-selector': 'off',
+  'unicorn/prefer-spread': 'off',
   'unicorn/prevent-abbreviations': [
     'error',
     { allowList: { props: true, Props: true, e: true } },
