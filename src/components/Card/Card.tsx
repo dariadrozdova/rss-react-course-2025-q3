@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 
 import type { CardProps } from '@types';
 
 import { useGetPokemonDetailsQuery } from '@api/pokemonApiSlice';
+import { usePokemonImage } from '@hooks/usePokemonImage';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
 import { toggleItemSelection } from '@store/slices/selectedItemsSlice';
 import { cn } from '@utils/cn';
@@ -18,8 +19,6 @@ function Card({
   item,
   onPokemonClick,
 }: CardProps) {
-  const [imageLoaded, setImageLoaded] = useState(false);
-  const [imageError, setImageError] = useState(false);
   const dispatch = useAppDispatch();
 
   const isItemSelected = useAppSelector((state) =>
@@ -31,6 +30,25 @@ function Card({
       skip: !item.name,
     });
 
+  const imageUrls = useMemo(
+    () => [
+      item.imageUrl,
+      pokemonDetails?.sprites?.front_default && !pokemonDetailsError
+        ? pokemonDetails.sprites.front_default
+        : undefined,
+      `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${item.id}.png`,
+      `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${item.id}.png`,
+    ],
+    [
+      item.imageUrl,
+      item.id,
+      pokemonDetails?.sprites?.front_default,
+      pokemonDetailsError,
+    ]
+  );
+
+  const { finalImageUrl, hasError, isLoading } = usePokemonImage(imageUrls);
+
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (onPokemonClick) {
@@ -41,35 +59,6 @@ function Card({
 
   const handleCheckboxChange = () => {
     dispatch(toggleItemSelection(item));
-  };
-
-  const getImageUrl = () => {
-    if (item.imageUrl) {
-      return item.imageUrl;
-    }
-
-    if (pokemonDetails?.sprites?.front_default && !pokemonDetailsError) {
-      return pokemonDetails.sprites.front_default;
-    }
-
-    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${item.id}.png`;
-  };
-
-  const imageUrl = getImageUrl();
-
-  const handleImageLoad = () => {
-    setImageLoaded(true);
-    setImageError(false);
-  };
-
-  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
-    const fallbackUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${item.id}.png`;
-    if (e.currentTarget.src === fallbackUrl) {
-      setImageLoaded(true);
-      setImageError(true);
-    } else {
-      e.currentTarget.src = fallbackUrl;
-    }
   };
 
   const baseClass = `
@@ -84,15 +73,13 @@ function Card({
   `;
 
   const cardContentProps = {
-    imageError,
-    imageLoaded,
-    imageUrl,
+    imageError: hasError,
+    imageLoaded: !isLoading && !!finalImageUrl,
+    imageUrl: finalImageUrl,
     isItemSelected,
     isSelected,
     item,
     onCheckboxChange: handleCheckboxChange,
-    onImageError: handleImageError,
-    onImageLoad: handleImageLoad,
   };
 
   return onPokemonClick ? (

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { motion } from 'framer-motion';
 
 import { cn } from '@utils/cn';
@@ -7,10 +5,8 @@ import { cn } from '@utils/cn';
 interface PokemonImageProps {
   imageError: boolean;
   imageLoaded: boolean;
-  imageUrl: string;
+  imageUrl: string | undefined;
   name: string;
-  onImageError: (e: React.SyntheticEvent<HTMLImageElement>) => void;
-  onImageLoad: () => void;
 }
 
 function PokemonImage({
@@ -18,8 +14,6 @@ function PokemonImage({
   imageLoaded,
   imageUrl,
   name,
-  onImageError,
-  onImageLoad,
 }: PokemonImageProps) {
   return (
     <div
@@ -52,8 +46,6 @@ function PokemonImage({
           )}
           height={150}
           initial={{ opacity: 0 }}
-          onError={onImageError}
-          onLoad={onImageLoad}
           src={imageUrl}
           transition={{ duration: 0.5 }}
           width={150}

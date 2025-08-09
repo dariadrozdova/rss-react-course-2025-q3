@@ -6,14 +6,58 @@ import type {
   PokemonListResponse,
 } from '@types';
 
-export const baseQuery = fetchBaseQuery({
+const blobToDataUrl = (blob: Blob): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      if (typeof reader.result === 'string') {
+        resolve(reader.result);
+      } else {
+        reject(new Error('Failed to read blob as Data URL.'));
+      }
+    };
+    reader.addEventListener('error', reject);
+    reader.readAsDataURL(blob);
+  });
+};
+
+const baseQueryWithImageHandling = fetchBaseQuery({
   baseUrl: 'https://pokeapi.co/api/v2/',
 });
 
+const customBaseQuery: typeof baseQueryWithImageHandling = async (
+  arguments_,
+  api,
+  extraOptions
+) => {
+  if (
+    typeof arguments_ === 'string' &&
+    arguments_.startsWith('https://raw.githubusercontent.com')
+  ) {
+    const result = await fetchBaseQuery({
+      baseUrl: '/',
+      responseHandler: (response) => response.blob(),
+    })(arguments_, api, extraOptions);
+    return result;
+  }
+  return baseQueryWithImageHandling(arguments_, api, extraOptions);
+};
+
 export const pokemonApi = createApi({
-  baseQuery,
+  baseQuery: customBaseQuery,
   endpoints: (builder) => ({
     getPokemonDetails: builder.query<PokemonDetails, string>({
+      async onQueryStarted(_name, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          const imageUrl = data.sprites.front_default;
+          if (imageUrl) {
+            dispatch(pokemonApi.endpoints.getPokemonImage.initiate(imageUrl));
+          }
+        } catch (error) {
+          console.warn('Failed to pre-fetch pokemon image:', error);
+        }
+      },
       providesTags: (_result, _error, name) => [
         { id: name, type: 'PokemonDetails' as const },
       ],
@@ -36,6 +80,16 @@ export const pokemonApi = createApi({
           },
         })),
       }),
+    }),
+    getPokemonImage: builder.query<string, string>({
+      keepUnusedDataFor: 300,
+      providesTags: (_result, _error, url) => [
+        { id: url, type: 'PokemonImage' },
+      ],
+      query: (url) => url,
+      transformResponse: async (response: Blob) => {
+        return blobToDataUrl(response);
+      },
     }),
     getPokemonList: builder.query<
       { results: PokemonItem[]; total: number },
@@ -71,7 +125,11 @@ export const pokemonApi = createApi({
     }),
   }),
   reducerPath: 'pokemonApi',
-  tagTypes: ['Pokemon', 'PokemonList', 'PokemonDetails'],
+  tagTypes: ['Pokemon', 'PokemonList', 'PokemonDetails', 'PokemonImage'],
 });
 
-export const { useGetPokemonDetailsQuery, useGetPokemonListQuery } = pokemonApi;
+export const {
+  useGetPokemonDetailsQuery,
+  useGetPokemonImageQuery,
+  useGetPokemonListQuery,
+} = pokemonApi;

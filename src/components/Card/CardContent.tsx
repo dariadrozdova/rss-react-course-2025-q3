@@ -1,5 +1,3 @@
-import React from 'react';
-
 import type { PokemonItem } from '@types';
 
 import { cn } from '@utils/cn';
@@ -10,13 +8,11 @@ import SelectionCheckbox from './SelectionCheckbox';
 interface CardContentProps {
   imageError: boolean;
   imageLoaded: boolean;
-  imageUrl: string;
+  imageUrl: string | undefined;
   isItemSelected: boolean;
   isSelected: boolean;
   item: PokemonItem;
   onCheckboxChange: () => void;
-  onImageError: (e: React.SyntheticEvent<HTMLImageElement>) => void;
-  onImageLoad: () => void;
 }
 
 function CardContent({
@@ -27,8 +23,6 @@ function CardContent({
   isSelected,
   item,
   onCheckboxChange,
-  onImageError,
-  onImageLoad,
 }: CardContentProps) {
   return (
     <>
@@ -48,8 +42,6 @@ function CardContent({
         imageLoaded={imageLoaded}
         imageUrl={imageUrl}
         name={item.name}
-        onImageError={onImageError}
-        onImageLoad={onImageLoad}
       />
 
       <SelectionCheckbox
