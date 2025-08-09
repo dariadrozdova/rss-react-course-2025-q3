@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 
+import CacheInvalidationButton from '@components/CacheInvalidationButton';
 import { PokemonContent } from '@components/PokemonContent';
 import Search from '@components/Search';
-import SelectionFlyout from '@components/SelectionFlyout'; // Add this import
+import SelectionFlyout from '@components/SelectionFlyout';
 import { usePaginationAndSearch } from '@hooks/usePaginationAndSearch';
 import { usePokemonData } from '@hooks/usePokemonData';
 import NotFoundPage from '@pages/NotFoundPage';
@@ -92,6 +93,8 @@ function MainPage() {
               initialSearchTerm={effectiveSearchTerm}
               onSearch={handleSearch}
             />
+
+            <CacheInvalidationButton disabled={isLoading} />
           </section>
 
           <section
