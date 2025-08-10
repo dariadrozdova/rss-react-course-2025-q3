@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import type { PokemonItem } from '@types';
+import type { PokemonContentProps, PokemonItem } from '@types';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { PokemonContent } from '@components/PokemonContent';
@@ -52,10 +52,13 @@ vi.mock('@components/SkeletonCardList', () => ({
 }));
 
 describe('PokemonContent', () => {
-  const defaultProps = {
+  const defaultProps: PokemonContentProps = {
     currentPage: 1,
     effectiveSearchTerm: '',
+    error: null,
+    isLoading: false,
     onPageChange: vi.fn(),
+    pokemonItems: [],
     totalItems: 0,
     totalPages: 0,
   };
@@ -68,7 +71,7 @@ describe('PokemonContent', () => {
     { id: 5, imageUrl: 'url5', name: 'rattata', url: 'url5' },
   ];
 
-  let renderProps: any;
+  let renderProps: PokemonContentProps;
 
   beforeEach(() => {
     renderProps = { ...defaultProps };

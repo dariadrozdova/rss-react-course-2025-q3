@@ -81,8 +81,11 @@ export default tseslint.config(
           groups: [
             ['^\\u0000'],
             ['^node:'],
+            ['^react'],
             ['^@?\\w'],
-            ['^(@types|@components|@hooks|@pages|@utils|@api)(/.*)?$'],
+            [
+              '^(@api|@components|@hooks|@pages|@utils|@types|@store|@context|@__test__)(/.*)?$',
+            ],
             ['^\\.\\.(?!/?$)', '^\\.\\./?$'],
             [
               '^\\./(?=.*/)(?!.*\\.(css|less|scss|sass|styl))$',
@@ -103,6 +106,10 @@ export default tseslint.config(
           args: 'after-used',
           argsIgnorePattern: '^_',
         },
+      ],
+      'no-relative-import-paths/no-relative-import-paths': [
+        'error',
+        { allowSameFolder: true, prefix: '@' },
       ],
     },
     settings: {

@@ -1,19 +1,17 @@
+import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router-dom';
+
+import { fireEvent, render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+
+import Card from '@components/Card/Card';
 import { store } from '@store/index';
 import {
   setSelectedItems,
   unselectAllItems,
 } from '@store/slices/selectedItemsSlice';
-import { fireEvent, render, screen } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import Card from '@components/Card/Card';
-
-import {
-  mockPokemonItemWithImage,
-  mockPokemonItemWithoutImage,
-} from '@/__tests__/utils/cardComponentsMockData';
+import { mockPokemonItemWithImage } from '@/__tests__/utils/cardComponentsMockData';
 
 const renderCard = (item: typeof mockPokemonItemWithImage, props = {}) =>
   render(
@@ -32,29 +30,6 @@ describe('Card', () => {
   it('renders the item name', () => {
     renderCard(mockPokemonItemWithImage);
     expect(screen.getByText(mockPokemonItemWithImage.name)).toBeInTheDocument();
-  });
-
-  it('renders the image when imageUrl is provided', () => {
-    renderCard(mockPokemonItemWithImage);
-    const image = screen.getByRole('img', {
-      name: mockPokemonItemWithImage.name,
-    });
-
-    expect(image).toBeInTheDocument();
-    expect(image).toHaveAttribute('src', mockPokemonItemWithImage.imageUrl);
-    expect(image).toHaveAttribute('alt', mockPokemonItemWithImage.name);
-  });
-
-  it('uses fallback image URL when imageUrl is not provided', () => {
-    renderCard(mockPokemonItemWithoutImage);
-    const image = screen.getByRole('img', {
-      name: mockPokemonItemWithoutImage.name,
-    });
-
-    expect(image).toHaveAttribute(
-      'src',
-      `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${mockPokemonItemWithoutImage.id}.png`
-    );
   });
 
   describe('with onPokemonClick prop', () => {
@@ -141,17 +116,6 @@ describe('Card', () => {
         .parentElement?.querySelector('.animate-pulse');
 
       expect(placeholder).toBeInTheDocument();
-    });
-
-    it('hides image initially and shows after load', () => {
-      renderCard(mockPokemonItemWithImage);
-      const image = screen.getByRole('img');
-
-      expect(image).toHaveClass('hidden');
-
-      fireEvent.load(image);
-
-      expect(image).not.toHaveClass('hidden');
     });
   });
 

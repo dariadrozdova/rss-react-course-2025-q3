@@ -1,5 +1,6 @@
 import type { PokemonItem } from '@types';
-import React from 'react';
+
+import { cn } from '@utils/cn';
 
 import PokemonImage from './PokemonImage';
 import SelectionCheckbox from './SelectionCheckbox';
@@ -7,13 +8,11 @@ import SelectionCheckbox from './SelectionCheckbox';
 interface CardContentProps {
   imageError: boolean;
   imageLoaded: boolean;
-  imageUrl: string;
+  imageUrl: string | undefined;
   isItemSelected: boolean;
   isSelected: boolean;
   item: PokemonItem;
   onCheckboxChange: () => void;
-  onImageError: (e: React.SyntheticEvent<HTMLImageElement>) => void;
-  onImageLoad: () => void;
 }
 
 function CardContent({
@@ -24,20 +23,16 @@ function CardContent({
   isSelected,
   item,
   onCheckboxChange,
-  onImageError,
-  onImageLoad,
 }: CardContentProps) {
   return (
     <>
       <strong
-        className={`
-          mb-2.5 capitalize font-bold text-base md:text-lg transition-colors
-          ${
-            isSelected
-              ? 'text-[var(--color-primary-green)]'
-              : 'text-theme-primary group-hover:text-[var(--theme-text-hover-teal)]'
-          }
-        `}
+        className={cn(
+          'mb-2.5 capitalize font-bold text-base md:text-lg transition-colors',
+          isSelected
+            ? 'text-[var(--color-primary-green)]'
+            : 'text-theme-primary group-hover:text-[var(--theme-text-hover-teal)]'
+        )}
       >
         {item.name}
       </strong>
@@ -47,8 +42,6 @@ function CardContent({
         imageLoaded={imageLoaded}
         imageUrl={imageUrl}
         name={item.name}
-        onImageError={onImageError}
-        onImageLoad={onImageLoad}
       />
 
       <SelectionCheckbox

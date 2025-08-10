@@ -1,4 +1,5 @@
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import useLocalStorage from '@hooks/useLocalStorage';
