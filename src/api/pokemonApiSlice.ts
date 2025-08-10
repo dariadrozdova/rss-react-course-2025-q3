@@ -1,3 +1,4 @@
+import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type {
   PokemonDetailResponse,
@@ -5,6 +6,8 @@ import type {
   PokemonItem,
   PokemonListResponse,
 } from '@types';
+
+const HTTP_STATUS_NOT_FOUND = 404;
 
 const blobToDataUrl = (blob: Blob): Promise<string> => {
   return new Promise((resolve, reject) => {
@@ -81,16 +84,45 @@ export const pokemonApi = createApi({
         })),
       }),
     }),
-    getPokemonImage: builder.query<string, string>({
-      keepUnusedDataFor: 300,
+
+    getPokemonImage: builder.query<null | string, string>({
+      keepUnusedDataFor: 600,
       providesTags: (_result, _error, url) => [
         { id: url, type: 'PokemonImage' },
       ],
-      query: (url) => url,
-      transformResponse: async (response: Blob) => {
-        return blobToDataUrl(response);
+      queryFn: async (
+        url,
+        { signal }
+      ): Promise<{ data: null | string } | { error: FetchBaseQueryError }> => {
+        try {
+          const response = await fetch(url, { signal });
+
+          if (!response.ok) {
+            if (response.status === HTTP_STATUS_NOT_FOUND) {
+              return { data: null };
+            }
+            return {
+              error: {
+                data: await response.text(),
+                status: response.status,
+              } as FetchBaseQueryError,
+            };
+          }
+
+          const blob = await response.blob();
+          const dataUrl = await blobToDataUrl(blob);
+          return { data: dataUrl };
+        } catch (error) {
+          return {
+            error: {
+              error: error instanceof Error ? error.message : String(error),
+              status: 'FETCH_ERROR',
+            } as FetchBaseQueryError,
+          };
+        }
       },
     }),
+
     getPokemonList: builder.query<
       { results: PokemonItem[]; total: number },
       { limit: number; offset: number }

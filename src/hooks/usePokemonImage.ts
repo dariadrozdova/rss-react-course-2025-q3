@@ -12,7 +12,6 @@ export const usePokemonImage = (
   urls: (string | undefined)[]
 ): UsePokemonImageResult => {
   const validUrls = useMemo(() => urls.filter(Boolean), [urls]);
-
   const [urlIndex, setUrlIndex] = useState(0);
   const currentUrl = validUrls[urlIndex];
 
@@ -30,15 +29,16 @@ export const usePokemonImage = (
   }, [validUrls]);
 
   useEffect(() => {
-    if (isError && urlIndex < validUrls.length - 1) {
+    if ((imageDataUrl === null || isError) && urlIndex < validUrls.length - 1) {
       setUrlIndex((previousIndex) => previousIndex + 1);
     }
-  }, [isError, urlIndex, validUrls.length]);
+  }, [imageDataUrl, isError, urlIndex, validUrls.length]);
 
-  const allAttemptsFailed = isError && urlIndex >= validUrls.length - 1;
+  const allAttemptsFailed =
+    (imageDataUrl === null || isError) && urlIndex >= validUrls.length - 1;
 
   return {
-    finalImageUrl: imageDataUrl,
+    finalImageUrl: imageDataUrl || undefined,
     hasError: allAttemptsFailed,
     isLoading: isLoading || isFetching,
   };
