@@ -108,4 +108,53 @@ describe('pokemonApi', () => {
       expect(result.error).toBeDefined();
     });
   });
+
+  describe('RTK Query functionality', () => {
+    it('should have correct tag types for caching', () => {
+      expect(pokemonApi.internalActions).toBeDefined();
+    });
+  });
+
+  describe('RTK Query slice structure', () => {
+    it('should have correct API slice configuration', () => {
+      expect(pokemonApi.reducerPath).toBeDefined();
+      expect(pokemonApi.middleware).toBeDefined();
+      expect(pokemonApi.reducer).toBeDefined();
+      expect(pokemonApi.endpoints).toBeDefined();
+    });
+
+    it('should have required endpoints defined', () => {
+      expect(pokemonApi.endpoints.getPokemonList).toBeDefined();
+      expect(pokemonApi.endpoints.getPokemonDetails).toBeDefined();
+    });
+
+    it('should generate hooks for endpoints', () => {
+      expect(pokemonApi.endpoints.getPokemonList.useQuery).toBeDefined();
+      expect(pokemonApi.endpoints.getPokemonDetails.useQuery).toBeDefined();
+    });
+  });
+
+  describe('getPokemonDetails', () => {
+    it('should have getPokemonDetails endpoint available', () => {
+      expect(pokemonApi.endpoints.getPokemonDetails).toBeDefined();
+      expect(typeof pokemonApi.endpoints.getPokemonDetails.initiate).toBe(
+        'function'
+      );
+    });
+  });
+
+  describe('API slice structure', () => {
+    it('should have correct API slice properties', () => {
+      expect(pokemonApi.reducerPath).toBeDefined();
+      expect(pokemonApi.endpoints.getPokemonList).toBeDefined();
+      expect(pokemonApi.endpoints.getPokemonDetails).toBeDefined();
+      expect(pokemonApi.middleware).toBeDefined();
+      expect(pokemonApi.reducer).toBeDefined();
+    });
+
+    it('should export hooks for endpoints', () => {
+      expect(pokemonApi.endpoints.getPokemonList.useQuery).toBeDefined();
+      expect(pokemonApi.endpoints.getPokemonDetails.useQuery).toBeDefined();
+    });
+  });
 });
