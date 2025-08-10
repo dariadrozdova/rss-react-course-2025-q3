@@ -33,9 +33,7 @@ const PokemonContainer = ({
       <div className={cn('flex justify-between items-center mb-4')}>
         <h2 className={cn(titleClassName, 'text-theme-primary')}>{title}</h2>
         <button
-          className={cn(
-            'p-2 rounded hover:bg-theme-hover-secondary text-theme-secondary'
-          )}
+          className={cn('p-2 rounded text-theme-secondary')}
           onClick={onClose}
         >
           <X size={20} />
@@ -129,9 +127,7 @@ function PokemonDetails() {
           {pokemon.name}
         </h2>
         <button
-          className={cn(
-            'p-2 rounded cursor-pointer hover:bg-theme-hover-secondary text-theme-secondary'
-          )}
+          className={cn('p-2 rounded cursor-pointer text-theme-secondary')}
           onClick={handleCloseDetails}
         >
           <X size={20} />

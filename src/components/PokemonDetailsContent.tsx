@@ -23,7 +23,7 @@ const PokemonDetailsContent = ({ pokemon }: PokemonDetailsContentProps) => (
         <div
           className={cn(
             'w-48 h-48 mx-auto flex items-center justify-center',
-            'bg-theme-image-placeholder text-theme-secondary'
+            'text-theme-secondary'
           )}
         >
           No image

@@ -54,8 +54,7 @@ const Search = ({ initialSearchTerm, onSearch }: SearchProps) => {
         'flex gap-2.5 justify-center items-center p-[15px]',
         'rounded-lg',
         'shadow-sm shadow-[hsla(0,0%,0%,0.05)]',
-        'w-full max-w-2xl',
-        'bg-theme-secondary-alt'
+        'w-full max-w-2xl'
       )}
       onClick={(e) => {
         e.stopPropagation();
@@ -67,7 +66,7 @@ const Search = ({ initialSearchTerm, onSearch }: SearchProps) => {
           'text-base flex-grow max-w-full outline-none',
           'transition-all duration-200 ease-in-out',
           'focus:border-[var(--color-primary-cyan)] focus:shadow-[0_0_0_3px_hsla(187,100%,42%,0.2)]',
-          'bg-theme-primary text-theme-primary border-theme-input placeholder-theme-input-placeholder'
+          'bg-theme-primary text-theme-primary'
         )}
         onChange={handleInputChange}
         onKeyDown={handleKeyPress}
