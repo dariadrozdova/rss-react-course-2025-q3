@@ -28,6 +28,19 @@ export interface PaginationProps {
   totalPages: number;
 }
 
+export interface PokemonContentProps {
+  currentPage: number;
+  effectiveSearchTerm: string;
+  error: null | string;
+  isLoading: boolean;
+  onPageChange: (page: number) => void;
+  onPokemonClick?: (pokemonId: number) => void;
+  pokemonItems: PokemonItem[];
+  selectedPokemonId?: number | undefined;
+  totalItems: null | number;
+  totalPages: number;
+}
+
 export interface PokemonDetailResponse {
   id: number;
   name: string;

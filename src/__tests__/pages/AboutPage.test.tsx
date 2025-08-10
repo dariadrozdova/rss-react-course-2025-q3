@@ -75,7 +75,7 @@ describe('AboutPage', () => {
       ['heading', { level: 2, name: 'Author' }, 'Author'],
       ['heading', { level: 2, name: 'The Course' }, 'The Course'],
     ])('displays %s with correct content', (role, options, expectedText) => {
-      const element = screen.getByRole(role as any, options);
+      const element = screen.getByRole(role, options);
       expect(element).toBeInTheDocument();
       expect(element).toHaveTextContent(expectedText);
     });

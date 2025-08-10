@@ -1,6 +1,6 @@
 import React from 'react';
 
-import type { PokemonItem } from '@types';
+import type { PokemonContentProps } from '@types';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import { cn } from '@utils/cn';
@@ -8,19 +8,6 @@ import { cn } from '@utils/cn';
 import CardList from './CardList';
 import Pagination from './Pagination';
 import SkeletonCardList from './SkeletonCardList';
-
-interface PokemonContentProps {
-  currentPage: number;
-  effectiveSearchTerm: string;
-  error: null | string;
-  isLoading: boolean;
-  onPageChange: (page: number) => void;
-  onPokemonClick?: (pokemonId: number) => void;
-  pokemonItems: PokemonItem[];
-  selectedPokemonId?: number;
-  totalItems: null | number;
-  totalPages: number;
-}
 
 export const PokemonContent: React.FC<PokemonContentProps> = ({
   currentPage,
