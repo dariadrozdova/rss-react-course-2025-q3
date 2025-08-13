@@ -1,16 +1,16 @@
 import { useEffect } from 'react';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 
-import CacheInvalidationButton from '@components/CacheInvalidationButton';
-import { PokemonContent } from '@components/PokemonContent';
-import Search from '@components/Search';
-import SelectionFlyout from '@components/SelectionFlyout';
-import { usePaginationAndSearch } from '@hooks/usePaginationAndSearch';
-import { usePokemonData } from '@hooks/usePokemonData';
-import NotFoundPage from '@pages/NotFoundPage';
-import { useAppSelector } from '@store/hooks';
-import { selectHasSelectedItems } from '@store/selectors';
-import { cn } from '@utils/cn';
+import CacheInvalidationButton from '@/components/CacheInvalidationButton';
+import { PokemonContent } from '@/components/PokemonContent';
+import Search from '@/components/Search';
+import SelectionFlyout from '@/components/SelectionFlyout';
+import { usePaginationAndSearch } from '@/hooks/usePaginationAndSearch';
+import { usePokemonData } from '@/hooks/usePokemonData';
+import NotFoundPage from '@/pages/NotFoundPage';
+import { useAppSelector } from '@/store/hooks';
+import { selectHasSelectedItems } from '@/store/selectors';
+import { cn } from '@/utils/cn';
 
 const ITEMS_PER_PAGE = 20;
 

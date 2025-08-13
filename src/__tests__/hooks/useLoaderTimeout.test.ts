@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { useLoaderTimeout } from '@hooks/useLoaderTimeout';
+import { useLoaderTimeout } from '@/hooks/useLoaderTimeout';
 
 const DEFAULT_TIMEOUT = 500;
 const CUSTOM_TIMEOUT = 1000;

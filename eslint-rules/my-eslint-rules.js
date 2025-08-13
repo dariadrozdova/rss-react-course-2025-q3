@@ -107,7 +107,7 @@ export const myEslintRules = {
   'unicorn/prefer-spread': 'off',
   'unicorn/prevent-abbreviations': [
     'error',
-    { allowList: { props: true, Props: true, e: true } },
+    { allowList: { props: true, Props: true, e: true, Params: true } },
   ],
   'unicorn/explicit-length-check': 'off',
   'unicorn/filename-case': [

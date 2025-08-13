@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-import { pokemonApi, useGetPokemonListQuery } from '@api/pokemonApiSlice'; // Adjust path as needed
-import Button from '@components/Button';
-import { useAppDispatch } from '@store/hooks';
+import { pokemonApi, useGetPokemonListQuery } from '@/api/pokemonApiSlice'; // Adjust path as needed
+import Button from '@/components/Button';
+import { useAppDispatch } from '@/store/hooks';
 
 interface CacheInvalidationButtonProps {
   disabled?: boolean;

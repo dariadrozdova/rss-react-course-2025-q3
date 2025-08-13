@@ -1,19 +1,11 @@
 /// <reference types="vitest" />
-/// <reference types="vite/client" />
 
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  plugins: [
-    tailwindcss(),
-    react(),
-    tsconfigPaths({
-      projects: ['./tsconfig.app.json'],
-    }),
-  ],
+  plugins: [react(), tsconfigPaths()],
   test: {
     globals: true,
     environment: 'jsdom',
@@ -24,13 +16,10 @@ export default defineConfig({
       reporter: ['text', 'html', 'json'],
       include: ['src/**/*.{js,jsx,ts,tsx}'],
       exclude: [
-        'src/**/*.test.{js,jsx,ts,tsx}',
-        'src/**/*.spec.{js,jsx,ts,tsx}',
-        'src/main.{js,jsx,ts,tsx}',
-        'src/setupTests.{js,ts}',
-        'src/**/*.d.ts',
-        'src/types/**/*.ts',
-        'src/__tests__/utils/**/*.{js,jsx,ts,tsx}',
+        '**/*.config.{js,ts,cjs}',
+        '**/tests/**',
+        '**/__tests__/**',
+        'src/types/**',
       ],
       thresholds: {
         global: {

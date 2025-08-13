@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
-import { cn } from '@utils/cn';
+import { cn } from '@/utils/cn';
 
 interface PokemonImageProps {
   imageError: boolean;
@@ -15,6 +16,8 @@ function PokemonImage({
   imageUrl,
   name,
 }: PokemonImageProps) {
+  const MotionImage = motion(Image);
+
   return (
     <div
       className={cn(
@@ -28,7 +31,7 @@ function PokemonImage({
           )}
         />
       )}
-      {imageError ? (
+      {imageError || !imageUrl ? (
         <div
           className={cn(
             'rounded-lg h-full w-full bg-gray-200 flex items-center justify-center mx-auto text-gray-500 text-sm'
@@ -37,12 +40,11 @@ function PokemonImage({
           No Image
         </div>
       ) : (
-        <motion.img
+        <MotionImage
           alt={name}
           animate={{ opacity: imageLoaded ? 1 : 0 }}
           className={cn(
-            'rounded-lg h-auto block max-w-[100px] sm:max-w-[120px] mx-auto',
-            imageLoaded ? '' : 'hidden'
+            'rounded-lg h-auto block max-w-[100px] sm:max-w-[120px] mx-auto'
           )}
           height={150}
           initial={{ opacity: 0 }}

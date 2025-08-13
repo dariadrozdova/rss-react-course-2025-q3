@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import Button from '@components/Button';
+import Button from '@/components/Button';
 import {
   BUTTON_BASE_CLASSES,
   BUTTON_COLOR_GREEN,
   BUTTON_COLOR_RED,
-} from '@utils/stylesConstants';
+} from '@/utils/stylesConstants';
 
 describe('Button', () => {
   let button: HTMLElement;

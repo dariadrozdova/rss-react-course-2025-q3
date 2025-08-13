@@ -3,11 +3,11 @@ import { useOutletContext, useParams } from 'react-router-dom';
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { X } from 'lucide-react';
 
-import { useLoaderTimeout } from '@hooks/useLoaderTimeout';
-import { usePokemonDetails } from '@hooks/usePokemonDetails';
-import { cn } from '@utils/cn';
-
 import PokemonDetailsContent from './PokemonDetailsContent';
+
+import { useLoaderTimeout } from '@/hooks/useLoaderTimeout';
+import { usePokemonDetails } from '@/hooks/usePokemonDetails';
+import { cn } from '@/utils/cn';
 
 const MIN_CONTAINER_HEIGHT = 'min-h-[600px]';
 

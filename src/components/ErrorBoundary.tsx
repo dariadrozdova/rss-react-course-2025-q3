@@ -1,11 +1,10 @@
 import type { ErrorInfo } from 'react';
 import { Component } from 'react';
 
-import type { ErrorBoundaryProps, ErrorBoundaryState } from '@types';
-
-import { cn } from '@utils/cn';
-
 import Button from './Button';
+
+import type { ErrorBoundaryProps, ErrorBoundaryState } from '@/types/';
+import { cn } from '@/utils/cn';
 
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {

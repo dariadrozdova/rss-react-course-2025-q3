@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 
-import { useGetPokemonImageQuery } from '@api/pokemonApiSlice';
+import { useGetPokemonImageQuery } from '@/api/pokemonApiSlice';
 
 interface UsePokemonImageResult {
   finalImageUrl: string | undefined;

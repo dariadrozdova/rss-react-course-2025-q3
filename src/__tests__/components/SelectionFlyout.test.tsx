@@ -2,13 +2,12 @@ import { Provider } from 'react-redux';
 
 import { configureStore } from '@reduxjs/toolkit';
 import { fireEvent, render, screen } from '@testing-library/react';
-import type { PokemonItem } from '@types';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import SelectionFlyout from '@components/SelectionFlyout';
-import selectedItemsReducer from '@store/slices/selectedItemsSlice';
-
 import { mockPokemonDetailResponses } from '@/__tests__/utils/mainPageMockData';
+import SelectionFlyout from '@/components/SelectionFlyout';
+import selectedItemsReducer from '@/store/slices/selectedItemsSlice';
+import type { PokemonItem } from '@/types/';
 
 global.URL.createObjectURL = vi.fn(() => 'mock-blob-url');
 global.URL.revokeObjectURL = vi.fn();

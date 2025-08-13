@@ -1,7 +1,6 @@
-import type { CardListProps } from '@types';
-
-import Card from '@components/Card/Card';
-import { cn } from '@utils/cn';
+import Card from '@/components/Card/Card';
+import type { CardListProps } from '@/types/';
+import { cn } from '@/utils/cn';
 
 function CardList({
   currentPage,

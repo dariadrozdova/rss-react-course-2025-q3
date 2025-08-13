@@ -1,8 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import AboutPage from '@pages/AboutPage';
-
 import { render, screen } from '@/__tests__/utils/TestUtilities';
+import AboutPage from '@/pages/AboutPage';
 
 const AboutPageWithProviders = () => <AboutPage />;
 
@@ -17,7 +16,7 @@ describe('AboutPage', () => {
       expect(screen.getByRole('img', { name: 'App Logo' })).toBeInTheDocument();
       expect(screen.getByRole('img')).toHaveAttribute(
         'src',
-        '/icons/favicon.svg'
+        expect.stringContaining('favicon.svg')
       );
     });
 

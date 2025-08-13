@@ -1,4 +1,7 @@
-import { cn } from '@utils/cn';
+import Image from 'next/image';
+
+import favicon from '@/app/favicon.svg';
+import { cn } from '@/utils/cn';
 
 function AboutPage() {
   return (
@@ -9,10 +12,12 @@ function AboutPage() {
         min-h-[1016px]`)}
     >
       <div className={cn('max-w-4xl w-full py-6 md:py-10')}>
-        <img
+        <Image
           alt="App Logo"
-          className={cn('w-24 h-24 mb-6 mx-auto')}
-          src="/icons/favicon.svg"
+          className={cn('mb-6 mx-auto')}
+          height={96}
+          src={favicon}
+          width={96}
         />
 
         <h1

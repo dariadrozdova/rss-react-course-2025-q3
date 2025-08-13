@@ -1,10 +1,9 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import type { SearchProps } from '@types';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import Search from '@components/Search';
-
+import Search from '@/components/Search';
 import { ThemeProvider } from '@/context/ThemeContext';
+import type { SearchProps } from '@/types/';
 
 describe('Search Component Tests', () => {
   let mockOnSearch: (searchTerm: string) => void;

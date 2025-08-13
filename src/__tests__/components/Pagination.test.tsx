@@ -1,8 +1,8 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import type { PaginationProps } from '@types';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import Pagination from '@components/Pagination';
+import Pagination from '@/components/Pagination';
+import type { PaginationProps } from '@/types/';
 
 const DEFAULT_TOTAL_PAGES = 10;
 const FIRST_PAGE = 1;

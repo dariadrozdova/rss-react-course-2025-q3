@@ -5,9 +5,8 @@ import { MemoryRouter } from 'react-router-dom';
 
 import { render } from '@testing-library/react';
 
-import { store } from '@store/index';
-
 import { ThemeProvider } from '@/context/ThemeContext';
+import { store } from '@/store/index';
 
 interface AllTheProvidersProps {
   children: React.ReactNode;

@@ -3,10 +3,10 @@ import { MemoryRouter } from 'react-router-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import PokemonDetails from '@components/PokemonDetails';
+import PokemonDetails from '@/components/PokemonDetails';
 
-vi.mock('@hooks/useLoaderTimeout');
-vi.mock('@hooks/usePokemonDetails');
+vi.mock('@/hooks/useLoaderTimeout');
+vi.mock('@/hooks/usePokemonDetails');
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom');
   return {
@@ -18,10 +18,9 @@ vi.mock('react-router-dom', async () => {
 
 import { useOutletContext, useParams } from 'react-router-dom';
 
-import { useLoaderTimeout } from '@hooks/useLoaderTimeout';
-import { usePokemonDetails } from '@hooks/usePokemonDetails';
-
 import { ThemeProvider } from '@/context/ThemeContext';
+import { useLoaderTimeout } from '@/hooks/useLoaderTimeout';
+import { usePokemonDetails } from '@/hooks/usePokemonDetails';
 
 const mockUseLoaderTimeout = vi.mocked(useLoaderTimeout);
 const mockUsePokemonDetails = vi.mocked(usePokemonDetails);
@@ -162,7 +161,11 @@ describe('PokemonDetails', () => {
       renderComponent();
 
       const image = screen.getByRole('img', { name: 'bulbasaur' });
-      expect(image).toHaveAttribute('src', 'https://example.com/bulbasaur.png');
+      expect(image).toBeInTheDocument();
+      expect(image).toHaveAttribute(
+        'src',
+        expect.stringContaining('/_next/image')
+      );
     });
 
     it('displays placeholder when image not available', () => {

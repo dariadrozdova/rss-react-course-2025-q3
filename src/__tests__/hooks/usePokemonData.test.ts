@@ -1,16 +1,15 @@
 import { renderHook } from '@testing-library/react';
-import type { PokemonListItem } from '@types';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
+import { mockPokeApiListResponse } from '@/__tests__/utils/mainPageMockData';
 import {
   useGetPokemonDetailsQuery,
   useGetPokemonListQuery,
-} from '@api/pokemonApiSlice';
-import { usePokemonData } from '@hooks/usePokemonData';
+} from '@/api/pokemonApiSlice';
+import { usePokemonData } from '@/hooks/usePokemonData';
+import type { PokemonListItem } from '@/types/';
 
-import { mockPokeApiListResponse } from '@/__tests__/utils/mainPageMockData';
-
-vi.mock('@api/pokemonApiSlice', () => ({
+vi.mock('@/api/pokemonApiSlice', () => ({
   useGetPokemonDetailsQuery: vi.fn(),
   useGetPokemonListQuery: vi.fn(),
 }));

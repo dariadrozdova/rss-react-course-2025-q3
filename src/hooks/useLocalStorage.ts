@@ -27,7 +27,7 @@ function useLocalStorage<T extends string>(
           typeof value === 'function' ? value(storedValue) : value;
 
         setStoredValue(newValue);
-        localStorage.setItem(key, String(newValue));
+        localStorage.setItem(key, newValue);
       } catch (error) {
         console.warn(`Error writing to localStorage key "${key}":`, error);
       }

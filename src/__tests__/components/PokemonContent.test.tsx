@@ -1,14 +1,14 @@
 import { render, screen } from '@testing-library/react';
-import type { PokemonContentProps, PokemonItem } from '@types';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { PokemonContent } from '@components/PokemonContent';
+import { PokemonContent } from '@/components/PokemonContent';
+import type { PokemonContentProps, PokemonItem } from '@/types/';
 
-vi.mock('@components/Loader', () => ({
+vi.mock('@/components/Loader', () => ({
   default: vi.fn(() => <div data-testid="loader">Loading...</div>),
 }));
 
-vi.mock('@components/CardList', () => ({
+vi.mock('@/components/CardList', () => ({
   default: vi.fn(({ pokemonItems }) => (
     <ul data-testid="card-list">
       {pokemonItems.map((item: PokemonItem) => (
@@ -20,7 +20,7 @@ vi.mock('@components/CardList', () => ({
   )),
 }));
 
-vi.mock('@components/Pagination', () => ({
+vi.mock('@/components/Pagination', () => ({
   default: vi.fn(
     ({
       currentPage,
@@ -45,7 +45,7 @@ vi.mock('@components/Pagination', () => ({
   ),
 }));
 
-vi.mock('@components/SkeletonCardList', () => ({
+vi.mock('@/components/SkeletonCardList', () => ({
   default: vi.fn(({ count }: { count: number }) => (
     <div data-testid="skeleton-card-list">Loading {count} cards...</div>
   )),

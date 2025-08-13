@@ -1,12 +1,10 @@
 import { useEffect } from 'react';
 
-import type { PokemonItem } from '@types';
-
-import useLocalStorage from '@hooks/useLocalStorage';
-import { selectSelectedItems } from '@store/selectors';
-import { setSelectedItems } from '@store/slices/selectedItemsSlice';
-
+import useLocalStorage from '@/hooks/useLocalStorage';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { selectSelectedItems } from '@/store/selectors';
+import { setSelectedItems } from '@/store/slices/selectedItemsSlice';
+import type { PokemonItem } from '@/types/';
 
 export const useSelectedItemsStorage = () => {
   const dispatch = useAppDispatch();

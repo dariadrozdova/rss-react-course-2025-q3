@@ -2,14 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import { AnimatePresence, motion } from 'framer-motion';
 
-import Button from '@components/Button';
-import { useAppDispatch, useAppSelector } from '@store/hooks';
+import Button from '@/components/Button';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import {
   selectSelectedItems,
   selectSelectedItemsCount,
-} from '@store/selectors';
-import { unselectAllItems } from '@store/slices/selectedItemsSlice';
-import { cn } from '@utils/cn';
+} from '@/store/selectors';
+import { unselectAllItems } from '@/store/slices/selectedItemsSlice';
+import { cn } from '@/utils/cn';
 
 const SelectionFlyout: React.FC = () => {
   const dispatch = useAppDispatch();

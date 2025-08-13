@@ -1,3 +1,6 @@
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
 import js from '@eslint/js';
 import globals from 'globals';
 import reactHooks from 'eslint-plugin-react-hooks';
@@ -13,13 +16,16 @@ import unicorn from 'eslint-plugin-unicorn';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import { myEslintRules } from './eslint-rules/my-eslint-rules.js';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 export default tseslint.config(
   {
     languageOptions: {
       sourceType: 'module',
       parserOptions: {
         projectService: true,
-        tsconfigRootDir: import.meta.dirname,
+        tsconfigRootDir: __dirname,
       },
     },
   },

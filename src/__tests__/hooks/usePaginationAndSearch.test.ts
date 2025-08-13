@@ -3,7 +3,7 @@ import React from 'react';
 import { act, renderHook } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { usePaginationAndSearch } from '@hooks/usePaginationAndSearch';
+import { usePaginationAndSearch } from '@/hooks/usePaginationAndSearch';
 
 const mockStorage: Record<string, string> = {};
 

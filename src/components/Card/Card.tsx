@@ -1,17 +1,15 @@
 import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 
-import type { CardProps } from '@types';
-
-import { useGetPokemonDetailsQuery } from '@api/pokemonApiSlice';
-import { usePokemonImage } from '@hooks/usePokemonImage';
-import { useAppDispatch, useAppSelector } from '@store/hooks';
-import { toggleItemSelection } from '@store/slices/selectedItemsSlice';
-import { cn } from '@utils/cn';
-
 import CardContent from './CardContent';
 
+import { useGetPokemonDetailsQuery } from '@/api/pokemonApiSlice';
+import { usePokemonImage } from '@/hooks/usePokemonImage';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { selectIsItemSelected } from '@/store/selectors';
+import { toggleItemSelection } from '@/store/slices/selectedItemsSlice';
+import type { CardProps } from '@/types/';
+import { cn } from '@/utils/cn';
 
 function Card({
   currentPage,

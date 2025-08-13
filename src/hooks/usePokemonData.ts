@@ -1,8 +1,7 @@
 import { useMemo } from 'react';
 
-import type { UsePokemonDataResult } from '@types';
-
-import { useGetPokemonListQuery } from '@api/pokemonApiSlice';
+import { useGetPokemonListQuery } from '@/api/pokemonApiSlice';
+import type { UsePokemonDataResult } from '@/types/';
 
 export const usePokemonData = (
   searchTerm: string,

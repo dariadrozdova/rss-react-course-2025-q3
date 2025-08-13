@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import SkeletonCardList from '@components/SkeletonCardList';
+import SkeletonCardList from '@/components/SkeletonCardList';
 
 describe('SkeletonCardList', () => {
   it('renders with default count of 20 skeleton cards', () => {

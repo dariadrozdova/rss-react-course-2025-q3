@@ -3,9 +3,8 @@ import { MemoryRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import NotFoundPage from '@pages/NotFoundPage';
-
 import { ThemeProvider } from '@/context/ThemeContext';
+import NotFoundPage from '@/pages/NotFoundPage';
 
 const NotFoundPageWithProviders = () => (
   <MemoryRouter>
@@ -27,7 +26,10 @@ describe('NotFoundPage', () => {
 
       const pokeballImage = screen.getByRole('img', { name: 'Poké Ball' });
       expect(pokeballImage).toBeInTheDocument();
-      expect(pokeballImage).toHaveAttribute('src', '/icons/pokeball.png');
+      expect(pokeballImage).toHaveAttribute(
+        'src',
+        expect.stringContaining('pokeball.png')
+      );
     });
 
     it.each([

@@ -1,4 +1,6 @@
-import { cn } from '@utils/cn';
+import Image from 'next/image';
+
+import { cn } from '@/utils/cn';
 
 interface PokemonDetailsContentProps {
   pokemon: {
@@ -14,10 +16,12 @@ const PokemonDetailsContent = ({ pokemon }: PokemonDetailsContentProps) => (
   <>
     <div className={cn('text-center mb-6')}>
       {pokemon.sprites.front_default ? (
-        <img
+        <Image
           alt={pokemon.name}
-          className={cn('w-48 h-48 mx-auto')}
+          className={cn('mx-auto')}
+          height={192}
           src={pokemon.sprites.front_default}
+          width={192}
         />
       ) : (
         <div

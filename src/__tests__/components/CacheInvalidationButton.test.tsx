@@ -1,15 +1,15 @@
 import { render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { useGetPokemonListQuery } from '@api/pokemonApiSlice';
-import CacheInvalidationButton from '@components/CacheInvalidationButton';
-import { useAppDispatch } from '@store/hooks';
+import { useGetPokemonListQuery } from '@/api/pokemonApiSlice';
+import CacheInvalidationButton from '@/components/CacheInvalidationButton';
+import { useAppDispatch } from '@/store/hooks';
 
-vi.mock('@store/hooks', () => ({
+vi.mock('@/store/hooks', () => ({
   useAppDispatch: vi.fn(),
 }));
 
-vi.mock('@api/pokemonApiSlice', () => ({
+vi.mock('@/api/pokemonApiSlice', () => ({
   pokemonApi: {
     util: {
       resetApiState: vi.fn(),

@@ -1,9 +1,8 @@
 import React from 'react';
 
-import type { PaginationProps } from '@types';
-
-import Button from '@components/Button';
-import { cn } from '@utils/cn';
+import Button from '@/components/Button';
+import type { PaginationProps } from '@/types/';
+import { cn } from '@/utils/cn';
 
 const Pagination: React.FC<PaginationProps> = ({
   currentPage,

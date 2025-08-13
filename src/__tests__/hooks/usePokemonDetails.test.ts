@@ -1,13 +1,13 @@
 import { renderHook } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { usePokemonDetails } from '@hooks/usePokemonDetails';
+import { usePokemonDetails } from '@/hooks/usePokemonDetails';
 
-vi.mock('@api/pokemonApiSlice', () => ({
+vi.mock('@/api/pokemonApiSlice', () => ({
   useGetPokemonDetailsQuery: vi.fn(),
 }));
 
-import { useGetPokemonDetailsQuery } from '@api/pokemonApiSlice';
+import { useGetPokemonDetailsQuery } from '@/api/pokemonApiSlice';
 const mockUseGetPokemonDetailsQuery = useGetPokemonDetailsQuery as ReturnType<
   typeof vi.fn
 >;

@@ -1,11 +1,12 @@
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+
 import type {
   PokemonDetailResponse,
   PokemonDetails,
   PokemonItem,
   PokemonListResponse,
-} from '@types';
+} from '@/types/';
 
 const HTTP_STATUS_NOT_FOUND = 404;
 

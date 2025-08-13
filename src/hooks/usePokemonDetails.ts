@@ -1,7 +1,7 @@
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
-import type { PokemonDetails } from '@types';
 
-import { useGetPokemonDetailsQuery } from '@api/pokemonApiSlice';
+import { useGetPokemonDetailsQuery } from '@/api/pokemonApiSlice';
+import type { PokemonDetails } from '@/types/';
 
 interface SerializedError {
   code?: string;

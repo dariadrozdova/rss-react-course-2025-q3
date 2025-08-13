@@ -1,9 +1,8 @@
-import type { PokemonItem } from '@types';
-
-import { cn } from '@utils/cn';
-
 import PokemonImage from './PokemonImage';
 import SelectionCheckbox from './SelectionCheckbox';
+
+import type { PokemonItem } from '@/types/';
+import { cn } from '@/utils/cn';
 
 interface CardContentProps {
   imageError: boolean;

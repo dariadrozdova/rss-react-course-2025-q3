@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { pokemonApi } from '@api/pokemonApiSlice';
-
 import selectedItemsSlice from './slices/selectedItemsSlice';
+
+import { pokemonApi } from '@/api/pokemonApiSlice';
 
 export const store = configureStore({
   middleware: (getDefaultMiddleware) =>

@@ -2,12 +2,12 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import PokemonDetails from '@components/PokemonDetails';
-import AboutPage from '@pages/AboutPage';
-import MainPage from '@pages/MainPage';
-import NotFoundPage from '@pages/NotFoundPage';
-
 import App from './App';
+
+import PokemonDetails from '@/components/PokemonDetails';
+import AboutPage from '@/pages/AboutPage';
+import MainPage from '@/pages/MainPage';
+import NotFoundPage from '@/pages/NotFoundPage';
 
 const router = createBrowserRouter([
   {

@@ -6,7 +6,7 @@ import React, {
   useState,
 } from 'react';
 
-import useLocalStorage from '@hooks/useLocalStorage';
+import useLocalStorage from '@/hooks/useLocalStorage';
 
 type Theme = 'dark' | 'light';
 

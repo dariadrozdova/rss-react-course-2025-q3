@@ -1,9 +1,8 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import ErrorBoundary from '@components/ErrorBoundary';
-
 import ThrowingComponent from '@/__tests__/utils/ThrowingComponent';
+import ErrorBoundary from '@/components/ErrorBoundary';
 
 describe('ErrorBoundary', () => {
   let consoleErrorSpy: ReturnType<typeof vi.spyOn>;

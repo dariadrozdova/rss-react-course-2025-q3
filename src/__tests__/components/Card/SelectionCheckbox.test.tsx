@@ -2,9 +2,8 @@ import '@testing-library/jest-dom';
 
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import SelectionCheckbox from '@components/Card/SelectionCheckbox';
-
 import { fireEvent, render, screen } from '@/__tests__/utils/TestUtilities';
+import SelectionCheckbox from '@/components/Card/SelectionCheckbox';
 
 describe('SelectionCheckbox', () => {
   beforeEach(() => {

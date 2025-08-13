@@ -1,6 +1,6 @@
-# RS School React Course: State Management & Context API
+# RS School React Course
 
-This project is a continuation of the [Rolling Scopes School (RS School) React Course](https://rs.school/courses/reactjs), now focusing on advanced state management techniques and context API for theme management. It builds upon previous tasks, demonstrating the integration of a state management solution (Redux Toolkit) for managing selected items and a Context API for dynamic theme switching.
+This project is a continuation of the [Rolling Scopes School (RS School) React Course](https://rs.school/courses/reactjs), it builds upon previous tasks. As part of this task I am migrating my project from Vite to the Next.js by using App Router.
 
 ## Installation & Setup
 

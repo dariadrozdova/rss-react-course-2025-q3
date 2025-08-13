@@ -4,13 +4,12 @@ import { MemoryRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import CardList from '@components/CardList';
-import { store } from '@store/index';
-
 import { mockPokemonItemsList } from '@/__tests__/utils/cardComponentsMockData';
+import CardList from '@/components/CardList';
 import { ThemeProvider } from '@/context/ThemeContext';
+import { store } from '@/store/index';
 
-vi.mock('@components/Card/Card', () => ({
+vi.mock('@/components/Card/Card', () => ({
   default: vi.fn(({ currentPage, isSelected, item, onPokemonClick }) => (
     <li
       data-current-page={currentPage}

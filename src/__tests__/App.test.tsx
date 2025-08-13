@@ -4,19 +4,18 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import MainPage from '@pages/MainPage';
-import { store } from '@store/index';
-import { unselectAllItems } from '@store/slices/selectedItemsSlice';
-
 import App from '@/App';
+import MainPage from '@/pages/MainPage';
+import { store } from '@/store/index';
+import { unselectAllItems } from '@/store/slices/selectedItemsSlice';
 
-vi.mock('@components/ErrorBoundary', async (importOriginal) => {
+vi.mock('@/components/ErrorBoundary', async (importOriginal) => {
   const actual =
-    await importOriginal<typeof import('@components/ErrorBoundary')>();
+    await importOriginal<typeof import('@/components/ErrorBoundary')>();
   return { default: actual.default };
 });
 
-vi.mock('@pages/MainPage', async () => {
+vi.mock('@/pages/MainPage', async () => {
   const React = await vi.importActual<typeof import('react')>('react');
 
   const MockMainPage = vi.fn(() => {

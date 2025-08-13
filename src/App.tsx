@@ -2,15 +2,15 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { NavLink, Outlet } from 'react-router-dom';
 
-import ErrorBoundary from '@components/ErrorBoundary';
-import ThemeSwitch from '@components/ThemeSwitch';
-import { useSelectedItemsStorage } from '@hooks/useSelectedItemsStorage';
-import { cn } from '@utils/cn';
-
 import { ThemeProvider } from './context/ThemeContext';
 import { store } from './store';
 
 import './index.css';
+
+import ErrorBoundary from '@/components/ErrorBoundary';
+import ThemeSwitch from '@/components/ThemeSwitch';
+import { useSelectedItemsStorage } from '@/hooks/useSelectedItemsStorage';
+import { cn } from '@/utils/cn';
 
 const AppContent: React.FC = () => {
   useSelectedItemsStorage();

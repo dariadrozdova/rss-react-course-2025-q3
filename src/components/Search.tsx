@@ -6,11 +6,10 @@ import {
   useState,
 } from 'react';
 
-import type { SearchProps } from '@types';
-
-import { cn } from '@utils/cn';
-
 import Button from './Button';
+
+import type { SearchProps } from '@/types/';
+import { cn } from '@/utils/cn';
 
 const Search = ({ initialSearchTerm, onSearch }: SearchProps) => {
   const [inputValue, setInputValue] = useState(initialSearchTerm);

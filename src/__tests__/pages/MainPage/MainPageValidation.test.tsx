@@ -2,26 +2,25 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import useLocalStorage from '@hooks/useLocalStorage';
-import { usePaginationAndSearch } from '@hooks/usePaginationAndSearch';
-import { usePokemonData } from '@hooks/usePokemonData';
-import MainPage from '@pages/MainPage';
-
 import { render, screen, waitFor } from '@/__tests__/utils/TestUtilities';
+import useLocalStorage from '@/hooks/useLocalStorage';
+import { usePaginationAndSearch } from '@/hooks/usePaginationAndSearch';
+import { usePokemonData } from '@/hooks/usePokemonData';
+import MainPage from '@/pages/MainPage';
 
-vi.mock('@hooks/usePokemonData', () => ({ usePokemonData: vi.fn() }));
-vi.mock('@hooks/useLocalStorage', () => ({ default: vi.fn() }));
-vi.mock('@components/Search', () => ({
+vi.mock('@/hooks/usePokemonData', () => ({ usePokemonData: vi.fn() }));
+vi.mock('@/hooks/useLocalStorage', () => ({ default: vi.fn() }));
+vi.mock('@/components/Search', () => ({
   default: vi.fn(() => <div data-testid="search">Search</div>),
 }));
-vi.mock('@hooks/usePaginationAndSearch', () => ({
+vi.mock('@/hooks/usePaginationAndSearch', () => ({
   usePaginationAndSearch: vi.fn(),
 }));
-vi.mock('@components/PokemonContent', () => ({
+vi.mock('@/components/PokemonContent', () => ({
   PokemonContent: vi.fn(() => <div data-testid="pokemon-content">Content</div>),
 }));
 
-vi.mock('@pages/NotFoundPage', () => ({
+vi.mock('@/pages/NotFoundPage', () => ({
   default: vi.fn(() => <div data-testid="not-found-page">Not Found</div>),
 }));
 

@@ -4,14 +4,13 @@ import { MemoryRouter } from 'react-router-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import Card from '@components/Card/Card';
-import { store } from '@store/index';
+import { mockPokemonItemWithImage } from '@/__tests__/utils/cardComponentsMockData';
+import Card from '@/components/Card/Card';
+import { store } from '@/store/index';
 import {
   setSelectedItems,
   unselectAllItems,
-} from '@store/slices/selectedItemsSlice';
-
-import { mockPokemonItemWithImage } from '@/__tests__/utils/cardComponentsMockData';
+} from '@/store/slices/selectedItemsSlice';
 
 const renderCard = (item: typeof mockPokemonItemWithImage, props = {}) =>
   render(
@@ -81,29 +80,6 @@ describe('Card', () => {
       fireEvent.click(checkbox);
 
       expect(store.getState().selectedItems.items).toEqual([]);
-    });
-  });
-
-  describe('image error handling edge cases', () => {
-    it('handles image error without nextElementSibling', () => {
-      renderCard(mockPokemonItemWithImage);
-      const image = screen.getByRole('img');
-
-      const originalNextElementSibling = image.nextElementSibling;
-      Object.defineProperty(image, 'nextElementSibling', {
-        configurable: true,
-        get: () => null,
-      });
-
-      expect(() => {
-        fireEvent.error(image);
-        fireEvent.error(image);
-      }).not.toThrow();
-
-      Object.defineProperty(image, 'nextElementSibling', {
-        configurable: true,
-        get: () => originalNextElementSibling,
-      });
     });
   });
 

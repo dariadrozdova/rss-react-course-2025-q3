@@ -2,9 +2,8 @@ import '@testing-library/jest-dom';
 
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import ThemeSwitch from '@components/ThemeSwitch';
-
 import { fireEvent, render, screen } from '@/__tests__/utils/TestUtilities';
+import ThemeSwitch from '@/components/ThemeSwitch';
 
 vi.mock('lucide-react', () => ({
   Moon: vi.fn(({ ...props }) => <div data-testid="moon-icon" {...props} />),

@@ -1,10 +1,13 @@
 import { NavLink } from 'react-router-dom';
 
-import { cn } from '@utils/cn';
+import Image from 'next/image';
+
+import pokeball from '@/app/pokeball.png';
+import { cn } from '@/utils/cn';
 import {
   BUTTON_BASE_CLASSES,
   BUTTON_COLOR_GREEN,
-} from '@utils/stylesConstants';
+} from '@/utils/stylesConstants';
 
 function NotFoundPage() {
   const navLinkClasses = `${BUTTON_BASE_CLASSES} ${BUTTON_COLOR_GREEN}`;
@@ -19,11 +22,7 @@ function NotFoundPage() {
       <div className={cn('max-w-4xl w-full')}>
         <div className={cn('flex items-center justify-center gap-4 mb-6')}>
           <span className={cn('text-8xl font-bold text-theme-primary')}>4</span>
-          <img
-            alt="Poké Ball"
-            className={cn('w-20 h-20')}
-            src="/icons/pokeball.png"
-          />
+          <Image alt="Poké Ball" height={80} src={pokeball} width={80} />
           <span className={cn('text-8xl font-bold text-theme-primary')}>4</span>
         </div>
 

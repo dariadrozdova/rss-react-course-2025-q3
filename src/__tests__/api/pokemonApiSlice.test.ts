@@ -1,13 +1,12 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { pokemonApi } from '@api/pokemonApiSlice';
-
 import { setupApiStore } from '@/__tests__/utils/apiTestUtilities';
 import {
   emptyResultsList,
   mockPokeApiListResponse,
   singleItemResponse,
 } from '@/__tests__/utils/mainPageMockData';
+import { pokemonApi } from '@/api/pokemonApiSlice';
 
 const LIST_LIMIT_FULL = 10;
 const LIST_LIMIT_SINGLE = 1;
