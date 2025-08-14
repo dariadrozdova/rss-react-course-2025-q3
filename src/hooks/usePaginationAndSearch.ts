@@ -1,5 +1,8 @@
+'use client';
+
 import { useCallback, useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import useLocalStorage from './useLocalStorage';
 
@@ -12,7 +15,9 @@ interface UsePaginationAndSearchResult {
 }
 
 export const usePaginationAndSearch = (): UsePaginationAndSearchResult => {
-  const [searchParameters, setSearchParameters] = useSearchParams();
+  const searchParameters = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
 
   const [localSearchTerm, setLocalSearchTerm] = useLocalStorage<string>(
     'lastSearchTerm',
@@ -20,7 +25,6 @@ export const usePaginationAndSearch = (): UsePaginationAndSearchResult => {
   );
 
   const searchTermFromUrl = searchParameters.get('search') || '';
-
   const effectiveSearchTerm = searchParameters.has('search')
     ? searchTermFromUrl
     : '';
@@ -44,6 +48,10 @@ export const usePaginationAndSearch = (): UsePaginationAndSearchResult => {
   const [currentPage, setCurrentPage] = useState<number>(
     isValidPage ? Math.max(1, currentPageFromUrl) : 1
   );
+
+  const updateSearchParams = (parameters: URLSearchParams) => {
+    router.push(`${pathname}?${parameters.toString()}`);
+  };
 
   useEffect(() => {
     if (searchParameters.has('search')) {
@@ -79,13 +87,12 @@ export const usePaginationAndSearch = (): UsePaginationAndSearchResult => {
       const newSearchParameters = new URLSearchParams();
       if (newSearchTerm.trim()) {
         newSearchParameters.set('search', newSearchTerm.trim());
-        newSearchParameters.set('page', '1');
-      } else {
-        newSearchParameters.set('page', '1');
       }
-      setSearchParameters(newSearchParameters);
+      newSearchParameters.set('page', '1');
+
+      updateSearchParams(newSearchParameters);
     },
-    [setLocalSearchTerm, setSearchParameters]
+    [setLocalSearchTerm]
   );
 
   const handlePageChange = useCallback(
@@ -96,9 +103,10 @@ export const usePaginationAndSearch = (): UsePaginationAndSearchResult => {
         searchParameters.toString()
       );
       newSearchParameters.set('page', String(page));
-      setSearchParameters(newSearchParameters);
+
+      updateSearchParams(newSearchParameters);
     },
-    [searchParameters, setSearchParameters]
+    [searchParameters]
   );
 
   return {

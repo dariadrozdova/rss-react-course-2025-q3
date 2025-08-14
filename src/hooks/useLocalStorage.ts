@@ -1,3 +1,5 @@
+'use client';
+
 import { useCallback, useState } from 'react';
 
 type UseLocalStorageResult<T> = [T, (value: ((previous: T) => T) | T) => void];

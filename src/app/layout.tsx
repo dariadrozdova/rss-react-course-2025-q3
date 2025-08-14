@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 
-import '@/index.css';
+import '@/app/globals.css';
+
+import { Providers } from '@/app/providers';
+import Header from '@/components/Header';
 
 export const metadata: Metadata = {
   title: 'RS School React Project',
@@ -19,7 +22,12 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body className="max-w-7xl w-full mx-auto p-4 md:p-8 flex flex-col items-center">
+        <Providers>
+          <Header />
+          {children}
+        </Providers>
+      </body>
     </html>
   );
 }

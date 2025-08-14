@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
-import { Link } from 'react-router-dom';
+
+import Link from 'next/link';
 
 import CardContent from './CardContent';
 
@@ -85,7 +86,7 @@ function Card({
       <CardContent {...cardContentProps} />
     </div>
   ) : (
-    <Link className={cn(baseClass)} to={`/${currentPage}/${item.id}`}>
+    <Link className={cn(baseClass)} href={`/${currentPage}/${item.id}`}>
       <CardContent {...cardContentProps} />
     </Link>
   );

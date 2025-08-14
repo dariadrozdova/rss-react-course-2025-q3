@@ -16,7 +16,7 @@ function PokemonImage({
   imageUrl,
   name,
 }: PokemonImageProps) {
-  const MotionImage = motion(Image);
+  const MotionImage = motion.create(Image);
 
   return (
     <div

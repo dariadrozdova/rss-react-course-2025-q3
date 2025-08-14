@@ -114,7 +114,7 @@ export const myEslintRules = {
     'error',
     {
       cases: {
-        kebabCase: false,
+        kebabCase: true,
         camelCase: true,
         pascalCase: true,
       },
