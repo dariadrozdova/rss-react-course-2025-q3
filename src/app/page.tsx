@@ -1,11 +1,5 @@
-import { Suspense } from 'react';
-
-import MainContent from '@/components/MainContent';
+import { redirect } from 'next/navigation';
 
 export default function MainPage() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <MainContent />
-    </Suspense>
-  );
+  redirect('/details');
 }

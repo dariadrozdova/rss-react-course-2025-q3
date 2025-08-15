@@ -47,7 +47,8 @@ export default function MainContent() {
   }, [searchParams, totalPages]);
 
   const handlePokemonClick = (pokemonId: number) => {
-    router.push(`/details/${pokemonId}?${searchParams.toString()}`);
+    const query = searchParams.toString();
+    router.push(`/details/${pokemonId}${query ? `?${query}` : ''}`);
   };
 
   return (
@@ -58,11 +59,7 @@ export default function MainContent() {
           hasSelectedItems && 'pb-20'
         )}
       >
-        <div
-          className={cn(
-            'flex flex-col gap-5 w-full transition-all duration-300'
-          )}
-        >
+        <div className="flex flex-col gap-5 w-full transition-all duration-300">
           <section className="theme-card p-6 rounded-lg shadow-md text-center flex flex-col items-center gap-5 box-border w-full flex-shrink-0">
             <Search
               initialSearchTerm={effectiveSearchTerm}

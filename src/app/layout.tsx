@@ -22,10 +22,12 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="max-w-7xl w-full mx-auto p-4 md:p-8 flex flex-col items-center">
+      <body>
         <Providers>
-          <Header />
-          {children}
+          <div className="max-w-7xl w-full mx-auto p-4 md:p-8">
+            <Header />
+            {children}
+          </div>
         </Providers>
       </body>
     </html>

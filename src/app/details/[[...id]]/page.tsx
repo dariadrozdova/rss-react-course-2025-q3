@@ -1,34 +1,66 @@
 'use client';
 
-import { X } from 'lucide-react';
-import { useParams, useRouter } from 'next/navigation';
+import { Suspense } from 'react';
 
+import { X } from 'lucide-react';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
+
+import MainContent from '@/components/MainContent';
 import PokemonDetailsContent from '@/components/PokemonDetailsContent';
 import { useLoaderTimeout } from '@/hooks/useLoaderTimeout';
 import { usePokemonDetails } from '@/hooks/usePokemonDetails';
 import { cn } from '@/utils/cn';
 
-const MIN_CONTAINER_HEIGHT = 'min-h-[600px]'; // TODO
+const MIN_CONTAINER_HEIGHT = 'min-h-[600px]';
 
-export default function PokemonDetailsPage() {
-  const parameters = useParams();
+export default function PokemonPage() {
+  const parameters = useParams<{ id?: string[] }>();
   const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const detailsId = parameters.detailsId as string;
-  const { error, isLoading, pokemon } = usePokemonDetails(detailsId);
-  const showLoader = useLoaderTimeout(detailsId);
+  const pokemonId = parameters?.id?.[0] ?? null;
 
   const handleCloseDetails = () => {
-    router.back();
+    const query = searchParams.toString();
+    router.push(`/details${query ? `?${query}` : ''}`);
   };
+
+  return (
+    <div
+      className={cn(
+        'grid gap-4',
+        pokemonId ? 'md:grid-cols-3' : 'md:grid-cols-1'
+      )}
+    >
+      <div className={cn(pokemonId ? 'md:col-span-2' : 'md:col-span-1')}>
+        <Suspense fallback={<div>Loading list...</div>}>
+          <MainContent />
+        </Suspense>
+      </div>
+
+      {pokemonId && (
+        <DetailsPanel onClose={handleCloseDetails} pokemonId={pokemonId} />
+      )}
+    </div>
+  );
+}
+
+function DetailsPanel({
+  onClose,
+  pokemonId,
+}: {
+  onClose: () => void;
+  pokemonId: string;
+}) {
+  const { error, isLoading, pokemon } = usePokemonDetails(pokemonId);
+  const showLoader = useLoaderTimeout(pokemonId);
 
   if (isLoading || showLoader) {
     return (
       <div
         className={cn(
-          'rounded-lg shadow-md p-6',
-          MIN_CONTAINER_HEIGHT,
-          'bg-theme-secondary'
+          'rounded-lg shadow-md p-6 bg-theme-secondary md:col-span-1',
+          MIN_CONTAINER_HEIGHT
         )}
       >
         <div className="flex justify-center items-center py-8">
@@ -42,9 +74,8 @@ export default function PokemonDetailsPage() {
     return (
       <div
         className={cn(
-          'rounded-lg shadow-md p-6',
-          MIN_CONTAINER_HEIGHT,
-          'bg-theme-secondary'
+          'rounded-lg shadow-md p-6 bg-theme-secondary md:col-span-1',
+          MIN_CONTAINER_HEIGHT
         )}
       >
         <h2 className="text-xl font-bold text-red-600">Error</h2>
@@ -55,7 +86,7 @@ export default function PokemonDetailsPage() {
         </p>
         <button
           className="px-4 py-2 bg-blue-600 text-white rounded"
-          onClick={handleCloseDetails}
+          onClick={onClose}
         >
           Go Back
         </button>
@@ -67,16 +98,15 @@ export default function PokemonDetailsPage() {
     return (
       <div
         className={cn(
-          'rounded-lg shadow-md p-6',
-          MIN_CONTAINER_HEIGHT,
-          'bg-theme-secondary'
+          'rounded-lg shadow-md p-6 bg-theme-secondary md:col-span-1',
+          MIN_CONTAINER_HEIGHT
         )}
       >
         <h2 className="text-xl font-bold">Not Found</h2>
         <p className="text-theme-secondary mb-4">Pokémon not found</p>
         <button
           className="px-4 py-2 bg-blue-600 text-white rounded"
-          onClick={handleCloseDetails}
+          onClick={onClose}
         >
           Go Back
         </button>
@@ -87,9 +117,8 @@ export default function PokemonDetailsPage() {
   return (
     <div
       className={cn(
-        'rounded-lg shadow-md p-6',
-        MIN_CONTAINER_HEIGHT,
-        'bg-theme-secondary'
+        'rounded-lg shadow-md p-6 bg-theme-secondary md:col-span-1',
+        MIN_CONTAINER_HEIGHT
       )}
     >
       <div className="flex justify-between items-center mb-6">
@@ -98,7 +127,7 @@ export default function PokemonDetailsPage() {
         </h2>
         <button
           className="p-2 rounded cursor-pointer text-theme-secondary"
-          onClick={handleCloseDetails}
+          onClick={onClose}
         >
           <X size={20} />
         </button>
