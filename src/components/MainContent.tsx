@@ -16,9 +16,13 @@ import { cn } from '@/utils/cn';
 
 const ITEMS_PER_PAGE = 20;
 
-export default function MainContent() {
+interface MainContentProps {
+  selectedPokemonId: string | undefined;
+}
+
+export default function MainContent({ selectedPokemonId }: MainContentProps) {
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const searchParameters = useSearchParams();
   const hasSelectedItems = useAppSelector(selectHasSelectedItems);
 
   const {
@@ -44,12 +48,16 @@ export default function MainContent() {
     if (!isValidPageParameter()) {
       router.push('/not-found');
     }
-  }, [searchParams, totalPages]);
+  }, [searchParameters, totalPages]);
 
   const handlePokemonClick = (pokemonId: number) => {
-    const query = searchParams.toString();
+    const query = searchParameters.toString();
     router.push(`/details/${pokemonId}${query ? `?${query}` : ''}`);
   };
+
+  const parsedPokemonId = selectedPokemonId
+    ? Number.parseInt(selectedPokemonId, 10)
+    : undefined;
 
   return (
     <>
@@ -77,6 +85,7 @@ export default function MainContent() {
               onPageChange={handlePageChange}
               onPokemonClick={handlePokemonClick}
               pokemonItems={pokemonItems}
+              selectedPokemonId={parsedPokemonId}
               totalItems={totalItems}
               totalPages={totalPages}
             />
