@@ -1,3 +1,5 @@
+'use client';
+
 import {
   type ChangeEvent,
   type KeyboardEvent,
@@ -6,6 +8,8 @@ import {
   useState,
 } from 'react';
 
+import { useTranslations } from 'next-intl';
+
 import Button from './Button';
 
 import type { SearchProps } from '@/types/';
@@ -13,6 +17,8 @@ import { classNames } from '@/utils/classNames';
 
 const Search = ({ initialSearchTerm, onSearch }: SearchProps) => {
   const [inputValue, setInputValue] = useState(initialSearchTerm);
+
+  const t = useTranslations('Search');
 
   const previousInitialSearchTermReference = useRef(initialSearchTerm);
 
@@ -69,7 +75,7 @@ const Search = ({ initialSearchTerm, onSearch }: SearchProps) => {
         )}
         onChange={handleInputChange}
         onKeyDown={handleKeyPress}
-        placeholder="Search for Pokemons..."
+        placeholder={t('placeholder')}
         type="text"
         value={inputValue}
       />
@@ -81,7 +87,7 @@ const Search = ({ initialSearchTerm, onSearch }: SearchProps) => {
         color="green"
         onClick={handleSearchClick}
       >
-        Search
+        {t('button')}
       </Button>
     </div>
   );

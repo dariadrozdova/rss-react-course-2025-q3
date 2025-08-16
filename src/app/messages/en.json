@@ -1,0 +1,42 @@
+{
+  "Header": {
+    "home": "Home",
+    "about": "About"
+  },
+  "Search": {
+    "placeholder": "Search for Pokemons...",
+    "button": "Search"
+  },
+  "Pagination": {
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "AboutPage": {
+    "title": "About This App",
+    "overviewSection": {
+      "title": "App Overview",
+      "text": "This is a Pokémon Explorer application, built as part of the <courseLink>{courseName}</courseLink>. It allows users to search for Pokémon by name, view their details, and see their images, all powered by the Pokémon API."
+    },
+    "authorSection": {
+      "title": "Author",
+      "githubProfile": "GitHub Profile"
+    },
+    "courseSection": {
+      "title": "The Course",
+      "text": "This project is a practical assignment from the <courseLink>{courseName}</courseLink>."
+    }
+  },
+  "NotFoundPage": {
+    "title": "Looks like this page doesn't exist!",
+    "description": "Go back to the homepage and continue exploring.",
+    "backToHome": "Back to Homepage"
+  },
+  "CourseNames": {
+    "rsSchoolReact": "RS School React Course"
+  },
+  "ErrorPage": {
+    "title": "Oops! Something went wrong.",
+    "description": "We are sorry, but an unexpected error occurred. Please try refreshing the page.",
+    "button": "Refresh Page"
+  }
+}

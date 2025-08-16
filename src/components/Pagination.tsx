@@ -1,4 +1,8 @@
+'use client';
+
 import React from 'react';
+
+import { useTranslations } from 'next-intl';
 
 import Button from '@/components/Button';
 import type { PaginationProps } from '@/types/';
@@ -9,6 +13,8 @@ const Pagination: React.FC<PaginationProps> = ({
   onPageChange,
   totalPages,
 }) => {
+  const t = useTranslations('Pagination');
+
   if (totalPages <= 1) {
     return null;
   }
@@ -38,7 +44,7 @@ const Pagination: React.FC<PaginationProps> = ({
         disabled={currentPage === 1}
         onClick={handlePageClick(currentPage - 1)}
       >
-        Previous
+        {t('previous')}
       </Button>
 
       {showFirstPage && (
@@ -125,7 +131,7 @@ const Pagination: React.FC<PaginationProps> = ({
         disabled={currentPage === totalPages || totalPages === 0}
         onClick={handlePageClick(currentPage + 1)}
       >
-        Next
+        {t('next')}
       </Button>
     </div>
   );

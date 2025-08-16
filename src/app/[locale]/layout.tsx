@@ -1,0 +1,40 @@
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { hasLocale, NextIntlClientProvider } from 'next-intl';
+import { getMessages } from 'next-intl/server';
+
+import '@/app/globals.css';
+
+import StoreProvider from '@/app/StoreProvider';
+import Header from '@/components/Header';
+import { routing } from '@/i18n/routing';
+
+export const metadata: Metadata = { title: 'RS School React Project' };
+
+export default async function LocaleLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) {
+    notFound();
+  }
+  const messages = await getMessages();
+  return (
+    <html lang={locale} suppressHydrationWarning>
+      <body>
+        <NextIntlClientProvider messages={messages}>
+          <StoreProvider>
+            <div className="max-w-7xl w-full mx-auto p-4 md:p-8">
+              <Header />
+              {children}
+            </div>
+          </StoreProvider>
+        </NextIntlClientProvider>
+      </body>
+    </html>
+  );
+}

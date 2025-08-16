@@ -54,6 +54,7 @@ function PokemonImage({
           initial={{ opacity: 0 }}
           onError={onImageError}
           onLoad={onImageLoad}
+          priority
           src={imageUrl}
           transition={{ duration: 0.5 }}
           width={150}
