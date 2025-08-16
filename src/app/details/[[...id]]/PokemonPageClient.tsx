@@ -5,7 +5,7 @@ import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import DetailsPanel from '@/components/DetailsPanel';
 import MainContent from '@/components/MainContent';
 import type { PokemonItem } from '@/types';
-import { cn } from '@/utils/classNames';
+import { classNames } from '@/utils/classNames';
 
 interface PokemonPageClientProps {
   pokemonList: PokemonItem[];
@@ -29,12 +29,14 @@ export default function PokemonPageClient({
 
   return (
     <div
-      className={cn(
+      className={classNames(
         'grid gap-4',
         pokemonId ? 'md:grid-cols-3' : 'md:grid-cols-1'
       )}
     >
-      <div className={cn(pokemonId ? 'md:col-span-2' : 'md:col-span-1')}>
+      <div
+        className={classNames(pokemonId ? 'md:col-span-2' : 'md:col-span-1')}
+      >
         <MainContent
           pokemonList={pokemonList}
           selectedPokemonId={pokemonId}

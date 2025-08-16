@@ -4,31 +4,31 @@ import Link from 'next/link';
 
 import ThemeSwitch from '@/components/ThemeSwitch';
 import { useSelectedItemsStorage } from '@/hooks/useSelectedItemsStorage';
-import { cn } from '@/utils/classNames';
+import { classNames } from '@/utils/classNames';
 
 export default function Header() {
   useSelectedItemsStorage();
 
   return (
     <nav
-      className={cn(`py-4 rounded-lg shadow-sm mb-8 w-full
+      className={classNames(`py-4 rounded-lg shadow-sm mb-8 w-full
         max-w-7xl border box-border
         md:rounded-xl md:shadow-lg
         bg-theme-secondary border-theme`)}
     >
-      <div className={cn('flex justify-end px-4 pb-2')}>
+      <div className={classNames('flex justify-end px-4 pb-2')}>
         <ThemeSwitch />
       </div>
 
       <ul
-        className={cn(`list-none p-0 m-0 flex justify-center flex-wrap
+        className={classNames(`list-none p-0 m-0 flex justify-center flex-wrap
           flex-col gap-4
           sm:gap-2
           md:flex-row md:gap-10`)}
       >
         <li>
           <Link
-            className={cn(
+            className={classNames(
               'block no-underline font-semibold rounded-lg',
               'transition-colors duration-300',
               'px-6 py-3 text-center',
@@ -43,7 +43,7 @@ export default function Header() {
         </li>
         <li>
           <Link
-            className={cn(
+            className={classNames(
               'block no-underline font-semibold rounded-lg',
               'transition-colors duration-300',
               'px-6 py-3 text-center',

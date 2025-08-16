@@ -9,7 +9,7 @@ import {
   selectSelectedItemsCount,
 } from '@/store/selectors';
 import { unselectAllItems } from '@/store/slices/selectedItemsSlice';
-import { cn } from '@/utils/classNames';
+import { classNames } from '@/utils/classNames';
 
 const SelectionFlyout: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -62,7 +62,7 @@ const SelectionFlyout: React.FC = () => {
     <AnimatePresence>
       <motion.div
         animate={{ opacity: 1, y: 0 }}
-        className={cn(`fixed bottom-0 left-0 right-0 z-[9999] p-3 shadow-2xl border-t
+        className={classNames(`fixed bottom-0 left-0 right-0 z-[9999] p-3 shadow-2xl border-t
           bg-theme-secondary border-theme`)}
         exit={{ opacity: 0, y: 100 }}
         initial={{ opacity: 0, y: 100 }}
@@ -73,20 +73,20 @@ const SelectionFlyout: React.FC = () => {
         transition={{ damping: 30, stiffness: 300, type: 'spring' }}
       >
         <div
-          className={cn(
+          className={classNames(
             'max-w-5xl mx-auto flex items-center justify-between h-full'
           )}
         >
-          <div className={cn('flex items-center')}>
+          <div className={classNames('flex items-center')}>
             <span
-              className={cn(`text-sm font-medium
+              className={classNames(`text-sm font-medium
                 text-theme-secondary`)}
             >
               {selectedCount} item{selectedCount === 1 ? '' : 's'} selected
             </span>
           </div>
 
-          <div className={cn('flex items-center gap-3')}>
+          <div className={classNames('flex items-center gap-3')}>
             <Button color="red" onClick={handleUnselectAll} size="small">
               Unselect all
             </Button>

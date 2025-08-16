@@ -9,7 +9,7 @@ import {
 import Button from './Button';
 
 import type { SearchProps } from '@/types/';
-import { cn } from '@/utils/classNames';
+import { classNames } from '@/utils/classNames';
 
 const Search = ({ initialSearchTerm, onSearch }: SearchProps) => {
   const [inputValue, setInputValue] = useState(initialSearchTerm);
@@ -49,7 +49,7 @@ const Search = ({ initialSearchTerm, onSearch }: SearchProps) => {
 
   return (
     <div
-      className={cn(
+      className={classNames(
         'flex gap-2.5 justify-center items-center p-[15px]',
         'rounded-lg',
         'shadow-sm shadow-[hsla(0,0%,0%,0.05)]',
@@ -60,7 +60,7 @@ const Search = ({ initialSearchTerm, onSearch }: SearchProps) => {
       }}
     >
       <input
-        className={cn(
+        className={classNames(
           'px-[15px] py-[10px] border rounded-md',
           'text-base flex-grow max-w-full outline-none',
           'transition-all duration-200 ease-in-out',
@@ -74,7 +74,7 @@ const Search = ({ initialSearchTerm, onSearch }: SearchProps) => {
         value={inputValue}
       />
       <Button
-        className={cn(`px-5 py-[10px] rounded-md text-base normal-case
+        className={classNames(`px-5 py-[10px] rounded-md text-base normal-case
           shadow-sm shadow-black/10
           hover:-translate-y-[1px]
           active:shadow-black/10`)}

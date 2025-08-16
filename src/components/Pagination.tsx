@@ -2,7 +2,7 @@ import React from 'react';
 
 import Button from '@/components/Button';
 import type { PaginationProps } from '@/types/';
-import { cn } from '@/utils/classNames';
+import { classNames } from '@/utils/classNames';
 
 const Pagination: React.FC<PaginationProps> = ({
   currentPage,
@@ -27,11 +27,11 @@ const Pagination: React.FC<PaginationProps> = ({
 
   return (
     <div
-      className={cn('flex justify-center items-center gap-2 mt-8')}
+      className={classNames('flex justify-center items-center gap-2 mt-8')}
       onClick={handlePaginationClick}
     >
       <Button
-        className={cn(
+        className={classNames(
           'px-4 py-2 rounded-md shadow-sm hover:shadow-md transition-shadow duration-200'
         )}
         color="green"
@@ -44,7 +44,7 @@ const Pagination: React.FC<PaginationProps> = ({
       {showFirstPage && (
         <>
           <Button
-            className={cn(
+            className={classNames(
               'px-3 py-2 rounded-md shadow-sm hover:shadow-md transition-shadow duration-200'
             )}
             color="green"
@@ -52,7 +52,11 @@ const Pagination: React.FC<PaginationProps> = ({
           >
             1
           </Button>
-          <span className={cn('px-2 text-[var(--color-text-dark-blue-gray)]')}>
+          <span
+            className={classNames(
+              'px-2 text-[var(--color-text-dark-blue-gray)]'
+            )}
+          >
             ...
           </span>
         </>
@@ -60,7 +64,7 @@ const Pagination: React.FC<PaginationProps> = ({
 
       {currentPage > 1 && (
         <Button
-          className={cn(
+          className={classNames(
             'px-3 py-2 rounded-md shadow-sm hover:shadow-md transition-shadow duration-200'
           )}
           color="green"
@@ -71,7 +75,7 @@ const Pagination: React.FC<PaginationProps> = ({
       )}
 
       <Button
-        className={cn(
+        className={classNames(
           'px-3 py-2 rounded-md shadow-lg bg-green-600 text-white border-green-600 font-semibold ring-2 ring-green-300 ring-offset-1 cursor-default'
         )}
         color="green"
@@ -82,7 +86,7 @@ const Pagination: React.FC<PaginationProps> = ({
 
       {currentPage < totalPages && (
         <Button
-          className={cn(
+          className={classNames(
             'px-3 py-2 rounded-md shadow-sm hover:shadow-md transition-shadow duration-200'
           )}
           color="green"
@@ -94,11 +98,15 @@ const Pagination: React.FC<PaginationProps> = ({
 
       {showLastPage && (
         <>
-          <span className={cn('px-2 text-[var(--color-text-dark-blue-gray)]')}>
+          <span
+            className={classNames(
+              'px-2 text-[var(--color-text-dark-blue-gray)]'
+            )}
+          >
             ...
           </span>
           <Button
-            className={cn(
+            className={classNames(
               'px-3 py-2 rounded-md shadow-sm hover:shadow-md transition-shadow duration-200'
             )}
             color="green"
@@ -110,7 +118,7 @@ const Pagination: React.FC<PaginationProps> = ({
       )}
 
       <Button
-        className={cn(
+        className={classNames(
           'px-4 py-2 rounded-md shadow-sm hover:shadow-md transition-shadow duration-200'
         )}
         color="green"

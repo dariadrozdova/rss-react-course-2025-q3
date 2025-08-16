@@ -1,4 +1,10 @@
+import { Suspense } from 'react';
+
 import PokemonPageClient from './PokemonPageClient';
+
+export async function generateStaticParams() {
+  return [{ id: [] }];
+}
 
 export default async function PokemonPage() {
   const pokemonListResponse = await fetch(
@@ -17,9 +23,11 @@ export default async function PokemonPage() {
   });
 
   return (
-    <PokemonPageClient
-      pokemonList={pokemonList}
-      totalCount={pokemonListData.count}
-    />
+    <Suspense>
+      <PokemonPageClient
+        pokemonList={pokemonList}
+        totalCount={pokemonListData.count}
+      />
+    </Suspense>
   );
 }

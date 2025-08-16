@@ -14,6 +14,7 @@ import eslintPluginNoRelativeImportPaths from 'eslint-plugin-no-relative-import-
 import unusedImports from 'eslint-plugin-unused-imports';
 import unicorn from 'eslint-plugin-unicorn';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import nextPlugin from '@next/eslint-plugin-next';
 import { myEslintRules } from './eslint-rules/my-eslint-rules.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -51,6 +52,7 @@ export default tseslint.config(
       'unused-imports': unusedImports,
       'no-relative-import-paths': eslintPluginNoRelativeImportPaths,
       'simple-import-sort': simpleImportSort,
+      '@next/next': nextPlugin,
     },
     extends: [
       js.configs.recommended,
@@ -63,6 +65,8 @@ export default tseslint.config(
     ],
     rules: {
       ...myEslintRules,
+      ...nextPlugin.configs.recommended.rules,
+      ...nextPlugin.configs['core-web-vitals'].rules,
       'unused-imports/no-unused-imports': 'error',
       'unused-imports/no-unused-vars': [
         'warn',

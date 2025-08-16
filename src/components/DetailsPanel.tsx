@@ -4,7 +4,7 @@ import { X } from 'lucide-react';
 
 import PokemonDetailsContent from '@/components/PokemonDetailsContent';
 import { usePokemonDetails } from '@/hooks/usePokemonDetails';
-import { cn } from '@/utils/classNames';
+import { classNames } from '@/utils/classNames';
 
 const MIN_CONTAINER_HEIGHT = 'min-h-[600px]';
 
@@ -13,7 +13,7 @@ interface DetailsPanelProps {
   pokemonId: string;
 }
 
-const mainPanelClasses = cn(
+const mainPanelClasses = classNames(
   'relative overflow-hidden theme-card rounded-lg shadow-md md:col-span-1',
   'transition-all duration-300 transform hover:scale-[1.01] hover:shadow-lg',
   'bg-theme-secondary p-6',

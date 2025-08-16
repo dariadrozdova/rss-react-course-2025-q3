@@ -17,7 +17,7 @@ next-env.d.ts
 dist
 
 # TypeScript build cache
-tsconfig.tsbuildinfo
+./tsconfig.tsbuildinfo
 
 # Editor directories and files
 .vscode/*

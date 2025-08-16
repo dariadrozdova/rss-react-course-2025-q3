@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { selectIsItemSelected } from '@/store/selectors';
 import { toggleItemSelection } from '@/store/slices/selectedItemsSlice';
 import type { CardProps } from '@/types/';
-import { cn } from '@/utils/classNames';
+import { classNames } from '@/utils/classNames';
 
 function Card({
   currentPage,
@@ -83,11 +83,14 @@ function Card({
   };
 
   return onPokemonClick ? (
-    <div className={cn(baseClass, 'cursor-pointer')} onClick={handleClick}>
+    <div
+      className={classNames(baseClass, 'cursor-pointer')}
+      onClick={handleClick}
+    >
       <CardContent {...cardContentProps} />
     </div>
   ) : (
-    <Link className={cn(baseClass)} href={`/${currentPage}/${item.id}`}>
+    <Link className={classNames(baseClass)} href={`/${currentPage}/${item.id}`}>
       <CardContent {...cardContentProps} />
     </Link>
   );
