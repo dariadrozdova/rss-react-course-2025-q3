@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import pokeball from '@/app/pokeball.png';
-import { cn } from '@/utils/cn';
+import { cn } from '@/utils/classNames';
 import {
   BUTTON_BASE_CLASSES,
   BUTTON_COLOR_GREEN,

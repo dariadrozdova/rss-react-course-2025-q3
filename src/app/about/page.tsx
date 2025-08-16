@@ -3,7 +3,7 @@
 import Image from 'next/image';
 
 import favicon from '@/app/icon.svg';
-import { cn } from '@/utils/cn';
+import { cn } from '@/utils/classNames';
 
 function AboutPage() {
   return (

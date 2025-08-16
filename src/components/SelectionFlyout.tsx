@@ -9,7 +9,7 @@ import {
   selectSelectedItemsCount,
 } from '@/store/selectors';
 import { unselectAllItems } from '@/store/slices/selectedItemsSlice';
-import { cn } from '@/utils/cn';
+import { cn } from '@/utils/classNames';
 
 const SelectionFlyout: React.FC = () => {
   const dispatch = useAppDispatch();

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { cn } from '@/utils/cn';
+import { cn } from '@/utils/classNames';
 import { BUTTON_COLOR_GREEN, BUTTON_COLOR_RED } from '@/utils/stylesConstants';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {

@@ -3,7 +3,7 @@ import React from 'react';
 import { Moon, Sun } from 'lucide-react';
 
 import { useTheme } from '@/context/ThemeContext';
-import { cn } from '@/utils/cn';
+import { cn } from '@/utils/classNames';
 
 const ThemeSwitch: React.FC = () => {
   const { isDark, toggleTheme } = useTheme();

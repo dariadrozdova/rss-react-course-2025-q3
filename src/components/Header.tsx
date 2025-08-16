@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 import ThemeSwitch from '@/components/ThemeSwitch';
 import { useSelectedItemsStorage } from '@/hooks/useSelectedItemsStorage';
-import { cn } from '@/utils/cn';
+import { cn } from '@/utils/classNames';
 
 export default function Header() {
   useSelectedItemsStorage();

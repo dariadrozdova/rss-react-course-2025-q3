@@ -2,7 +2,7 @@ import React from 'react';
 
 import Button from '@/components/Button';
 import type { PaginationProps } from '@/types/';
-import { cn } from '@/utils/cn';
+import { cn } from '@/utils/classNames';
 
 const Pagination: React.FC<PaginationProps> = ({
   currentPage,

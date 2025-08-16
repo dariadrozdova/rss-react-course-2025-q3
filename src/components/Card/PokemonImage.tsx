@@ -1,13 +1,15 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
-import { cn } from '@/utils/cn';
+import { cn } from '@/utils/classNames';
 
 interface PokemonImageProps {
   imageError: boolean;
   imageLoaded: boolean;
   imageUrl: string | undefined;
   name: string;
+  onImageError?: () => void;
+  onImageLoad?: () => void;
 }
 
 function PokemonImage({
@@ -15,6 +17,8 @@ function PokemonImage({
   imageLoaded,
   imageUrl,
   name,
+  onImageError,
+  onImageLoad,
 }: PokemonImageProps) {
   const MotionImage = motion.create(Image);
 
@@ -48,6 +52,8 @@ function PokemonImage({
           )}
           height={150}
           initial={{ opacity: 0 }}
+          onError={onImageError}
+          onLoad={onImageLoad}
           src={imageUrl}
           transition={{ duration: 0.5 }}
           width={150}

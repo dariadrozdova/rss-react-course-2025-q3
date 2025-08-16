@@ -2,14 +2,14 @@ import type { Metadata } from 'next';
 
 import '@/app/globals.css';
 
-import { Providers } from '@/app/providers';
+import StoreProvider from '@/app/StoreProvider';
 import Header from '@/components/Header';
 
 export const metadata: Metadata = {
   title: 'RS School React Project',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -23,12 +23,12 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <Providers>
+        <StoreProvider>
           <div className="max-w-7xl w-full mx-auto p-4 md:p-8">
             <Header />
             {children}
           </div>
-        </Providers>
+        </StoreProvider>
       </body>
     </html>
   );

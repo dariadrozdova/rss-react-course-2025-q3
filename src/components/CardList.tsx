@@ -1,6 +1,6 @@
 import Card from '@/components/Card/Card';
 import type { CardListProps } from '@/types/';
-import { cn } from '@/utils/cn';
+import { cn } from '@/utils/classNames';
 
 function CardList({
   currentPage,

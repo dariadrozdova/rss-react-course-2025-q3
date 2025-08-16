@@ -7,7 +7,7 @@ import Pagination from './Pagination';
 import SkeletonCardList from './SkeletonCardList';
 
 import type { PokemonContentProps } from '@/types';
-import { cn } from '@/utils/cn';
+import { cn } from '@/utils/classNames';
 
 export const PokemonContent: React.FC<PokemonContentProps> = ({
   currentPage,

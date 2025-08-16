@@ -9,7 +9,7 @@ import {
 import Button from './Button';
 
 import type { SearchProps } from '@/types/';
-import { cn } from '@/utils/cn';
+import { cn } from '@/utils/classNames';
 
 const Search = ({ initialSearchTerm, onSearch }: SearchProps) => {
   const [inputValue, setInputValue] = useState(initialSearchTerm);

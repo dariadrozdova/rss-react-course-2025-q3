@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { cn } from '@/utils/cn';
+import { cn } from '@/utils/classNames';
 
 interface PokemonDetailsContentProps {
   pokemon: {
@@ -20,6 +20,7 @@ const PokemonDetailsContent = ({ pokemon }: PokemonDetailsContentProps) => (
           alt={pokemon.name}
           className={cn('mx-auto')}
           height={192}
+          priority
           src={pokemon.sprites.front_default}
           width={192}
         />
