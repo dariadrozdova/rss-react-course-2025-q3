@@ -3,15 +3,18 @@ import React from 'react';
 import { Moon, Sun } from 'lucide-react';
 
 import { useTheme } from '@/context/ThemeContext';
-import { cn } from '@/utils/classNames';
+import { classNames } from '@/utils/classNames';
 
 const ThemeSwitch: React.FC = () => {
   const { isDark, toggleTheme } = useTheme();
 
   return (
-    <div className={cn('flex items-center space-x-2')}>
+    <div className={classNames('flex items-center space-x-2')}>
       <span
-        className={cn('text-sm', isDark ? 'text-gray-300' : 'text-gray-600')}
+        className={classNames(
+          'text-sm',
+          isDark ? 'text-gray-300' : 'text-gray-600'
+        )}
       >
         {isDark ? <Moon size={16} /> : <Sun size={16} />}
       </span>
@@ -19,7 +22,7 @@ const ThemeSwitch: React.FC = () => {
       <button
         aria-checked={isDark}
         aria-label={`Switch to ${isDark ? 'light' : 'dark'} theme`}
-        className={cn(
+        className={classNames(
           'relative inline-flex h-6 w-11 items-center rounded-full',
           'transition-all duration-300 ease-in-out cursor-pointer border-none',
           'focus:outline-none focus:ring-0',
@@ -33,7 +36,7 @@ const ThemeSwitch: React.FC = () => {
         type="button"
       >
         <span
-          className={cn(
+          className={classNames(
             'inline-block h-4 w-4 transform rounded-full bg-white shadow-lg',
             'transition-transform duration-300 ease-in-out',
             isDark ? 'translate-x-6' : 'translate-x-1'

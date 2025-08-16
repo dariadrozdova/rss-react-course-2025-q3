@@ -2,7 +2,7 @@ import PokemonImage from './PokemonImage';
 import SelectionCheckbox from './SelectionCheckbox';
 
 import type { PokemonItem } from '@/types/';
-import { cn } from '@/utils/classNames';
+import { classNames } from '@/utils/classNames';
 
 interface CardContentProps {
   imageError: boolean;
@@ -30,7 +30,7 @@ function CardContent({
   return (
     <>
       <strong
-        className={cn(
+        className={classNames(
           'mb-2.5 capitalize font-bold text-base md:text-lg transition-colors',
           isSelected
             ? 'text-[var(--color-primary-green)]'

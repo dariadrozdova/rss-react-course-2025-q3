@@ -1,10 +1,8 @@
-'use client';
-
 import Image from 'next/image';
 import Link from 'next/link';
 
 import pokeball from '@/app/pokeball.png';
-import { cn } from '@/utils/classNames';
+import { classNames } from '@/utils/classNames';
 import {
   BUTTON_BASE_CLASSES,
   BUTTON_COLOR_GREEN,
@@ -15,7 +13,7 @@ export default function NotFoundPage() {
 
   return (
     <div
-      className={cn(`theme-card p-6 rounded-lg shadow-md
+      className={classNames(`theme-card p-6 rounded-lg shadow-md
         text-center flex flex-col items-center justify-center
         w-full box-border font-['Inter']
         min-h-[1016px]`)}

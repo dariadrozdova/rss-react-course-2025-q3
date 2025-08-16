@@ -16,12 +16,6 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
-          rel="stylesheet"
-        />
-      </head>
       <body>
         <StoreProvider>
           <div className="max-w-7xl w-full mx-auto p-4 md:p-8">

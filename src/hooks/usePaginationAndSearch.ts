@@ -84,15 +84,20 @@ export const usePaginationAndSearch = (): UsePaginationAndSearchResult => {
       setCurrentPage(1);
       setLocalSearchTerm(newSearchTerm);
 
-      const newSearchParameters = new URLSearchParams();
+      const newSearchParameters = new URLSearchParams(
+        searchParameters.toString()
+      );
+
       if (newSearchTerm.trim()) {
         newSearchParameters.set('search', newSearchTerm.trim());
+      } else {
+        newSearchParameters.delete('search');
       }
       newSearchParameters.set('page', '1');
 
       updateSearchParams(newSearchParameters);
     },
-    [setLocalSearchTerm]
+    [setLocalSearchTerm, searchParameters]
   );
 
   const handlePageChange = useCallback(

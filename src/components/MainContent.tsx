@@ -11,7 +11,7 @@ import { usePaginationAndSearch } from '@/hooks/usePaginationAndSearch';
 import { useAppSelector } from '@/store/hooks';
 import { selectHasSelectedItems } from '@/store/selectors';
 import type { PokemonItem } from '@/types';
-import { cn } from '@/utils/classNames';
+import { classNames } from '@/utils/classNames';
 
 const ITEMS_PER_PAGE = 20;
 
@@ -26,7 +26,7 @@ export default function MainContent({
   selectedPokemonId,
 }: MainContentProps) {
   const router = useRouter();
-  const searchParameters = useSearchParams();
+  const searchParams = useSearchParams();
   const hasSelectedItems = useAppSelector(selectHasSelectedItems);
 
   const {
@@ -60,14 +60,17 @@ export default function MainContent({
     if (!(isValidPage && (totalPages === 0 || currentPage <= totalPages))) {
       router.push('/not-found');
     }
-  }, [searchParameters, totalPages]);
+  }, [searchParams, totalPages]);
 
   const handlePokemonClick = (pokemonId: number) => {
     if (parsedPokemonId === pokemonId) {
       return;
     }
-    const query = searchParameters.toString();
-    router.push(`/details/${pokemonId}${query ? `?${query}` : ''}`, {
+
+    const parameters = new URLSearchParams(searchParams);
+    parameters.set('id', pokemonId.toString());
+
+    router.push(`/?${parameters.toString()}`, {
       scroll: false,
     });
   };
@@ -79,7 +82,7 @@ export default function MainContent({
   return (
     <>
       <div
-        className={cn(
+        className={classNames(
           'flex flex-row gap-8 w-full transition-all duration-300',
           hasSelectedItems && 'pb-20'
         )}
