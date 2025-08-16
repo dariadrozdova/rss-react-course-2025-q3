@@ -1,4 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+'use client';
+
+import React from 'react';
 
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -15,44 +17,38 @@ const SelectionFlyout: React.FC = () => {
   const dispatch = useAppDispatch();
   const selectedItems = useAppSelector(selectSelectedItems);
   const selectedCount = useAppSelector(selectSelectedItemsCount);
-  const downloadLinkReference = useRef<HTMLAnchorElement>(null);
-  const [downloadUrl, setDownloadUrl] = useState<string>('');
 
   const handleUnselectAll = () => {
     dispatch(unselectAllItems());
   };
 
-  const handleDownload = () => {
-    const csvHeaders = ['ID', 'Name', 'Image URL', 'Details URL'];
-    const csvRows = selectedItems.map((item) => [
-      item.id.toString(),
-      `"${item.name}"`,
-      `"${item.imageUrl || ''}"`,
-      `"${window.location.origin}/pokemon/${item.id}"`,
-    ]);
+  const handleDownload = async () => {
+    try {
+      const response = await fetch('/api/download-csv', {
+        body: JSON.stringify({ items: selectedItems }),
+        headers: { 'Content-Type': 'application/json' },
+        method: 'POST',
+      });
 
-    const csvContent = [
-      csvHeaders.join(','),
-      ...csvRows.map((row) => row.join(',')),
-    ].join('\n');
-
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-
-    setDownloadUrl(url);
-
-    setTimeout(() => {
-      downloadLinkReference.current?.click();
-    }, 0);
-  };
-
-  useEffect(() => {
-    return () => {
-      if (downloadUrl) {
-        URL.revokeObjectURL(downloadUrl);
+      if (!response.ok) {
+        throw new Error('Failed to generate CSV');
       }
-    };
-  }, [downloadUrl]);
+
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${selectedCount}_items.csv`;
+      document.body.append(link);
+      link.click();
+      link.remove();
+
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.warn('CSV download failed:', error);
+    }
+  };
 
   if (selectedCount === 0) {
     return null;
@@ -94,14 +90,6 @@ const SelectionFlyout: React.FC = () => {
             <Button color="green" onClick={handleDownload} size="small">
               Download
             </Button>
-
-            <a
-              aria-hidden="true"
-              download={`${selectedCount}_items.csv`}
-              href={downloadUrl}
-              ref={downloadLinkReference}
-              style={{ display: 'none' }}
-            />
           </div>
         </div>
       </motion.div>

@@ -39,13 +39,26 @@ export function usePokemonDetails(pokemonId: string) {
           id: detailsData.id,
           name: detailsData.name,
           sprites: { front_default: detailsData.sprites.front_default },
-          stats: detailsData.stats.map((stat: any) => ({
-            base_stat: stat.base_stat,
-            stat: { name: stat.stat.name },
-          })),
-          types: detailsData.types.map((type: any) => ({
-            type: { name: type.type.name },
-          })),
+          stats: detailsData.stats.map(
+            (stats: {
+              base_stat: number;
+              stat: {
+                name: string;
+              };
+            }) => ({
+              base_stat: stats.base_stat,
+              stat: { name: stats.stat.name },
+            })
+          ),
+          types: detailsData.types.map(
+            (types: {
+              type: {
+                name: string;
+              };
+            }) => ({
+              type: { name: types.type.name },
+            })
+          ),
         };
 
         pokemonCache.set(pokemonId, transformedDetails);
