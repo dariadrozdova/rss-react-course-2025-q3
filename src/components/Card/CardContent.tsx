@@ -1,9 +1,8 @@
-import type { PokemonItem } from '@types';
-
-import { cn } from '@utils/cn';
-
 import PokemonImage from './PokemonImage';
 import SelectionCheckbox from './SelectionCheckbox';
+
+import type { PokemonItem } from '@/types/';
+import { classNames } from '@/utils/classNames';
 
 interface CardContentProps {
   imageError: boolean;
@@ -13,6 +12,8 @@ interface CardContentProps {
   isSelected: boolean;
   item: PokemonItem;
   onCheckboxChange: () => void;
+  onImageError?: () => void;
+  onImageLoad?: () => void;
 }
 
 function CardContent({
@@ -23,11 +24,13 @@ function CardContent({
   isSelected,
   item,
   onCheckboxChange,
+  onImageError,
+  onImageLoad,
 }: CardContentProps) {
   return (
     <>
       <strong
-        className={cn(
+        className={classNames(
           'mb-2.5 capitalize font-bold text-base md:text-lg transition-colors',
           isSelected
             ? 'text-[var(--color-primary-green)]'
@@ -42,6 +45,8 @@ function CardContent({
         imageLoaded={imageLoaded}
         imageUrl={imageUrl}
         name={item.name}
+        onImageError={onImageError}
+        onImageLoad={onImageLoad}
       />
 
       <SelectionCheckbox

@@ -85,7 +85,7 @@ export const myEslintRules = {
   ],
   'max-lines-per-function': [
     'error',
-    { max: 110, skipBlankLines: true, skipComments: true },
+    { max: 120, skipBlankLines: true, skipComments: true },
   ],
   'no-console': ['error', { allow: ['warn'] }],
   'no-empty-function': 'off',
@@ -107,14 +107,14 @@ export const myEslintRules = {
   'unicorn/prefer-spread': 'off',
   'unicorn/prevent-abbreviations': [
     'error',
-    { allowList: { props: true, Props: true, e: true } },
+    { allowList: { props: true, Props: true, e: true, Params: true } },
   ],
   'unicorn/explicit-length-check': 'off',
   'unicorn/filename-case': [
     'error',
     {
       cases: {
-        kebabCase: false,
+        kebabCase: true,
         camelCase: true,
         pascalCase: true,
       },

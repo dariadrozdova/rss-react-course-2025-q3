@@ -1,3 +1,6 @@
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
 import js from '@eslint/js';
 import globals from 'globals';
 import reactHooks from 'eslint-plugin-react-hooks';
@@ -11,7 +14,11 @@ import eslintPluginNoRelativeImportPaths from 'eslint-plugin-no-relative-import-
 import unusedImports from 'eslint-plugin-unused-imports';
 import unicorn from 'eslint-plugin-unicorn';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import nextPlugin from '@next/eslint-plugin-next';
 import { myEslintRules } from './eslint-rules/my-eslint-rules.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 export default tseslint.config(
   {
@@ -19,7 +26,7 @@ export default tseslint.config(
       sourceType: 'module',
       parserOptions: {
         projectService: true,
-        tsconfigRootDir: import.meta.dirname,
+        tsconfigRootDir: __dirname,
       },
     },
   },
@@ -45,6 +52,7 @@ export default tseslint.config(
       'unused-imports': unusedImports,
       'no-relative-import-paths': eslintPluginNoRelativeImportPaths,
       'simple-import-sort': simpleImportSort,
+      '@next/next': nextPlugin,
     },
     extends: [
       js.configs.recommended,
@@ -57,6 +65,8 @@ export default tseslint.config(
     ],
     rules: {
       ...myEslintRules,
+      ...nextPlugin.configs.recommended.rules,
+      ...nextPlugin.configs['core-web-vitals'].rules,
       'unused-imports/no-unused-imports': 'error',
       'unused-imports/no-unused-vars': [
         'warn',

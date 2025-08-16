@@ -1,17 +1,14 @@
-import React, { useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useMemo, useState } from 'react';
 
-import type { CardProps } from '@types';
-
-import { useGetPokemonDetailsQuery } from '@api/pokemonApiSlice';
-import { usePokemonImage } from '@hooks/usePokemonImage';
-import { useAppDispatch, useAppSelector } from '@store/hooks';
-import { toggleItemSelection } from '@store/slices/selectedItemsSlice';
-import { cn } from '@utils/cn';
+import Link from 'next/link';
 
 import CardContent from './CardContent';
 
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { selectIsItemSelected } from '@/store/selectors';
+import { toggleItemSelection } from '@/store/slices/selectedItemsSlice';
+import type { CardProps } from '@/types/';
+import { classNames } from '@/utils/classNames';
 
 function Card({
   currentPage,
@@ -20,34 +17,35 @@ function Card({
   onPokemonClick,
 }: CardProps) {
   const dispatch = useAppDispatch();
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [imageError, setImageError] = useState(false);
 
   const isItemSelected = useAppSelector((state) =>
     selectIsItemSelected(state, item.id)
   );
-
-  const { data: pokemonDetails, error: pokemonDetailsError } =
-    useGetPokemonDetailsQuery(item.name, {
-      skip: !item.name,
-    });
-
   const imageUrls = useMemo(
-    () => [
-      item.imageUrl,
-      pokemonDetails?.sprites?.front_default && !pokemonDetailsError
-        ? pokemonDetails.sprites.front_default
-        : undefined,
-      `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${item.id}.png`,
-      `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${item.id}.png`,
-    ],
-    [
-      item.imageUrl,
-      item.id,
-      pokemonDetails?.sprites?.front_default,
-      pokemonDetailsError,
-    ]
+    () =>
+      [
+        item.imageUrl,
+        `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${item.id}.png`,
+        `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${item.id}.png`,
+      ].filter(Boolean),
+    [item.imageUrl, item.id]
   );
 
-  const { finalImageUrl, hasError, isLoading } = usePokemonImage(imageUrls);
+  const currentImageUrl = imageUrls[currentImageIndex];
+
+  const handleImageError = () => {
+    if (currentImageIndex < imageUrls.length - 1) {
+      setCurrentImageIndex((previous) => previous + 1);
+    } else {
+      setImageError(true);
+    }
+  };
+
+  const handleImageLoad = () => {
+    setImageError(false);
+  };
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -73,21 +71,26 @@ function Card({
   `;
 
   const cardContentProps = {
-    imageError: hasError,
-    imageLoaded: !isLoading && !!finalImageUrl,
-    imageUrl: finalImageUrl,
+    imageError,
+    imageLoaded: !!currentImageUrl && !imageError,
+    imageUrl: currentImageUrl,
     isItemSelected,
     isSelected,
     item,
     onCheckboxChange: handleCheckboxChange,
+    onImageError: handleImageError,
+    onImageLoad: handleImageLoad,
   };
 
   return onPokemonClick ? (
-    <div className={cn(baseClass, 'cursor-pointer')} onClick={handleClick}>
+    <div
+      className={classNames(baseClass, 'cursor-pointer')}
+      onClick={handleClick}
+    >
       <CardContent {...cardContentProps} />
     </div>
   ) : (
-    <Link className={cn(baseClass)} to={`/${currentPage}/${item.id}`}>
+    <Link className={classNames(baseClass)} href={`/${currentPage}/${item.id}`}>
       <CardContent {...cardContentProps} />
     </Link>
   );
