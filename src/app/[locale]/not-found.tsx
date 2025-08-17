@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
+import pokeball from '@public/pokeball.png';
 
-import pokeball from '@/app/pokeball.png';
 import { classNames } from '@/utils/classNames';
 import {
   BUTTON_BASE_CLASSES,

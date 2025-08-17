@@ -6,11 +6,11 @@ import type { Metadata } from 'next';
 
 import '@/app/globals.css';
 
-import StoreProvider from '@/app/StoreProvider';
+import StoreProvider from '@/providers/StoreProvider';
 import Header from '@/components/Header';
 import { routing } from '@/i18n/routing';
-import ThemeInitScript from '@/components/ThemeInitScript';
 import { classNames } from '@/utils/classNames';
+import ThemeInitScript from '@/utils/themeInitScript';
 
 export const metadata: Metadata = { title: 'RS School React Project' };
 

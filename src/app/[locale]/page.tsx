@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 
-import PokemonPageClient from './PokemonPageClient';
+import PokemonPageClient from '@/components/PokemonPageClient';
 
 import type { PokemonItem } from '@/types';
 
