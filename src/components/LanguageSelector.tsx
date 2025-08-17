@@ -1,6 +1,6 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useLocale } from 'next-intl';
 import { useEffect, useState } from 'react';
 
@@ -19,6 +19,7 @@ export default function LanguageSelector() {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
   const [, setSelectedLocale, isLocaleLoaded] = useLocalStorage(
     'selected-locale',
@@ -36,7 +37,13 @@ export default function LanguageSelector() {
 
     const pathWithoutLocale = pathname.replace(`/${locale}`, '');
     const newPath = `/${newLocale}${pathWithoutLocale}`;
-    router.push(newPath);
+
+    const currentParams = new URLSearchParams(searchParams.toString());
+    const query = currentParams.toString();
+
+    const finalPath = query ? `${newPath}?${query}` : newPath;
+
+    router.push(finalPath);
     setIsLanguageMenuOpen(false);
   };
 
