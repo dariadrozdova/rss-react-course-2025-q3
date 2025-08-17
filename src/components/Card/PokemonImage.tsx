@@ -24,21 +24,22 @@ function PokemonImage({
 
   return (
     <div
-      className={classNames(
-        'mt-4 relative h-[100px] sm:h-[120px] w-[100px] sm:w-[120px]'
-      )}
+      className={classNames('mt-4 relative', 'h-25 w-25', 'sm:h-30 sm:w-30')}
     >
       {!imageLoaded && !imageError && (
         <div
           className={classNames(
-            'absolute inset-0 rounded-lg bg-gray-200 animate-pulse flex items-center justify-center'
+            'absolute inset-0 flex items-center justify-center',
+            'rounded-lg bg-gray-200 animate-pulse'
           )}
         />
       )}
       {imageError || !imageUrl ? (
         <div
           className={classNames(
-            'rounded-lg h-full w-full bg-gray-200 flex items-center justify-center mx-auto text-gray-500 text-sm'
+            'h-full w-full mx-auto',
+            'flex items-center justify-center',
+            'rounded-lg bg-gray-200 text-gray-500 text-sm'
           )}
         >
           No Image
@@ -48,7 +49,8 @@ function PokemonImage({
           alt={name}
           animate={{ opacity: imageLoaded ? 1 : 0 }}
           className={classNames(
-            'rounded-lg h-auto block max-w-[100px] sm:max-w-[120px] mx-auto'
+            'block mx-auto rounded-lg h-auto',
+            'max-w-25 sm:max-w-30'
           )}
           height={150}
           initial={{ opacity: 0 }}

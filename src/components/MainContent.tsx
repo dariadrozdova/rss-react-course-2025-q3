@@ -83,19 +83,37 @@ export default function MainContent({
     <>
       <div
         className={classNames(
-          'flex flex-row gap-8 w-full transition-all duration-300',
+          'flex flex-row gap-8 w-full',
+          'transition-all duration-300',
           hasSelectedItems && 'pb-20'
         )}
       >
-        <div className="flex flex-col gap-5 w-full transition-all duration-300">
-          <section className="theme-card p-6 rounded-lg shadow-md text-center flex flex-col items-center gap-5 box-border w-full flex-shrink-0">
+        <div
+          className={classNames(
+            'flex flex-col gap-5 w-full',
+            'transition-all duration-300'
+          )}
+        >
+          <section
+            className={classNames(
+              'theme-card p-6 rounded-lg shadow-md box-border flex-shrink-0',
+              'text-center flex flex-col items-center gap-5',
+              'w-full'
+            )}
+          >
             <Search
               initialSearchTerm={effectiveSearchTerm}
               onSearch={handleSearch}
             />
           </section>
 
-          <section className="flex-grow theme-card p-6 rounded-lg shadow-md flex flex-col items-center justify-start box-border w-full min-h-[900px]">
+          <section
+            className={classNames(
+              'flex-grow theme-card p-6 rounded-lg shadow-md box-border',
+              'flex flex-col items-center justify-start',
+              'w-full min-h-[900px]'
+            )}
+          >
             <PokemonContent
               currentPage={currentPage}
               effectiveSearchTerm={effectiveSearchTerm}

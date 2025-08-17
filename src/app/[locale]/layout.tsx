@@ -10,6 +10,7 @@ import StoreProvider from '@/app/StoreProvider';
 import Header from '@/components/Header';
 import { routing } from '@/i18n/routing';
 import ThemeInitScript from '@/components/ThemeInitScript';
+import { classNames } from '@/utils/classNames';
 
 export const metadata: Metadata = { title: 'RS School React Project' };
 
@@ -33,7 +34,9 @@ export default async function LocaleLayout({
       <body>
         <NextIntlClientProvider messages={messages}>
           <StoreProvider>
-            <div className="max-w-7xl w-full mx-auto p-4 md:p-8">
+            <div
+              className={classNames('max-w-7xl w-full mx-auto', 'p-4 md:p-8')}
+            >
               <Header />
               {children}
             </div>

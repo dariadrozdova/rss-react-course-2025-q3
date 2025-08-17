@@ -26,12 +26,13 @@ const SelectionFlyout: React.FC = () => {
       <motion.div
         animate={{ opacity: 1, y: 0 }}
         className={classNames(
-          `fixed bottom-0 left-0 right-0 z-[9999] p-3 shadow-2xl border-t bg-theme-secondary border-theme`
+          'fixed bottom-0 left-0 right-0 z-[9999] p-3 shadow-2xl border-t',
+          'bg-theme-secondary border-theme'
         )}
         exit={{ opacity: 0, y: 100 }}
         initial={{ opacity: 0, y: 100 }}
         style={{
-          height: '72px',
+          height: '5rem',
           pointerEvents: 'auto',
         }}
         transition={{ damping: 30, stiffness: 300, type: 'spring' }}

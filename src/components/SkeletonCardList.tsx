@@ -15,9 +15,7 @@ const SkeletonCardList: React.FC<Props> = ({ count = 20 }) => {
     >
       {Array.from({ length: count }).map((_, index) => (
         <div
-          className={classNames(
-            'bg-gray-200 animate-pulse h-[180px] rounded-md'
-          )}
+          className={classNames('bg-gray-200 animate-pulse h-45 rounded-md')}
           key={index}
         />
       ))}

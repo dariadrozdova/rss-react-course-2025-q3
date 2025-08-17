@@ -45,7 +45,8 @@ const PokemonDetailsContent = ({ pokemon }: PokemonDetailsContentProps) => (
         {pokemon.types.map((typeInfo, index) => (
           <span
             className={classNames(
-              'px-3 py-1 bg-blue-500 text-white rounded capitalize'
+              'px-3 py-1 rounded capitalize',
+              'bg-blue-500 text-white'
             )}
             key={index}
           >
@@ -56,7 +57,9 @@ const PokemonDetailsContent = ({ pokemon }: PokemonDetailsContentProps) => (
     </div>
 
     <div>
-      <h3 className={`font-semibold mb-2 text-theme-primary`}>Stats</h3>
+      <h3 className={classNames('font-semibold mb-2 text-theme-primary')}>
+        Stats
+      </h3>
       <div className={classNames('space-y-2')}>
         {pokemon.stats.map((statInfo, index) => (
           <div className={classNames('flex justify-between')} key={index}>

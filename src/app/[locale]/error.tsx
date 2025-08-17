@@ -21,11 +21,9 @@ export default function Error({ error, reset }: ErrorProps) {
   return (
     <div
       className={classNames(
-        `flex flex-col items-center justify-center
-          min-h-[80vh] text-center p-5
-          bg-error-background border-2 border-error-border rounded-lg
-          shadow-md shadow-black-alpha-10 font-sans
-          w-full`
+        'flex flex-col items-center justify-center w-full min-h-[80vh] p-5 text-center font-sans',
+        'bg-error-background border-2 border-error-border rounded-lg',
+        'shadow-md shadow-black-alpha-10'
       )}
     >
       <h1
@@ -41,14 +39,12 @@ export default function Error({ error, reset }: ErrorProps) {
         {t('description')}
       </p>
       <Button
-        className={classNames(`px-[25px] py-3 rounded-lg text-[1.1em] normal-case
-          shadow-md shadow-black-alpha-15
-          hover:-translate-y-0.5
-          active:shadow-black-alpha-15`)}
+        className={classNames(
+          'px-6 py-3 rounded-lg text-[1.1em] normal-case',
+          'shadow-md shadow-black-alpha-15 hover:-translate-y-0.5 active:shadow-black-alpha-15'
+        )}
         color="green"
-        onClick={() => {
-          reset();
-        }}
+        onClick={reset}
       >
         {t('button')}
       </Button>

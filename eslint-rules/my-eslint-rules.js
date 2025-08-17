@@ -77,7 +77,7 @@ export const myEslintRules = {
   'max-len': [
     'error',
     {
-      code: 120,
+      code: 110,
       ignoreComments: true,
       ignoreTemplateLiterals: true,
       ignoreStrings: true,
@@ -85,7 +85,7 @@ export const myEslintRules = {
   ],
   'max-lines-per-function': [
     'error',
-    { max: 120, skipBlankLines: true, skipComments: true },
+    { max: 110, skipBlankLines: true, skipComments: true },
   ],
   'no-console': ['error', { allow: ['warn'] }],
   'no-empty-function': 'off',

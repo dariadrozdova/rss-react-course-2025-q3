@@ -16,10 +16,11 @@ export default function AboutPage() {
 
   return (
     <div
-      className={classNames(`theme-card p-6 rounded-lg shadow-md
-        text-center flex flex-col items-center justify-start
-        w-full box-border font-['Inter']
-        min-h-[1016px]`)}
+      className={classNames(
+        'theme-card p-6 rounded-lg shadow-md',
+        'text-center flex flex-col items-center justify-start',
+        'w-full box-border font-["Inter"] min-h-[64rem]'
+      )}
     >
       <div className={classNames('max-w-4xl w-full py-6 md:py-10')}>
         <Image

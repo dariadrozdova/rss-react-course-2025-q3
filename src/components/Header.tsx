@@ -33,23 +33,25 @@ export default function Header() {
 
   return (
     <nav
-      className={classNames(`py-4 rounded-lg shadow-sm mb-8 w-full
-        max-w-7xl border box-border
-        md:rounded-xl md:shadow-lg
-        bg-theme-secondary border-theme`)}
+      className={classNames(
+        'w-full max-w-7xl box-border rounded-lg shadow-sm border',
+        'py-4 mb-8',
+        'md:rounded-xl md:shadow-lg',
+        'bg-theme-secondary border-theme'
+      )}
     >
-      <div
-        className={classNames('flex justify-end items-center gap-2 px-4 pb-2')}
-      >
+      <div className="flex justify-end items-center gap-2 px-4 pb-2">
         <LanguageSelector />
         <ThemeSwitch />
       </div>
 
       <ul
-        className={classNames(`list-none p-0 m-0 flex justify-center flex-wrap
-          flex-col gap-4
-          sm:gap-2
-          md:flex-row md:gap-10`)}
+        className={classNames(
+          'list-none p-0 m-0 flex justify-center flex-wrap flex-col',
+          'gap-4',
+          'sm:gap-2',
+          'md:flex-row md:gap-10'
+        )}
       >
         <li>
           <Link className={getNavLinkStyles('/')} href="/">

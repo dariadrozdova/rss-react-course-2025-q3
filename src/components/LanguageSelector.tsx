@@ -47,9 +47,9 @@ export default function LanguageSelector() {
       <button
         aria-label="Select language"
         className={classNames(
-          'flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer',
-          'text-theme-primary hover:bg-theme-primary/20',
-          'transition-colors duration-300 font-medium'
+          'flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer font-medium',
+          'transition-colors duration-300',
+          'text-theme-primary hover:bg-theme-primary/20'
         )}
         onClick={() => {
           setIsLanguageMenuOpen(!isLanguageMenuOpen);
@@ -59,8 +59,9 @@ export default function LanguageSelector() {
         <span className="sm:hidden">{currentLanguage?.code.toUpperCase()}</span>
         <svg
           className={classNames(
-            'w-4 h-4 transition-transform duration-200',
-            isLanguageMenuOpen ? 'rotate-180' : ''
+            'w-4 h-4',
+            'transition-transform duration-200',
+            isLanguageMenuOpen && 'rotate-180'
           )}
           fill="none"
           stroke="currentColor"

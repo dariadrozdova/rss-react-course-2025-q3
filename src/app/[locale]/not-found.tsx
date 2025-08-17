@@ -12,15 +12,14 @@ import {
 export default function NotFoundPage() {
   const t = useTranslations('NotFoundPage');
 
-  const navLinkClasses = `${BUTTON_BASE_CLASSES} ${BUTTON_COLOR_GREEN}`;
+  const navLinkClasses = classNames(BUTTON_BASE_CLASSES, BUTTON_COLOR_GREEN);
 
   return (
     <div
       className={classNames(
-        `theme-card p-6 rounded-lg shadow-md
-          text-center flex flex-col items-center justify-center
-          w-full box-border font-['Inter']
-          min-h-[1016px]`
+        'theme-card p-6 rounded-lg shadow-md',
+        'text-center flex flex-col items-center justify-center',
+        'w-full box-border font-["Inter"] min-h-[64rem]'
       )}
     >
       <div className="max-w-4xl w-full">

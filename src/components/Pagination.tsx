@@ -8,6 +8,18 @@ import type { PaginationProps } from '@/types/';
 import Button from '@/components/Button';
 import { classNames } from '@/utils/classNames';
 
+const buttonBaseStyles = classNames(
+  'px-3 py-2 rounded-md shadow-sm',
+  'transition-shadow duration-200',
+  'hover:shadow-md'
+);
+
+const previousNextButtonStyles = classNames(
+  'px-4 py-2 rounded-md shadow-sm',
+  'transition-shadow duration-200',
+  'hover:shadow-md'
+);
+
 const Pagination: React.FC<PaginationProps> = ({
   currentPage,
   onPageChange,
@@ -37,9 +49,7 @@ const Pagination: React.FC<PaginationProps> = ({
       onClick={handlePaginationClick}
     >
       <Button
-        className={classNames(
-          'px-4 py-2 rounded-md shadow-sm hover:shadow-md transition-shadow duration-200'
-        )}
+        className={previousNextButtonStyles}
         color="green"
         disabled={currentPage === 1}
         onClick={handlePageClick(currentPage - 1)}
@@ -50,19 +60,13 @@ const Pagination: React.FC<PaginationProps> = ({
       {showFirstPage && (
         <>
           <Button
-            className={classNames(
-              'px-3 py-2 rounded-md shadow-sm hover:shadow-md transition-shadow duration-200'
-            )}
+            className={buttonBaseStyles}
             color="green"
             onClick={handlePageClick(1)}
           >
             1
           </Button>
-          <span
-            className={classNames(
-              'px-2 text-[var(--color-text-dark-blue-gray)]'
-            )}
-          >
+          <span className="px-2 text-[var(--color-text-dark-blue-gray)]">
             ...
           </span>
         </>
@@ -70,9 +74,7 @@ const Pagination: React.FC<PaginationProps> = ({
 
       {currentPage > 1 && (
         <Button
-          className={classNames(
-            'px-3 py-2 rounded-md shadow-sm hover:shadow-md transition-shadow duration-200'
-          )}
+          className={buttonBaseStyles}
           color="green"
           onClick={handlePageClick(currentPage - 1)}
         >
@@ -82,7 +84,9 @@ const Pagination: React.FC<PaginationProps> = ({
 
       <Button
         className={classNames(
-          'px-3 py-2 rounded-md shadow-lg bg-green-600 text-white border-green-600 font-semibold ring-2 ring-green-300 ring-offset-1 cursor-default'
+          'px-3 py-2 rounded-md shadow-lg cursor-default',
+          'bg-green-600 text-white border-green-600 font-semibold',
+          'ring-2 ring-green-300 ring-offset-1'
         )}
         color="green"
         disabled
@@ -92,9 +96,7 @@ const Pagination: React.FC<PaginationProps> = ({
 
       {currentPage < totalPages && (
         <Button
-          className={classNames(
-            'px-3 py-2 rounded-md shadow-sm hover:shadow-md transition-shadow duration-200'
-          )}
+          className={buttonBaseStyles}
           color="green"
           onClick={handlePageClick(currentPage + 1)}
         >
@@ -104,16 +106,14 @@ const Pagination: React.FC<PaginationProps> = ({
 
       {showLastPage && (
         <>
-          <span
-            className={classNames(
-              'px-2 text-[var(--color-text-dark-blue-gray)]'
-            )}
-          >
+          <span className="px-2 text-[var(--color-text-dark-blue-gray)]">
             ...
           </span>
           <Button
             className={classNames(
-              'px-3 py-2 rounded-md shadow-sm hover:shadow-md transition-shadow duration-200'
+              'px-3 py-2 rounded-md shadow-sm',
+              'transition-shadow duration-200',
+              'hover:shadow-md'
             )}
             color="green"
             onClick={handlePageClick(totalPages)}
@@ -125,7 +125,9 @@ const Pagination: React.FC<PaginationProps> = ({
 
       <Button
         className={classNames(
-          'px-4 py-2 rounded-md shadow-sm hover:shadow-md transition-shadow duration-200'
+          'px-4 py-2 rounded-md shadow-sm',
+          'transition-shadow duration-200',
+          'hover:shadow-md'
         )}
         color="green"
         disabled={currentPage === totalPages || totalPages === 0}

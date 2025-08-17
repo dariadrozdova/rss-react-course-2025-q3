@@ -15,15 +15,16 @@ interface DetailsPanelProps {
 
 const mainPanelClasses = classNames(
   'relative overflow-hidden theme-card rounded-lg shadow-md md:col-span-1',
-  'transition-all duration-300 transform hover:scale-[1.01] hover:shadow-lg',
+  'transition-all duration-300 transform',
   'bg-theme-secondary p-6',
   MIN_CONTAINER_HEIGHT,
-  'max-h-[700px] overflow-y-auto'
+  'max-h-[44rem] overflow-y-auto',
+  'hover:scale-[1.01] hover:shadow-lg'
 );
 
 const CloseButton = ({ onClick }: { onClick: () => void }) => (
   <button
-    className="p-2 rounded cursor-pointer text-theme-secondary"
+    className={classNames('p-2 rounded cursor-pointer', 'text-theme-secondary')}
     onClick={onClick}
   >
     <X size={20} />
@@ -46,7 +47,7 @@ const StatePanel = ({
     </div>
     <p className="text-theme-secondary mb-4">{message}</p>
     <button
-      className="px-4 py-2 bg-blue-600 text-white rounded"
+      className={classNames('px-4 py-2 rounded', 'bg-blue-600 text-white')}
       onClick={onClose}
     >
       Go Back
@@ -64,7 +65,12 @@ export default function DetailsPanel({
     return (
       <div className={mainPanelClasses}>
         <div className="flex justify-center items-center py-8">
-          <div className="border-4 border-gray-200 border-t-blue-500 rounded-full w-10 h-10 animate-spin" />
+          <div
+            className={classNames(
+              'border-4 border-gray-200 border-t-blue-500 rounded-full w-10 h-10',
+              'animate-spin'
+            )}
+          />
         </div>
       </div>
     );
@@ -93,7 +99,12 @@ export default function DetailsPanel({
   return (
     <div className={mainPanelClasses}>
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold capitalize text-theme-primary">
+        <h2
+          className={classNames(
+            'text-2xl font-bold capitalize',
+            'text-theme-primary'
+          )}
+        >
           {pokemonDetails.name}
         </h2>
         <CloseButton onClick={onClose} />

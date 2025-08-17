@@ -59,16 +59,14 @@ function Card({
     dispatch(toggleItemSelection(item));
   };
 
-  const baseClass = `
-    group p-4 sm:p-5 rounded-lg shadow-sm flex flex-col items-center text-center
-    transition-all duration-300 ease-in-out min-h-[280px] border
-    bg-theme-secondary
-    ${
-      isSelected
-        ? 'border-teal-400 shadow-lg ring-2 ring-teal-200 -translate-y-1'
-        : 'border-theme hover:-translate-y-1 hover:shadow-lg hover:border-teal-400'
-    }
-  `;
+  const baseClass = classNames(
+    'group p-4 sm:p-5 rounded-lg shadow-sm flex flex-col items-center text-center',
+    'transition-all duration-300 ease-in-out min-h-70 border',
+    'bg-theme-secondary',
+    isSelected
+      ? 'border-teal-400 shadow-lg ring-2 ring-teal-200 -translate-y-1'
+      : 'border-theme hover:-translate-y-1 hover:shadow-lg hover:border-teal-400'
+  );
 
   const cardContentProps = {
     imageError,
