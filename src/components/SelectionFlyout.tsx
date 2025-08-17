@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
 import React from 'react';
+import { useTranslations } from 'next-intl';
 
 import Button from '@/components/Button';
 import { useDownload } from '@/hooks/useDownload';
@@ -10,6 +11,8 @@ import { unselectAllItems } from '@/store/slices/selectedItemsSlice';
 import { classNames } from '@/utils/classNames';
 
 const SelectionFlyout: React.FC = () => {
+  const t = useTranslations('SelectionFlyout');
+
   const dispatch = useAppDispatch();
   const { handleDownload, selectedCount } = useDownload();
 
@@ -46,17 +49,17 @@ const SelectionFlyout: React.FC = () => {
             <span
               className={classNames('text-sm font-medium text-theme-secondary')}
             >
-              {selectedCount} item{selectedCount === 1 ? '' : 's'} selected
+              {t('selectedCount', { selectedCount })}
             </span>
           </div>
 
           <div className={classNames('flex items-center gap-3')}>
             <Button color="red" onClick={handleUnselectAll} size="small">
-              Unselect all
+              {t('unselectAll')}
             </Button>
 
             <Button color="green" onClick={handleDownload} size="small">
-              Download
+              {t('download')}
             </Button>
           </div>
         </div>

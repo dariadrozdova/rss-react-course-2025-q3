@@ -38,5 +38,10 @@
     "title": "Oops! Something went wrong.",
     "description": "We are sorry, but an unexpected error occurred. Please try refreshing the page.",
     "button": "Refresh Page"
+  },
+  "SelectionFlyout": {
+    "selectedCount": "{selectedCount, plural, one {# item selected} other {# items selected}}",
+    "unselectAll": "Unselect all",
+    "download": "Download"
   }
 }

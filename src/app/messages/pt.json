@@ -38,5 +38,10 @@
     "title": "Ups! Algo correu mal.",
     "description": "Pedimos desculpa, mas ocorreu um erro inesperado. Por favor, tente atualizar a página.",
     "button": "Atualizar a página"
+  },
+  "SelectionFlyout": {
+    "selectedCount": "{selectedCount, plural, one {# item selecionado} other {# itens selecionados}}",
+    "unselectAll": "Desselecionar tudo",
+    "download": "Transferir"
   }
 }
