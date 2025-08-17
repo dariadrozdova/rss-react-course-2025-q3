@@ -43,5 +43,8 @@
     "selectedCount": "{selectedCount, plural, one {# item selected} other {# items selected}}",
     "unselectAll": "Unselect all",
     "download": "Download"
+  },
+  "Card": {
+    "select": "Select"
   }
 }

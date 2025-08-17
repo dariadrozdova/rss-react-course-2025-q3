@@ -1,3 +1,6 @@
+'use client';
+
+import { useTranslations } from 'next-intl';
 import { classNames } from '@/utils/classNames';
 
 interface SelectionCheckboxProps {
@@ -9,6 +12,8 @@ function SelectionCheckbox({
   isItemSelected,
   onCheckboxChange,
 }: SelectionCheckboxProps) {
+  const t = useTranslations('Card');
+
   return (
     <div
       className={classNames('mt-auto pt-3 flex items-center justify-center')}
@@ -55,7 +60,7 @@ function SelectionCheckbox({
               : 'text-theme-secondary'
           )}
         >
-          Select
+          {t('select')}
         </span>
       </label>
     </div>

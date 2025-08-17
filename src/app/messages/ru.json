@@ -43,5 +43,8 @@
     "selectedCount": "{selectedCount, plural, one {# выбранный элемент} few {# выбранных элемента} many {# выбранных элементов} other {# выбранных элементов}}",
     "unselectAll": "Отменить выбор",
     "download": "Скачать"
+  },
+  "Card": {
+    "select": "Выбрать"
   }
 }
