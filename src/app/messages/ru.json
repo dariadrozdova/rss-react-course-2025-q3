@@ -1,0 +1,50 @@
+{
+  "Header": {
+    "home": "Главная",
+    "about": "О нас"
+  },
+  "Search": {
+    "placeholder": "Поиск покемонов...",
+    "button": "Поиск"
+  },
+  "Pagination": {
+    "previous": "Предыдущая",
+    "next": "Следующая"
+  },
+  "AboutPage": {
+    "title": "Об этом приложении",
+    "overviewSection": {
+      "title": "Обзор приложения",
+      "text": "Это приложение-справочник Pokémon, созданное в рамках <courseLink>{courseName}</courseLink>. Оно позволяет пользователям искать покемонов по имени, просматривать их детали и изображения, используя Pokémon API."
+    },
+    "authorSection": {
+      "title": "Автор",
+      "githubProfile": "Профиль GitHub"
+    },
+    "courseSection": {
+      "title": "Курс",
+      "text": "Этот проект является практическим заданием из <courseLink>{courseName}</courseLink>."
+    }
+  },
+  "NotFoundPage": {
+    "title": "Кажется, такой страницы не существует!",
+    "description": "Вернитесь на главную страницу и продолжите изучение.",
+    "backToHome": "Вернуться на главную"
+  },
+  "CourseNames": {
+    "rsSchoolReact": "курса RS School по React"
+  },
+  "ErrorPage": {
+    "title": "Ой! Что-то пошло не так.",
+    "description": "Извините, но произошла непредвиденная ошибка. Пожалуйста, попробуйте обновить страницу.",
+    "button": "Обновить страницу"
+  },
+  "SelectionFlyout": {
+    "selectedCount": "{selectedCount, plural, one {# выбранный элемент} few {# выбранных элемента} many {# выбранных элементов} other {# выбранных элементов}}",
+    "unselectAll": "Отменить выбор",
+    "download": "Скачать"
+  },
+  "Card": {
+    "select": "Выбрать"
+  }
+}

@@ -1,5 +1,7 @@
+'use client';
+
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
 
 import useLocalStorage from './useLocalStorage';
 
@@ -12,15 +14,14 @@ interface UsePaginationAndSearchResult {
 }
 
 export const usePaginationAndSearch = (): UsePaginationAndSearchResult => {
-  const [searchParameters, setSearchParameters] = useSearchParams();
+  const searchParameters = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
 
-  const [localSearchTerm, setLocalSearchTerm] = useLocalStorage<string>(
-    'lastSearchTerm',
-    ''
-  );
+  const [localSearchTerm, setLocalSearchTerm, isLocalStorageLoaded] =
+    useLocalStorage<string>('lastSearchTerm', '');
 
   const searchTermFromUrl = searchParameters.get('search') || '';
-
   const effectiveSearchTerm = searchParameters.has('search')
     ? searchTermFromUrl
     : '';
@@ -45,7 +46,14 @@ export const usePaginationAndSearch = (): UsePaginationAndSearchResult => {
     isValidPage ? Math.max(1, currentPageFromUrl) : 1
   );
 
+  const updateSearchParams = (parameters: URLSearchParams) => {
+    router.push(`${pathname}?${parameters.toString()}`);
+  };
+
   useEffect(() => {
+    if (!isLocalStorageLoaded) {
+      return;
+    }
     if (searchParameters.has('search')) {
       if (searchTermFromUrl !== localSearchTerm) {
         setLocalSearchTerm(searchTermFromUrl);
@@ -60,6 +68,7 @@ export const usePaginationAndSearch = (): UsePaginationAndSearchResult => {
     localSearchTerm,
     setLocalSearchTerm,
     searchParameters,
+    isLocalStorageLoaded,
   ]);
 
   useEffect(() => {
@@ -76,16 +85,20 @@ export const usePaginationAndSearch = (): UsePaginationAndSearchResult => {
       setCurrentPage(1);
       setLocalSearchTerm(newSearchTerm);
 
-      const newSearchParameters = new URLSearchParams();
+      const newSearchParameters = new URLSearchParams(
+        searchParameters.toString()
+      );
+
       if (newSearchTerm.trim()) {
         newSearchParameters.set('search', newSearchTerm.trim());
-        newSearchParameters.set('page', '1');
       } else {
-        newSearchParameters.set('page', '1');
+        newSearchParameters.delete('search');
       }
-      setSearchParameters(newSearchParameters);
+      newSearchParameters.set('page', '1');
+
+      updateSearchParams(newSearchParameters);
     },
-    [setLocalSearchTerm, setSearchParameters]
+    [setLocalSearchTerm, searchParameters]
   );
 
   const handlePageChange = useCallback(
@@ -96,9 +109,10 @@ export const usePaginationAndSearch = (): UsePaginationAndSearchResult => {
         searchParameters.toString()
       );
       newSearchParameters.set('page', String(page));
-      setSearchParameters(newSearchParameters);
+
+      updateSearchParams(newSearchParameters);
     },
-    [searchParameters, setSearchParameters]
+    [searchParameters]
   );
 
   return {

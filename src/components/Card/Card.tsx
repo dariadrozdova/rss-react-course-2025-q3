@@ -1,17 +1,14 @@
-import React, { useMemo } from 'react';
-import { Link } from 'react-router-dom';
-
-import type { CardProps } from '@types';
-
-import { useGetPokemonDetailsQuery } from '@api/pokemonApiSlice';
-import { usePokemonImage } from '@hooks/usePokemonImage';
-import { useAppDispatch, useAppSelector } from '@store/hooks';
-import { toggleItemSelection } from '@store/slices/selectedItemsSlice';
-import { cn } from '@utils/cn';
+import Link from 'next/link';
+import React, { useMemo, useState } from 'react';
 
 import CardContent from './CardContent';
 
+import type { CardProps } from '@/types/';
+
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { selectIsItemSelected } from '@/store/selectors';
+import { toggleItemSelection } from '@/store/slices/selectedItemsSlice';
+import { classNames } from '@/utils/classNames';
 
 function Card({
   currentPage,
@@ -20,34 +17,23 @@ function Card({
   onPokemonClick,
 }: CardProps) {
   const dispatch = useAppDispatch();
+  const [currentImageIndex, _setCurrentImageIndex] = useState(0);
+  const [imageError, _setImageError] = useState(false);
 
   const isItemSelected = useAppSelector((state) =>
     selectIsItemSelected(state, item.id)
   );
-
-  const { data: pokemonDetails, error: pokemonDetailsError } =
-    useGetPokemonDetailsQuery(item.name, {
-      skip: !item.name,
-    });
-
   const imageUrls = useMemo(
-    () => [
-      item.imageUrl,
-      pokemonDetails?.sprites?.front_default && !pokemonDetailsError
-        ? pokemonDetails.sprites.front_default
-        : undefined,
-      `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${item.id}.png`,
-      `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${item.id}.png`,
-    ],
-    [
-      item.imageUrl,
-      item.id,
-      pokemonDetails?.sprites?.front_default,
-      pokemonDetailsError,
-    ]
+    () =>
+      [
+        item.imageUrl,
+        `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${item.id}.png`,
+        `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${item.id}.png`,
+      ].filter(Boolean),
+    [item.imageUrl, item.id]
   );
 
-  const { finalImageUrl, hasError, isLoading } = usePokemonImage(imageUrls);
+  const currentImageUrl = imageUrls[currentImageIndex];
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -61,21 +47,19 @@ function Card({
     dispatch(toggleItemSelection(item));
   };
 
-  const baseClass = `
-    group p-4 sm:p-5 rounded-lg shadow-sm flex flex-col items-center text-center
-    transition-all duration-300 ease-in-out min-h-[280px] border
-    bg-theme-secondary
-    ${
-      isSelected
-        ? 'border-teal-400 shadow-lg ring-2 ring-teal-200 -translate-y-1'
-        : 'border-theme hover:-translate-y-1 hover:shadow-lg hover:border-teal-400'
-    }
-  `;
+  const baseClass = classNames(
+    'group p-4 sm:p-5 rounded-lg shadow-sm flex flex-col items-center text-center',
+    'transition-all duration-300 ease-in-out min-h-70 border',
+    'bg-theme-secondary',
+    isSelected
+      ? 'border-teal-400 shadow-lg ring-2 ring-teal-200 -translate-y-1'
+      : 'border-theme hover:-translate-y-1 hover:shadow-lg hover:border-teal-400'
+  );
 
   const cardContentProps = {
-    imageError: hasError,
-    imageLoaded: !isLoading && !!finalImageUrl,
-    imageUrl: finalImageUrl,
+    imageError,
+    imageLoaded: !!currentImageUrl && !imageError,
+    imageUrl: currentImageUrl,
     isItemSelected,
     isSelected,
     item,
@@ -83,11 +67,14 @@ function Card({
   };
 
   return onPokemonClick ? (
-    <div className={cn(baseClass, 'cursor-pointer')} onClick={handleClick}>
+    <div
+      className={classNames(baseClass, 'cursor-pointer')}
+      onClick={handleClick}
+    >
       <CardContent {...cardContentProps} />
     </div>
   ) : (
-    <Link className={cn(baseClass)} to={`/${currentPage}/${item.id}`}>
+    <Link className={classNames(baseClass)} href={`/${currentPage}/${item.id}`}>
       <CardContent {...cardContentProps} />
     </Link>
   );

@@ -77,7 +77,7 @@ export const myEslintRules = {
   'max-len': [
     'error',
     {
-      code: 120,
+      code: 110,
       ignoreComments: true,
       ignoreTemplateLiterals: true,
       ignoreStrings: true,
@@ -107,14 +107,23 @@ export const myEslintRules = {
   'unicorn/prefer-spread': 'off',
   'unicorn/prevent-abbreviations': [
     'error',
-    { allowList: { props: true, Props: true, e: true } },
+    {
+      allowList: {
+        props: true,
+        Props: true,
+        e: true,
+        Params: true,
+        env: true,
+        'next-env': true,
+      },
+    },
   ],
   'unicorn/explicit-length-check': 'off',
   'unicorn/filename-case': [
     'error',
     {
       cases: {
-        kebabCase: false,
+        kebabCase: true,
         camelCase: true,
         pascalCase: true,
       },

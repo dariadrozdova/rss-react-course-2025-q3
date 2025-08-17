@@ -1,17 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { pokemonApi } from '@api/pokemonApiSlice';
-
 import selectedItemsSlice from './slices/selectedItemsSlice';
 
-export const store = configureStore({
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(pokemonApi.middleware),
-  reducer: {
-    [pokemonApi.reducerPath]: pokemonApi.reducer,
-    selectedItems: selectedItemsSlice,
-  },
-});
+export type AppDispatch = AppStore['dispatch'];
+export type AppStore = ReturnType<typeof makeStore>;
+export type RootState = ReturnType<AppStore['getState']>;
 
-export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>;
+export function makeStore() {
+  return configureStore({
+    devTools: process.env.NODE_ENV !== 'production',
+    reducer: {
+      selectedItems: selectedItemsSlice,
+    },
+  });
+}

@@ -1,41 +1,55 @@
-import { useCallback, useState } from 'react';
+'use client';
 
-type UseLocalStorageResult<T> = [T, (value: ((previous: T) => T) | T) => void];
+import { useCallback, useEffect, useState } from 'react';
 
-function useLocalStorage<T extends string>(
+type UseLocalStorageResult<T> = [
+  T | undefined,
+  (value: ((previous: T | undefined) => T) | T) => void,
+  boolean,
+];
+
+function useLocalStorage<T>(
   key: string,
-  initialValue: (() => T) | T
+  initialValue: T
 ): UseLocalStorageResult<T> {
-  const [storedValue, setStoredValue] = useState<T>(() => {
+  const [storedValue, setStoredValue] = useState<T | undefined>(undefined);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
     try {
-      const item = localStorage.getItem(key);
-      return item === null
-        ? typeof initialValue === 'function'
-          ? initialValue()
-          : initialValue
-        : (item as T);
+      const item = window.localStorage.getItem(key);
+      if (item) {
+        const parsed = JSON.parse(item);
+        setStoredValue(parsed);
+      } else {
+        setStoredValue(initialValue);
+      }
     } catch (error) {
       console.warn(`Error reading localStorage key "${key}":`, error);
-      return typeof initialValue === 'function' ? initialValue() : initialValue;
+      setStoredValue(initialValue);
+    } finally {
+      setIsLoaded(true);
     }
-  });
+  }, [key, initialValue]);
 
   const setValue = useCallback(
-    (value: ((previous: T) => T) | T) => {
+    (value: ((previous: T | undefined) => T) | T) => {
       try {
         const newValue =
-          typeof value === 'function' ? value(storedValue) : value;
+          typeof value === 'function'
+            ? (value as (previous: T | undefined) => T)(storedValue)
+            : value;
 
         setStoredValue(newValue);
-        localStorage.setItem(key, String(newValue));
+        window.localStorage.setItem(key, JSON.stringify(newValue));
       } catch (error) {
         console.warn(`Error writing to localStorage key "${key}":`, error);
       }
     },
-    [key]
+    [key, storedValue]
   );
 
-  return [storedValue, setValue];
+  return [storedValue, setValue, isLoaded];
 }
 
 export default useLocalStorage;

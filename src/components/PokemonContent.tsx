@@ -1,13 +1,13 @@
-import React from 'react';
-
-import type { PokemonContentProps } from '@types';
 import { AnimatePresence, motion } from 'framer-motion';
-
-import { cn } from '@utils/cn';
+import React from 'react';
 
 import CardList from './CardList';
 import Pagination from './Pagination';
 import SkeletonCardList from './SkeletonCardList';
+
+import type { PokemonContentProps } from '@/types';
+
+import { classNames } from '@/utils/classNames';
 
 export const PokemonContent: React.FC<PokemonContentProps> = ({
   currentPage,
@@ -30,12 +30,12 @@ export const PokemonContent: React.FC<PokemonContentProps> = ({
       : '';
 
   return (
-    <div className={cn('min-h-[800px] w-full flex flex-col')}>
+    <div className="min-h-[50rem] w-full flex flex-col">
       <AnimatePresence mode="wait">
         {isLoading ? (
           <motion.div
             animate={{ opacity: 1 }}
-            className={cn('flex-grow')}
+            className="flex-grow"
             exit={{ opacity: 0 }}
             initial={{ opacity: 0 }}
             key="loader"
@@ -45,14 +45,17 @@ export const PokemonContent: React.FC<PokemonContentProps> = ({
         ) : error ? (
           <motion.div
             animate={{ opacity: 1 }}
-            className={cn('flex-grow flex items-center justify-center')}
+            className="flex-grow flex items-center justify-center"
             exit={{ opacity: 0 }}
             initial={{ opacity: 0 }}
             key="error"
           >
             <p
-              className={cn(
-                'text-[var(--color-primary-red-hover)] bg-[var(--color-error-background)] border border-[var(--color-error-border-light)] p-[15px] rounded-md font-semibold text-center w-full max-w-xl box-border md:p-[10px] md:text-[0.9em]'
+              className={classNames(
+                'p-4 rounded-md box-border font-semibold text-center',
+                'w-full max-w-xl',
+                'md:p-3 md:text-sm',
+                'text-[var(--color-primary-red-hover)] bg-[var(--color-error-background)] border border-[var(--color-error-border-light)]'
               )}
             >
               Error: {error}
@@ -61,14 +64,17 @@ export const PokemonContent: React.FC<PokemonContentProps> = ({
         ) : pokemonItems.length === 0 ? (
           <motion.div
             animate={{ opacity: 1 }}
-            className={cn('flex-grow flex items-center justify-center')}
+            className="flex-grow flex items-center justify-center"
             exit={{ opacity: 0 }}
             initial={{ opacity: 0 }}
             key="empty"
           >
             <p
-              className={cn(
-                'bg-[var(--color-black-alpha-10)] border border-[var(--color-black-alpha-15)] p-[15px] rounded-md text-gray-800 text-center w-full max-w-xl box-border md:p-[10px] md:text-[0.9em]'
+              className={classNames(
+                'p-4 rounded-md text-gray-800 text-center box-border',
+                'w-full max-w-xl',
+                'md:p-2.5 md:text-sm',
+                'bg-theme-secondary border border-theme text-theme-primary'
               )}
             >
               {message}
@@ -77,7 +83,7 @@ export const PokemonContent: React.FC<PokemonContentProps> = ({
         ) : (
           <motion.div
             animate={{ opacity: 1 }}
-            className={cn('flex-grow')}
+            className="flex-grow"
             exit={{ opacity: 0 }}
             initial={{ opacity: 0 }}
             key="content"
@@ -94,10 +100,10 @@ export const PokemonContent: React.FC<PokemonContentProps> = ({
         )}
       </AnimatePresence>
 
-      <div className={cn('flex-shrink-0 mt-auto')}>
+      <div className="flex-shrink-0 mt-auto">
         {(showPagination || isLoading) && (
           <div
-            className={cn(
+            className={classNames(
               'transition-opacity duration-300',
               isLoading ? 'opacity-0 pointer-events-none' : 'opacity-100'
             )}

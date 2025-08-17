@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { cn } from '@utils/cn';
-import { BUTTON_COLOR_GREEN, BUTTON_COLOR_RED } from '@utils/stylesConstants';
+import { classNames } from '@/utils/classNames';
+import { BUTTON_COLOR_GREEN, BUTTON_COLOR_RED } from '@/utils/stylesConstants';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   color?: 'green' | 'red';
@@ -30,20 +30,17 @@ const Button: React.FC<ButtonProps> = ({
   const sizeClasses =
     size === 'small' ? 'px-4 py-2 text-sm' : 'px-8 py-3 text-lg';
 
-  const baseClasses = `
-    inline-block font-semibold rounded-lg shadow-md
-    transition-colors duration-200 ease-in-out tracking-wide
-    active:translate-y-0 active:shadow-xs active:shadow-black/10
-    cursor-pointer border-none text-white
-    disabled:opacity-50
-    disabled:cursor-not-allowed
-    disabled:pointer-events-none
-    disabled:shadow-none
-  `;
+  const baseClasses = classNames(
+    'inline-block font-semibold rounded-lg shadow-md',
+    'transition-colors duration-200 ease-in-out tracking-wide',
+    'active:translate-y-0 active:shadow-xs active:shadow-black/10',
+    'cursor-pointer border-none text-white',
+    'disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none disabled:shadow-none'
+  );
 
   return (
     <button
-      className={cn(baseClasses, sizeClasses, colorClasses, className)}
+      className={classNames(baseClasses, sizeClasses, colorClasses, className)}
       {...rest}
     >
       {children}

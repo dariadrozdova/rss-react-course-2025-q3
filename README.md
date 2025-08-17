@@ -1,6 +1,6 @@
-# RS School React Course: State Management & Context API
+# RS School React Course
 
-This project is a continuation of the [Rolling Scopes School (RS School) React Course](https://rs.school/courses/reactjs), now focusing on advanced state management techniques and context API for theme management. It builds upon previous tasks, demonstrating the integration of a state management solution (Redux Toolkit) for managing selected items and a Context API for dynamic theme switching.
+This project is a continuation of the [Rolling Scopes School (RS School) React Course](https://rs.school/courses/reactjs), it builds upon previous tasks. As part of this task I am migrating my project from Vite to the Next.js by using App Router.
 
 ## Installation & Setup
 
@@ -37,17 +37,11 @@ In the project directory, you can run:
 
 - `npm run dev`: Runs the app in development mode.
 
-- `npm run build`: Builds the app for production to the `dist` folder.
+- `npm run build`: Builds the app for production to the `.next` folder.
 
 - `npm run lint`: Runs ESLint to check for linting errors across the project.
 
 - `npm run format:fix`: Runs Prettier to automatically format code files.
-
-- `npm run test`: Executes unit and integration tests using Vitest.
-
-- `npm run test:coverage`: Runs tests and generates a code coverage report.
-
-- `npm run prepare`: Manually installs Husky Git hooks (usually run automatically by `npm install`).
 
 ## Git Hooks
 
@@ -56,8 +50,6 @@ This project uses Husky to enforce code quality and commit message standards:
 - **`pre-commit`**: Runs `lint-staged` (which executes ESLint and Prettier on staged files) and checks for TypeScript errors (`tsc`).
 
 - **`commit-msg`**: Validates commit messages using `commitlint` to ensure they follow conventional commit guidelines.
-
-- **`pre-push`**: Runs all tests (`npm test`) before allowing a push to the remote repository.
 
 ## Author
 

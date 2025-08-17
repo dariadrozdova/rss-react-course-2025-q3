@@ -1,0 +1,50 @@
+{
+  "Header": {
+    "home": "Галоўная",
+    "about": "Пра нас"
+  },
+  "Search": {
+    "placeholder": "Пошук пакэмонаў...",
+    "button": "Пошук"
+  },
+  "Pagination": {
+    "previous": "Папярэдняя",
+    "next": "Наступная"
+  },
+  "AboutPage": {
+    "title": "Пра гэты дадатак",
+    "overviewSection": {
+      "title": "Агляд дадатка",
+      "text": "Гэта дадатак-даведнік Pokémon, створаны ў рамках <courseLink>{courseName}</courseLink>. Ён дазваляе карыстальнікам шукаць пакэмонаў па імені, праглядаць іх дэталі і выявы, выкарыстоўваючы Pokémon API."
+    },
+    "authorSection": {
+      "title": "Аўтар",
+      "githubProfile": "Профіль GitHub"
+    },
+    "courseSection": {
+      "title": "Курс",
+      "text": "Гэты праект з'яўляецца практычным заданнем з <courseLink>{courseName}</courseLink>."
+    }
+  },
+  "NotFoundPage": {
+    "title": "Здаецца, такой старонкі не існуе!",
+    "description": "Вярніцеся на галоўную старонку і працягвайце вывучэнне.",
+    "backToHome": "Вярнуцца на галоўную"
+  },
+  "CourseNames": {
+    "rsSchoolReact": "курса RS School па React"
+  },
+  "ErrorPage": {
+    "title": "Ой! Нешта пайшло не так.",
+    "description": "Прабачце, але адбылася нечаканая памылка. Калі ласка, паспрабуйце абнавіць старонку.",
+    "button": "Абнавіць старонку"
+  },
+  "SelectionFlyout": {
+    "selectedCount": "{selectedCount, plural, one {# абраны элемент} few {# абраныя элементы} many {# абраных элементаў} other {# абраных элементаў}}",
+    "unselectAll": "Зняць выбар",
+    "download": "Спампаваць"
+  },
+  "Card": {
+    "select": "Выбраць"
+  }
+}

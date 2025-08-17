@@ -1,0 +1,50 @@
+{
+  "Header": {
+    "home": "Головна",
+    "about": "Про нас"
+  },
+  "Search": {
+    "placeholder": "Пошук покемонів...",
+    "button": "Шукати"
+  },
+  "Pagination": {
+    "previous": "Попередня",
+    "next": "Наступна"
+  },
+  "AboutPage": {
+    "title": "Про цей додаток",
+    "overviewSection": {
+      "title": "Огляд додатка",
+      "text": "Це додаток для дослідження покемонів, створений як частина <courseLink>{courseName}</courseLink>. Він дозволяє користувачам шукати покемонів за іменем, переглядати їх деталі та зображення, все працює на основі Pokémon API."
+    },
+    "authorSection": {
+      "title": "Автор",
+      "githubProfile": "GitHub Профіль"
+    },
+    "courseSection": {
+      "title": "Курс",
+      "text": "Цей проект є практичним завданням з <courseLink>{courseName}</courseLink>."
+    }
+  },
+  "NotFoundPage": {
+    "title": "Схоже, ця сторінка не існує!",
+    "description": "Поверніться на головну сторінку та продовжуйте дослідження.",
+    "backToHome": "Назад на головну"
+  },
+  "CourseNames": {
+    "rsSchoolReact": "RS School React Курс"
+  },
+  "ErrorPage": {
+    "title": "Ой! Щось пішло не так.",
+    "description": "Вибачте, але сталася неочікувана помилка. Будь ласка, спробуйте оновити сторінку.",
+    "button": "Оновити сторінку"
+  },
+  "SelectionFlyout": {
+    "selectedCount": "{selectedCount, plural, one {# обраний елемент} few {# обраних елементи} many {# обраних елементів} other {# обраних елементів}}",
+    "unselectAll": "Скасувати вибір",
+    "download": "Завантажити"
+  },
+  "Card": {
+    "select": "Обрати"
+  }
+}

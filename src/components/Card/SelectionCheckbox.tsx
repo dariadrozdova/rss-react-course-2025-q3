@@ -1,4 +1,7 @@
-import { cn } from '@utils/cn';
+'use client';
+
+import { useTranslations } from 'next-intl';
+import { classNames } from '@/utils/classNames';
 
 interface SelectionCheckboxProps {
   isItemSelected: boolean;
@@ -9,22 +12,26 @@ function SelectionCheckbox({
   isItemSelected,
   onCheckboxChange,
 }: SelectionCheckboxProps) {
+  const t = useTranslations('Card');
+
   return (
     <div
-      className={cn('mt-auto pt-3 flex items-center justify-center')}
+      className={classNames('mt-auto pt-3 flex items-center justify-center')}
       onClick={(e) => {
         e.stopPropagation();
       }}
     >
-      <label className={cn('flex items-center cursor-pointer select-none')}>
+      <label
+        className={classNames('flex items-center cursor-pointer select-none')}
+      >
         <input
           checked={isItemSelected}
-          className={cn('sr-only')}
+          className={classNames('sr-only')}
           onChange={onCheckboxChange}
           type="checkbox"
         />
         <div
-          className={cn(
+          className={classNames(
             'w-5 h-5 rounded border-2 flex items-center justify-center transition-all duration-200',
             isItemSelected
               ? 'bg-teal-500 border-teal-500'
@@ -33,7 +40,7 @@ function SelectionCheckbox({
         >
           {isItemSelected && (
             <svg
-              className={cn('w-3 h-3 text-white')}
+              className={classNames('w-3 h-3 text-white')}
               fill="currentColor"
               viewBox="0 0 20 20"
             >
@@ -46,14 +53,14 @@ function SelectionCheckbox({
           )}
         </div>
         <span
-          className={cn(
+          className={classNames(
             'ml-2 text-sm transition-colors',
             isItemSelected
               ? 'text-teal-600 font-medium'
               : 'text-theme-secondary'
           )}
         >
-          Select
+          {t('select')}
         </span>
       </label>
     </div>

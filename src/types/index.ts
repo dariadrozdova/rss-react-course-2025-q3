@@ -106,10 +106,3 @@ export interface SearchProps {
 export interface SearchState {
   inputValue: string;
 }
-
-export interface UsePokemonDataResult {
-  error: null | string;
-  isLoading: boolean;
-  pokemonItems: PokemonItem[];
-  totalItems: null | number;
-}

@@ -1,0 +1,50 @@
+{
+  "Header": {
+    "home": "Início",
+    "about": "Sobre"
+  },
+  "Search": {
+    "placeholder": "Procurar por Pokemons...",
+    "button": "Procurar"
+  },
+  "Pagination": {
+    "previous": "Anterior",
+    "next": "Próximo"
+  },
+  "AboutPage": {
+    "title": "Sobre Este Aplicativo",
+    "overviewSection": {
+      "title": "Visão Geral do Aplicativo",
+      "text": "Este é um aplicativo Pokémon Explorer, construído como parte do <courseLink>{courseName}</courseLink>. Ele permite que os usuários pesquisem Pokémons por nome, visualizem seus detalhes e vejam suas imagens, tudo alimentado pela API Pokémon."
+    },
+    "authorSection": {
+      "title": "Autor",
+      "githubProfile": "Perfil do GitHub"
+    },
+    "courseSection": {
+      "title": "O Curso",
+      "text": "Este projeto é uma tarefa prática do <courseLink>{courseName}</courseLink>."
+    }
+  },
+  "NotFoundPage": {
+    "title": "Parece que esta página não existe!",
+    "description": "Volte para a página inicial e continue explorando.",
+    "backToHome": "Voltar para a Página Inicial"
+  },
+  "CourseNames": {
+    "rsSchoolReact": "Curso de React da RS School"
+  },
+  "ErrorPage": {
+    "title": "Ups! Algo correu mal.",
+    "description": "Pedimos desculpa, mas ocorreu um erro inesperado. Por favor, tente atualizar a página.",
+    "button": "Atualizar a página"
+  },
+  "SelectionFlyout": {
+    "selectedCount": "{selectedCount, plural, one {# item selecionado} other {# itens selecionados}}",
+    "unselectAll": "Desselecionar tudo",
+    "download": "Transferir"
+  },
+  "Card": {
+    "select": "Selecionar"
+  }
+}
