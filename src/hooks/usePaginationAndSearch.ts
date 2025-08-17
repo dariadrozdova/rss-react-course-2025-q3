@@ -18,10 +18,8 @@ export const usePaginationAndSearch = (): UsePaginationAndSearchResult => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const [localSearchTerm, setLocalSearchTerm] = useLocalStorage<string>(
-    'lastSearchTerm',
-    ''
-  );
+  const [localSearchTerm, setLocalSearchTerm, isLocalStorageLoaded] =
+    useLocalStorage<string>('lastSearchTerm', '');
 
   const searchTermFromUrl = searchParameters.get('search') || '';
   const effectiveSearchTerm = searchParameters.has('search')
@@ -53,6 +51,9 @@ export const usePaginationAndSearch = (): UsePaginationAndSearchResult => {
   };
 
   useEffect(() => {
+    if (!isLocalStorageLoaded) {
+      return;
+    }
     if (searchParameters.has('search')) {
       if (searchTermFromUrl !== localSearchTerm) {
         setLocalSearchTerm(searchTermFromUrl);
@@ -67,6 +68,7 @@ export const usePaginationAndSearch = (): UsePaginationAndSearchResult => {
     localSearchTerm,
     setLocalSearchTerm,
     searchParameters,
+    isLocalStorageLoaded,
   ]);
 
   useEffect(() => {

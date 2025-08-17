@@ -4,49 +4,17 @@ import { AnimatePresence, motion } from 'framer-motion';
 import React from 'react';
 
 import Button from '@/components/Button';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import {
-  selectSelectedItems,
-  selectSelectedItemsCount,
-} from '@/store/selectors';
+import { useDownload } from '@/hooks/useDownload';
+import { useAppDispatch } from '@/store/hooks';
 import { unselectAllItems } from '@/store/slices/selectedItemsSlice';
 import { classNames } from '@/utils/classNames';
 
 const SelectionFlyout: React.FC = () => {
   const dispatch = useAppDispatch();
-  const selectedItems = useAppSelector(selectSelectedItems);
-  const selectedCount = useAppSelector(selectSelectedItemsCount);
+  const { handleDownload, selectedCount } = useDownload();
 
   const handleUnselectAll = () => {
     dispatch(unselectAllItems());
-  };
-
-  const handleDownload = async () => {
-    try {
-      const response = await fetch('/api/download-csv', {
-        body: JSON.stringify({ items: selectedItems }),
-        headers: { 'Content-Type': 'application/json' },
-        method: 'POST',
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to generate CSV');
-      }
-
-      const blob = await response.blob();
-      const url = URL.createObjectURL(blob);
-
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `${selectedCount}_items.csv`;
-      document.body.append(link);
-      link.click();
-      link.remove();
-
-      URL.revokeObjectURL(url);
-    } catch (error) {
-      console.warn('CSV download failed:', error);
-    }
   };
 
   if (selectedCount === 0) {
@@ -57,8 +25,9 @@ const SelectionFlyout: React.FC = () => {
     <AnimatePresence>
       <motion.div
         animate={{ opacity: 1, y: 0 }}
-        className={classNames(`fixed bottom-0 left-0 right-0 z-[9999] p-3 shadow-2xl border-t
-          bg-theme-secondary border-theme`)}
+        className={classNames(
+          `fixed bottom-0 left-0 right-0 z-[9999] p-3 shadow-2xl border-t bg-theme-secondary border-theme`
+        )}
         exit={{ opacity: 0, y: 100 }}
         initial={{ opacity: 0, y: 100 }}
         style={{
@@ -74,8 +43,7 @@ const SelectionFlyout: React.FC = () => {
         >
           <div className={classNames('flex items-center')}>
             <span
-              className={classNames(`text-sm font-medium
-                text-theme-secondary`)}
+              className={classNames('text-sm font-medium text-theme-secondary')}
             >
               {selectedCount} item{selectedCount === 1 ? '' : 's'} selected
             </span>

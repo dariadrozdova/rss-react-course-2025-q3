@@ -2,8 +2,9 @@
 
 import { usePathname, useRouter } from 'next/navigation';
 import { useLocale } from 'next-intl';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
+import useLocalStorage from '@/hooks/useLocalStorage';
 import { classNames } from '@/utils/classNames';
 
 const languages = [
@@ -19,8 +20,20 @@ export default function LanguageSelector() {
   const router = useRouter();
   const pathname = usePathname();
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
+  const [, setSelectedLocale, isLocaleLoaded] = useLocalStorage(
+    'selected-locale',
+    'en'
+  );
+
+  useEffect(() => {
+    if (isLocaleLoaded) {
+      setSelectedLocale(locale);
+    }
+  }, [locale, setSelectedLocale, isLocaleLoaded]);
 
   const switchLanguage = (newLocale: string) => {
+    setSelectedLocale(newLocale);
+
     const pathWithoutLocale = pathname.replace(`/${locale}`, '');
     const newPath = `/${newLocale}${pathWithoutLocale}`;
     router.push(newPath);
@@ -61,7 +74,6 @@ export default function LanguageSelector() {
           />
         </svg>
       </button>
-
       {isLanguageMenuOpen && (
         <div
           className={classNames(

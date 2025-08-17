@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import type { PokemonItem } from '@/types/';
 
@@ -12,23 +12,32 @@ import { setSelectedItems } from '@/store/slices/selectedItemsSlice';
 export const useSelectedItemsStorage = () => {
   const dispatch = useAppDispatch();
   const selectedItems = useAppSelector(selectSelectedItems);
-  const [storedItems, setStoredItems] = useLocalStorage<string>(
-    'pokemonSelectedItems',
-    '[]'
-  );
+  const isFirstLoadReference = useRef(true);
+
+  const [storedItems, setStoredItems, isLocalStorageLoaded] =
+    useLocalStorage<string>('pokemonSelectedItems', '[]');
 
   useEffect(() => {
+    if (!isLocalStorageLoaded || !isFirstLoadReference.current) {
+      return;
+    }
+
     try {
-      const parsedItems: PokemonItem[] = JSON.parse(storedItems);
+      const parsedItems: PokemonItem[] = JSON.parse(storedItems || '[]');
       if (parsedItems.length > 0) {
         dispatch(setSelectedItems(parsedItems));
       }
     } catch (error) {
       console.warn('Failed to parse stored selected items:', error);
+    } finally {
+      isFirstLoadReference.current = false;
     }
-  }, [dispatch, storedItems]);
+  }, [dispatch, storedItems, isLocalStorageLoaded]);
 
   useEffect(() => {
+    if (!isLocalStorageLoaded) {
+      return;
+    }
     setStoredItems(JSON.stringify(selectedItems));
-  }, [selectedItems, setStoredItems]);
+  }, [selectedItems, setStoredItems, isLocalStorageLoaded]);
 };

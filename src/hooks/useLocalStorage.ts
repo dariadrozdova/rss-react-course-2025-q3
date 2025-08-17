@@ -2,31 +2,42 @@
 
 import { useCallback, useEffect, useState } from 'react';
 
-type UseLocalStorageResult<T> = [T, (value: ((previous: T) => T) | T) => void];
+type UseLocalStorageResult<T> = [
+  T | undefined,
+  (value: ((previous: T | undefined) => T) | T) => void,
+  boolean,
+];
 
 function useLocalStorage<T>(
   key: string,
   initialValue: T
 ): UseLocalStorageResult<T> {
-  const [storedValue, setStoredValue] = useState<T>(initialValue);
+  const [storedValue, setStoredValue] = useState<T | undefined>(undefined);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     try {
       const item = window.localStorage.getItem(key);
       if (item) {
-        setStoredValue(JSON.parse(item));
+        const parsed = JSON.parse(item);
+        setStoredValue(parsed);
+      } else {
+        setStoredValue(initialValue);
       }
     } catch (error) {
       console.warn(`Error reading localStorage key "${key}":`, error);
+      setStoredValue(initialValue);
+    } finally {
+      setIsLoaded(true);
     }
-  }, [key]);
+  }, [key, initialValue]);
 
   const setValue = useCallback(
-    (value: ((previous: T) => T) | T) => {
+    (value: ((previous: T | undefined) => T) | T) => {
       try {
         const newValue =
           typeof value === 'function'
-            ? (value as (previous: T) => T)(storedValue)
+            ? (value as (previous: T | undefined) => T)(storedValue)
             : value;
 
         setStoredValue(newValue);
@@ -38,7 +49,7 @@ function useLocalStorage<T>(
     [key, storedValue]
   );
 
-  return [storedValue, setValue];
+  return [storedValue, setValue, isLoaded];
 }
 
 export default useLocalStorage;

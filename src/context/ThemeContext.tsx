@@ -5,10 +5,10 @@ import React, {
   useCallback,
   useContext,
   useEffect,
-  useState,
 } from 'react';
 
 import useLocalStorage from '@/hooks/useLocalStorage';
+import { classNames } from '@/utils/classNames';
 
 type Theme = 'dark' | 'light';
 
@@ -25,36 +25,53 @@ interface ThemeProviderProps {
 }
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-  const [storedTheme, setStoredTheme] = useLocalStorage<Theme>(
-    'theme',
-    'light'
-  );
-  const [theme, setTheme] = useState<Theme>(storedTheme);
+  const [theme, setTheme, isLoaded] = useLocalStorage<Theme>('theme', 'light');
 
   useEffect(() => {
-    setStoredTheme(theme);
-  }, [theme, setStoredTheme]);
+    if (!isLoaded) {
+      return;
+    }
 
-  useEffect(() => {
-    document.documentElement.className = theme;
-    document.documentElement.dataset.theme = theme;
-  }, [theme]);
+    document.documentElement.className = theme as Theme;
+    document.documentElement.dataset.theme = theme as Theme;
+    document.documentElement.style.colorScheme = theme as Theme;
+  }, [theme, isLoaded]);
 
   const toggleTheme = useCallback(() => {
     setTheme((previousTheme) => (previousTheme === 'light' ? 'dark' : 'light'));
-  }, []);
+  }, [setTheme]);
 
   const isDark = theme === 'dark';
 
   const contextValue = {
     isDark,
-    theme,
+    theme: theme as Theme,
     toggleTheme,
   };
 
+  if (!isLoaded) {
+    return (
+      <ThemeContext.Provider value={contextValue}>
+        <div
+          className={classNames(
+            'invisible absolute inset-0 w-full min-h-screen opacity-0'
+          )}
+        >
+          {children}
+        </div>
+      </ThemeContext.Provider>
+    );
+  }
+
   return (
     <ThemeContext.Provider value={contextValue}>
-      {children}
+      <div
+        className={classNames(
+          'opacity-100 transition-opacity duration-100 ease-in-out'
+        )}
+      >
+        {children}
+      </div>
     </ThemeContext.Provider>
   );
 };

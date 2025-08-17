@@ -9,6 +9,7 @@ import '@/app/globals.css';
 import StoreProvider from '@/app/StoreProvider';
 import Header from '@/components/Header';
 import { routing } from '@/i18n/routing';
+import ThemeInitScript from '@/components/ThemeInitScript';
 
 export const metadata: Metadata = { title: 'RS School React Project' };
 
@@ -26,6 +27,9 @@ export default async function LocaleLayout({
   const messages = await getMessages();
   return (
     <html lang={locale} suppressHydrationWarning>
+      <head>
+        <ThemeInitScript />
+      </head>
       <body>
         <NextIntlClientProvider messages={messages}>
           <StoreProvider>
