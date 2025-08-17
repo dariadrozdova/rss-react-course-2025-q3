@@ -74,7 +74,7 @@ export const PokemonContent: React.FC<PokemonContentProps> = ({
                 'p-4 rounded-md text-gray-800 text-center box-border',
                 'w-full max-w-xl',
                 'md:p-2.5 md:text-sm',
-                'bg-[var(--color-black-alpha-10)] border border-[var(--color-black-alpha-15)]'
+                'bg-theme-secondary border border-theme text-theme-primary'
               )}
             >
               {message}
