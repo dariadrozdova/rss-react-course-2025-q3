@@ -1,11 +1,11 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import React from 'react';
 
-import { useTranslations } from 'next-intl';
+import type { PaginationProps } from '@/types/';
 
 import Button from '@/components/Button';
-import type { PaginationProps } from '@/types/';
 import { classNames } from '@/utils/classNames';
 
 const Pagination: React.FC<PaginationProps> = ({

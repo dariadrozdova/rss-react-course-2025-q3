@@ -1,13 +1,13 @@
+import Link from 'next/link';
 import React, { useMemo, useState } from 'react';
 
-import Link from 'next/link';
-
 import CardContent from './CardContent';
+
+import type { CardProps } from '@/types/';
 
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { selectIsItemSelected } from '@/store/selectors';
 import { toggleItemSelection } from '@/store/slices/selectedItemsSlice';
-import type { CardProps } from '@/types/';
 import { classNames } from '@/utils/classNames';
 
 function Card({

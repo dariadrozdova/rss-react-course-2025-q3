@@ -2,6 +2,7 @@ import PokemonImage from './PokemonImage';
 import SelectionCheckbox from './SelectionCheckbox';
 
 import type { PokemonItem } from '@/types/';
+
 import { classNames } from '@/utils/classNames';
 
 interface CardContentProps {

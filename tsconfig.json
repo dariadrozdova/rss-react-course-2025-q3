@@ -29,7 +29,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "next-env.d.ts",
-    "./dist/types/**/*.ts",
     "**/*.css",
     "src/types/**/*.ts",
     "src/middleware.ts"

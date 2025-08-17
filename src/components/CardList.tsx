@@ -1,5 +1,6 @@
-import Card from '@/components/Card/Card';
 import type { CardListProps } from '@/types/';
+
+import Card from '@/components/Card/Card';
 import { classNames } from '@/utils/classNames';
 
 function CardList({

@@ -1,12 +1,12 @@
-import React from 'react';
-
 import { AnimatePresence, motion } from 'framer-motion';
+import React from 'react';
 
 import CardList from './CardList';
 import Pagination from './Pagination';
 import SkeletonCardList from './SkeletonCardList';
 
 import type { PokemonContentProps } from '@/types';
+
 import { classNames } from '@/utils/classNames';
 
 export const PokemonContent: React.FC<PokemonContentProps> = ({

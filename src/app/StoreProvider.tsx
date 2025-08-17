@@ -1,12 +1,12 @@
 'use client';
 
+import { setupListeners } from '@reduxjs/toolkit/query';
 import { useRef } from 'react';
 import { Provider } from 'react-redux';
 
-import { setupListeners } from '@reduxjs/toolkit/query';
+import type { AppStore } from '@/store';
 
 import { ThemeProvider } from '@/context/ThemeContext';
-import type { AppStore } from '@/store';
 import { makeStore } from '@/store';
 
 export default function StoreProvider({

@@ -4,7 +4,6 @@ const withNextIntl = createNextIntlPlugin();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  distDir: './dist',
   images: {
     remotePatterns: [
       {

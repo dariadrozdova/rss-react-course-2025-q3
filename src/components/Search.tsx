@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import {
   type ChangeEvent,
   type KeyboardEvent,
@@ -8,11 +9,10 @@ import {
   useState,
 } from 'react';
 
-import { useTranslations } from 'next-intl';
-
 import Button from './Button';
 
 import type { SearchProps } from '@/types/';
+
 import { classNames } from '@/utils/classNames';
 
 const Search = ({ initialSearchTerm, onSearch }: SearchProps) => {

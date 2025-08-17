@@ -2,9 +2,10 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 
+import type { PokemonItem } from '@/types';
+
 import DetailsPanel from '@/components/DetailsPanel';
 import MainContent from '@/components/MainContent';
-import type { PokemonItem } from '@/types';
 import { classNames } from '@/utils/classNames';
 
 interface PokemonPageClientProps {

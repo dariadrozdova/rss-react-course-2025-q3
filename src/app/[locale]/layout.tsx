@@ -1,7 +1,8 @@
-import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
+
+import type { Metadata } from 'next';
 
 import '@/app/globals.css';
 

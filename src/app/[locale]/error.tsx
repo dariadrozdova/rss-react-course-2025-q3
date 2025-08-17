@@ -1,8 +1,7 @@
 'use client';
 
-import { useEffect } from 'react';
-
 import { useTranslations } from 'next-intl';
+import { useEffect } from 'react';
 
 import Button from '@/components/Button';
 import { classNames } from '@/utils/classNames';

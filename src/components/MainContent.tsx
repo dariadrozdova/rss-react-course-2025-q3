@@ -1,8 +1,9 @@
 'use client';
 
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useMemo } from 'react';
 
-import { useRouter, useSearchParams } from 'next/navigation';
+import type { PokemonItem } from '@/types';
 
 import { PokemonContent } from '@/components/PokemonContent';
 import Search from '@/components/Search';
@@ -10,7 +11,6 @@ import SelectionFlyout from '@/components/SelectionFlyout';
 import { usePaginationAndSearch } from '@/hooks/usePaginationAndSearch';
 import { useAppSelector } from '@/store/hooks';
 import { selectHasSelectedItems } from '@/store/selectors';
-import type { PokemonItem } from '@/types';
 import { classNames } from '@/utils/classNames';
 
 const ITEMS_PER_PAGE = 20;
