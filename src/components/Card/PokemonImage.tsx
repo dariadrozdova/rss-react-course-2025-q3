@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import Image from 'next/image';
 
 import { classNames } from '@/utils/classNames';
@@ -8,33 +7,25 @@ interface PokemonImageProps {
   imageLoaded: boolean;
   imageUrl: string | undefined;
   name: string;
-  onImageError?: () => void;
-  onImageLoad?: () => void;
 }
 
-function PokemonImage({
-  imageError,
-  imageLoaded,
-  imageUrl,
-  name,
-  onImageError,
-  onImageLoad,
-}: PokemonImageProps) {
-  const MotionImage = motion.create(Image);
-
+function PokemonImage({ imageUrl, name }: PokemonImageProps) {
   return (
     <div
       className={classNames('mt-4 relative', 'h-25 w-25', 'sm:h-30 sm:w-30')}
     >
-      {!imageLoaded && !imageError && (
-        <div
+      {imageUrl ? (
+        <Image
+          alt={name}
           className={classNames(
-            'absolute inset-0 flex items-center justify-center',
-            'rounded-lg bg-gray-200 animate-pulse'
+            'block mx-auto rounded-lg h-auto',
+            'max-w-25 sm:max-w-30'
           )}
+          height={150}
+          src={imageUrl}
+          width={150}
         />
-      )}
-      {imageError || !imageUrl ? (
+      ) : (
         <div
           className={classNames(
             'h-full w-full mx-auto',
@@ -44,23 +35,6 @@ function PokemonImage({
         >
           No Image
         </div>
-      ) : (
-        <MotionImage
-          alt={name}
-          animate={{ opacity: imageLoaded ? 1 : 0 }}
-          className={classNames(
-            'block mx-auto rounded-lg h-auto',
-            'max-w-25 sm:max-w-30'
-          )}
-          height={150}
-          initial={{ opacity: 0 }}
-          onError={onImageError}
-          onLoad={onImageLoad}
-          priority
-          src={imageUrl}
-          transition={{ duration: 0.5 }}
-          width={150}
-        />
       )}
     </div>
   );

@@ -13,8 +13,6 @@ interface CardContentProps {
   isSelected: boolean;
   item: PokemonItem;
   onCheckboxChange: () => void;
-  onImageError?: () => void;
-  onImageLoad?: () => void;
 }
 
 function CardContent({
@@ -25,8 +23,6 @@ function CardContent({
   isSelected,
   item,
   onCheckboxChange,
-  onImageError,
-  onImageLoad,
 }: CardContentProps) {
   return (
     <>
@@ -46,8 +42,6 @@ function CardContent({
         imageLoaded={imageLoaded}
         imageUrl={imageUrl}
         name={item.name}
-        onImageError={onImageError}
-        onImageLoad={onImageLoad}
       />
 
       <SelectionCheckbox

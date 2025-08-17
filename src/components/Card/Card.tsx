@@ -17,8 +17,8 @@ function Card({
   onPokemonClick,
 }: CardProps) {
   const dispatch = useAppDispatch();
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [imageError, setImageError] = useState(false);
+  const [currentImageIndex, _setCurrentImageIndex] = useState(0);
+  const [imageError, _setImageError] = useState(false);
 
   const isItemSelected = useAppSelector((state) =>
     selectIsItemSelected(state, item.id)
@@ -34,18 +34,6 @@ function Card({
   );
 
   const currentImageUrl = imageUrls[currentImageIndex];
-
-  const handleImageError = () => {
-    if (currentImageIndex < imageUrls.length - 1) {
-      setCurrentImageIndex((previous) => previous + 1);
-    } else {
-      setImageError(true);
-    }
-  };
-
-  const handleImageLoad = () => {
-    setImageError(false);
-  };
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -76,8 +64,6 @@ function Card({
     isSelected,
     item,
     onCheckboxChange: handleCheckboxChange,
-    onImageError: handleImageError,
-    onImageLoad: handleImageLoad,
   };
 
   return onPokemonClick ? (
