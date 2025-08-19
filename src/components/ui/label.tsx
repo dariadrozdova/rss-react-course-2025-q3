@@ -1,10 +1,10 @@
-import type { JSX, LabelHTMLAttributes } from "react";
+import { type FC, type LabelHTMLAttributes } from "react";
 
 import { classNames } from "@/lib/class-names";
 
 type LabelProps = LabelHTMLAttributes<HTMLLabelElement>;
 
-export function Label({ className, ...props }: LabelProps): JSX.Element {
+export const Label: FC<LabelProps> = ({ className, ...props }) => {
   return (
     <label
       className={classNames(
@@ -16,4 +16,4 @@ export function Label({ className, ...props }: LabelProps): JSX.Element {
       {...props}
     />
   );
-}
+};

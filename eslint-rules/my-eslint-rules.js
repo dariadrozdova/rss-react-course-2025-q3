@@ -1,34 +1,5 @@
 /** @type {import("eslint").Linter.RulesRecord} */
 
-const sortingRules = {
-  "import/order": [
-    "error",
-    {
-      "newlines-between": "always-and-inside-groups",
-      groups: [
-        "builtin",
-        "external",
-        "internal",
-        ["parent", "sibling"],
-        "object",
-        "type",
-        "index",
-      ],
-      alphabetize: {
-        order: "asc",
-        caseInsensitive: true,
-      },
-    },
-  ],
-  "unused-imports/no-unused-imports": "error",
-  "no-relative-import-paths/no-relative-import-paths": [
-    "error",
-    { allowSameFolder: false, rootDir: "src", prefix: "@" },
-  ],
-  "import/first": "error",
-  "import/newline-after-import": "error",
-};
-
 export const myEslintRules = {
   "@typescript-eslint/consistent-type-assertions": [
     "error",
@@ -91,16 +62,6 @@ export const myEslintRules = {
     "ignorePackages",
     { js: "never", jsx: "never", ts: "never", tsx: "never" },
   ],
-  settings: {
-    "import/resolver": {
-      typescript: {
-        alwaysTryTypes: true,
-      },
-      node: {
-        extensions: [".js", ".jsx", ".ts", ".tsx"],
-      },
-    },
-  },
   "import/prefer-default-export": "off",
   "import/no-unresolved": "off",
   "import/no-duplicates": "off",

@@ -1,6 +1,6 @@
-import type { JSX } from "react";
+import { type FC } from "react";
 
-import { TwemojiWrapper } from "./twemoji-wrapper";
+import { TwemojiWrapper } from "@/components/twemoji/twemoji-wrapper";
 
 interface CatEmojiProps {
   animated?: boolean;
@@ -13,30 +13,29 @@ interface CatEmojiProps {
 type CatVariant = "angry" | "face" | "happy" | "love" | "paw" | "sad" | "wink";
 
 const CAT_EMOJIS: Record<CatVariant, string> = {
+  angry: "😾",
+  face: "🐱",
   happy: "😸",
   love: "😻",
-  wink: "😽",
-  sad: "😿",
-  angry: "😾",
   paw: "🐾",
-  face: "🐱",
+  sad: "😿",
+  wink: "😽",
 };
 
-export function CatEmoji({
+export const CatEmoji: FC<CatEmojiProps> = ({
   animated = false,
   className,
   interactive = false,
   size = "md",
   variant = "happy",
-}: CatEmojiProps): JSX.Element {
+}) => {
   return (
     <TwemojiWrapper
       animated={animated}
       className={className}
+      emoji={CAT_EMOJIS[variant]}
       interactive={interactive}
       size={size}
-    >
-      {CAT_EMOJIS[variant]}
-    </TwemojiWrapper>
+    />
   );
-}
+};

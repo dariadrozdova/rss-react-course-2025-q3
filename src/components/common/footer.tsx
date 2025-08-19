@@ -1,9 +1,9 @@
-import type { JSX } from "react";
+import type { FC } from "react";
 
 import { CatEmoji, TwemojiWrapper } from "@/components/twemoji";
 import { classNames } from "@/lib/class-names";
 
-export function Footer(): JSX.Element {
+export const Footer: FC = () => {
   return (
     <footer
       className={classNames(
@@ -35,7 +35,7 @@ export function Footer(): JSX.Element {
       </div>
 
       <div className="relative z-10">
-        <p className="mb-1">
+        <div className="mb-1">
           <a
             className={classNames(
               "hover:text-secondary",
@@ -47,7 +47,7 @@ export function Footer(): JSX.Element {
             rel="noreferrer"
             target="_blank"
           >
-            GitHub <TwemojiWrapper size="sm">🐙</TwemojiWrapper>
+            GitHub <TwemojiWrapper emoji="🐙" size="sm" />
           </a>{" "}
           |{" "}
           <a
@@ -61,11 +61,11 @@ export function Footer(): JSX.Element {
             rel="noreferrer"
             target="_blank"
           >
-            RS School <TwemojiWrapper size="sm">📚</TwemojiWrapper>
+            RS School <TwemojiWrapper emoji="📚" size="sm" />
           </a>
-        </p>
+        </div>
 
-        <p
+        <div
           className={classNames(
             "mt-1 text-xs opacity-60",
             "flex items-center justify-center gap-1",
@@ -73,8 +73,8 @@ export function Footer(): JSX.Element {
         >
           <span>Powered by cats</span>
           <CatEmoji animated size="sm" variant="paw" />
-        </p>
+        </div>
       </div>
     </footer>
   );
-}
+};

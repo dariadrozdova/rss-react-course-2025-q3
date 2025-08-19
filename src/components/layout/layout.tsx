@@ -1,10 +1,10 @@
-import type { JSX, PropsWithChildren } from "react";
+import type { FC, PropsWithChildren } from "react";
 
 import { Footer } from "@/components/common/footer";
 import { Header } from "@/components/common/header";
 import { classNames } from "@/lib/class-names";
 
-export function Layout({ children }: PropsWithChildren): JSX.Element {
+export const Layout: FC<PropsWithChildren> = ({ children }) => {
   return (
     <div
       className={classNames(
@@ -42,4 +42,4 @@ export function Layout({ children }: PropsWithChildren): JSX.Element {
       <Footer />
     </div>
   );
-}
+};

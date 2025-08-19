@@ -1,5 +1,4 @@
-import type { JSX } from "react";
-
+import type { FC } from "react";
 import { useState } from "react";
 
 import { classNames } from "@/lib/class-names";
@@ -12,20 +11,20 @@ const CAT_MESSAGES = [
   "Purrfect, everything is great! 😽",
 ];
 
-export function CatHelper(): JSX.Element {
+export const CatHelper: FC = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [messageIndex, setMessageIndex] = useState(0);
 
-  const handleClick = () => {
-    setMessageIndex((previous) => (previous + 1) % CAT_MESSAGES.length);
+  const handleClick = (): void => {
+    setMessageIndex((previous: number) => (previous + 1) % CAT_MESSAGES.length);
   };
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setIsVisible(false);
   };
 
   if (!isVisible) {
-    return <></>;
+    return null;
   }
 
   return (
@@ -75,4 +74,4 @@ export function CatHelper(): JSX.Element {
       </div>
     </div>
   );
-}
+};

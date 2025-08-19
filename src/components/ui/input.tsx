@@ -1,10 +1,10 @@
-import type { InputHTMLAttributes, JSX } from "react";
+import { type FC, type InputHTMLAttributes } from "react";
 
 import { classNames } from "@/lib/class-names";
 
 type InputProps = InputHTMLAttributes<HTMLInputElement>;
 
-export function Input({ className, ...props }: InputProps): JSX.Element {
+export const Input: FC<InputProps> = ({ className, ...props }) => {
   return (
     <input
       className={classNames(
@@ -22,4 +22,4 @@ export function Input({ className, ...props }: InputProps): JSX.Element {
       {...props}
     />
   );
-}
+};

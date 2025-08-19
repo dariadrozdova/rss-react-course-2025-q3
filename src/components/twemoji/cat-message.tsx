@@ -1,8 +1,7 @@
-import type { JSX } from "react";
+import type { FC } from "react";
 
+import { CatEmoji } from "@/components/twemoji/cat-emoji";
 import { classNames } from "@/lib/class-names";
-
-import { CatEmoji } from "./cat-emoji";
 
 interface CatMessageProps {
   className?: string;
@@ -48,12 +47,12 @@ const MESSAGE_CONFIGS: Record<
   },
 };
 
-export function CatMessage({
+export const CatMessage: FC<CatMessageProps> = ({
   className,
   message,
   onClose,
   variant = "info",
-}: CatMessageProps): JSX.Element {
+}) => {
   const config = MESSAGE_CONFIGS[variant];
 
   return (
@@ -88,4 +87,4 @@ export function CatMessage({
       )}
     </div>
   );
-}
+};

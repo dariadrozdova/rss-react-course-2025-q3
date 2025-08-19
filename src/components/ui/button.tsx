@@ -1,4 +1,4 @@
-import type { ButtonHTMLAttributes, JSX } from "react";
+import { type ButtonHTMLAttributes, type FC } from "react";
 
 import { classNames } from "@/lib/class-names";
 
@@ -7,14 +7,14 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: "danger" | "ghost" | "primary" | "secondary";
 };
 
-export function Button({
+export const Button: FC<ButtonProps> = ({
   children,
   className,
   disabled,
   size = "md",
   variant = "primary",
   ...props
-}: ButtonProps): JSX.Element {
+}) => {
   return (
     <button
       className={classNames(
@@ -24,6 +24,7 @@ export function Button({
         "focus:ring-2 focus:ring-offset-2 focus:outline-none",
         "disabled:cursor-not-allowed disabled:opacity-50",
         "transform hover:scale-105 active:scale-95",
+        "cursor-pointer",
 
         size === "sm" && "px-4 py-1.5 text-sm",
         size === "md" && "px-6 py-2 text-base",
@@ -38,7 +39,6 @@ export function Button({
 
         variant === "secondary" && [
           "border-secondary text-secondary border-2 bg-white",
-          "hover:bg-secondary hover:text-white hover:shadow-lg",
           "focus:ring-secondary/50",
           "disabled:hover:text-secondary disabled:hover:bg-white",
         ],
@@ -65,4 +65,4 @@ export function Button({
       {children}
     </button>
   );
-}
+};

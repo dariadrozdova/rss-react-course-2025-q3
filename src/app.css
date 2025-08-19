@@ -40,7 +40,6 @@
   user-select: none;
 }
 
-/* Размеры для твемодзи */
 .twemoji.w-4 {
   width: 1rem;
   height: 1rem;
@@ -58,12 +57,10 @@
   height: 2rem;
 }
 
-/* Анимация для котиков */
 .twemoji.animate-bounce {
   animation: bounce 1s infinite;
 }
 
-/* Hover эффекты для интерактивных котиков */
 .twemoji-interactive {
   cursor: pointer;
   transition: transform 0.2s ease;
@@ -73,7 +70,6 @@
   transform: scale(1.1) rotate(5deg);
 }
 
-/* Pulse для фоновых котиков */
 .twemoji-bg {
   opacity: 0.1;
   filter: grayscale(50%);

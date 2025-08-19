@@ -14,7 +14,7 @@
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
     "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx,.mjs --fix",
-    "format:fix": "prettier --write \"./**/*.{ts,tsx,js,html,css,mjs,json,md}\"",
+    "format:fix": "prettier --write \"./**/*.{ts,tsx,js,html,css,mjs,json,md,yml}\"",
     "lint": "eslint .",
     "ci:format": "prettier --check .",
     "ncu:ux": "ncu -u"
@@ -23,6 +23,7 @@
     "@hookform/resolvers": "^5.2.1",
     "@reduxjs/toolkit": "^2.8.2",
     "clsx": "^2.1.1",
+    "focus-trap-react": "^11.0.4",
     "modern-normalize": "^3.0.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

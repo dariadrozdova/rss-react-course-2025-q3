@@ -1,24 +1,23 @@
-import type { JSX, ReactNode } from "react";
-
+import { type FC } from "react";
 import Twemoji from "react-twemoji";
 
 import { classNames } from "@/lib/class-names";
 
 interface TwemojiWrapperProps {
   animated?: boolean;
-  children: ReactNode;
   className?: string;
+  emoji: string;
   interactive?: boolean;
   size?: "lg" | "md" | "sm" | "xl";
 }
 
-export function TwemojiWrapper({
+export const TwemojiWrapper: FC<TwemojiWrapperProps> = ({
   animated = false,
-  children,
   className,
+  emoji,
   interactive = false,
   size = "md",
-}: TwemojiWrapperProps): JSX.Element {
+}) => {
   return (
     <Twemoji
       options={{
@@ -36,7 +35,7 @@ export function TwemojiWrapper({
         folder: "svg",
       }}
     >
-      <span>{children}</span>
+      <span>{emoji}</span>
     </Twemoji>
   );
-}
+};

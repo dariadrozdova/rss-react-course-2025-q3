@@ -1,9 +1,9 @@
-import type { JSX } from "react";
+import { type FC } from "react";
 
 import { CatEmoji, TwemojiWrapper } from "@/components/twemoji";
 import { classNames } from "@/lib/class-names";
 
-export function Header(): JSX.Element {
+export const Header: FC = () => {
   return (
     <header
       className={classNames(
@@ -45,13 +45,11 @@ export function Header(): JSX.Element {
           )}
         >
           <span>Made with</span>
-          <TwemojiWrapper animated size="sm">
-            ❤️
-          </TwemojiWrapper>
+          <TwemojiWrapper animated emoji={"❤️"} size="sm" />
           <span>and</span>
           <CatEmoji animated size="sm" variant="face" />
         </div>
       </div>
     </header>
   );
-}
+};

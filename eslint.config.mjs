@@ -12,6 +12,7 @@ import eslintPluginNoRelativeImportPaths from "eslint-plugin-no-relative-import-
 import unusedImports from "eslint-plugin-unused-imports";
 import { myEslintRules } from "./eslint-rules/my-eslint-rules.js";
 import unicorn from "eslint-plugin-unicorn";
+import simpleImportSort from "eslint-plugin-simple-import-sort";
 
 export default tseslint.config(
   {
@@ -48,6 +49,7 @@ export default tseslint.config(
       "react-compiler": reactCompiler,
       "unused-imports": unusedImports,
       "no-relative-import-paths": eslintPluginNoRelativeImportPaths,
+      "simple-import-sort": simpleImportSort,
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
@@ -59,6 +61,34 @@ export default tseslint.config(
       ...react.configs.recommended.rules,
       ...react.configs["jsx-runtime"].rules,
       ...myEslintRules,
+      "perfectionist/sort-imports": "off",
+      "simple-import-sort/imports": [
+        "error",
+        {
+          groups: [
+            ["^\\u0000"],
+            ["^node:"],
+            ["^react"],
+            ["^@?\\w"],
+            [
+              "^(@api|@components|@hooks|@pages|@utils|@types|@store|@context|@__test__)(/.*)?$",
+            ],
+            ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
+            [
+              "^\\./(?=.*/)(?!.*\\.(css|less|scss|sass|styl))$",
+              "^\\.(?!/?$)",
+              "^\\./?$",
+            ],
+            ["^.+\\.(css|less|scss|sass|styl)$"],
+          ],
+        },
+      ],
+      "simple-import-sort/exports": "error",
+      "no-relative-import-paths/no-relative-import-paths": [
+        "error",
+        { allowSameFolder: false, rootDir: "src", prefix: "@" },
+      ],
+      "unused-imports/no-unused-imports": "error",
     },
     settings: {
       react: {

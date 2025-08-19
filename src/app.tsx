@@ -2,8 +2,8 @@ import type { FC } from "react";
 
 import { Layout } from "@/components/layout/layout";
 import { CatEmoji } from "@/components/twemoji";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { ModalButtons } from "@/components/ui/modal-buttons";
 import { classNames } from "@/lib/class-names";
 
 export const App: FC = () => {
@@ -26,9 +26,7 @@ export const App: FC = () => {
         <p className={classNames("mb-6", "text-gray-600")}>
           This is a demo project with forms and fluffy friends.
         </p>
-        <Button variant="primary">
-          Open form <CatEmoji size="sm" variant="happy" />
-        </Button>
+        <ModalButtons />
       </Card>
     </Layout>
   );

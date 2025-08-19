@@ -1,10 +1,10 @@
-import type { JSX, PropsWithChildren } from "react";
+import type { FC, PropsWithChildren } from "react";
 
 import { classNames } from "@/lib/class-names";
 
 type CardProps = PropsWithChildren<{ className?: string }>;
 
-export function Card({ children, className }: CardProps): JSX.Element {
+export const Card: FC<CardProps> = ({ children, className }) => {
   return (
     <div
       className={classNames(
@@ -18,4 +18,4 @@ export function Card({ children, className }: CardProps): JSX.Element {
       {children}
     </div>
   );
-}
+};
