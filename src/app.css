@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: hsl(351 100% 86%);
+  --color-secondary: hsl(270 95% 76%);
+  --color-accent: hsl(217 91% 66%);
+  --color-success: hsl(158 64% 52%);
+  --color-warning: hsl(42 96% 62%);
+  --color-background: hsl(300 17% 99%);
+  --color-text: hsl(220 14% 20%);
+}
+
+.bg-primary {
+  background-color: var(--color-primary);
+}
+
+.text-secondary {
+  color: var(--color-secondary);
+}
+
+.border-secondary {
+  border-color: var(--color-secondary);
+}
+
+.bg-gradient-main {
+  background-image: linear-gradient(
+    135deg,
+    var(--color-primary) 0%,
+    var(--color-secondary) 50%,
+    var(--color-accent) 100%
+  );
+}
+
+.twemoji {
+  display: inline-block;
+  height: 1.2em;
+  width: 1.2em;
+  margin: 0 0.05em 0 0.1em;
+  vertical-align: -0.1em;
+  user-select: none;
+}
+
+/* Размеры для твемодзи */
+.twemoji.w-4 {
+  width: 1rem;
+  height: 1rem;
+}
+.twemoji.w-5 {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.twemoji.w-6 {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.twemoji.w-8 {
+  width: 2rem;
+  height: 2rem;
+}
+
+/* Анимация для котиков */
+.twemoji.animate-bounce {
+  animation: bounce 1s infinite;
+}
+
+/* Hover эффекты для интерактивных котиков */
+.twemoji-interactive {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.twemoji-interactive:hover {
+  transform: scale(1.1) rotate(5deg);
+}
+
+/* Pulse для фоновых котиков */
+.twemoji-bg {
+  opacity: 0.1;
+  filter: grayscale(50%);
+}
