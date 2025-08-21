@@ -9,7 +9,7 @@ export const Label: FC<LabelProps> = ({ className, ...props }) => {
     <label
       className={classNames(
         "mb-1 block",
-        "text-text text-sm font-medium",
+        "text-sm font-medium text-gray-500",
         "transition-colors duration-200",
         className,
       )}

@@ -1,5 +1,6 @@
 import { type FC, useState } from "react";
 
+import { UncontrolledForm } from "@/components/forms/uncontrolled-form";
 import { Modal } from "@/components/modal";
 import { CatEmoji } from "@/components/twemoji";
 import { Button } from "@/components/ui/button";
@@ -19,6 +20,7 @@ export const ModalButtons: FC = () => {
   const handleOpenRHFModal = (): void => {
     setIsRHFModalOpen(true);
   };
+
   const handleCloseRHFModal = (): void => {
     setIsRHFModalOpen(false);
   };
@@ -39,7 +41,7 @@ export const ModalButtons: FC = () => {
         onClose={handleCloseUncontrolledModal}
         title="Uncontrolled Form"
       >
-        <p>Form will be here</p>
+        <UncontrolledForm onSuccess={handleCloseUncontrolledModal} />
       </Modal>
 
       <Modal

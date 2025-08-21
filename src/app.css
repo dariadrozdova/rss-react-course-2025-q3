@@ -6,6 +6,7 @@
   --color-accent: hsl(217 91% 66%);
   --color-success: hsl(158 64% 52%);
   --color-warning: hsl(42 96% 62%);
+  --color-error: hsl(351 82% 59%);
   --color-background: hsl(300 17% 99%);
   --color-text: hsl(220 14% 20%);
 }
@@ -20,6 +21,10 @@
 
 .border-secondary {
   border-color: var(--color-secondary);
+}
+
+.text-error {
+  color: var(--color-error);
 }
 
 .bg-gradient-main {

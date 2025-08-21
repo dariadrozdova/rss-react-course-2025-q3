@@ -31,6 +31,7 @@ export const ModalContent: FC<ModalContentProps> = ({
         "rounded-2xl bg-white shadow-2xl",
         "transform transition-all duration-200",
         "animate-in zoom-in-95 duration-200",
+        "max-h-[90vh] overflow-y-auto",
       )}
       onClick={(error) => {
         error.stopPropagation();
@@ -42,11 +43,12 @@ export const ModalContent: FC<ModalContentProps> = ({
             "flex items-center justify-between",
             "px-6 py-4",
             "border-b border-gray-100",
+            "sticky top-0 z-10 bg-white",
           )}
         >
           <h2
             className={classNames(
-              "text-text text-lg font-semibold",
+              "text-lg font-semibold text-gray-500",
               "flex items-center gap-2",
             )}
           >
@@ -60,7 +62,7 @@ export const ModalContent: FC<ModalContentProps> = ({
               "rounded-full p-2",
               "transition-colors hover:bg-gray-100",
               "text-gray-400 hover:text-gray-600",
-              "focus:ring-secondary/50 focus:ring-2 focus:outline-none",
+              "focus:ring-secondary/50 cursor-pointer focus:ring-2 focus:outline-none",
             )}
             onClick={onClose}
           >

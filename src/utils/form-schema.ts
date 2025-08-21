@@ -27,26 +27,26 @@ export const formSchema = z
         message: "Age must be non-negative",
       }),
 
-    confirmPassword: z.string(),
+    confirmPassword: z.string().min(1, "Confirm password is required"),
 
     country: z.string().min(1, "Country is required"),
 
-    email: z.email("Invalid email"),
+    email: z.email("Invalid email").min(1, "Email is required"),
 
     gender: z
-      .string()
-      .nonempty("Gender is required")
-      .refine((value) => ["female", "male", "other"].includes(value), {
-        message: "Invalid gender selected",
+      .union([z.literal("female"), z.literal("male"), z.literal("other")])
+      .refine((value) => typeof value === "string", {
+        message: "Gender is required",
       }),
 
     name: z
       .string()
       .min(NAME_MIN_LENGTH, "Name is required")
-      .regex(/^[A-Z][a-zA-Z]*$/, "Name must start with an uppercase letter"),
+      .regex(/^(\p{Lu})\p{L}*$/u, "Name must start with an uppercase letter"),
 
     password: z
       .string()
+      .min(1, "Password is required")
       .min(
         PASSWORD_MIN_LENGTH,
         `Password must be at least ${PASSWORD_MIN_LENGTH} characters`,
@@ -58,9 +58,7 @@ export const formSchema = z
 
     picture: z
       .any()
-      .refine((file) => file instanceof File, {
-        message: "File is required",
-      })
+      .refine((file) => file, "Picture is required")
       .refine(
         (file: File) => ["image/jpeg", "image/png"].includes(file.type || ""),
         { message: "Only .png or .jpeg files are allowed" },

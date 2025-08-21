@@ -68,7 +68,7 @@ export const CatHelper: FC = () => {
           </p>
 
           <p className={classNames("text-xs text-gray-400", "italic")}>
-            Кликни на меня для новой подсказки!
+            Click me for a new hint!
           </p>
         </div>
       </div>

@@ -1,9 +1,9 @@
 import type { FC } from "react";
 
 import { Layout } from "@/components/layout/layout";
+import { ModalButtons } from "@/components/modal/modal-buttons";
 import { CatEmoji } from "@/components/twemoji";
 import { Card } from "@/components/ui/card";
-import { ModalButtons } from "@/components/ui/modal-buttons";
 import { classNames } from "@/lib/class-names";
 
 export const App: FC = () => {
