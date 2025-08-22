@@ -33,7 +33,11 @@ export const RadioGroup: FC<RadioGroupProps> = ({
             key={opt.value}
           >
             <input
-              className="cursor-pointer"
+              className={classNames(
+                "focus:border-purple-500 focus:ring-purple-500/50",
+                "focus:ring-2 focus:outline-none",
+                "cursor-pointer",
+              )}
               name={name}
               type="radio"
               value={opt.value}

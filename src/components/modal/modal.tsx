@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import { FocusTrap } from "focus-trap-react";
 
@@ -15,6 +15,8 @@ export const Modal: FC<ModalProps> = ({
   size = "md",
   title,
 }) => {
+  const modalReference = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
     const handleEscapeKey = (event: KeyboardEvent): void => {
       if (event.key === "Escape" && isOpen) {
@@ -39,22 +41,30 @@ export const Modal: FC<ModalProps> = ({
 
   return (
     <ModalPortal>
-      <FocusTrap
-        active={isOpen}
-        focusTrapOptions={{
-          allowOutsideClick: true,
-          clickOutsideDeactivates: true,
-          fallbackFocus: "body",
-          initialFocus: false,
-          onDeactivate: onClose,
-        }}
-      >
-        <ModalOverlay onClose={onClose}>
-          <ModalContent onClose={onClose} size={size} title={title}>
-            {children}
-          </ModalContent>
-        </ModalOverlay>
-      </FocusTrap>
+      <ModalOverlay onClose={onClose}>
+        <FocusTrap
+          active={isOpen}
+          focusTrapOptions={{
+            escapeDeactivates: true,
+            initialFocus: () =>
+              document.querySelector<HTMLInputElement>("form input"),
+          }}
+        >
+          <div
+            className="fixed inset-0 flex items-center justify-center"
+            onClick={(error) => {
+              if (error.target === error.currentTarget) {
+                onClose();
+              }
+            }}
+            ref={modalReference}
+          >
+            <ModalContent onClose={onClose} size={size} title={title}>
+              {children}
+            </ModalContent>
+          </div>
+        </FocusTrap>
+      </ModalOverlay>
     </ModalPortal>
   );
 };
