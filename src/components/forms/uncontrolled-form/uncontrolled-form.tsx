@@ -1,6 +1,6 @@
 import { type FC, type FormEvent, useState } from "react";
 
-import { FormFields } from "@/components/forms/form-fileds";
+import { FormFields } from "@/components/forms/uncontrolled-form/form-fileds";
 import { classNames } from "@/lib/class-names";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { addFormSubmission } from "@/store/slices/form-slice";

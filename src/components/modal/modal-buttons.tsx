@@ -1,6 +1,6 @@
 import { type FC, useState } from "react";
 
-import { UncontrolledForm } from "@/components/forms/uncontrolled-form";
+import { UncontrolledForm } from "@/components/forms/uncontrolled-form/uncontrolled-form";
 import { Modal } from "@/components/modal";
 import { CatEmoji } from "@/components/twemoji";
 import { Button } from "@/components/ui/button";

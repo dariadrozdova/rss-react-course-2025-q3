@@ -1,11 +1,11 @@
 import { type FC } from "react";
 
-import { AutocompleteInput } from "@/components/ui/autocomplete-input";
+import { AutocompleteInput } from "@/components/forms/uncontrolled-form/autocomplete-input";
+import { Checkbox } from "@/components/forms/uncontrolled-form/checkbox";
+import { FileInput } from "@/components/forms/uncontrolled-form/file-input";
+import { RadioGroup } from "@/components/forms/uncontrolled-form/radio-group";
+import { TextInput } from "@/components/forms/uncontrolled-form/text-input";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { FileInput } from "@/components/ui/file-input";
-import { RadioGroup } from "@/components/ui/radio-group";
-import { TextInput } from "@/components/ui/text-input";
 import { classNames } from "@/lib/class-names";
 import { type FormSchema } from "@/utils/form-schema";
 

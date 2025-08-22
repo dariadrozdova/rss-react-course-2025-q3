@@ -1,5 +1,7 @@
 import type { FC, InputHTMLAttributes } from "react";
 
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { classNames } from "@/lib/class-names";
 
 interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -15,22 +17,17 @@ export const TextInput: FC<TextInputProps> = ({
   ...props
 }) => {
   return (
-    <div>
-      <label
-        className={classNames("block text-sm font-medium text-gray-500")}
-        htmlFor={id}
-      >
-        {label}
-      </label>
-      <input
-        id={id}
-        {...props}
+    <div className="mb-4">
+      <Label htmlFor={id}>{label}</Label>
+      <Input {...props} />
+      <p
         className={classNames(
-          "border-secondary mt-1 block w-full rounded-md border p-2",
-          props.className,
+          "text-error mt-1 h-4 text-sm",
+          !error && "opacity-0",
         )}
-      />
-      <p className={classNames("text-error h-5 text-sm")}>{error}</p>
+      >
+        {error}
+      </p>
     </div>
   );
 };

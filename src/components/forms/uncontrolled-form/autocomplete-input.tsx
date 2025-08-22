@@ -1,5 +1,7 @@
 import type { FC } from "react";
 
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { classNames } from "@/lib/class-names";
 
 interface AutocompleteInputProps {
@@ -18,27 +20,22 @@ export const AutocompleteInput: FC<AutocompleteInputProps> = ({
   options,
 }) => {
   return (
-    <div>
-      <label
-        className={classNames("block text-sm font-medium text-gray-500")}
-        htmlFor={id}
-      >
-        {label}
-      </label>
-      <input
-        className={classNames(
-          "border-secondary mt-1 block w-full rounded-md border p-2",
-        )}
-        id={id}
-        list={`${id}-list`}
-        name={name}
-      />
+    <div className="relative mb-4">
+      <Label htmlFor={id}>{label}</Label>
+      <Input id={id} list={`${id}-list`} name={name} />
       <datalist id={`${id}-list`}>
         {options.map((c) => (
           <option key={c} value={c} />
         ))}
       </datalist>
-      <p className={classNames("text-error h-5 text-sm")}>{error}</p>
+      <p
+        className={classNames(
+          "text-error mt-1 h-4 text-sm",
+          !error && "opacity-0",
+        )}
+      >
+        {error}
+      </p>
     </div>
   );
 };
