@@ -68,7 +68,9 @@ export const formSchema = z
       }),
 
     picture: z
-      .instanceof(File, { message: "Picture is required and must be .png or .jpeg file." })
+      .custom<File>((val) => val instanceof File, {
+        message: "Picture is required and must be a File",
+      })
       .refine((file) => file.size <= FILE_SIZE_LIMIT_BYTES, {
         message: `File size must be ≤ ${FILE_SIZE_LIMIT_MB}MB`,
       })

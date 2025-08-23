@@ -13,12 +13,14 @@ interface FileInputProps extends InputHTMLAttributes<HTMLInputElement> {
   error?: string;
   id: string;
   label: string | ReactNode;
+  onFileSelect?: (file: File) => void;
 }
 
 export const FileInput: FC<FileInputProps> = ({
   error,
   id,
   label,
+  onFileSelect,
   ...props
 }) => {
   const fileInputReference = useRef<HTMLInputElement>(null);
@@ -29,12 +31,10 @@ export const FileInput: FC<FileInputProps> = ({
   };
 
   const handleFileChange = (error: ChangeEvent<HTMLInputElement>): void => {
-    if (
-      fileNameReference.current &&
-      error.target.files &&
-      error.target.files.length > 0
-    ) {
-      fileNameReference.current.textContent = error.target.files[0].name;
+    if (fileNameReference.current && error.target.files?.length) {
+      const file = error.target.files[0];
+      fileNameReference.current.textContent = file.name;
+      onFileSelect?.(file);
     }
   };
 

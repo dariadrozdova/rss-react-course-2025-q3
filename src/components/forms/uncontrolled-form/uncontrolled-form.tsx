@@ -5,7 +5,11 @@ import { classNames } from "@/lib/class-names";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { addFormSubmission } from "@/store/slices/form-slice";
 import { fileToBase64 } from "@/utils/file-to-base-64";
-import { type FormInput, type FormOutput, formSchema } from "@/utils/form-schema";
+import {
+  type FormInput,
+  type FormOutput,
+  formSchema,
+} from "@/utils/form-schema";
 
 export const UncontrolledForm: FC<{
   onSuccess: () => void;
@@ -18,21 +22,10 @@ export const UncontrolledForm: FC<{
   >({});
 
   const handleSubmit = async (
-    error: FormEvent<HTMLFormElement>,
+    event: FormEvent<HTMLFormElement>,
   ): Promise<void> => {
-    error.preventDefault();
-    const formData = new FormData(error.currentTarget);
-
-    const file = formData.get("picture");
-    let base64 = "";
-
-    if (file instanceof File && file.size > 0) {
-      base64 = await fileToBase64(file);
-    }
-
-    const isFormSchemaKey = (key: string): key is keyof FormOutput => {
-      return key in formSchema.shape;
-    };
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
 
     const values = {
       acceptTerms: formData.get("acceptTerms") === "on",
@@ -43,7 +36,11 @@ export const UncontrolledForm: FC<{
       gender: formData.get("gender"),
       name: formData.get("name"),
       password: formData.get("password"),
-      picture: base64,
+      picture: formData.get("picture"),
+    };
+
+    const isFormSchemaKey = (key: string): key is keyof FormOutput => {
+      return key in formSchema.shape;
     };
 
     const parseResult = formSchema.safeParse(values);
@@ -61,6 +58,14 @@ export const UncontrolledForm: FC<{
 
       setErrors(fieldErrors);
       return;
+    }
+
+    let base64 = "";
+    if (
+      parseResult.data.picture instanceof File &&
+      parseResult.data.picture.size > 0
+    ) {
+      base64 = await fileToBase64(parseResult.data.picture);
     }
 
     dispatch(

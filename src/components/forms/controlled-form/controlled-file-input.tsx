@@ -28,14 +28,16 @@ export const ControlledFileInput: FC<ControlledFileInputProps> = ({
   };
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    if (
-      fileNameReference.current &&
-      event.target.files &&
-      event.target.files.length > 0
-    ) {
-      const file = event.target.files[0];
-      fileNameReference.current.textContent = file.name;
-      setValue("picture", file);
+    const file = event.target.files?.[0] ?? null;
+
+    if (fileNameReference.current) {
+      fileNameReference.current.textContent = file
+        ? file.name
+        : "No file chosen";
+    }
+
+    if (file) {
+      setValue("picture", file, { shouldValidate: true });
     }
   };
 
