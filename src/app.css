@@ -36,6 +36,32 @@
   );
 }
 
+.glow-highlight-new {
+  box-shadow:
+    0 0 8px var(--color-primary),
+    0 0 16px var(--color-secondary),
+    0 0 24px var(--color-accent);
+  border-color: var(--color-secondary);
+  border-width: 2px;
+  animation: glow-pulse 3s ease-in-out;
+}
+
+@keyframes glow-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 8px var(--color-primary),
+      0 0 16px var(--color-secondary),
+      0 0 24px var(--color-accent);
+  }
+  50% {
+    box-shadow:
+      0 0 12px var(--color-primary),
+      0 0 24px var(--color-secondary),
+      0 0 36px var(--color-accent);
+  }
+}
+
 .twemoji {
   display: inline-block;
   height: 1.2em;

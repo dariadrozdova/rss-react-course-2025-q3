@@ -2,6 +2,7 @@ import type { FC } from "react";
 
 import { Layout } from "@/components/layout/layout";
 import { ModalButtons } from "@/components/modal/modal-buttons";
+import { SubmissionsList } from "@/components/submissions/submissions-list";
 import { CatEmoji } from "@/components/twemoji";
 import { Card } from "@/components/ui/card";
 import { classNames } from "@/lib/class-names";
@@ -28,6 +29,8 @@ export const App: FC = () => {
         </p>
         <ModalButtons />
       </Card>
+
+      <SubmissionsList />
     </Layout>
   );
 };

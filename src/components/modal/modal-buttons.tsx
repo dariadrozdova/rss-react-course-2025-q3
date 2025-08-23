@@ -51,7 +51,7 @@ export const ModalButtons: FC = () => {
         onClose={handleCloseControlledFormModal}
         title="Controlled Form"
       >
-        <ControlledForm onSuccess={handleCloseUncontrolledModal} />
+        <ControlledForm onSuccess={handleCloseControlledFormModal} />
       </Modal>
     </>
   );
