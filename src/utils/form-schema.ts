@@ -9,6 +9,8 @@ import {
   PASSWORD_MIN_LENGTH,
 } from "@/lib/constants";
 
+const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png"];
+
 export const formSchema = z
   .object({
     acceptTerms: z.boolean().refine((value) => value === true, {
@@ -40,56 +42,39 @@ export const formSchema = z
 
     password: z
       .string()
-      .min(1, "Password is required")
+      .min(
+        PASSWORD_MIN_LENGTH,
+        `Password must be at least ${PASSWORD_MIN_LENGTH} characters`,
+      )
       .refine((value) => {
-        if (value.length === 0) return true;
-        if (value.length < PASSWORD_MIN_LENGTH) return false;
-        return true;
-      }, `Password must be at least ${PASSWORD_MIN_LENGTH} characters`)
-      .refine((value) => {
-        if (value.length === 0) return true;
         return /[\p{Lu}]/u.test(value);
       }, "Password must contain an uppercase letter")
       .refine((value) => {
-        if (value.length === 0) return true;
         return /[\p{Ll}]/u.test(value);
       }, "Password must contain a lowercase letter")
       .refine((value) => {
-        if (value.length === 0) return true;
         return /[\p{Nd}]/u.test(value);
       }, "Password must contain a number")
       .refine((value) => {
-        if (value.length === 0) return true;
         return /[^\p{L}\p{Nd}\s]/u.test(value);
       }, "Password must contain a special character"),
 
-    country: z.string().nullable(),
+    country: z.string().min(1, "Country is required"),
 
     gender: z
       .union([z.literal("female"), z.literal("male"), z.literal("other")])
-      .nullable()
       .refine((value) => value !== null && value !== undefined, {
         message: "Gender is required",
       }),
 
     picture: z
-      .any()
-      .optional()
+      .instanceof(File, { message: "Picture is required and must be .png or .jpeg file." })
+      .refine((file) => file.size <= FILE_SIZE_LIMIT_BYTES, {
+        message: `File size must be ≤ ${FILE_SIZE_LIMIT_MB}MB`,
+      })
       .refine(
-        (file) => {
-          if (!file) return true;
-          return ["image/jpeg", "image/png"].includes(file.type || "");
-        },
-        { message: "Only .png or .jpeg files are allowed" },
-      )
-      .refine(
-        (file) => {
-          if (!file) return true;
-          return file.size <= FILE_SIZE_LIMIT_BYTES;
-        },
-        {
-          message: `File size must be ≤ ${FILE_SIZE_LIMIT_MB}MB`,
-        },
+        (file) => ACCEPTED_IMAGE_TYPES.includes(file.type),
+        "Only .png or .jpeg files are allowed",
       ),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -97,4 +82,6 @@ export const formSchema = z
     path: ["confirmPassword"],
   });
 
-export type FormSchema = z.infer<typeof formSchema>;
+export type FormInput = z.input<typeof formSchema>;
+
+export type FormOutput = z.infer<typeof formSchema>;

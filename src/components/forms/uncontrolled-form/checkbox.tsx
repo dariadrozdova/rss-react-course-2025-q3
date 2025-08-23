@@ -1,11 +1,11 @@
-import type { FC, InputHTMLAttributes } from "react";
+import type { FC, InputHTMLAttributes, ReactNode } from "react";
 
 import { classNames } from "@/lib/class-names";
 
 interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
   error?: string;
   id: string;
-  label: string;
+  label: string | ReactNode;
 }
 
 export const Checkbox: FC<CheckboxProps> = ({ error, id, label, ...props }) => {

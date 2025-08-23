@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import type { FC, ReactNode } from "react";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -7,7 +7,7 @@ import { classNames } from "@/lib/class-names";
 interface AutocompleteInputProps {
   error?: string;
   id: string;
-  label: string;
+  label: string | ReactNode;
   name: string;
   options: string[];
 }

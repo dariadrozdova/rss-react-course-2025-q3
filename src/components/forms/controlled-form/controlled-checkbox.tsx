@@ -2,13 +2,14 @@ import type { FC } from "react";
 import { type UseFormRegister } from "react-hook-form";
 
 import { classNames } from "@/lib/class-names";
-import { type FormSchema } from "@/utils/form-schema";
+import { type FormInput } from "@/utils/form-schema";
 
 interface ControlledCheckboxProps {
   error?: string;
-  id: keyof FormSchema;
+  id: keyof FormInput;
   label: string;
-  register: ReturnType<UseFormRegister<FormSchema>>;
+  register: ReturnType<UseFormRegister<FormInput>>;
+  isRequired?: boolean;
 }
 
 export const ControlledCheckbox: FC<ControlledCheckboxProps> = ({
@@ -16,6 +17,7 @@ export const ControlledCheckbox: FC<ControlledCheckboxProps> = ({
   id,
   label,
   register,
+  isRequired = false,
 }) => {
   return (
     <div className="mb-4">
@@ -35,6 +37,7 @@ export const ControlledCheckbox: FC<ControlledCheckboxProps> = ({
           htmlFor={id}
         >
           {label}
+          {isRequired && <span className="text-error ml-1 font-bold">*</span>}
         </label>
       </div>
       <p

@@ -2,6 +2,7 @@ import {
   type ChangeEvent,
   type FC,
   type InputHTMLAttributes,
+  type ReactNode,
   useRef,
 } from "react";
 
@@ -11,7 +12,7 @@ import { classNames } from "@/lib/class-names";
 interface FileInputProps extends InputHTMLAttributes<HTMLInputElement> {
   error?: string;
   id: string;
-  label: string;
+  label: string | ReactNode;
 }
 
 export const FileInput: FC<FileInputProps> = ({

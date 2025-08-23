@@ -4,12 +4,12 @@ import {
   calculatePasswordStrength,
   createPasswordStrengthHTML,
 } from "@/utils/password-strength";
-import { type FC, useCallback, useRef } from "react";
+import { type FC, type ReactNode, useCallback, useRef } from "react";
 
 interface PasswordInputProps {
   id: string;
   name: string;
-  label: string;
+  label: string | ReactNode;
   error?: string;
   showStrength?: boolean;
   className?: string;
@@ -23,7 +23,6 @@ export const PasswordInput: FC<PasswordInputProps> = ({
   showStrength = false,
   className = "",
 }) => {
-  // Тип ref должен быть явно указан для 'HTMLInputElement'
   const inputRef = useRef<HTMLInputElement>(null);
   const strengthIndicatorRef = useRef<HTMLDivElement>(null);
 

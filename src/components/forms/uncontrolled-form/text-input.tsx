@@ -1,4 +1,4 @@
-import type { FC, InputHTMLAttributes } from "react";
+import type { FC, InputHTMLAttributes, ReactNode } from "react";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -7,7 +7,7 @@ import { classNames } from "@/lib/class-names";
 interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
   error?: string;
   id: string;
-  label: string;
+  label: string | ReactNode;
 }
 
 export const TextInput: FC<TextInputProps> = ({

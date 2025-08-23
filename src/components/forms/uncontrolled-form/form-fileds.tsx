@@ -8,61 +8,70 @@ import { RadioGroup } from "@/components/forms/uncontrolled-form/radio-group";
 import { TextInput } from "@/components/forms/uncontrolled-form/text-input";
 import { Button } from "@/components/ui/button";
 import { classNames } from "@/lib/class-names";
-import { type FormSchema } from "@/utils/form-schema";
+import { type FormInput } from "@/utils/form-schema";
 
 interface FormFieldsProps {
   countries: string[];
-  errors: Partial<Record<keyof FormSchema, string>>;
+  errors: Partial<Record<keyof FormInput, string>>;
 }
 
 export const FormFields: FC<FormFieldsProps> = ({ countries, errors }) => {
   const fullWidthWrapperClasses = classNames("md:col-span-2");
+
+  const requiredStarClasses = "text-error font-bold ml-1";
+
+  const requiredStar = <span className={requiredStarClasses}>*</span>;
 
   return (
     <>
       <div
         className={classNames("grid", "grid-cols-1", "gap-4", "md:grid-cols-2")}
       >
-        <TextInput error={errors.name} id="name" label="Name *" name="name" />
+        <TextInput
+          error={errors.name}
+          id="name"
+          label={<>Name {requiredStar}</>}
+          name="name"
+        />
         <TextInput
           error={errors.age}
           id="age"
-          label="Age *"
+          label={<>Age {requiredStar}</>}
           name="age"
           type="number"
         />
         <TextInput
           error={errors.email}
           id="email"
-          label="Email *"
+          label={<>Email {requiredStar}</>}
           name="email"
           type="email"
         />
         <AutocompleteInput
           error={errors.country}
           id="country"
-          label="Country"
+          label={<>Country {requiredStar}</>}
           name="country"
           options={countries}
         />
         <PasswordInput
           error={errors.password}
           id="password"
-          label="Password *"
+          label={<>Password {requiredStar}</>}
           name="password"
           showStrength={true}
         />
         <PasswordInput
           error={errors.confirmPassword}
           id="confirmPassword"
-          label="Confirm Password *"
+          label={<>Confirm Password {requiredStar}</>}
           name="confirmPassword"
           showStrength={false}
         />
         <div className={fullWidthWrapperClasses}>
           <RadioGroup
             error={errors.gender}
-            label="Gender *"
+            label={<>Gender {requiredStar}</>}
             name="gender"
             options={[
               { label: "Male", value: "male" },
@@ -75,7 +84,7 @@ export const FormFields: FC<FormFieldsProps> = ({ countries, errors }) => {
           <Checkbox
             error={errors.acceptTerms}
             id="acceptTerms"
-            label="Accept Terms and Conditions *"
+            label={<>Accept Terms and Conditions {requiredStar}</>}
             name="acceptTerms"
           />
         </div>
@@ -83,7 +92,7 @@ export const FormFields: FC<FormFieldsProps> = ({ countries, errors }) => {
           <FileInput
             error={errors.picture}
             id="picture"
-            label="Upload Picture"
+            label={<>Upload Picture {requiredStar}</>}
             name="picture"
           />
         </div>

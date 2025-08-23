@@ -3,13 +3,14 @@ import { type UseFormRegister } from "react-hook-form";
 
 import { Label } from "@/components/ui/label";
 import { classNames } from "@/lib/class-names";
-import { type FormSchema } from "@/utils/form-schema";
+import { type FormInput } from "@/utils/form-schema";
 
 interface ControlledRadioGroupProps {
   error?: string;
   label: string;
   options: Option[];
-  register: ReturnType<UseFormRegister<FormSchema>>;
+  register: ReturnType<UseFormRegister<FormInput>>;
+  isRequired?: boolean;
 }
 
 interface Option {
@@ -22,10 +23,14 @@ export const ControlledRadioGroup: FC<ControlledRadioGroupProps> = ({
   label,
   options,
   register,
+  isRequired = false,
 }) => {
   return (
     <div className="mb-4">
-      <Label>{label}</Label>
+      <Label>
+        {label}
+        {isRequired && <span className="text-error ml-1 font-bold">*</span>}
+      </Label>
       <div className={classNames("mt-1 flex gap-4")}>
         {options.map((opt) => (
           <label

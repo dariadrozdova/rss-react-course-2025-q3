@@ -48,8 +48,8 @@ export const Footer: FC = () => {
             target="_blank"
           >
             GitHub <TwemojiWrapper emoji="🐙" size="sm" />
-          </a>{" "}
-          |{" "}
+          </a>
+          |
           <a
             className={classNames(
               "hover:text-secondary",

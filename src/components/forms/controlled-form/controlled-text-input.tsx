@@ -9,15 +9,16 @@ import {
   MIN_PASSWORD_LENGTH,
   WEAK_PASSWORD_SCORE_THRESHOLD,
 } from "@/lib/constants";
-import { type FormSchema } from "@/utils/form-schema";
+import { type FormInput } from "@/utils/form-schema";
 
 interface ControlledTextInputProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, "name"> {
   error?: string;
-  id: keyof FormSchema;
+  id: keyof FormInput;
   label: string;
-  register: ReturnType<UseFormRegister<FormSchema>>;
-  watch?: UseFormWatch<FormSchema>;
+  register: ReturnType<UseFormRegister<FormInput>>;
+  watch?: UseFormWatch<FormInput>;
+  isRequired?: boolean;
 }
 
 const getPasswordStrength = (password: string): string => {
@@ -47,6 +48,7 @@ export const ControlledTextInput: FC<ControlledTextInputProps> = ({
   register,
   type,
   watch,
+  isRequired = false,
   ...props
 }) => {
   const isPasswordField = type === "password" && id === "password";
@@ -55,7 +57,10 @@ export const ControlledTextInput: FC<ControlledTextInputProps> = ({
 
   return (
     <div className="mb-4">
-      <Label htmlFor={id}>{label}</Label>
+      <Label htmlFor={id}>
+        {label}
+        {isRequired && <span className="text-error ml-1 font-bold">*</span>}
+      </Label>
       <Input {...register} {...props} type={type} />
       {showPasswordStrength && (
         <p className="mt-1 text-sm text-gray-500">

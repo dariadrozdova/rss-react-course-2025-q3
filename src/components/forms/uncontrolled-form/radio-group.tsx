@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import type { FC, ReactNode } from "react";
 
 import { Label } from "@/components/ui/label";
 import { classNames } from "@/lib/class-names";
@@ -10,7 +10,7 @@ interface Option {
 
 interface RadioGroupProps {
   error?: string;
-  label: string;
+  label: string | ReactNode;
   name: string;
   options: Option[];
 }

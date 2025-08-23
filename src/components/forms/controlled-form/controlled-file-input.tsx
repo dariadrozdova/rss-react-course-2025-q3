@@ -3,13 +3,14 @@ import { type FieldError, type UseFormSetValue } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
 import { classNames } from "@/lib/class-names";
-import { type FormSchema } from "@/utils/form-schema";
+import { type FormInput } from "@/utils/form-schema";
 
 interface ControlledFileInputProps {
   error?: FieldError | string | undefined;
-  id: keyof FormSchema;
+  id: keyof FormInput;
   label: string;
-  setValue: UseFormSetValue<FormSchema>;
+  setValue: UseFormSetValue<FormInput>;
+  isRequired?: boolean;
 }
 
 export const ControlledFileInput: FC<ControlledFileInputProps> = ({
@@ -17,6 +18,7 @@ export const ControlledFileInput: FC<ControlledFileInputProps> = ({
   id,
   label,
   setValue,
+  isRequired = false,
 }) => {
   const fileInputReference = useRef<HTMLInputElement>(null);
   const fileNameReference = useRef<HTMLSpanElement>(null);
@@ -37,6 +39,8 @@ export const ControlledFileInput: FC<ControlledFileInputProps> = ({
     }
   };
 
+  const errorMessage = typeof error === "string" ? error : error?.message;
+
   return (
     <div className="mb-4">
       <label
@@ -44,6 +48,7 @@ export const ControlledFileInput: FC<ControlledFileInputProps> = ({
         htmlFor={id}
       >
         {label}
+        {isRequired && <span className="text-error ml-1 font-bold">*</span>}
       </label>
       <div className={classNames("flex items-center gap-2")}>
         <input
@@ -75,7 +80,7 @@ export const ControlledFileInput: FC<ControlledFileInputProps> = ({
           !error && "opacity-0",
         )}
       >
-        {error}
+        {errorMessage}
       </p>
     </div>
   );

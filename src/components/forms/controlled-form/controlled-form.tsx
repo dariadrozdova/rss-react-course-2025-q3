@@ -8,7 +8,7 @@ import { classNames } from "@/lib/class-names";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { addFormSubmission } from "@/store/slices/form-slice";
 import { fileToBase64 } from "@/utils/file-to-base-64";
-import { type FormSchema, formSchema } from "@/utils/form-schema";
+import { type FormOutput, formSchema } from "@/utils/form-schema";
 
 export const ControlledForm: FC<{
   onSuccess: () => void;
@@ -22,12 +22,23 @@ export const ControlledForm: FC<{
     register,
     setValue,
     watch,
-  } = useForm<FormSchema>({
+  } = useForm({
     mode: "onChange",
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      age: "",
+      password: "",
+      confirmPassword: "",
+      acceptTerms: false,
+      country: "",
+      gender: undefined,
+      picture: undefined,
+    },
   });
 
-  const onSubmit = async (data: FormSchema): Promise<void> => {
+  const onSubmit = async (data: FormOutput): Promise<void> => {
     let base64 = "";
 
     if (data.picture instanceof File && data.picture.size > 0) {

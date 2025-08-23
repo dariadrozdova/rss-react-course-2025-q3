@@ -5,7 +5,7 @@ import { classNames } from "@/lib/class-names";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { addFormSubmission } from "@/store/slices/form-slice";
 import { fileToBase64 } from "@/utils/file-to-base-64";
-import { type FormSchema, formSchema } from "@/utils/form-schema";
+import { type FormInput, type FormOutput, formSchema } from "@/utils/form-schema";
 
 export const UncontrolledForm: FC<{
   onSuccess: () => void;
@@ -14,7 +14,7 @@ export const UncontrolledForm: FC<{
   const countries = useAppSelector((state) => state.countries.countries);
 
   const [errors, setErrors] = useState<
-    Partial<Record<keyof FormSchema, string>>
+    Partial<Record<keyof FormInput, string>>
   >({});
 
   const handleSubmit = async (
@@ -30,7 +30,7 @@ export const UncontrolledForm: FC<{
       base64 = await fileToBase64(file);
     }
 
-    const isFormSchemaKey = (key: string): key is keyof FormSchema => {
+    const isFormSchemaKey = (key: string): key is keyof FormOutput => {
       return key in formSchema.shape;
     };
 
@@ -50,7 +50,7 @@ export const UncontrolledForm: FC<{
 
     if (!parseResult.success) {
       const issues = parseResult.error.issues;
-      const fieldErrors: Partial<Record<keyof FormSchema, string>> = {};
+      const fieldErrors: Partial<Record<keyof FormInput, string>> = {};
 
       for (const issue of issues) {
         const fieldName = issue.path[0];
