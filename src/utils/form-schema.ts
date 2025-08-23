@@ -11,7 +11,7 @@ import {
 
 export const formSchema = z
   .object({
-    acceptTerms: z.literal(true).refine((value) => value, {
+    acceptTerms: z.boolean().refine((value) => value === true, {
       message: "You must accept the terms",
     }),
 
@@ -28,43 +28,69 @@ export const formSchema = z
 
     confirmPassword: z.string().min(1, "Confirm password is required"),
 
-    country: z.string().min(1, "Country is required"),
-
     email: z.email("Invalid email").min(1, "Email is required"),
-
-    gender: z
-      .union([z.literal("female"), z.literal("male"), z.literal("other")])
-      .refine((value) => typeof value === "string", {
-        message: "Gender is required",
-      }),
 
     name: z
       .string()
       .min(NAME_MIN_LENGTH, "Name is required")
-      .regex(/^(\p{Lu})\p{L}*$/u, "Name must start with an uppercase letter"),
+      .refine((value) => {
+        if (value.length < NAME_MIN_LENGTH) return true;
+        return /^(\p{Lu})\p{L}*$/u.test(value);
+      }, "Name must start with an uppercase letter"),
 
     password: z
       .string()
       .min(1, "Password is required")
-      .min(
-        PASSWORD_MIN_LENGTH,
-        `Password must be at least ${PASSWORD_MIN_LENGTH} characters`,
-      )
-      .regex(/[A-Z]/, "Password must contain an uppercase letter")
-      .regex(/[a-z]/, "Password must contain a lowercase letter")
-      .regex(/[0-9]/, "Password must contain a number")
-      .regex(/[^a-zA-Z0-9]/, "Password must contain a special character"),
+      .refine((value) => {
+        if (value.length === 0) return true;
+        if (value.length < PASSWORD_MIN_LENGTH) return false;
+        return true;
+      }, `Password must be at least ${PASSWORD_MIN_LENGTH} characters`)
+      .refine((value) => {
+        if (value.length === 0) return true;
+        return /[\p{Lu}]/u.test(value);
+      }, "Password must contain an uppercase letter")
+      .refine((value) => {
+        if (value.length === 0) return true;
+        return /[\p{Ll}]/u.test(value);
+      }, "Password must contain a lowercase letter")
+      .refine((value) => {
+        if (value.length === 0) return true;
+        return /[\p{Nd}]/u.test(value);
+      }, "Password must contain a number")
+      .refine((value) => {
+        if (value.length === 0) return true;
+        return /[^\p{L}\p{Nd}\s]/u.test(value);
+      }, "Password must contain a special character"),
+
+    country: z.string().nullable(),
+
+    gender: z
+      .union([z.literal("female"), z.literal("male"), z.literal("other")])
+      .nullable()
+      .refine((value) => value !== null && value !== undefined, {
+        message: "Gender is required",
+      }),
 
     picture: z
       .any()
-      .refine((file) => file, "Picture is required")
+      .optional()
       .refine(
-        (file: File) => ["image/jpeg", "image/png"].includes(file.type || ""),
+        (file) => {
+          if (!file) return true;
+          return ["image/jpeg", "image/png"].includes(file.type || "");
+        },
         { message: "Only .png or .jpeg files are allowed" },
       )
-      .refine((file: File) => file.size <= FILE_SIZE_LIMIT_BYTES, {
-        message: `File size must be ≤ ${FILE_SIZE_LIMIT_MB}MB`,
-      }),
+      .refine(
+        (file) => {
+          if (!file) return true;
+          return file.size <= FILE_SIZE_LIMIT_BYTES;
+        },
+        {
+          message: `File size must be ≤ ${FILE_SIZE_LIMIT_MB}MB`,
+        },
+      ),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords must match",

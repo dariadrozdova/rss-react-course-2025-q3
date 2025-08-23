@@ -3,6 +3,7 @@ import { type FC } from "react";
 import { AutocompleteInput } from "@/components/forms/uncontrolled-form/autocomplete-input";
 import { Checkbox } from "@/components/forms/uncontrolled-form/checkbox";
 import { FileInput } from "@/components/forms/uncontrolled-form/file-input";
+import { PasswordInput } from "@/components/forms/uncontrolled-form/password-input";
 import { RadioGroup } from "@/components/forms/uncontrolled-form/radio-group";
 import { TextInput } from "@/components/forms/uncontrolled-form/text-input";
 import { Button } from "@/components/ui/button";
@@ -22,18 +23,18 @@ export const FormFields: FC<FormFieldsProps> = ({ countries, errors }) => {
       <div
         className={classNames("grid", "grid-cols-1", "gap-4", "md:grid-cols-2")}
       >
-        <TextInput error={errors.name} id="name" label="Name" name="name" />
+        <TextInput error={errors.name} id="name" label="Name *" name="name" />
         <TextInput
           error={errors.age}
           id="age"
-          label="Age"
+          label="Age *"
           name="age"
           type="number"
         />
         <TextInput
           error={errors.email}
           id="email"
-          label="Email"
+          label="Email *"
           name="email"
           type="email"
         />
@@ -44,24 +45,24 @@ export const FormFields: FC<FormFieldsProps> = ({ countries, errors }) => {
           name="country"
           options={countries}
         />
-        <TextInput
+        <PasswordInput
           error={errors.password}
           id="password"
-          label="Password"
+          label="Password *"
           name="password"
-          type="password"
+          showStrength={true}
         />
-        <TextInput
+        <PasswordInput
           error={errors.confirmPassword}
           id="confirmPassword"
-          label="Confirm Password"
+          label="Confirm Password *"
           name="confirmPassword"
-          type="password"
+          showStrength={false}
         />
         <div className={fullWidthWrapperClasses}>
           <RadioGroup
             error={errors.gender}
-            label="Gender"
+            label="Gender *"
             name="gender"
             options={[
               { label: "Male", value: "male" },
@@ -74,7 +75,7 @@ export const FormFields: FC<FormFieldsProps> = ({ countries, errors }) => {
           <Checkbox
             error={errors.acceptTerms}
             id="acceptTerms"
-            label="Accept Terms and Conditions"
+            label="Accept Terms and Conditions *"
             name="acceptTerms"
           />
         </div>

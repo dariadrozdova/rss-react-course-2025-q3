@@ -3,10 +3,10 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 export interface FormData {
   acceptTerms: boolean;
   age: number;
-  country: string;
+  country: string | null;
   createdAt: number;
   email: string;
-  gender: "female" | "male" | "other";
+  gender: "female" | "male" | "other" | null;
   id: string;
   name: string;
   password: string;

@@ -1,12 +1,14 @@
-import { type FC, type InputHTMLAttributes } from "react";
+import { forwardRef, type InputHTMLAttributes } from "react";
 
 import { classNames } from "@/lib/class-names";
 
-type InputProps = InputHTMLAttributes<HTMLInputElement>;
-
-export const Input: FC<InputProps> = ({ className, ...props }) => {
+export const Input = forwardRef<
+  HTMLInputElement,
+  InputHTMLAttributes<HTMLInputElement>
+>(({ className, ...props }, ref) => {
   return (
     <input
+      ref={ref}
       className={classNames(
         "w-full rounded-xl px-4 py-2",
         "text-gray-700",
@@ -22,4 +24,4 @@ export const Input: FC<InputProps> = ({ className, ...props }) => {
       {...props}
     />
   );
-};
+});
