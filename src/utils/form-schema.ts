@@ -1,14 +1,13 @@
 import { z } from "zod";
 
-const MIN_AGE_STRING_LENGTH = 1;
-const AGE_MIN_VALUE = 0;
-const NAME_MIN_LENGTH = 1;
-const PASSWORD_MIN_LENGTH = 8;
-const KILOBYTE_TO_BYTE = 1024;
-const MEGABYTE_TO_KILOBYTE = 1024;
-const FILE_SIZE_LIMIT_MB = 2;
-const FILE_SIZE_LIMIT_BYTES =
-  FILE_SIZE_LIMIT_MB * MEGABYTE_TO_KILOBYTE * KILOBYTE_TO_BYTE;
+import {
+  AGE_MIN_VALUE,
+  FILE_SIZE_LIMIT_BYTES,
+  FILE_SIZE_LIMIT_MB,
+  MIN_AGE_STRING_LENGTH,
+  NAME_MIN_LENGTH,
+  PASSWORD_MIN_LENGTH,
+} from "@/lib/constants";
 
 export const formSchema = z
   .object({

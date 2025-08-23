@@ -1,18 +1,18 @@
-import globals from "globals";
+import eslint from "@eslint/js";
+import eslintPluginImport from "eslint-plugin-import";
+import eslintPluginNoRelativeImportPaths from "eslint-plugin-no-relative-import-paths";
+import perfectionist from "eslint-plugin-perfectionist";
+import eslintPluginPrettier from "eslint-plugin-prettier/recommended";
+import react from "eslint-plugin-react";
+import reactCompiler from "eslint-plugin-react-compiler";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
-import react from "eslint-plugin-react";
-import tseslint from "typescript-eslint";
-import eslintPluginPrettier from "eslint-plugin-prettier/recommended";
-import reactCompiler from "eslint-plugin-react-compiler";
-import perfectionist from "eslint-plugin-perfectionist";
-import eslintPluginImport from "eslint-plugin-import";
-import eslint from "@eslint/js";
-import eslintPluginNoRelativeImportPaths from "eslint-plugin-no-relative-import-paths";
-import unusedImports from "eslint-plugin-unused-imports";
-import { myEslintRules } from "./eslint-rules/my-eslint-rules.js";
-import unicorn from "eslint-plugin-unicorn";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
+import unicorn from "eslint-plugin-unicorn";
+import unusedImports from "eslint-plugin-unused-imports";
+import globals from "globals";
+import tseslint from "typescript-eslint";
+import { myEslintRules } from "./eslint-rules/my-eslint-rules.js";
 
 export default tseslint.config(
   {
@@ -44,6 +44,7 @@ export default tseslint.config(
     },
     plugins: {
       react,
+      import: eslintPluginImport,
       "react-hooks": reactHooks,
       "react-refresh": reactRefresh,
       "react-compiler": reactCompiler,

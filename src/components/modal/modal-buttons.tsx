@@ -1,5 +1,6 @@
 import { type FC, useState } from "react";
 
+import { ControlledForm } from "@/components/forms/controlled-form/controlled-form";
 import { UncontrolledForm } from "@/components/forms/uncontrolled-form/uncontrolled-form";
 import { Modal } from "@/components/modal";
 import { CatEmoji } from "@/components/twemoji";
@@ -7,7 +8,8 @@ import { Button } from "@/components/ui/button";
 
 export const ModalButtons: FC = () => {
   const [isUncontrolledModalOpen, setIsUncontrolledModalOpen] = useState(false);
-  const [isRHFModalOpen, setIsRHFModalOpen] = useState(false);
+  const [isControlledFormModalOpen, setIsControlledFormModalOpen] =
+    useState(false);
 
   const handleOpenUncontrolledModal = (): void => {
     setIsUncontrolledModalOpen(true);
@@ -17,12 +19,12 @@ export const ModalButtons: FC = () => {
     setIsUncontrolledModalOpen(false);
   };
 
-  const handleOpenRHFModal = (): void => {
-    setIsRHFModalOpen(true);
+  const handleOpenControlledFormModal = (): void => {
+    setIsControlledFormModalOpen(true);
   };
 
-  const handleCloseRHFModal = (): void => {
-    setIsRHFModalOpen(false);
+  const handleCloseControlledFormModal = (): void => {
+    setIsControlledFormModalOpen(false);
   };
 
   return (
@@ -31,7 +33,7 @@ export const ModalButtons: FC = () => {
         <Button onClick={handleOpenUncontrolledModal} variant="primary">
           Open Uncontrolled Form <CatEmoji size="sm" variant="happy" />
         </Button>
-        <Button onClick={handleOpenRHFModal} variant="secondary">
+        <Button onClick={handleOpenControlledFormModal} variant="secondary">
           Open RHF Form <CatEmoji size="sm" variant="paw" />
         </Button>
       </div>
@@ -45,11 +47,11 @@ export const ModalButtons: FC = () => {
       </Modal>
 
       <Modal
-        isOpen={isRHFModalOpen}
-        onClose={handleCloseRHFModal}
-        title="React Hook Form"
+        isOpen={isControlledFormModalOpen}
+        onClose={handleCloseControlledFormModal}
+        title="Controlled Form"
       >
-        <p>Form will be here</p>
+        <ControlledForm onSuccess={handleCloseUncontrolledModal} />
       </Modal>
     </>
   );
