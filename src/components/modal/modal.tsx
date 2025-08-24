@@ -6,7 +6,14 @@ import { FocusTrap } from "focus-trap-react";
 import { ModalContent } from "@/components/modal/modal-content";
 import { ModalOverlay } from "@/components/modal/modal-overlay";
 import { ModalPortal } from "@/components/modal/modal-portal";
-import type { ModalProps } from "@/components/modal/types";
+
+interface ModalProps {
+  children: React.ReactNode;
+  isOpen: boolean;
+  onClose: () => void;
+  size?: "lg" | "md" | "sm" | "xl";
+  title?: string;
+}
 
 export const Modal: FC<ModalProps> = ({
   children,

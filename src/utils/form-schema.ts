@@ -8,8 +8,19 @@ import {
   NAME_MIN_LENGTH,
   PASSWORD_MIN_LENGTH,
 } from "@/lib/constants";
+import { COUNTRIES } from "@/store/slices/countries-slice";
 
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png"];
+
+export const createCountryValidation = (availableCountries: string[]) => {
+  return z
+    .string()
+    .min(1, "Country is required")
+    .refine(
+      (value) => availableCountries.includes(value),
+      "Please select a valid country from the list",
+    );
+};
 
 export const formSchema = z
   .object({
@@ -59,10 +70,11 @@ export const formSchema = z
         return /[^\p{L}\p{Nd}\s]/u.test(value);
       }, "Password must contain a special character"),
 
-    country: z.string().min(1, "Country is required"),
+    country: createCountryValidation(COUNTRIES),
 
     gender: z
       .union([z.literal("female"), z.literal("male"), z.literal("other")])
+      .nullable()
       .refine((value) => value !== null && value !== undefined, {
         message: "Gender is required",
       }),

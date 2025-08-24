@@ -29,15 +29,6 @@ export const PasswordInput: FC<PasswordInputProps> = ({
 
       <Input type="password" name={name} id={id} />
 
-      <p
-        className={classNames(
-          "text-error mt-1 h-4 text-sm",
-          !error && "opacity-0",
-        )}
-      >
-        {error}
-      </p>
-
       {showStrength && (
         <div ref={strengthIndicatorRef} className="mt-2">
           <div className="mb-2 h-2 w-full overflow-hidden rounded-full bg-gray-100">
@@ -97,6 +88,15 @@ export const PasswordInput: FC<PasswordInputProps> = ({
           </div>
         </div>
       )}
+
+      <p
+        className={classNames(
+          "text-error mt-1 h-6 text-sm",
+          !error && "opacity-0",
+        )}
+      >
+        {error}
+      </p>
     </div>
   );
 };

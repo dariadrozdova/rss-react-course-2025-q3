@@ -6,7 +6,7 @@ export interface FormData {
   country: string;
   createdAt: number;
   email: string;
-  gender: "female" | "male" | "other";
+  gender: "female" | "male" | "other" | null;
   id: string;
   name: string;
   password: string;
