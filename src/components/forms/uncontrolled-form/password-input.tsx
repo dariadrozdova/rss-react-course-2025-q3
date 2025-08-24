@@ -1,41 +1,69 @@
+import { type FC, type ReactNode, useRef } from "react";
+
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useUncontrolledPasswordStrength } from "@/hooks/use-uncontrolled-password-strength";
 import { classNames } from "@/lib/class-names";
-import { type FC, type ReactNode } from "react";
 
 interface PasswordInputProps {
-  id: string;
-  name: string;
-  label: string | ReactNode;
-  error?: string;
-  showStrength?: boolean;
   className?: string;
+  error?: string;
+  id: string;
+  label: ReactNode | string;
+  name: string;
+  showStrength?: boolean;
 }
 
 export const PasswordInput: FC<PasswordInputProps> = ({
-  id,
-  name,
-  label,
-  error,
-  showStrength = false,
   className = "",
+  error,
+  id,
+  label,
+  name,
+  showStrength = false,
 }) => {
-  const strengthIndicatorRef = useUncontrolledPasswordStrength(id);
+  const strengthIndicatorReference = useUncontrolledPasswordStrength(id);
+  const inputReference = useRef<HTMLInputElement>(null);
+
+  const togglePasswordVisibility = (): void => {
+    if (inputReference.current) {
+      inputReference.current.type =
+        inputReference.current.type === "password" ? "text" : "password";
+    }
+  };
 
   return (
     <div className={className}>
       <Label htmlFor={id}>{label}</Label>
 
-      <Input type="password" name={name} id={id} />
+      <div className={classNames("relative")}>
+        <Input id={id} name={name} ref={inputReference} type="password" />
+
+        <div
+          className={classNames(
+            "absolute top-1/2 right-2 -translate-y-1/2",
+            "flex items-center",
+          )}
+        >
+          <Button
+            onClick={togglePasswordVisibility}
+            size="sm"
+            type="button"
+            variant="ghost"
+          >
+            Show
+          </Button>
+        </div>
+      </div>
 
       {showStrength && (
-        <div ref={strengthIndicatorRef} className="mt-2">
+        <div className="mt-2" ref={strengthIndicatorReference}>
           <div className="mb-2 h-2 w-full overflow-hidden rounded-full bg-gray-100">
             <div
               className="password-progress-bar h-2 rounded-full bg-gray-200 shadow-sm transition-all duration-500 ease-out"
               style={{ width: "0%" }}
-            ></div>
+            />
           </div>
 
           <div className="rounded-lg pr-3">

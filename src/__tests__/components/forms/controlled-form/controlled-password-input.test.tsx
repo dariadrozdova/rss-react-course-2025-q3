@@ -13,7 +13,9 @@ vi.mock("@/components/ui/button", () => ({
 }));
 
 vi.mock("@/components/ui/input", () => ({
-  Input: (props: InputHTMLAttributes<HTMLInputElement>) => <input {...props} data-testid="input" />,
+  Input: (props: InputHTMLAttributes<HTMLInputElement>) => (
+    <input {...props} data-testid="input" />
+  ),
 }));
 
 vi.mock("@/components/ui/label", () => ({
