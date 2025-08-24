@@ -5,7 +5,7 @@ import { type UseFormRegister, type UseFormWatch } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { PasswordStrengthIndicator } from "@/components/ui/password-strength-indicator";
+import { PasswordStrengthIndicator } from "@/components/forms/controlled-form/controlled-password-input/password-strength-indicator";
 import { classNames } from "@/lib/class-names";
 import { type FormInput } from "@/utils/form-schema";
 

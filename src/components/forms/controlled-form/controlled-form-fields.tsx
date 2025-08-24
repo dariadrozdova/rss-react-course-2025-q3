@@ -9,11 +9,11 @@ import {
 import { ControlledAutocompleteInput } from "@/components/forms/controlled-form/controlled-autocomplete-input";
 import { ControlledCheckbox } from "@/components/forms/controlled-form/controlled-checkbox";
 import { ControlledFileInput } from "@/components/forms/controlled-form/controlled-file-input";
-import { ControlledPasswordInput } from "@/components/forms/controlled-form/controlled-password-input";
+import { ControlledPasswordInput } from "@/components/forms/controlled-form/controlled-password-input/controlled-password-input";
 import { ControlledRadioGroup } from "@/components/forms/controlled-form/controlled-radio-group";
 import { ControlledTextInput } from "@/components/forms/controlled-form/controlled-text-input";
 import { Button } from "@/components/ui/button";
-import { useRequiredFields } from "@/hooks/useRequiredField";
+import { useRequiredFields } from "@/hooks/use-required-field";
 import { classNames } from "@/lib/class-names";
 import { type FormInput, formSchema } from "@/utils/form-schema";
 
