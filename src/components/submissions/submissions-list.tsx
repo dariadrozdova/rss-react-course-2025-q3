@@ -1,3 +1,6 @@
+import { type FC, useEffect } from "react";
+
+import { SubmissionTile } from "@/components/submissions/submission-tile";
 import { classNames } from "@/lib/class-names";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
@@ -5,8 +8,6 @@ import {
   selectRecentSubmissionId,
   selectSubmissions,
 } from "@/store/slices/form-slice";
-import { type FC, useEffect } from "react";
-import { SubmissionTile } from "./submission-tile";
 
 export const SubmissionsList: FC = () => {
   const dispatch = useAppDispatch();
@@ -19,7 +20,9 @@ export const SubmissionsList: FC = () => {
         dispatch(clearRecentSubmission());
       }, 3000);
 
-      return () => clearTimeout(timer);
+      return () => {
+        clearTimeout(timer);
+      };
     }
   }, [recentSubmissionId, dispatch]);
 
@@ -59,9 +62,9 @@ export const SubmissionsList: FC = () => {
       >
         {sortedSubmissions.map((submission) => (
           <SubmissionTile
+            isRecent={submission.id === recentSubmissionId}
             key={submission.id}
             submission={submission}
-            isRecent={submission.id === recentSubmissionId}
           />
         ))}
       </div>

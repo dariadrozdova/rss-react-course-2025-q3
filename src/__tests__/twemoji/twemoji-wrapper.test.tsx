@@ -1,10 +1,11 @@
-import { TwemojiWrapper } from "@/components/twemoji/twemoji-wrapper";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
+import { TwemojiWrapper } from "@/components/twemoji/twemoji-wrapper";
+
 vi.mock("react-twemoji", () => ({
   default: vi.fn(({ children, options }) => (
-    <div data-testid="twemoji-mock" data-options={JSON.stringify(options)}>
+    <div data-options={JSON.stringify(options)} data-testid="twemoji-mock">
       {children}
     </div>
   )),
@@ -39,7 +40,7 @@ describe("TwemojiWrapper", () => {
   });
 
   it("applies animated and interactive classes when props are true", () => {
-    render(<TwemojiWrapper emoji="🎉" animated={true} interactive={true} />);
+    render(<TwemojiWrapper animated emoji="🎉" interactive />);
     const twemojiMock = screen.getByTestId("twemoji-mock");
     const parsedOptions = JSON.parse(twemojiMock.dataset.options || "{}");
 
@@ -49,7 +50,7 @@ describe("TwemojiWrapper", () => {
 
   it("applies a custom className", () => {
     const customClassName = "my-custom-class";
-    render(<TwemojiWrapper emoji="👍" className={customClassName} />);
+    render(<TwemojiWrapper className={customClassName} emoji="👍" />);
     const twemojiMock = screen.getByTestId("twemoji-mock");
     const parsedOptions = JSON.parse(twemojiMock.dataset.options || "{}");
 

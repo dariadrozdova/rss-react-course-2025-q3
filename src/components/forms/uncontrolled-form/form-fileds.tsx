@@ -59,7 +59,7 @@ export const FormFields: FC<FormFieldsProps> = ({ countries, errors }) => {
           id="password"
           label={<>Password {requiredStar}</>}
           name="password"
-          showStrength={true}
+          showStrength
         />
         <PasswordInput
           error={errors.confirmPassword}

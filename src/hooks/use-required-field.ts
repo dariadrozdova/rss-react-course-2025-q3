@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+
 import { z } from "zod";
 
 export function useRequiredFields<T extends z.ZodType>(
@@ -16,15 +17,15 @@ export function useRequiredFields<T extends z.ZodType>(
   }, [schema, fieldNames]);
 
   return {
-    isRequired: (fieldName: string): boolean => {
-      return requiredFields[fieldName] ?? false;
-    },
-
     getAllRequired: (): string[] => {
       return Object.keys(requiredFields).filter((key) => requiredFields[key]);
     },
 
     getFieldsInfo: () => requiredFields,
+
+    isRequired: (fieldName: string): boolean => {
+      return requiredFields[fieldName] ?? false;
+    },
   };
 }
 
@@ -37,12 +38,15 @@ function isFieldRequired<T extends z.ZodType>(
     const pathSegments = fieldPath.split(".");
     let current = testData;
 
-    for (let i = 0; i < pathSegments.length - 1; i++) {
-      current[pathSegments[i]] = {};
-      current = current[pathSegments[i]] as Record<string, unknown>;
+    for (let index = 0; index < pathSegments.length - 1; index++) {
+      current[pathSegments[index]] = {};
+      current = current[pathSegments[index]] as Record<string, unknown>;
     }
 
-    current[pathSegments[pathSegments.length - 1]] = undefined;
+    const lastSegment = pathSegments.at(-1);
+    if (lastSegment !== undefined) {
+      current[lastSegment] = undefined;
+    }
 
     const result = schema.safeParse(testData);
 

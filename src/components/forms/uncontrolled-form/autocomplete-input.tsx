@@ -7,7 +7,7 @@ import { classNames } from "@/lib/class-names";
 interface AutocompleteInputProps {
   error?: string;
   id: string;
-  label: string | ReactNode;
+  label: ReactNode | string;
   name: string;
   options: string[];
 }

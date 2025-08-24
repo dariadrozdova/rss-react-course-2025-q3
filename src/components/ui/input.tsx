@@ -5,10 +5,9 @@ import { classNames } from "@/lib/class-names";
 export const Input = forwardRef<
   HTMLInputElement,
   InputHTMLAttributes<HTMLInputElement>
->(({ className, ...props }, ref) => {
+>(({ className, ...props }, reference) => {
   return (
     <input
-      ref={ref}
       className={classNames(
         "w-full rounded-xl px-4 py-2",
         "text-gray-700",
@@ -21,6 +20,7 @@ export const Input = forwardRef<
         "placeholder:text-gray-400",
         className,
       )}
+      ref={reference}
       {...props}
     />
   );

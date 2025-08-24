@@ -1,10 +1,11 @@
-import { CatEmoji } from "@/components/twemoji/cat-emoji";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
+import { CatEmoji } from "@/components/twemoji/cat-emoji";
+
 vi.mock("@/components/twemoji/twemoji-wrapper", () => ({
   TwemojiWrapper: vi.fn(({ emoji, ...props }) => (
-    <div data-testid="twemoji-wrapper-mock" data-emoji={emoji} {...props}>
+    <div data-emoji={emoji} data-testid="twemoji-wrapper-mock" {...props}>
       Mocked TwemojiWrapper for {emoji}
     </div>
   )),

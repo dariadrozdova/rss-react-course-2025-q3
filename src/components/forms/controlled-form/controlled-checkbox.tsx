@@ -7,17 +7,17 @@ import { type FormInput } from "@/utils/form-schema";
 interface ControlledCheckboxProps {
   error?: string;
   id: keyof FormInput;
+  isRequired?: boolean;
   label: string;
   register: ReturnType<UseFormRegister<FormInput>>;
-  isRequired?: boolean;
 }
 
 export const ControlledCheckbox: FC<ControlledCheckboxProps> = ({
   error,
   id,
+  isRequired = false,
   label,
   register,
-  isRequired = false,
 }) => {
   return (
     <div className="mb-4">

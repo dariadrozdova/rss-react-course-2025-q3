@@ -1,5 +1,6 @@
-import { classNames } from "@/lib/class-names";
 import type { FC } from "react";
+
+import { classNames } from "@/lib/class-names";
 
 interface PasswordRequirementProps {
   met: boolean;

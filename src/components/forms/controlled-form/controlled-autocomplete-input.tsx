@@ -9,15 +9,15 @@ import { type FormInput } from "@/utils/form-schema";
 interface ControlledAutocompleteInputProps {
   error?: string;
   id: keyof FormInput;
+  isRequired?: boolean;
   label: string;
   options: string[];
   register: ReturnType<UseFormRegister<FormInput>>;
-  isRequired?: boolean;
 }
 
 export const ControlledAutocompleteInput: FC<
   ControlledAutocompleteInputProps
-> = ({ error, id, label, options, register, isRequired = false }) => {
+> = ({ error, id, isRequired = false, label, options, register }) => {
   return (
     <div className="relative mb-4">
       <Label htmlFor={id}>

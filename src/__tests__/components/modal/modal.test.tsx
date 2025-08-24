@@ -1,25 +1,26 @@
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
 import { Modal } from "@/components/modal/modal";
 import { ModalButtons } from "@/components/modal/modal-buttons";
 import { ModalContent } from "@/components/modal/modal-content";
 import { ModalOverlay } from "@/components/modal/modal-overlay";
 import { ModalPortal } from "@/components/modal/modal-portal";
-import { cleanup, fireEvent, render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("focus-trap-react", () => ({
   FocusTrap: ({
-    children,
     active,
+    children,
   }: {
-    children: React.ReactNode;
     active: boolean;
+    children: React.ReactNode;
   }) => (active ? <div data-testid="focus-trap">{children}</div> : children),
 }));
 
 vi.mock("@/components/twemoji", () => ({
   CatEmoji: ({ size, variant }: { size: string; variant: string }) => (
-    <span data-testid="cat-emoji" data-size={size} data-variant={variant}>
+    <span data-size={size} data-testid="cat-emoji" data-variant={variant}>
       🐱
     </span>
   ),
@@ -63,7 +64,7 @@ describe("Modal Components", () => {
   beforeEach(() => {
     const modalRoot = document.createElement("div");
     modalRoot.id = "modal-root";
-    document.body.appendChild(modalRoot);
+    document.body.append(modalRoot);
   });
 
   afterEach(() => {
@@ -71,7 +72,7 @@ describe("Modal Components", () => {
     vi.clearAllMocks();
     const modalRoot = document.getElementById("modal-root");
     if (modalRoot) {
-      document.body.removeChild(modalRoot);
+      modalRoot.remove();
     }
     document.body.style.overflow = "";
   });
@@ -92,7 +93,7 @@ describe("Modal Components", () => {
     it("should fallback to document.body when modal-root not found", () => {
       const modalRoot = document.getElementById("modal-root");
       if (modalRoot) {
-        document.body.removeChild(modalRoot);
+        modalRoot.remove();
       }
 
       render(
@@ -224,7 +225,7 @@ describe("Modal Components", () => {
     });
 
     it("should pass props to ModalContent", () => {
-      render(<Modal {...defaultProps} title="Test Title" size="lg" />);
+      render(<Modal {...defaultProps} size="lg" title="Test Title" />);
 
       expect(screen.getByText("Test Title")).toBeInTheDocument();
     });

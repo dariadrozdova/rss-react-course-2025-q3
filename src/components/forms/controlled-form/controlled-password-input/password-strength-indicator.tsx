@@ -1,39 +1,43 @@
+import type { FC } from "react";
+
 import { PasswordRequirement } from "@/components/forms/controlled-form/controlled-password-input/password-requirement";
 import { classNames } from "@/lib/class-names";
 import {
   calculatePasswordStrength,
   type PasswordStrengthResult,
 } from "@/utils/password-strength";
-import type { FC } from "react";
 
 interface PasswordStrengthIndicatorProps {
-  password: string;
   className?: string;
+  password: string;
 }
 
 export const PasswordStrengthIndicator: FC<PasswordStrengthIndicatorProps> = ({
-  password,
   className,
+  password,
 }) => {
   const result = password ? calculatePasswordStrength(password) : null;
 
   const getStrengthColors = (strength: PasswordStrengthResult["strength"]) => {
     switch (strength) {
-      case "weak":
+      case "medium": {
         return {
-          text: "text-error",
-          bg: "bg-error",
-        };
-      case "medium":
-        return {
-          text: "text-warning",
           bg: "bg-warning",
+          text: "text-warning",
         };
-      case "strong":
+      }
+      case "strong": {
         return {
-          text: "text-success",
           bg: "bg-success",
+          text: "text-success",
         };
+      }
+      case "weak": {
+        return {
+          bg: "bg-error",
+          text: "text-error",
+        };
+      }
     }
   };
 

@@ -33,9 +33,9 @@ describe("FormFields", () => {
       expect(confirmPasswordInput).toHaveAttribute("name", "confirmPassword");
 
       const genderRadios = screen.getAllByRole("radio");
-      genderRadios.forEach((radio) => {
+      for (const radio of genderRadios) {
         expect(radio).toHaveAttribute("name", "gender");
-      });
+      }
 
       const acceptTermsCheckbox = screen.getByRole("checkbox");
       const fileInput = document.querySelector('input[type="file"]');
@@ -72,9 +72,9 @@ describe("FormFields", () => {
 
     it("should display multiple error messages simultaneously", () => {
       const multipleErrors = {
-        name: "Name is required",
-        email: "Invalid email format",
         age: "Age must be positive",
+        email: "Invalid email format",
+        name: "Name is required",
       };
 
       render(<FormFields countries={mockCountries} errors={multipleErrors} />);
@@ -116,9 +116,9 @@ describe("FormFields", () => {
       render(<FormFields countries={mockCountries} errors={mockErrors} />);
 
       const genderInputs = screen.getAllByRole("radio");
-      genderInputs.forEach((input) => {
+      for (const input of genderInputs) {
         expect(input).toHaveAttribute("name", "gender");
-      });
+      }
     });
   });
 
@@ -155,9 +155,9 @@ describe("FormFields", () => {
       render(<FormFields countries={mockCountries} errors={mockErrors} />);
 
       const requiredStars = screen.getAllByText("*");
-      requiredStars.forEach((star) => {
+      for (const star of requiredStars) {
         expect(star).toHaveClass("text-error", "font-bold", "ml-1");
-      });
+      }
     });
   });
 
@@ -180,7 +180,9 @@ describe("FormFields", () => {
         <FormFields countries={mockCountries} errors={mockErrors} />,
       );
 
-      const fullWidthElements = container.querySelectorAll(".md\\:col-span-2");
+      const fullWidthElements = container.querySelectorAll(
+        String.raw`.md\:col-span-2`,
+      );
       expect(fullWidthElements).toHaveLength(4);
     });
 

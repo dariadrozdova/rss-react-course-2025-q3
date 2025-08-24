@@ -1,47 +1,48 @@
-import { PasswordRequirement } from "@/components/forms/controlled-form/controlled-password-input/password-requirement";
-import { PasswordStrengthIndicator } from "@/components/forms/controlled-form/controlled-password-input/password-strength-indicator";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
+
+import { PasswordRequirement } from "@/components/forms/controlled-form/controlled-password-input/password-requirement";
+import { PasswordStrengthIndicator } from "@/components/forms/controlled-form/controlled-password-input/password-strength-indicator";
 
 vi.mock("@/utils/password-strength", () => ({
   calculatePasswordStrength: vi.fn((password: string) => {
     if (password === "weak") {
       return {
-        strength: "weak" as const,
-        percentage: 25,
         checks: {
-          hasMinLength: false,
-          hasUppercase: false,
           hasLowercase: true,
+          hasMinLength: false,
           hasNumber: false,
           hasSpecial: false,
+          hasUppercase: false,
         },
+        percentage: 25,
+        strength: "weak" as const,
       };
     }
     if (password === "medium") {
       return {
-        strength: "medium" as const,
-        percentage: 60,
         checks: {
-          hasMinLength: true,
-          hasUppercase: true,
           hasLowercase: true,
+          hasMinLength: true,
           hasNumber: false,
           hasSpecial: false,
+          hasUppercase: true,
         },
+        percentage: 60,
+        strength: "medium" as const,
       };
     }
     if (password === "strong") {
       return {
-        strength: "strong" as const,
-        percentage: 100,
         checks: {
-          hasMinLength: true,
-          hasUppercase: true,
           hasLowercase: true,
+          hasMinLength: true,
           hasNumber: true,
           hasSpecial: true,
+          hasUppercase: true,
         },
+        percentage: 100,
+        strength: "strong" as const,
       };
     }
     return null;
@@ -98,7 +99,7 @@ describe("PasswordStrengthIndicator", () => {
   });
 
   it("should show met requirement with checkmark", () => {
-    render(<PasswordRequirement met={true} text="At least 8 characters" />);
+    render(<PasswordRequirement met text="At least 8 characters" />);
 
     expect(screen.getByText("✓")).toBeInTheDocument();
     expect(screen.getByText("At least 8 characters")).toBeInTheDocument();

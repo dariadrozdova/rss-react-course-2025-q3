@@ -1,6 +1,7 @@
-import { render, screen } from "@testing-library/react";
 import type { UseFormRegisterReturn } from "react-hook-form";
-import { beforeEach, describe, expect, it, vi, type Mock } from "vitest";
+
+import { render, screen } from "@testing-library/react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { ControlledAutocompleteInput } from "@/components/forms/controlled-form/controlled-autocomplete-input";
 import type { FormInput } from "@/utils/form-schema";
@@ -9,17 +10,17 @@ const createMockRegister = <T extends keyof FormInput>(
   name: T,
 ): UseFormRegisterReturn<T> => ({
   name,
-  onBlur: vi.fn() as Mock,
-  onChange: vi.fn() as Mock,
-  ref: vi.fn() as Mock,
+  onBlur: vi.fn(),
+  onChange: vi.fn(),
+  ref: vi.fn(),
 });
 
-type MockProps<T extends keyof FormInput> = {
+interface MockProps<T extends keyof FormInput> {
   id: T;
   label: string;
   options: string[];
   register: UseFormRegisterReturn<T>;
-};
+}
 
 describe("ControlledAutocompleteInput", () => {
   const mockOptions = ["France", "Germany", "Spain"];

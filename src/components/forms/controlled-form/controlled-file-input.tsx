@@ -8,17 +8,17 @@ import { type FormInput } from "@/utils/form-schema";
 interface ControlledFileInputProps {
   error?: FieldError | string | undefined;
   id: keyof FormInput;
+  isRequired?: boolean;
   label: string;
   setValue: UseFormSetValue<FormInput>;
-  isRequired?: boolean;
 }
 
 export const ControlledFileInput: FC<ControlledFileInputProps> = ({
   error,
   id,
+  isRequired = false,
   label,
   setValue,
-  isRequired = false,
 }) => {
   const fileInputReference = useRef<HTMLInputElement>(null);
   const fileNameReference = useRef<HTMLSpanElement>(null);

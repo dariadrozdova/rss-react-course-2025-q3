@@ -1,10 +1,12 @@
+import { Provider } from "react-redux";
+
+import { configureStore } from "@reduxjs/toolkit";
+import { render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
+
 import { App } from "@/app";
 import countriesReducer from "@/store/slices/countries-slice";
 import formsReducer from "@/store/slices/form-slice";
-import { configureStore } from "@reduxjs/toolkit";
-import { render, screen } from "@testing-library/react";
-import { Provider } from "react-redux";
-import { describe, expect, it, vi } from "vitest";
 
 vi.mock("@/components/layout/layout", () => ({
   Layout: ({ children }: { children: React.ReactNode }) => (
@@ -33,9 +35,9 @@ vi.mock("@/components/twemoji", () => ({
     variant: string;
   }) => (
     <div
-      data-testid="cat-emoji"
       data-animated={animated}
       data-size={size}
+      data-testid="cat-emoji"
       data-variant={variant}
     >
       Cat Emoji
@@ -51,7 +53,7 @@ vi.mock("@/components/ui/card", () => ({
     children: React.ReactNode;
     className: string;
   }) => (
-    <div data-testid="card" className={className}>
+    <div className={className} data-testid="card">
       {children}
     </div>
   ),

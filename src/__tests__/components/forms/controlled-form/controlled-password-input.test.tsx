@@ -1,10 +1,12 @@
+import type { InputHTMLAttributes } from "react";
+
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
 import { ControlledPasswordInput } from "@/components/forms/controlled-form/controlled-password-input/controlled-password-input";
 import type { ButtonProps } from "@/components/ui/button";
 import type { LabelProps } from "@/components/ui/label";
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import type { InputHTMLAttributes } from "react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/components/ui/button", () => ({
   Button: ({ children, onClick }: ButtonProps) => (
@@ -28,7 +30,7 @@ vi.mock(
   "@/components/forms/controlled-form/controlled-password-input/password-strength-indicator",
   () => ({
     PasswordStrengthIndicator: ({ password }: { password: string }) => (
-      <div data-testid="password-strength" data-password={password}>
+      <div data-password={password} data-testid="password-strength">
         Strength Indicator
       </div>
     ),
@@ -40,8 +42,8 @@ describe("ControlledPasswordInput", () => {
 
   const mockRegister = {
     name: inputId,
-    onChange: vi.fn(),
     onBlur: vi.fn(),
+    onChange: vi.fn(),
     ref: vi.fn(),
   };
   const mockWatch = vi.fn();
@@ -75,7 +77,7 @@ describe("ControlledPasswordInput", () => {
   });
 
   it("should show required indicator when required", () => {
-    render(<ControlledPasswordInput {...defaultProps} isRequired={true} />);
+    render(<ControlledPasswordInput {...defaultProps} isRequired />);
 
     expect(screen.getByText("*")).toBeInTheDocument();
   });
@@ -86,8 +88,8 @@ describe("ControlledPasswordInput", () => {
     render(
       <ControlledPasswordInput
         {...defaultProps}
+        showStrength
         watch={mockWatch}
-        showStrength={true}
       />,
     );
 
@@ -104,8 +106,8 @@ describe("ControlledPasswordInput", () => {
     render(
       <ControlledPasswordInput
         {...defaultProps}
+        showStrength
         watch={mockWatch}
-        showStrength={true}
       />,
     );
 
@@ -127,8 +129,8 @@ describe("ControlledPasswordInput", () => {
     render(
       <ControlledPasswordInput
         {...defaultProps}
-        placeholder="Enter password"
         autoComplete="new-password"
+        placeholder="Enter password"
       />,
     );
 

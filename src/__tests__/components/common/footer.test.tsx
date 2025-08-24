@@ -1,27 +1,28 @@
-import { Footer } from "@/components/common/footer";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
+import { Footer } from "@/components/common/footer";
+
 vi.mock("@/components/twemoji", () => ({
   CatEmoji: ({
+    animated,
     size,
     variant,
-    animated,
   }: {
+    animated?: boolean;
     size?: string;
     variant?: string;
-    animated?: boolean;
   }) => (
     <div
-      data-testid={`cat-emoji-${variant || "default"}`}
-      data-size={size}
       data-animated={animated}
+      data-size={size}
+      data-testid={`cat-emoji-${variant || "default"}`}
     >
       Cat {variant}
     </div>
   ),
   TwemojiWrapper: ({ emoji, size }: { emoji: string; size?: string }) => (
-    <span data-testid="twemoji-wrapper" data-emoji={emoji} data-size={size}>
+    <span data-emoji={emoji} data-size={size} data-testid="twemoji-wrapper">
       {emoji}
     </span>
   ),

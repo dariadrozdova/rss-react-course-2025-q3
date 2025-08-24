@@ -1,3 +1,5 @@
+import { type FormEvent, useEffect, useRef, useState } from "react";
+
 import { useAppDispatch } from "@/store/hooks";
 import { addFormSubmission } from "@/store/slices/form-slice";
 import { fileToBase64 } from "@/utils/file-to-base-64";
@@ -6,13 +8,12 @@ import {
   type FormOutput,
   formSchema,
 } from "@/utils/form-schema";
-import { type FormEvent, useEffect, useRef, useState } from "react";
 
 const FORM_DRAFT_KEY = "uncontrolledFormDraft";
 
 export const useUncontrolledForm = (onSuccess: () => void) => {
   const dispatch = useAppDispatch();
-  const formRef = useRef<HTMLFormElement | null>(null);
+  const formReference = useRef<HTMLFormElement | null>(null);
 
   const [errors, setErrors] = useState<
     Partial<Record<keyof FormInput, string>>
@@ -20,13 +21,15 @@ export const useUncontrolledForm = (onSuccess: () => void) => {
 
   useEffect(() => {
     const savedData = localStorage.getItem(FORM_DRAFT_KEY);
-    if (!savedData || !formRef.current) return;
+    if (!savedData || !formReference.current) {
+      return;
+    }
 
     try {
       const parsedData = JSON.parse(savedData) as Partial<FormOutput>;
-      const form = formRef.current;
+      const form = formReference.current;
 
-      Object.entries(parsedData).forEach(([key, value]) => {
+      for (const [key, value] of Object.entries(parsedData)) {
         if (
           key !== "password" &&
           key !== "confirmPassword" &&
@@ -48,7 +51,7 @@ export const useUncontrolledForm = (onSuccess: () => void) => {
             }
           }
         }
-      });
+      }
     } catch (error) {
       console.error("Error while restoring form data:", error);
       localStorage.removeItem(FORM_DRAFT_KEY);
@@ -56,11 +59,13 @@ export const useUncontrolledForm = (onSuccess: () => void) => {
   }, []);
 
   const handleChange = (): void => {
-    if (!formRef.current) return;
-    const formData = new FormData(formRef.current);
+    if (!formReference.current) {
+      return;
+    }
+    const formData = new FormData(formReference.current);
 
     const values: Partial<FormOutput> = {};
-    formData.forEach((value, key) => {
+    for (const [key, value] of formData.entries()) {
       if (
         key !== "password" &&
         key !== "confirmPassword" &&
@@ -68,11 +73,15 @@ export const useUncontrolledForm = (onSuccess: () => void) => {
       ) {
         values[key as keyof FormOutput] = value as any;
       }
-    });
+    }
 
     const hasData = Object.values(values).some((v) => {
-      if (typeof v === "string") return v.trim() !== "";
-      if (typeof v === "boolean") return v;
+      if (typeof v === "string") {
+        return v.trim() !== "";
+      }
+      if (typeof v === "boolean") {
+        return v;
+      }
       return v !== undefined && v !== null;
     });
 
@@ -143,5 +152,5 @@ export const useUncontrolledForm = (onSuccess: () => void) => {
     onSuccess();
   };
 
-  return { formRef, errors, handleSubmit, handleChange };
+  return { errors, formRef: formReference, handleChange, handleSubmit };
 };

@@ -25,19 +25,19 @@ export const ControlledForm: FC<{
     setValue,
     watch,
   } = useForm({
-    mode: "onChange",
-    resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      email: "",
-      age: "",
-      password: "",
-      confirmPassword: "",
       acceptTerms: false,
+      age: "",
+      confirmPassword: "",
       country: "",
+      email: "",
       gender: undefined,
+      name: "",
+      password: "",
       picture: undefined,
     },
+    mode: "onChange",
+    resolver: zodResolver(formSchema),
   });
 
   useEffect(() => {
@@ -45,11 +45,11 @@ export const ControlledForm: FC<{
     if (savedData) {
       try {
         const parsedData = JSON.parse(savedData);
-        Object.keys(parsedData).forEach((key) => {
+        for (const key of Object.keys(parsedData)) {
           if (key !== "password" && key !== "confirmPassword") {
             setValue(key as keyof FormOutput, parsedData[key]);
           }
-        });
+        }
       } catch (error) {
         console.error("Error while restoring form data:", error);
         localStorage.removeItem(FORM_DRAFT_KEY);
@@ -60,11 +60,15 @@ export const ControlledForm: FC<{
   const watchedValues = watch();
 
   useEffect(() => {
-    const { password, confirmPassword, ...dataToSave } = watchedValues;
+    const { confirmPassword, password, ...dataToSave } = watchedValues;
 
     const hasData = Object.values(dataToSave).some((value) => {
-      if (typeof value === "string") return value.trim() !== "";
-      if (typeof value === "boolean") return value;
+      if (typeof value === "string") {
+        return value.trim() !== "";
+      }
+      if (typeof value === "boolean") {
+        return value;
+      }
       return value !== undefined && value !== null;
     });
 

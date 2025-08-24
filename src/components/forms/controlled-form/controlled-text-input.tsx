@@ -15,10 +15,10 @@ interface ControlledTextInputProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, "name"> {
   error?: string;
   id: keyof FormInput;
+  isRequired?: boolean;
   label: string;
   register: ReturnType<UseFormRegister<FormInput>>;
   watch?: UseFormWatch<FormInput>;
-  isRequired?: boolean;
 }
 
 const getPasswordStrength = (password: string): string => {
@@ -44,11 +44,11 @@ const getPasswordStrength = (password: string): string => {
 export const ControlledTextInput: FC<ControlledTextInputProps> = ({
   error,
   id,
+  isRequired = false,
   label,
   register,
   type,
   watch,
-  isRequired = false,
   ...props
 }) => {
   const isPasswordField = type === "password" && id === "password";

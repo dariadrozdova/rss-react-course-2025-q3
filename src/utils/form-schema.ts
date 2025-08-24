@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z, ZodString } from "zod";
 
 import {
   AGE_MIN_VALUE,
@@ -10,9 +10,11 @@ import {
 } from "@/lib/constants";
 import { COUNTRIES } from "@/store/slices/countries-slice";
 
-const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png"];
+const ACCEPTED_IMAGE_TYPES = new Set(["image/jpeg", "image/png"]);
 
-export const createCountryValidation = (availableCountries: string[]) => {
+export const createCountryValidation = (
+  availableCountries: string[],
+): ZodString => {
   return z
     .string()
     .min(1, "Country is required")
@@ -24,7 +26,7 @@ export const createCountryValidation = (availableCountries: string[]) => {
 
 export const formSchema = z
   .object({
-    acceptTerms: z.boolean().refine((value) => value === true, {
+    acceptTerms: z.boolean().refine((value) => value, {
       message: "You must accept the terms",
     }),
 
@@ -41,13 +43,24 @@ export const formSchema = z
 
     confirmPassword: z.string().min(1, "Confirm password is required"),
 
+    country: createCountryValidation(COUNTRIES),
+
     email: z.email("Invalid email").min(1, "Email is required"),
+
+    gender: z
+      .union([z.literal("female"), z.literal("male"), z.literal("other")])
+      .nullable()
+      .refine((value) => value !== null, {
+        message: "Gender is required",
+      }),
 
     name: z
       .string()
       .min(NAME_MIN_LENGTH, "Name is required")
       .refine((value) => {
-        if (value.length < NAME_MIN_LENGTH) return true;
+        if (value.length < NAME_MIN_LENGTH) {
+          return true;
+        }
         return /^(\p{Lu})\p{L}*$/u.test(value);
       }, "Name must start with an uppercase letter"),
 
@@ -70,24 +83,15 @@ export const formSchema = z
         return /[^\p{L}\p{Nd}\s]/u.test(value);
       }, "Password must contain a special character"),
 
-    country: createCountryValidation(COUNTRIES),
-
-    gender: z
-      .union([z.literal("female"), z.literal("male"), z.literal("other")])
-      .nullable()
-      .refine((value) => value !== null && value !== undefined, {
-        message: "Gender is required",
-      }),
-
     picture: z
-      .custom<File>((val) => val instanceof File, {
+      .custom<File>((value) => value instanceof File, {
         message: "Picture is required and must be a File",
       })
       .refine((file) => file.size <= FILE_SIZE_LIMIT_BYTES, {
         message: `File size must be ≤ ${FILE_SIZE_LIMIT_MB}MB`,
       })
       .refine(
-        (file) => ACCEPTED_IMAGE_TYPES.includes(file.type),
+        (file) => ACCEPTED_IMAGE_TYPES.has(file.type),
         "Only .png or .jpeg files are allowed",
       ),
   })

@@ -1,9 +1,10 @@
-import { ControlledFileInput } from "@/components/forms/controlled-form/controlled-file-input";
-import type { ButtonProps } from "@/components/ui/button";
-import type { LabelProps } from "@/components/ui/label";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+
+import { ControlledFileInput } from "@/components/forms/controlled-form/controlled-file-input";
+import type { ButtonProps } from "@/components/ui/button";
+import type { LabelProps } from "@/components/ui/label";
 
 vi.mock("@/components/ui/button", () => ({
   Button: ({ children, onClick }: ButtonProps) => (
@@ -40,7 +41,7 @@ describe("ControlledFileInput", () => {
   });
 
   it("should show required indicator when required", () => {
-    render(<ControlledFileInput {...defaultProps} isRequired={true} />);
+    render(<ControlledFileInput {...defaultProps} isRequired />);
 
     expect(screen.getByText("*")).toBeInTheDocument();
   });

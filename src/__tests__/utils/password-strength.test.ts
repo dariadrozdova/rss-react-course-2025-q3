@@ -1,99 +1,100 @@
+import { describe, expect, it } from "vitest";
+
 import {
   calculatePasswordStrength,
   type PasswordStrengthResult,
 } from "@/utils/password-strength";
-import { describe, expect, it } from "vitest";
 
 describe("calculatePasswordStrength", () => {
-  const testCases: Array<[string, PasswordStrengthResult]> = [
+  const testCases: [string, PasswordStrengthResult][] = [
     [
       "",
       {
-        score: 0,
-        strength: "weak",
-        percentage: 0,
         checks: {
-          hasUppercase: false,
           hasLowercase: false,
+          hasMinLength: false,
           hasNumber: false,
           hasSpecial: false,
-          hasMinLength: false,
+          hasUppercase: false,
         },
+        percentage: 0,
+        score: 0,
+        strength: "weak",
       },
     ],
     [
       "short",
       {
-        score: 1,
-        strength: "weak",
-        percentage: 20,
         checks: {
-          hasUppercase: false,
           hasLowercase: true,
+          hasMinLength: false,
           hasNumber: false,
           hasSpecial: false,
-          hasMinLength: false,
+          hasUppercase: false,
         },
+        percentage: 20,
+        score: 1,
+        strength: "weak",
       },
     ],
     [
       "Medium1",
       {
-        score: 3,
-        strength: "medium",
-        percentage: 60,
         checks: {
-          hasUppercase: true,
           hasLowercase: true,
+          hasMinLength: false,
           hasNumber: true,
           hasSpecial: false,
-          hasMinLength: false,
+          hasUppercase: true,
         },
+        percentage: 60,
+        score: 3,
+        strength: "medium",
       },
     ],
     [
       "strongpassword",
       {
-        score: 2,
-        strength: "weak",
-        percentage: 40,
         checks: {
-          hasUppercase: false,
           hasLowercase: true,
+          hasMinLength: true,
           hasNumber: false,
           hasSpecial: false,
-          hasMinLength: true,
+          hasUppercase: false,
         },
+        percentage: 40,
+        score: 2,
+        strength: "weak",
       },
     ],
     [
       "StrongPass1",
       {
-        score: 4,
-        strength: "strong",
-        percentage: 80,
         checks: {
-          hasUppercase: true,
           hasLowercase: true,
+          hasMinLength: true,
           hasNumber: true,
           hasSpecial: false,
-          hasMinLength: true,
+          hasUppercase: true,
         },
+        percentage: 80,
+        score: 4,
+        strength: "strong",
       },
     ],
     [
       "V€ryStr0ng!",
       {
-        score: 5,
-        strength: "strong",
-        percentage: 100,
         checks: {
-          hasUppercase: true,
           hasLowercase: true,
+          hasMinLength: true,
           hasNumber: true,
           hasSpecial: true,
-          hasMinLength: true,
+          hasUppercase: true,
         },
+        percentage: 100,
+        score: 5,
+        strength: "strong",
       },
     ],
   ];

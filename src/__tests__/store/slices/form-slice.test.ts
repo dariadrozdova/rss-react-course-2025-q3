@@ -1,11 +1,12 @@
+import { describe, expect, it } from "vitest";
+
 import formsReducer, {
   addFormSubmission,
   clearRecentSubmission,
+  type FormData,
   selectRecentSubmissionId,
   selectSubmissions,
-  type FormData,
 } from "@/store/slices/form-slice";
-import { describe, expect, it } from "vitest";
 
 describe("Form Slice", () => {
   const mockFormData: FormData = {
@@ -48,9 +49,9 @@ describe("Form Slice", () => {
     it("should handle multiple addFormSubmission actions", () => {
       const secondFormData: FormData = {
         ...mockFormData,
+        email: "jane@example.com",
         id: "test-id-456",
         name: "Jane Doe",
-        email: "jane@example.com",
       };
 
       let state = formsReducer(initialState, addFormSubmission(mockFormData));
@@ -78,8 +79,8 @@ describe("Form Slice", () => {
   describe("Selectors", () => {
     const mockState = {
       forms: {
-        submissions: [mockFormData],
         recentSubmissionId: "test-id-123",
+        submissions: [mockFormData],
       },
     };
 
@@ -93,21 +94,21 @@ describe("Form Slice", () => {
 
     it("should select empty submissions array", () => {
       const emptyState = {
-        forms: { submissions: [], recentSubmissionId: null },
+        forms: { recentSubmissionId: null, submissions: [] },
       };
       expect(selectSubmissions(emptyState)).toEqual([]);
     });
 
     it("should select null recent submission id", () => {
       const nullState = {
-        forms: { submissions: [], recentSubmissionId: null },
+        forms: { recentSubmissionId: null, submissions: [] },
       };
       expect(selectRecentSubmissionId(nullState)).toBeNull();
     });
   });
 
   describe("FormData Interface Coverage", () => {
-    const testCases: Array<[keyof FormData, FormData[keyof FormData]]> = [
+    const testCases: [keyof FormData, FormData[keyof FormData]][] = [
       ["gender", "female"],
       ["gender", "other"],
       ["gender", null],

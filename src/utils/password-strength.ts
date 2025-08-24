@@ -1,33 +1,35 @@
+import { MIN_PASSWORD_LENGTH } from "@/lib/constants";
+
 export interface PasswordStrengthChecks {
-  hasUppercase: boolean;
   hasLowercase: boolean;
+  hasMinLength: boolean;
   hasNumber: boolean;
   hasSpecial: boolean;
-  hasMinLength: boolean;
+  hasUppercase: boolean;
 }
 
 export interface PasswordStrengthResult {
-  score: number;
-  strength: "weak" | "medium" | "strong";
   checks: PasswordStrengthChecks;
   percentage: number;
+  score: number;
+  strength: "medium" | "strong" | "weak";
 }
 
 export const calculatePasswordStrength = (
   password: string,
 ): PasswordStrengthResult => {
   const checks: PasswordStrengthChecks = {
-    hasUppercase: /[\p{Lu}]/u.test(password),
     hasLowercase: /[\p{Ll}]/u.test(password),
+    hasMinLength: password.length >= MIN_PASSWORD_LENGTH,
     hasNumber: /[\p{Nd}]/u.test(password),
     hasSpecial: /[^\p{L}\p{Nd}\s]/u.test(password),
-    hasMinLength: password.length >= 8,
+    hasUppercase: /[\p{Lu}]/u.test(password),
   };
 
   const score = Object.values(checks).filter(Boolean).length;
   const percentage = (score / 5) * 100;
 
-  let strength: "weak" | "medium" | "strong";
+  let strength: "medium" | "strong" | "weak";
   if (score <= 2) {
     strength = "weak";
   } else if (score <= 3) {
@@ -37,9 +39,9 @@ export const calculatePasswordStrength = (
   }
 
   return {
-    score,
-    strength,
     checks,
     percentage,
+    score,
+    strength,
   };
 };

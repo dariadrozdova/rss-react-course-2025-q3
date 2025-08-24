@@ -1,6 +1,7 @@
-import { render, screen } from "@testing-library/react";
 import type { UseFormRegisterReturn, UseFormWatch } from "react-hook-form";
-import { describe, expect, it, vi, type Mock } from "vitest";
+
+import { render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
 
 import { ControlledTextInput } from "@/components/forms/controlled-form/controlled-text-input";
 import type { FormInput } from "@/utils/form-schema";
@@ -9,9 +10,9 @@ const createMockRegister = <T extends keyof FormInput>(
   name: T,
 ): UseFormRegisterReturn<T> => ({
   name,
-  onBlur: vi.fn() as Mock,
-  onChange: vi.fn() as Mock,
-  ref: vi.fn() as Mock,
+  onBlur: vi.fn(),
+  onChange: vi.fn(),
+  ref: vi.fn(),
 });
 
 describe("ControlledTextInput", () => {
@@ -19,10 +20,10 @@ describe("ControlledTextInput", () => {
     const mockRegister = createMockRegister("name");
     render(
       <ControlledTextInput
-        label="Full Name"
-        id="name"
-        register={mockRegister}
         error="Name is required"
+        id="name"
+        label="Full Name"
+        register={mockRegister}
       />,
     );
 
@@ -33,10 +34,10 @@ describe("ControlledTextInput", () => {
     const mockRegister = createMockRegister("name");
     render(
       <ControlledTextInput
-        label="Full Name"
         id="name"
-        register={mockRegister}
         isRequired
+        label="Full Name"
+        register={mockRegister}
       />,
     );
 
@@ -56,15 +57,17 @@ describe("ControlledTextInput", () => {
 
     it("should show strength indicator for password input with watch", () => {
       mockWatch.mockImplementationOnce((fieldName: keyof FormInput) => {
-        if (fieldName === "password") return "weak";
+        if (fieldName === "password") {
+          return "weak";
+        }
         return "";
       });
 
       const mockRegister = createMockRegister("password");
       render(
         <ControlledTextInput
-          label="Password"
           id="password"
+          label="Password"
           register={mockRegister}
           type="password"
           watch={mockWatch as UseFormWatch<FormInput>}
@@ -75,15 +78,17 @@ describe("ControlledTextInput", () => {
 
     it("should display 'Weak' for a weak password", () => {
       mockWatch.mockImplementationOnce((fieldName: keyof FormInput) => {
-        if (fieldName === "password") return "pass";
+        if (fieldName === "password") {
+          return "pass";
+        }
         return "";
       });
 
       const mockRegister = createMockRegister("password");
       render(
         <ControlledTextInput
-          label="Password"
           id="password"
+          label="Password"
           register={mockRegister}
           type="password"
           watch={mockWatch as UseFormWatch<FormInput>}
@@ -94,15 +99,17 @@ describe("ControlledTextInput", () => {
 
     it("should display 'Strong' for a strong password", () => {
       mockWatch.mockImplementation((fieldName: keyof FormInput) => {
-        if (fieldName === "password") return "My_Strong_Password123";
+        if (fieldName === "password") {
+          return "My_Strong_Password123";
+        }
         return "";
       });
 
       const mockRegister = createMockRegister("password");
       render(
         <ControlledTextInput
-          label="Password"
           id="password"
+          label="Password"
           register={mockRegister}
           type="password"
           watch={mockWatch}
@@ -116,8 +123,8 @@ describe("ControlledTextInput", () => {
       const mockRegister = createMockRegister("name");
       render(
         <ControlledTextInput
-          label="Name"
           id="name"
+          label="Name"
           register={mockRegister}
           type="text"
           watch={mockWatch}

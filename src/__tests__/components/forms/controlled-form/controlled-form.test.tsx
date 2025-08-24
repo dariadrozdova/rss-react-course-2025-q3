@@ -1,9 +1,11 @@
+import { Provider } from "react-redux";
+
+import { render, screen } from "@testing-library/react";
+import configureStore from "redux-mock-store";
+import { beforeEach, describe, expect, it, type Mock, vi } from "vitest";
+
 import { ControlledForm } from "@/components/forms/controlled-form/controlled-form";
 import * as fileUtils from "@/utils/file-to-base-64";
-import { render, screen } from "@testing-library/react";
-import { Provider } from "react-redux";
-import configureStore from "redux-mock-store";
-import { beforeEach, describe, expect, it, vi, type Mock } from "vitest";
 
 const mockStore = configureStore();
 let onSuccess: Mock;
@@ -24,17 +26,17 @@ vi.mock("@/components/forms/controlled-form/controlled-form-fields", () => ({
       <input name="country" placeholder="Country" />
       <input name="gender" placeholder="Gender" />
       <input
-        name="picture"
-        type="file"
         data-testid="file-input"
+        name="picture"
         onChange={(e) => {
           const file = e.target.files?.[0];
           if (file) {
             require("@/utils/file-to-base-64").fileToBase64(file);
           }
         }}
+        type="file"
       />
-      <input type="checkbox" name="acceptTerms" />
+      <input name="acceptTerms" type="checkbox" />
       <button type="submit">Submit</button>
     </div>
   ),

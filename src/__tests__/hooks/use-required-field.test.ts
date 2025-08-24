@@ -1,15 +1,16 @@
-import { useRequiredFields } from "@/hooks/use-required-field";
 import { renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { z } from "zod";
 
+import { useRequiredFields } from "@/hooks/use-required-field";
+
 describe("useRequiredFields", () => {
   const testSchema = z.object({
-    name: z.string().min(1),
-    email: z.email(),
+    acceptTerms: z.boolean(),
     age: z.number().optional(),
     country: z.string().optional(),
-    acceptTerms: z.boolean(),
+    email: z.email(),
+    name: z.string().min(1),
   });
 
   const fieldNames = [
@@ -59,11 +60,11 @@ describe("useRequiredFields", () => {
 
     const fieldsInfo = result.current.getFieldsInfo();
     expect(fieldsInfo).toEqual({
-      name: true,
-      email: true,
+      acceptTerms: true,
       age: false,
       country: false,
-      acceptTerms: true,
+      email: true,
+      name: true,
     });
   });
 
@@ -79,8 +80,8 @@ describe("useRequiredFields", () => {
     const nestedSchema = z.object({
       user: z.object({
         profile: z.object({
-          name: z.string().min(1),
           bio: z.string().optional(),
+          name: z.string().min(1),
         }),
       }),
     });
@@ -124,8 +125,8 @@ describe("useRequiredFields", () => {
 
   it("should handle union schemas", () => {
     const unionSchema = z.object({
-      value: z.union([z.string(), z.number()]),
       optional: z.string().optional(),
+      value: z.union([z.string(), z.number()]),
     });
 
     const { result } = renderHook(() =>

@@ -58,59 +58,60 @@ export const ControlledFormFields: FC<ControlledFormFieldsProps> = ({
         <ControlledTextInput
           error={errors.name?.message}
           id="name"
+          isRequired={isRequired("name")}
           label="Name"
           register={register("name")}
-          isRequired={isRequired("name")}
         />
 
         <ControlledTextInput
           error={errors.age?.message}
           id="age"
+          isRequired={isRequired("age")}
           label="Age"
           register={register("age")}
           type="number"
-          isRequired={isRequired("age")}
         />
 
         <ControlledTextInput
           error={errors.email?.message}
           id="email"
+          isRequired={isRequired("email")}
           label="Email"
           register={register("email")}
           type="email"
-          isRequired={isRequired("email")}
         />
 
         <ControlledAutocompleteInput
           error={errors.country?.message}
           id="country"
+          isRequired={isRequired("country")}
           label="Country"
           options={countries}
           register={register("country")}
-          isRequired={isRequired("country")}
         />
 
         <ControlledPasswordInput
           error={errors.password?.message}
           id="password"
+          isRequired={isRequired("password")}
           label="Password"
           register={register("password")}
+          showStrength
           watch={watch}
-          showStrength={true}
-          isRequired={isRequired("password")}
         />
 
         <ControlledPasswordInput
           error={errors.confirmPassword?.message}
           id="confirmPassword"
+          isRequired={isRequired("confirmPassword")}
           label="Confirm Password"
           register={register("confirmPassword")}
-          isRequired={isRequired("confirmPassword")}
         />
 
         <div className={fullWidthWrapperClasses}>
           <ControlledRadioGroup
             error={errors.gender?.message}
+            isRequired={isRequired("gender")}
             label="Gender"
             options={[
               { label: "Male", value: "male" },
@@ -118,7 +119,6 @@ export const ControlledFormFields: FC<ControlledFormFieldsProps> = ({
               { label: "Other", value: "other" },
             ]}
             register={register("gender")}
-            isRequired={isRequired("gender")}
           />
         </div>
 
@@ -126,9 +126,9 @@ export const ControlledFormFields: FC<ControlledFormFieldsProps> = ({
           <ControlledCheckbox
             error={errors.acceptTerms?.message}
             id="acceptTerms"
+            isRequired={isRequired("acceptTerms")}
             label="Accept Terms and Conditions"
             register={register("acceptTerms")}
-            isRequired={isRequired("acceptTerms")}
           />
         </div>
 
@@ -136,9 +136,9 @@ export const ControlledFormFields: FC<ControlledFormFieldsProps> = ({
           <ControlledFileInput
             error={errors.picture?.message}
             id="picture"
+            isRequired={isRequired("picture")}
             label="Upload Picture"
             setValue={setValue}
-            isRequired={isRequired("picture")}
           />
         </div>
       </div>

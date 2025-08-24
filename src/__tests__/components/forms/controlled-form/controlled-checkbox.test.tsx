@@ -1,8 +1,10 @@
+import type { InputHTMLAttributes } from "react";
+
+import { render, screen } from "@testing-library/react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
 import { ControlledCheckbox } from "@/components/forms/controlled-form/controlled-checkbox";
 import type { LabelProps } from "@/components/ui/label";
-import { render, screen } from "@testing-library/react";
-import type { InputHTMLAttributes } from "react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/components/ui/input", () => ({
   Input: (props: InputHTMLAttributes<HTMLInputElement>) => (
@@ -21,8 +23,8 @@ describe("ControlledCheckbox", () => {
 
   const mockRegister = {
     name: checkboxId,
-    onChange: vi.fn(),
     onBlur: vi.fn(),
+    onChange: vi.fn(),
     ref: vi.fn(),
   };
 
@@ -44,7 +46,7 @@ describe("ControlledCheckbox", () => {
   });
 
   it("should show required indicator when required", () => {
-    render(<ControlledCheckbox {...defaultProps} isRequired={true} />);
+    render(<ControlledCheckbox {...defaultProps} isRequired />);
 
     expect(screen.getByText("*")).toBeInTheDocument();
   });

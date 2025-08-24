@@ -2,10 +2,10 @@ import type { FC, InputHTMLAttributes } from "react";
 import { useState } from "react";
 import { type UseFormRegister, type UseFormWatch } from "react-hook-form";
 
+import { PasswordStrengthIndicator } from "@/components/forms/controlled-form/controlled-password-input/password-strength-indicator";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { PasswordStrengthIndicator } from "@/components/forms/controlled-form/controlled-password-input/password-strength-indicator";
 import { classNames } from "@/lib/class-names";
 import { type FormInput } from "@/utils/form-schema";
 
@@ -13,21 +13,21 @@ interface ControlledPasswordInputProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, "name"> {
   error?: string;
   id: keyof FormInput;
+  isRequired?: boolean;
   label: string;
   register: ReturnType<UseFormRegister<FormInput>>;
-  watch?: UseFormWatch<FormInput>;
   showStrength?: boolean;
-  isRequired?: boolean;
+  watch?: UseFormWatch<FormInput>;
 }
 
 export const ControlledPasswordInput: FC<ControlledPasswordInputProps> = ({
   error,
   id,
+  isRequired = false,
   label,
   register,
-  watch,
   showStrength = false,
-  isRequired = false,
+  watch,
   ...props
 }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -51,10 +51,12 @@ export const ControlledPasswordInput: FC<ControlledPasswordInputProps> = ({
           className={classNames("absolute top-1/2 right-2 -translate-y-1/2")}
         >
           <Button
-            onClick={() => setShowPassword(!showPassword)}
+            onClick={() => {
+              setShowPassword(!showPassword);
+            }}
             size="sm"
-            variant="ghost"
             type="button"
+            variant="ghost"
           >
             {showPassword ? "Hide" : "Show"}
           </Button>

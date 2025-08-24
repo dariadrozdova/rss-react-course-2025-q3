@@ -1,6 +1,7 @@
-import { Layout } from "@/components/layout/layout";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
+
+import { Layout } from "@/components/layout/layout";
 
 vi.mock("@/components/common/header", () => ({
   Header: () => <header data-testid="mock-header">Mock Header</header>,

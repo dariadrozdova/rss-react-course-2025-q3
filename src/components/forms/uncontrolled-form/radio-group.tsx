@@ -10,7 +10,7 @@ interface Option {
 
 interface RadioGroupProps {
   error?: string;
-  label: string | ReactNode;
+  label: ReactNode | string;
   name: string;
   options: Option[];
 }

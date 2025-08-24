@@ -1,9 +1,10 @@
+import { configureStore } from "@reduxjs/toolkit";
+import { beforeEach, describe, expect, it } from "vitest";
+
 import type { AppDispatch, RootState } from "@/store";
 import { store } from "@/store";
 import countriesReducer from "@/store/slices/countries-slice";
 import formsReducer from "@/store/slices/form-slice";
-import { configureStore } from "@reduxjs/toolkit";
-import { beforeEach, describe, expect, it } from "vitest";
 
 describe("Store Configuration", () => {
   let testStore: ReturnType<typeof configureStore>;

@@ -12,7 +12,7 @@ import { classNames } from "@/lib/class-names";
 interface FileInputProps extends InputHTMLAttributes<HTMLInputElement> {
   error?: string;
   id: string;
-  label: string | ReactNode;
+  label: ReactNode | string;
   onFileSelect?: (file: File) => void;
 }
 

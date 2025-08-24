@@ -1,25 +1,28 @@
-import { fileToBase64 } from "@/utils/file-to-base-64";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
+import { fileToBase64 } from "@/utils/file-to-base-64";
 
 describe("fileToBase64", () => {
   let mockReader: {
-    result: string | null;
+    addEventListener: (event: "error" | "load", callback: () => void) => void;
     listeners: {
-      load?: () => void;
       error?: () => void;
+      load?: () => void;
     };
-    addEventListener: (event: "load" | "error", cb: () => void) => void;
     readAsDataURL: (file: File) => void;
+    result: null | string;
   };
 
   beforeEach(() => {
     mockReader = {
-      result: null,
+      addEventListener: vi.fn(
+        (event: "error" | "load", callback: () => void) => {
+          mockReader.listeners[event] = callback;
+        },
+      ),
       listeners: {},
-      addEventListener: vi.fn((event: "load" | "error", cb: () => void) => {
-        mockReader.listeners[event] = cb;
-      }),
       readAsDataURL: vi.fn(),
+      result: null,
     };
 
     vi.spyOn(window, "FileReader").mockImplementation(

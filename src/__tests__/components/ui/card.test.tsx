@@ -1,6 +1,7 @@
-import { Card } from "@/components/ui/card";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
+
+import { Card } from "@/components/ui/card";
 vi.mock("@/lib/class-names", () => ({
   classNames: (...classes: string[]) => classes.filter(Boolean).join(" "),
 }));

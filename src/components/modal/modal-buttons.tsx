@@ -2,9 +2,9 @@ import { type FC, useState } from "react";
 
 import { ControlledForm } from "@/components/forms/controlled-form/controlled-form";
 import { UncontrolledForm } from "@/components/forms/uncontrolled-form/uncontrolled-form";
+import { Modal } from "@/components/modal";
 import { CatEmoji } from "@/components/twemoji";
 import { Button } from "@/components/ui/button";
-import { Modal } from "@/components/modal";
 
 export const ModalButtons: FC = () => {
   const [isUncontrolledModalOpen, setIsUncontrolledModalOpen] = useState(false);

@@ -5,7 +5,7 @@ import { classNames } from "@/lib/class-names";
 interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
   error?: string;
   id: string;
-  label: string | ReactNode;
+  label: ReactNode | string;
 }
 
 export const Checkbox: FC<CheckboxProps> = ({ error, id, label, ...props }) => {

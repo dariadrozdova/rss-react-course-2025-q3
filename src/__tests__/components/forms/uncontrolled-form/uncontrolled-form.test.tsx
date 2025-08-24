@@ -1,7 +1,8 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Provider } from "react-redux";
+
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import configureStore from "redux-mock-store";
-import { beforeEach, describe, expect, it, vi, type Mock } from "vitest";
+import { beforeEach, describe, expect, it, type Mock, vi } from "vitest";
 
 import { UncontrolledForm } from "@/components/forms/uncontrolled-form/uncontrolled-form";
 import * as fileUtils from "@/utils/file-to-base-64";
@@ -20,8 +21,8 @@ vi.mock("@/components/forms/uncontrolled-form/form-fileds", () => ({
       />
       <input name="country" placeholder="Country" />
       <input name="gender" placeholder="Gender" />
-      <input name="picture" type="file" data-testid="file-input" />
-      <input type="checkbox" name="acceptTerms" />
+      <input data-testid="file-input" name="picture" type="file" />
+      <input name="acceptTerms" type="checkbox" />
       <button type="submit">Submit</button>
     </div>
   )),

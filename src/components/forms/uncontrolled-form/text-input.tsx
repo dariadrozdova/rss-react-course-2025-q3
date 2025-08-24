@@ -7,7 +7,7 @@ import { classNames } from "@/lib/class-names";
 interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
   error?: string;
   id: string;
-  label: string | ReactNode;
+  label: ReactNode | string;
 }
 
 export const TextInput: FC<TextInputProps> = ({

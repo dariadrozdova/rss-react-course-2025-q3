@@ -7,10 +7,10 @@ import { type FormInput } from "@/utils/form-schema";
 
 interface ControlledRadioGroupProps {
   error?: string;
+  isRequired?: boolean;
   label: string;
   options: Option[];
   register: ReturnType<UseFormRegister<FormInput>>;
-  isRequired?: boolean;
 }
 
 interface Option {
@@ -20,10 +20,10 @@ interface Option {
 
 export const ControlledRadioGroup: FC<ControlledRadioGroupProps> = ({
   error,
+  isRequired = false,
   label,
   options,
   register,
-  isRequired = false,
 }) => {
   return (
     <div className="mb-4">

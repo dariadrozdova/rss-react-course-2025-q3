@@ -1,18 +1,19 @@
+import type { FC } from "react";
+import { useState } from "react";
+
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { classNames } from "@/lib/class-names";
 import type { FormData } from "@/store/slices/form-slice";
-import type { FC } from "react";
-import { useState } from "react";
 
 interface SubmissionTileProps {
-  submission: FormData;
   isRecent: boolean;
+  submission: FormData;
 }
 
 export const SubmissionTile: FC<SubmissionTileProps> = ({
-  submission,
   isRecent,
+  submission,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -53,12 +54,12 @@ export const SubmissionTile: FC<SubmissionTileProps> = ({
       {submission.picture && (
         <div className={classNames("mb-4", "flex justify-center")}>
           <img
-            src={submission.picture}
             alt={`${submission.name}'s avatar`}
             className={classNames(
               "h-16 w-16 rounded-full object-cover",
               "border-2 border-gray-200",
             )}
+            src={submission.picture}
           />
         </div>
       )}
@@ -94,10 +95,12 @@ export const SubmissionTile: FC<SubmissionTileProps> = ({
                 : maskPassword(submission.password)}
             </span>
             <Button
-              onClick={() => setShowPassword(!showPassword)}
+              onClick={() => {
+                setShowPassword(!showPassword);
+              }}
               size="sm"
-              variant="ghost"
               type="button"
+              variant="ghost"
             >
               {showPassword ? "Hide" : "Show"}
             </Button>
