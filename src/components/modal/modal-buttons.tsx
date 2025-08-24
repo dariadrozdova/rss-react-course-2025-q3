@@ -6,25 +6,39 @@ import { Modal } from "@/components/modal";
 import { CatEmoji } from "@/components/twemoji";
 import { Button } from "@/components/ui/button";
 
+type ModalType = "uncontrolled" | "controlled" | null;
+
 export const ModalButtons: FC = () => {
-  const [isUncontrolledModalOpen, setIsUncontrolledModalOpen] = useState(false);
-  const [isControlledFormModalOpen, setIsControlledFormModalOpen] =
-    useState(false);
+  const [modalType, setModalType] = useState<ModalType>(null);
 
   const handleOpenUncontrolledModal = (): void => {
-    setIsUncontrolledModalOpen(true);
-  };
-
-  const handleCloseUncontrolledModal = (): void => {
-    setIsUncontrolledModalOpen(false);
+    setModalType("uncontrolled");
   };
 
   const handleOpenControlledFormModal = (): void => {
-    setIsControlledFormModalOpen(true);
+    setModalType("controlled");
   };
 
-  const handleCloseControlledFormModal = (): void => {
-    setIsControlledFormModalOpen(false);
+  const handleCloseModal = (): void => {
+    setModalType(null);
+  };
+
+  const isModalOpen = modalType !== null;
+
+  const getModalTitle = (): string => {
+    return modalType === "uncontrolled"
+      ? "Uncontrolled Form"
+      : "Controlled Form";
+  };
+
+  const renderModalContent = () => {
+    if (modalType === "uncontrolled") {
+      return <UncontrolledForm onSuccess={handleCloseModal} />;
+    }
+    if (modalType === "controlled") {
+      return <ControlledForm onSuccess={handleCloseModal} />;
+    }
+    return null;
   };
 
   return (
@@ -39,19 +53,11 @@ export const ModalButtons: FC = () => {
       </div>
 
       <Modal
-        isOpen={isUncontrolledModalOpen}
-        onClose={handleCloseUncontrolledModal}
-        title="Uncontrolled Form"
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        title={getModalTitle()}
       >
-        <UncontrolledForm onSuccess={handleCloseUncontrolledModal} />
-      </Modal>
-
-      <Modal
-        isOpen={isControlledFormModalOpen}
-        onClose={handleCloseControlledFormModal}
-        title="Controlled Form"
-      >
-        <ControlledForm onSuccess={handleCloseControlledFormModal} />
+        {renderModalContent()}
       </Modal>
     </>
   );

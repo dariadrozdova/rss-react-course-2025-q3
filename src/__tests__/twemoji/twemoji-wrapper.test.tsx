@@ -24,7 +24,7 @@ describe("TwemojiWrapper", () => {
     render(<TwemojiWrapper emoji={testEmoji} />);
 
     const twemojiMock = screen.getByTestId("twemoji-mock");
-    const parsedOptions = JSON.parse(twemojiMock.dataset.options || "{}");
+    const parsedOptions = JSON.parse(twemojiMock.dataset.options ?? "{}");
 
     expect(parsedOptions.ext).toBe(".svg");
     expect(parsedOptions.folder).toBe("svg");
@@ -34,7 +34,7 @@ describe("TwemojiWrapper", () => {
   it("applies different sizes correctly", () => {
     render(<TwemojiWrapper emoji="😊" size="lg" />);
     const twemojiMock = screen.getByTestId("twemoji-mock");
-    const parsedOptions = JSON.parse(twemojiMock.dataset.options || "{}");
+    const parsedOptions = JSON.parse(twemojiMock.dataset.options ?? "{}");
 
     expect(parsedOptions.className).toContain("w-6 h-6");
   });
@@ -42,7 +42,7 @@ describe("TwemojiWrapper", () => {
   it("applies animated and interactive classes when props are true", () => {
     render(<TwemojiWrapper animated emoji="🎉" interactive />);
     const twemojiMock = screen.getByTestId("twemoji-mock");
-    const parsedOptions = JSON.parse(twemojiMock.dataset.options || "{}");
+    const parsedOptions = JSON.parse(twemojiMock.dataset.options ?? "{}");
 
     expect(parsedOptions.className).toContain("animate-bounce");
     expect(parsedOptions.className).toContain("twemoji-interactive");
@@ -52,7 +52,7 @@ describe("TwemojiWrapper", () => {
     const customClassName = "my-custom-class";
     render(<TwemojiWrapper className={customClassName} emoji="👍" />);
     const twemojiMock = screen.getByTestId("twemoji-mock");
-    const parsedOptions = JSON.parse(twemojiMock.dataset.options || "{}");
+    const parsedOptions = JSON.parse(twemojiMock.dataset.options ?? "{}");
 
     expect(parsedOptions.className).toContain(customClassName);
   });

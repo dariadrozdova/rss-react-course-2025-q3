@@ -1,4 +1,4 @@
-import type { InputHTMLAttributes } from "react";
+import type { InputHTMLAttributes, ReactNode } from "react";
 
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -9,19 +9,19 @@ import type { ButtonProps } from "@/components/ui/button";
 import type { LabelProps } from "@/components/ui/label";
 
 vi.mock("@/components/ui/button", () => ({
-  Button: ({ children, onClick }: ButtonProps) => (
+  Button: ({ children, onClick }: ButtonProps): ReactNode => (
     <button onClick={onClick}>{children}</button>
   ),
 }));
 
 vi.mock("@/components/ui/input", () => ({
-  Input: (props: InputHTMLAttributes<HTMLInputElement>) => (
+  Input: (props: InputHTMLAttributes<HTMLInputElement>): ReactNode => (
     <input {...props} data-testid="input" />
   ),
 }));
 
 vi.mock("@/components/ui/label", () => ({
-  Label: ({ children, htmlFor }: LabelProps) => (
+  Label: ({ children, htmlFor }: LabelProps): ReactNode => (
     <label htmlFor={htmlFor}>{children}</label>
   ),
 }));
@@ -29,7 +29,11 @@ vi.mock("@/components/ui/label", () => ({
 vi.mock(
   "@/components/forms/controlled-form/controlled-password-input/password-strength-indicator",
   () => ({
-    PasswordStrengthIndicator: ({ password }: { password: string }) => (
+    PasswordStrengthIndicator: ({
+      password,
+    }: {
+      password: string;
+    }): ReactNode => (
       <div data-password={password} data-testid="password-strength">
         Strength Indicator
       </div>

@@ -1,18 +1,20 @@
+import type { ReactNode } from "react";
+
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import { Layout } from "@/components/layout/layout";
 
 vi.mock("@/components/common/header", () => ({
-  Header: () => <header data-testid="mock-header">Mock Header</header>,
+  Header: (): ReactNode => (
+    <header data-testid="mock-header">Mock Header</header>
+  ),
 }));
 
 vi.mock("@/components/common/footer", () => ({
-  Footer: () => <footer data-testid="mock-footer">Mock Footer</footer>,
-}));
-
-vi.mock("@/lib/class-names", () => ({
-  classNames: (...classes: string[]) => classes.filter(Boolean).join(" "),
+  Footer: (): ReactNode => (
+    <footer data-testid="mock-footer">Mock Footer</footer>
+  ),
 }));
 
 describe("Layout", () => {

@@ -11,6 +11,8 @@ import {
 
 const FORM_DRAFT_KEY = "uncontrolledFormDraft";
 
+type FormDraft = Partial<Record<keyof FormOutput, string>>;
+
 export const useUncontrolledForm = (onSuccess: () => void) => {
   const dispatch = useAppDispatch();
   const formReference = useRef<HTMLFormElement | null>(null);
@@ -26,7 +28,7 @@ export const useUncontrolledForm = (onSuccess: () => void) => {
     }
 
     try {
-      const parsedData = JSON.parse(savedData) as Partial<FormOutput>;
+      const parsedData = JSON.parse(savedData) as FormDraft;
       const form = formReference.current;
 
       for (const [key, value] of Object.entries(parsedData)) {
@@ -45,9 +47,9 @@ export const useUncontrolledForm = (onSuccess: () => void) => {
               input instanceof HTMLInputElement &&
               input.type === "checkbox"
             ) {
-              input.checked = Boolean(value);
+              input.checked = value === "true";
             } else {
-              input.value = value as string;
+              input.value = value ?? "";
             }
           }
         }
@@ -64,26 +66,21 @@ export const useUncontrolledForm = (onSuccess: () => void) => {
     }
     const formData = new FormData(formReference.current);
 
-    const values: Partial<FormOutput> = {};
+    const values: FormDraft = {};
     for (const [key, value] of formData.entries()) {
       if (
         key !== "password" &&
         key !== "confirmPassword" &&
         key !== "picture"
       ) {
-        values[key as keyof FormOutput] = value as any;
+        values[key as keyof FormOutput] =
+          typeof value === "string" ? value : value.name;
       }
     }
 
-    const hasData = Object.values(values).some((v) => {
-      if (typeof v === "string") {
-        return v.trim() !== "";
-      }
-      if (typeof v === "boolean") {
-        return v;
-      }
-      return v !== undefined && v !== null;
-    });
+    const hasData = Object.values(values).some(
+      (v) => v !== undefined && v.trim() !== "",
+    );
 
     if (hasData) {
       localStorage.setItem(FORM_DRAFT_KEY, JSON.stringify(values));

@@ -1,4 +1,10 @@
-import { MIN_PASSWORD_LENGTH } from "@/lib/constants";
+import {
+  MEDIUM_PASSWORD_SCORE_THRESHOLD,
+  MIN_PASSWORD_LENGTH,
+  PASSWORD_STRENGTH_CHECKS_COUNT,
+  PERCENTAGE_MULTIPLIER,
+  WEAK_PASSWORD_SCORE_THRESHOLD,
+} from "@/lib/constants";
 
 export interface PasswordStrengthChecks {
   hasLowercase: boolean;
@@ -27,12 +33,13 @@ export const calculatePasswordStrength = (
   };
 
   const score = Object.values(checks).filter(Boolean).length;
-  const percentage = (score / 5) * 100;
+  const percentage =
+    (score / PASSWORD_STRENGTH_CHECKS_COUNT) * PERCENTAGE_MULTIPLIER;
 
   let strength: "medium" | "strong" | "weak";
-  if (score <= 2) {
+  if (score <= WEAK_PASSWORD_SCORE_THRESHOLD) {
     strength = "weak";
-  } else if (score <= 3) {
+  } else if (score < MEDIUM_PASSWORD_SCORE_THRESHOLD) {
     strength = "medium";
   } else {
     strength = "strong";

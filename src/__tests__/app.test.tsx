@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { Provider } from "react-redux";
 
 import { configureStore } from "@reduxjs/toolkit";
@@ -9,17 +10,19 @@ import countriesReducer from "@/store/slices/countries-slice";
 import formsReducer from "@/store/slices/form-slice";
 
 vi.mock("@/components/layout/layout", () => ({
-  Layout: ({ children }: { children: React.ReactNode }) => (
+  Layout: ({ children }: { children: React.ReactNode }): ReactNode => (
     <div data-testid="layout">{children}</div>
   ),
 }));
 
 vi.mock("@/components/modal/modal-buttons", () => ({
-  ModalButtons: () => <div data-testid="modal-buttons">Modal Buttons</div>,
+  ModalButtons: (): ReactNode => (
+    <div data-testid="modal-buttons">Modal Buttons</div>
+  ),
 }));
 
 vi.mock("@/components/submissions/submissions-list", () => ({
-  SubmissionsList: () => (
+  SubmissionsList: (): ReactNode => (
     <div data-testid="submissions-list">Submissions List</div>
   ),
 }));
@@ -33,7 +36,7 @@ vi.mock("@/components/twemoji", () => ({
     animated: boolean;
     size: string;
     variant: string;
-  }) => (
+  }): ReactNode => (
     <div
       data-animated={animated}
       data-size={size}
@@ -52,7 +55,7 @@ vi.mock("@/components/ui/card", () => ({
   }: {
     children: React.ReactNode;
     className: string;
-  }) => (
+  }): ReactNode => (
     <div className={className} data-testid="card">
       {children}
     </div>
@@ -60,11 +63,11 @@ vi.mock("@/components/ui/card", () => ({
 }));
 
 vi.mock("@/components/common/header", () => ({
-  Header: () => <header data-testid="header">Header</header>,
+  Header: (): ReactNode => <header data-testid="header">Header</header>,
 }));
 
 vi.mock("@/components/common/footer", () => ({
-  Footer: () => <footer data-testid="footer">Footer</footer>,
+  Footer: (): ReactNode => <footer data-testid="footer">Footer</footer>,
 }));
 
 describe("App Component", () => {

@@ -51,7 +51,7 @@ export const ControlledForm: FC<{
           }
         }
       } catch (error) {
-        console.error("Error while restoring form data:", error);
+        console.warn("Error while restoring form data:", error);
         localStorage.removeItem(FORM_DRAFT_KEY);
       }
     }

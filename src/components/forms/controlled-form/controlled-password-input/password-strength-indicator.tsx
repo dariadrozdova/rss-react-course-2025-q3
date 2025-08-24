@@ -67,32 +67,32 @@ export const PasswordStrengthIndicator: FC<PasswordStrengthIndicatorProps> = ({
         <div
           className={classNames(
             "mb-2 text-sm font-semibold",
-            colors?.text || "text-gray-500",
+            colors?.text ?? "text-gray-500",
           )}
         >
           Password strength:{" "}
-          <span className="inline-block w-20">{result?.strength || "—"}</span>
+          <span className="inline-block w-20">{result?.strength ?? "—"}</span>
         </div>
 
         <div className={classNames("grid grid-cols-1 gap-1", "text-xs")}>
           <PasswordRequirement
-            met={result?.checks.hasMinLength || false}
+            met={result?.checks.hasMinLength ?? false}
             text="At least 8 characters"
           />
           <PasswordRequirement
-            met={result?.checks.hasUppercase || false}
+            met={result?.checks.hasUppercase ?? false}
             text="Uppercase letter (A-Z)"
           />
           <PasswordRequirement
-            met={result?.checks.hasLowercase || false}
+            met={result?.checks.hasLowercase ?? false}
             text="Lowercase letter (a-z)"
           />
           <PasswordRequirement
-            met={result?.checks.hasNumber || false}
+            met={result?.checks.hasNumber ?? false}
             text="Number (0-9)"
           />
           <PasswordRequirement
-            met={result?.checks.hasSpecial || false}
+            met={result?.checks.hasSpecial ?? false}
             text="Special character (!@#$%...)"
           />
         </div>

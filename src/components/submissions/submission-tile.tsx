@@ -11,23 +11,23 @@ interface SubmissionTileProps {
   submission: FormData;
 }
 
+const formatDate = (timestamp: number): string => {
+  return new Date(timestamp).toLocaleString();
+};
+
+const getTypeLabel = (type: "rhf" | "uncontrolled"): string => {
+  return type === "rhf" ? "React Hook Form" : "Uncontrolled Form";
+};
+
+const maskPassword = (password: string): string => {
+  return "*".repeat(password.length);
+};
+
 export const SubmissionTile: FC<SubmissionTileProps> = ({
   isRecent,
   submission,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
-
-  const formatDate = (timestamp: number): string => {
-    return new Date(timestamp).toLocaleString();
-  };
-
-  const getTypeLabel = (type: "rhf" | "uncontrolled"): string => {
-    return type === "rhf" ? "React Hook Form" : "Uncontrolled Form";
-  };
-
-  const maskPassword = (password: string): string => {
-    return "*".repeat(password.length);
-  };
 
   return (
     <Card

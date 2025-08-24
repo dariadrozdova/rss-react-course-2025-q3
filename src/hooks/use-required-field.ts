@@ -2,34 +2,7 @@ import { useMemo } from "react";
 
 import { z } from "zod";
 
-export function useRequiredFields<T extends z.ZodType>(
-  schema: T,
-  fieldNames: readonly string[],
-) {
-  const requiredFields = useMemo(() => {
-    const result: Record<string, boolean> = {};
-
-    for (const fieldName of fieldNames) {
-      result[fieldName] = isFieldRequired(schema, fieldName);
-    }
-
-    return result;
-  }, [schema, fieldNames]);
-
-  return {
-    getAllRequired: (): string[] => {
-      return Object.keys(requiredFields).filter((key) => requiredFields[key]);
-    },
-
-    getFieldsInfo: () => requiredFields,
-
-    isRequired: (fieldName: string): boolean => {
-      return requiredFields[fieldName] ?? false;
-    },
-  };
-}
-
-function isFieldRequired<T extends z.ZodType>(
+export function isFieldRequired<T extends z.ZodType>(
   schema: T,
   fieldPath: string,
 ): boolean {
@@ -61,4 +34,35 @@ function isFieldRequired<T extends z.ZodType>(
   } catch {
     return false;
   }
+}
+
+export function useRequiredFields<T extends z.ZodType>(
+  schema: T,
+  fieldNames: readonly string[],
+): {
+  getAllRequired: () => string[];
+  getFieldsInfo: () => Record<string, boolean>;
+  isRequired: (fieldName: string) => boolean;
+} {
+  const requiredFields = useMemo(() => {
+    const result: Record<string, boolean> = {};
+
+    for (const fieldName of fieldNames) {
+      result[fieldName] = isFieldRequired(schema, fieldName);
+    }
+
+    return result;
+  }, [schema, fieldNames]);
+
+  return {
+    getAllRequired: (): string[] => {
+      return Object.keys(requiredFields).filter((key) => requiredFields[key]);
+    },
+
+    getFieldsInfo: () => requiredFields,
+
+    isRequired: (fieldName: string): boolean => {
+      return requiredFields[fieldName] ?? false;
+    },
+  };
 }

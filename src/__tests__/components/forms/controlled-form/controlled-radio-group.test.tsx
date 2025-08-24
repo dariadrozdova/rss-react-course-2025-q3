@@ -3,9 +3,10 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { ControlledRadioGroup } from "@/components/forms/controlled-form/controlled-radio-group";
 import type { LabelProps } from "@/components/ui/label";
+import type { ReactNode } from "react";
 
 vi.mock("@/components/ui/label", () => ({
-  Label: ({ children, htmlFor }: LabelProps) => (
+  Label: ({ children, htmlFor }: LabelProps): ReactNode => (
     <label htmlFor={htmlFor}>{children}</label>
   ),
 }));

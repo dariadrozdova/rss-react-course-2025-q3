@@ -1,4 +1,4 @@
-import type { ButtonHTMLAttributes } from "react";
+import type { ButtonHTMLAttributes, ReactNode } from "react";
 import type {
   FieldErrors,
   UseFormRegister,
@@ -39,7 +39,10 @@ interface MockedTextInputProps extends MockedProps {
 vi.mock(
   "@/components/forms/controlled-form/controlled-autocomplete-input",
   () => ({
-    ControlledAutocompleteInput: ({ isRequired, label }: MockedProps) => (
+    ControlledAutocompleteInput: ({
+      isRequired,
+      label,
+    }: MockedProps): ReactNode => (
       <div data-testid={`controlled-autocomplete-${label.toLowerCase()}`}>
         {label}
         {isRequired && <span>*</span>}
@@ -49,7 +52,7 @@ vi.mock(
 );
 
 vi.mock("@/components/forms/controlled-form/controlled-checkbox", () => ({
-  ControlledCheckbox: ({ isRequired, label }: MockedProps) => (
+  ControlledCheckbox: ({ isRequired, label }: MockedProps): ReactNode => (
     <div
       data-testid={`controlled-checkbox-${label.toLowerCase().replaceAll(/\s+/g, "-")}`}
     >
@@ -60,7 +63,7 @@ vi.mock("@/components/forms/controlled-form/controlled-checkbox", () => ({
 }));
 
 vi.mock("@/components/forms/controlled-form/controlled-file-input", () => ({
-  ControlledFileInput: ({ isRequired, label }: MockedProps) => (
+  ControlledFileInput: ({ isRequired, label }: MockedProps): ReactNode => (
     <div
       data-testid={`controlled-file-${label.toLowerCase().replaceAll(/\s+/g, "-")}`}
     >
@@ -77,7 +80,7 @@ vi.mock(
       isRequired,
       label,
       showStrength,
-    }: MockedPasswordProps) => (
+    }: MockedPasswordProps): ReactNode => (
       <div
         data-testid={`controlled-password-${label.toLowerCase().replaceAll(/\s+/g, "-")}`}
       >
@@ -96,7 +99,7 @@ vi.mock("@/components/forms/controlled-form/controlled-radio-group", () => ({
     isRequired,
     label,
     options,
-  }: MockedRadioGroupProps) => (
+  }: MockedRadioGroupProps): ReactNode => (
     <div data-testid={`controlled-radio-${label.toLowerCase()}`}>
       {label}
       {isRequired && <span>*</span>}
@@ -106,7 +109,11 @@ vi.mock("@/components/forms/controlled-form/controlled-radio-group", () => ({
 }));
 
 vi.mock("@/components/forms/controlled-form/controlled-text-input", () => ({
-  ControlledTextInput: ({ isRequired, label, type }: MockedTextInputProps) => (
+  ControlledTextInput: ({
+    isRequired,
+    label,
+    type,
+  }: MockedTextInputProps): ReactNode => (
     <div data-testid={`controlled-text-${label.toLowerCase()}`}>
       {label}
       {isRequired && <span>*</span>}
@@ -116,7 +123,12 @@ vi.mock("@/components/forms/controlled-form/controlled-text-input", () => ({
 }));
 
 vi.mock("@/components/ui/button", () => ({
-  Button: ({ children, className, disabled, type }: MockedButtonProps) => (
+  Button: ({
+    children,
+    className,
+    disabled,
+    type,
+  }: MockedButtonProps): ReactNode => (
     <button
       className={className}
       data-testid="submit-button"
@@ -128,11 +140,14 @@ vi.mock("@/components/ui/button", () => ({
   ),
 }));
 
-vi.mock("@/hooks/use-required-field", () => ({
-  useRequiredFields: () => ({
-    isRequired: () => true,
+vi.mock(
+  "@/hooks/use-required-field",
+  (): { useRequiredFields: () => { isRequired: () => boolean } } => ({
+    useRequiredFields: () => ({
+      isRequired: () => true,
+    }),
   }),
-}));
+);
 
 describe("ControlledFormFields", () => {
   let mockProps: {

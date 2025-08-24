@@ -1,6 +1,8 @@
+export const MIN_PASSWORD_LENGTH = 8;
 export const WEAK_PASSWORD_SCORE_THRESHOLD = 2;
 export const MEDIUM_PASSWORD_SCORE_THRESHOLD = 4;
-export const MIN_PASSWORD_LENGTH = 8;
+export const PASSWORD_STRENGTH_CHECKS_COUNT = 5;
+export const PERCENTAGE_MULTIPLIER = 100;
 
 export const MIN_AGE_STRING_LENGTH = 1;
 export const AGE_MIN_VALUE = 0;

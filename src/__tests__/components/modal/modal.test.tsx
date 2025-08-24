@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -15,11 +17,18 @@ vi.mock("focus-trap-react", () => ({
   }: {
     active: boolean;
     children: React.ReactNode;
-  }) => (active ? <div data-testid="focus-trap">{children}</div> : children),
+  }): ReactNode =>
+    active ? <div data-testid="focus-trap">{children}</div> : children,
 }));
 
 vi.mock("@/components/twemoji", () => ({
-  CatEmoji: ({ size, variant }: { size: string; variant: string }) => (
+  CatEmoji: ({
+    size,
+    variant,
+  }: {
+    size: string;
+    variant: string;
+  }): ReactNode => (
     <span data-size={size} data-testid="cat-emoji" data-variant={variant}>
       🐱
     </span>
@@ -27,7 +36,7 @@ vi.mock("@/components/twemoji", () => ({
 }));
 
 vi.mock("@/components/forms/controlled-form/controlled-form", () => ({
-  ControlledForm: ({ onSuccess }: { onSuccess: () => void }) => (
+  ControlledForm: ({ onSuccess }: { onSuccess: () => void }): ReactNode => (
     <div data-testid="controlled-form" onClick={onSuccess}>
       Controlled Form
     </div>
@@ -35,7 +44,7 @@ vi.mock("@/components/forms/controlled-form/controlled-form", () => ({
 }));
 
 vi.mock("@/components/forms/uncontrolled-form/uncontrolled-form", () => ({
-  UncontrolledForm: ({ onSuccess }: { onSuccess: () => void }) => (
+  UncontrolledForm: ({ onSuccess }: { onSuccess: () => void }): ReactNode => (
     <div data-testid="uncontrolled-form" onClick={onSuccess}>
       Uncontrolled Form
     </div>
@@ -51,7 +60,7 @@ vi.mock("@/components/ui/button", () => ({
     children: React.ReactNode;
     onClick: () => void;
     variant: string;
-  }) => (
+  }): ReactNode => (
     <button data-testid="button" data-variant={variant} onClick={onClick}>
       {children}
     </button>
@@ -176,7 +185,9 @@ describe("Modal Components", () => {
       render(<ModalContent {...defaultProps} />);
 
       const content = screen.getByText("Modal Content").closest("div");
-      fireEvent.click(content!, { stopPropagation });
+      if (content) {
+        fireEvent.click(content, { stopPropagation });
+      }
     });
   });
 
@@ -220,7 +231,9 @@ describe("Modal Components", () => {
       const backdrop = screen
         .getByText("Modal Children")
         .closest('[class*="fixed inset-0"]');
-      await user.click(backdrop!);
+      if (backdrop) {
+        await user.click(backdrop);
+      }
       expect(mockOnClose).toHaveBeenCalled();
     });
 
@@ -253,15 +266,20 @@ describe("Modal Components", () => {
       expect(screen.queryByTestId("uncontrolled-form")).not.toBeInTheDocument();
     });
 
-    it("should handle both modals independently", async () => {
+    it("should handle modal state correctly", async () => {
       const user = userEvent.setup();
 
       render(<ModalButtons />);
 
-      await user.click(screen.getByText(/Open Uncontrolled Form/));
-      await user.click(screen.getByText(/Open RHF Form/));
+      expect(screen.queryByTestId("uncontrolled-form")).not.toBeInTheDocument();
+      expect(screen.queryByTestId("controlled-form")).not.toBeInTheDocument();
 
+      await user.click(screen.getByText(/Open Uncontrolled Form/));
       expect(screen.getByTestId("uncontrolled-form")).toBeInTheDocument();
+      expect(screen.queryByTestId("controlled-form")).not.toBeInTheDocument();
+
+      await user.click(screen.getByText(/Open RHF Form/));
+      expect(screen.queryByTestId("uncontrolled-form")).not.toBeInTheDocument();
       expect(screen.getByTestId("controlled-form")).toBeInTheDocument();
     });
   });

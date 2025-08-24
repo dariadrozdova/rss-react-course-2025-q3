@@ -40,9 +40,11 @@ const formsSlice = createSlice({
 
 export const { addFormSubmission, clearRecentSubmission } = formsSlice.actions;
 
-export const selectSubmissions = (state: { forms: FormsState }) =>
+export const selectSubmissions = (state: { forms: FormsState }): FormData[] =>
   state.forms.submissions;
-export const selectRecentSubmissionId = (state: { forms: FormsState }) =>
-  state.forms.recentSubmissionId;
+
+export const selectRecentSubmissionId = (state: {
+  forms: FormsState;
+}): null | string => state.forms.recentSubmissionId;
 
 export default formsSlice.reducer;

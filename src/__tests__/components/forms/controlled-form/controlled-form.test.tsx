@@ -28,8 +28,8 @@ vi.mock("@/components/forms/controlled-form/controlled-form-fields", () => ({
       <input
         data-testid="file-input"
         name="picture"
-        onChange={(e) => {
-          const file = e.target.files?.[0];
+        onChange={(error) => {
+          const file = error.target.files?.[0];
           if (file) {
             require("@/utils/file-to-base-64").fileToBase64(file);
           }

@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
@@ -12,7 +14,7 @@ vi.mock("@/components/twemoji", () => ({
     animated?: boolean;
     size?: string;
     variant?: string;
-  }) => (
+  }): ReactNode => (
     <div
       data-animated={animated ? "true" : "false"}
       data-size={size}
@@ -30,7 +32,7 @@ vi.mock("@/components/twemoji", () => ({
     animated?: boolean;
     emoji: string;
     size?: string;
-  }) => (
+  }): ReactNode => (
     <span
       data-animated={animated ? "true" : "false"}
       data-emoji={emoji}
@@ -40,10 +42,6 @@ vi.mock("@/components/twemoji", () => ({
       {emoji}
     </span>
   ),
-}));
-
-vi.mock("@/lib/class-names", () => ({
-  classNames: (...classes: string[]) => classes.filter(Boolean).join(" "),
 }));
 
 describe("Header", () => {
