@@ -2,7 +2,7 @@ import { type FC, type LabelHTMLAttributes } from "react";
 
 import { classNames } from "@/lib/class-names";
 
-type LabelProps = LabelHTMLAttributes<HTMLLabelElement>;
+export type LabelProps = LabelHTMLAttributes<HTMLLabelElement>;
 
 export const Label: FC<LabelProps> = ({ className, ...props }) => {
   return (

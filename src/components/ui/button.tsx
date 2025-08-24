@@ -2,7 +2,7 @@ import { type ButtonHTMLAttributes, type FC } from "react";
 
 import { classNames } from "@/lib/class-names";
 
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   size?: "lg" | "md" | "sm";
   variant?: "danger" | "ghost" | "primary" | "secondary";
 };

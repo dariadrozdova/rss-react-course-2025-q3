@@ -28,7 +28,7 @@ export function useRequiredFields<T extends z.ZodType>(
   };
 }
 
-function isFieldRequired<T extends z.ZodTypeAny>(
+function isFieldRequired<T extends z.ZodType>(
   schema: T,
   fieldPath: string,
 ): boolean {
