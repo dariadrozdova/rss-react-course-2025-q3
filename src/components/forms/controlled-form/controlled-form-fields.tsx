@@ -9,12 +9,13 @@ import {
 import { ControlledAutocompleteInput } from "@/components/forms/controlled-form/controlled-autocomplete-input";
 import { ControlledCheckbox } from "@/components/forms/controlled-form/controlled-checkbox";
 import { ControlledFileInput } from "@/components/forms/controlled-form/controlled-file-input";
+import { ControlledPasswordInput } from "@/components/forms/controlled-form/controlled-password-input";
 import { ControlledRadioGroup } from "@/components/forms/controlled-form/controlled-radio-group";
 import { ControlledTextInput } from "@/components/forms/controlled-form/controlled-text-input";
 import { Button } from "@/components/ui/button";
+import { useRequiredFields } from "@/hooks/useRequiredField";
 import { classNames } from "@/lib/class-names";
 import { type FormInput, formSchema } from "@/utils/form-schema";
-import { useRequiredFields } from "@/hooks/useRequiredField";
 
 const ALL_FORM_FIELDS = [
   "name",
@@ -89,22 +90,21 @@ export const ControlledFormFields: FC<ControlledFormFieldsProps> = ({
           isRequired={isRequired("country")}
         />
 
-        <ControlledTextInput
+        <ControlledPasswordInput
           error={errors.password?.message}
           id="password"
           label="Password"
           register={register("password")}
-          type="password"
           watch={watch}
+          showStrength={true}
           isRequired={isRequired("password")}
         />
 
-        <ControlledTextInput
+        <ControlledPasswordInput
           error={errors.confirmPassword?.message}
           id="confirmPassword"
           label="Confirm Password"
           register={register("confirmPassword")}
-          type="password"
           isRequired={isRequired("confirmPassword")}
         />
 

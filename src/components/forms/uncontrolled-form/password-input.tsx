@@ -1,5 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { classNames } from "@/lib/class-names";
 import {
   calculatePasswordStrength,
   createPasswordStrengthHTML,
@@ -55,7 +56,14 @@ export const PasswordInput: FC<PasswordInputProps> = ({
         onInput={updatePasswordStrength}
       />
 
-      {error && <div className="mt-1 text-sm text-red-600">{error}</div>}
+      <p
+        className={classNames(
+          "text-error mt-1 h-4 text-sm",
+          !error && "opacity-0",
+        )}
+      >
+        {error}
+      </p>
 
       {showStrength && <div ref={strengthIndicatorRef}></div>}
     </div>
