@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+@theme {
+  --color-neon: hsl(280 100% 70%);
+  --color-neon-50: hsl(280 100% 95%);
+  --color-neon-100: hsl(280 100% 90%);
+  --color-neon-200: hsl(280 100% 85%);
+  --color-neon-300: hsl(280 100% 80%);
+  --color-neon-400: hsl(280 100% 75%);
+  --color-neon-500: hsl(280 100% 70%);
+  --color-neon-600: hsl(280 100% 65%);
+  --color-neon-700: hsl(280 100% 60%);
+  --color-neon-800: hsl(280 80% 45%);
+  --color-neon-900: hsl(280 60% 30%);
+  --color-neon-950: hsl(280 50% 15%);
+
+  --color-electric: hsl(270 100% 75%);
+  --color-electric-50: hsl(270 100% 95%);
+  --color-electric-100: hsl(270 100% 90%);
+  --color-electric-200: hsl(270 100% 85%);
+  --color-electric-300: hsl(270 100% 80%);
+  --color-electric-400: hsl(270 100% 75%);
+  --color-electric-500: hsl(270 100% 70%);
+  --color-electric-600: hsl(270 100% 65%);
+  --color-electric-700: hsl(270 90% 55%);
+  --color-electric-800: hsl(270 80% 40%);
+  --color-electric-900: hsl(270 70% 25%);
+  --color-electric-950: hsl(270 60% 12%);
+
+  --color-cyber: hsl(320 100% 75%);
+  --color-cyber-50: hsl(320 100% 95%);
+  --color-cyber-100: hsl(320 100% 90%);
+  --color-cyber-200: hsl(320 100% 85%);
+  --color-cyber-300: hsl(320 100% 80%);
+  --color-cyber-400: hsl(320 100% 75%);
+  --color-cyber-500: hsl(320 100% 70%);
+  --color-cyber-600: hsl(320 100% 65%);
+  --color-cyber-700: hsl(320 90% 55%);
+  --color-cyber-800: hsl(320 80% 40%);
+  --color-cyber-900: hsl(320 70% 25%);
+  --color-cyber-950: hsl(320 60% 12%);
+
+  --color-azure: hsl(200 100% 70%);
+  --color-azure-50: hsl(200 100% 95%);
+  --color-azure-100: hsl(200 100% 90%);
+  --color-azure-200: hsl(200 100% 85%);
+  --color-azure-300: hsl(200 100% 80%);
+  --color-azure-400: hsl(200 100% 75%);
+  --color-azure-500: hsl(200 100% 70%);
+  --color-azure-600: hsl(200 100% 65%);
+  --color-azure-700: hsl(200 90% 55%);
+  --color-azure-800: hsl(200 80% 40%);
+  --color-azure-900: hsl(200 70% 25%);
+  --color-azure-950: hsl(200 60% 12%);
+
+  --color-volt: hsl(120 100% 60%);
+  --color-volt-50: hsl(120 100% 95%);
+  --color-volt-100: hsl(120 100% 90%);
+  --color-volt-200: hsl(120 100% 85%);
+  --color-volt-300: hsl(120 100% 75%);
+  --color-volt-400: hsl(120 100% 65%);
+  --color-volt-500: hsl(120 100% 60%);
+  --color-volt-600: hsl(120 100% 55%);
+  --color-volt-700: hsl(120 90% 45%);
+  --color-volt-800: hsl(120 80% 35%);
+  --color-volt-900: hsl(120 70% 20%);
+  --color-volt-950: hsl(120 60% 10%);
+
+  --color-dark: hsl(260 15% 8%);
+  --color-dark-50: hsl(260 20% 95%);
+  --color-dark-100: hsl(260 20% 88%);
+  --color-dark-200: hsl(260 20% 75%);
+  --color-dark-300: hsl(260 15% 60%);
+  --color-dark-400: hsl(260 15% 45%);
+  --color-dark-500: hsl(260 15% 30%);
+  --color-dark-600: hsl(260 15% 20%);
+  --color-dark-700: hsl(260 15% 15%);
+  --color-dark-800: hsl(260 15% 10%);
+  --color-dark-900: hsl(260 15% 8%);
+  --color-dark-950: hsl(260 20% 4%);
+
+  --color-glass: hsl(280 50% 50% / 0.1);
+  --color-glass-border: hsl(280 100% 80% / 0.2);
+  --color-glass-highlight: hsl(280 100% 90% / 0.1);
+
+  --color-success: hsl(120 100% 60%);
+  --color-warning: hsl(45 100% 60%);
+  --color-error: hsl(0 100% 70%);
+
+  --color-slate-50: hsl(260 20% 98%);
+  --color-slate-100: hsl(260 15% 95%);
+  --color-slate-200: hsl(260 10% 90%);
+  --color-slate-300: hsl(260 8% 80%);
+  --color-slate-400: hsl(260 6% 60%);
+  --color-slate-500: hsl(260 5% 40%);
+  --color-slate-600: hsl(260 6% 25%);
+  --color-slate-700: hsl(260 8% 15%);
+  --color-slate-800: hsl(260 10% 10%);
+  --color-slate-900: hsl(260 12% 6%);
+  --color-slate-950: hsl(260 15% 3%);
+}
