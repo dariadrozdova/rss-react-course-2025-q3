@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 
 import "@/app.css";
 
-import { App } from "./app";
+import { App } from "@/app";
 
 const ERROR_MESSAGE = "Root element not found";
 

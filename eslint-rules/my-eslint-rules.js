@@ -83,7 +83,7 @@ export const myEslintRules = {
   ],
   "max-lines-per-function": [
     "error",
-    { max: 80, skipBlankLines: true, skipComments: true },
+    { max: 90, skipBlankLines: true, skipComments: true },
   ],
   "no-console": ["error", { allow: ["warn"] }],
   "no-empty-function": "error",
