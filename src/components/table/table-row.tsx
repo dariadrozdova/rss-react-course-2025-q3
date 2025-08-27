@@ -26,17 +26,22 @@ export const TableRow: FC<TableRowProps> = ({ isEven, rowData }) => {
   const rowClasses = classNames(
     "grid grid-cols-6 gap-4 px-6 py-3",
     "hover:bg-neon-500/10 hover:shadow-sm hover:shadow-neon-500/20",
-    "transition-all duration-300 hover:scale-[1.02] cursor-pointer",
+    "transition-all duration-300 cursor-pointer",
     "hover:border-l-4 hover:border-l-neon-500",
     isEven ? "bg-dark-800/30" : "bg-dark-900/30",
+    "min-w-full",
   );
 
-  const cellClasses = classNames("text-sm text-slate-300", "truncate");
+  const cellClasses = classNames(
+    "text-sm text-slate-300",
+    "truncate",
+    "min-w-0",
+  );
 
   const countryCellClasses = classNames(
     cellClasses,
     "font-medium text-slate-100",
-    "transition-all duration-300 group-hover:text-neon-300",
+    "transition-all duration-300 hover:text-neon-300",
   );
 
   const numericCellClasses = classNames(cellClasses, "font-mono text-right");

@@ -8,7 +8,7 @@ interface AppLayoutProps {
 
 export const AppLayout: FC<AppLayoutProps> = ({ children }) => {
   const containerClasses = classNames(
-    "min-h-screen h-screen w-full flex flex-col",
+    "min-h-screen w-full flex flex-col",
     "bg-gradient-to-br from-dark-950 via-dark-900 to-dark-950",
     "bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,78,255,0.1),rgba(255,255,255,0))]",
   );
@@ -17,19 +17,26 @@ export const AppLayout: FC<AppLayoutProps> = ({ children }) => {
     "sticky top-0 z-10 w-full",
     "bg-dark-800/90 backdrop-blur-lg border-b border-neon-500/30",
     "shadow-lg shadow-neon-500/10 glow-neon",
+    "flex-shrink-0",
+    "cursor-default",
   );
 
   const titleClasses = classNames(
     "text-3xl font-bold text-transparent bg-clip-text",
     "bg-gradient-to-r from-neon-400 via-electric-400 to-cyber-400",
     "text-glow-neon",
-    "mb-2 transition-all duration-300 hover:scale-105",
   );
 
   const mainClasses = classNames(
     "px-6 py-8",
-    "flex-1 overflow-hidden",
+    "flex-1 min-h-0",
     "bg-gradient-to-br from-dark-950 via-dark-900 to-dark-950",
+  );
+
+  const footerClasses = classNames(
+    "border-neon-500/30 bg-dark-800/90 border-t backdrop-blur-lg",
+    "glow-neon py-6 text-center",
+    "flex-shrink-0",
   );
 
   return (
@@ -44,15 +51,10 @@ export const AppLayout: FC<AppLayoutProps> = ({ children }) => {
       </header>
 
       <main className={mainClasses}>
-        <div className="container mx-auto">{children}</div>
+        <div className="container mx-auto h-full">{children}</div>
       </main>
 
-      <footer
-        className={classNames(
-          "border-neon-500/30 bg-dark-800/90 border-t backdrop-blur-lg",
-          "glow-neon py-6 text-center",
-        )}
-      >
+      <footer className={footerClasses}>
         <div className="container mx-auto space-y-2 px-6">
           <div className="flex items-center justify-center space-x-6 text-sm">
             <span className="text-slate-300">Data source:</span>

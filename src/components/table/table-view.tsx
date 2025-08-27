@@ -18,13 +18,14 @@ export const TableView: FC<TableViewProps> = ({
   searchTerm,
   selectedYear,
   tableRows,
-  totalRows,
 }) => {
   const containerClasses = classNames(
-    "w-full h-full flex flex-col rounded-lg border shadow-2xl",
+    "w-full flex flex-col rounded-lg border shadow-2xl",
     "bg-dark-900/90 backdrop-blur-lg border-glow-neon",
     "shadow-neon-500/10 transition-all duration-300",
     "hover:shadow-neon-500/20 hover:border-neon-400",
+    "overflow-hidden",
+    "max-h-[70vh] h-[70vh]",
   );
 
   const headerClasses = classNames(
@@ -32,13 +33,14 @@ export const TableView: FC<TableViewProps> = ({
     "bg-gradient-to-r from-neon-600/30 to-electric-600/30",
     "border-b border-glow-neon backdrop-blur-sm",
     "rounded-t-lg shadow-inner",
+    "flex-shrink-0 min-w-full",
   );
 
   const headerCellClasses = classNames(
-    "text-sm font-semibold text-slate-100",
+    "text-sm font-semibold",
+    "text-neon-300",
     "uppercase tracking-wider transition-all duration-300",
-    "hover:text-neon-300 hover:scale-105 cursor-default",
-    "text-glow-neon",
+    "cursor-default",
   );
 
   const headerCellCenteredClasses = classNames(
@@ -48,21 +50,16 @@ export const TableView: FC<TableViewProps> = ({
   const headerCellRightClasses = classNames(headerCellClasses, "text-right");
 
   const bodyClasses = classNames(
-    "flex-1 overflow-y-auto",
+    "flex-1 overflow-y-auto overflow-x-hidden",
+    "min-h-0",
     "scrollbar-thin scrollbar-track-dark-800 scrollbar-thumb-neon-600",
     "hover:scrollbar-thumb-neon-500",
+    "w-full",
   );
 
   const emptyStateClasses = classNames(
     "flex items-center justify-center py-12",
     "text-slate-400 text-center",
-  );
-
-  const footerClasses = classNames(
-    "border-glass-border border-t px-6 py-3",
-    "bg-dark-800/50 rounded-b-lg",
-    "text-center text-xs text-slate-400",
-    "flex justify-between items-center",
   );
 
   return (
@@ -78,13 +75,15 @@ export const TableView: FC<TableViewProps> = ({
 
       <div className={bodyClasses}>
         {tableRows.length > 0 ? (
-          tableRows.map((row, index) => (
-            <TableRow
-              isEven={index % 2 === 0}
-              key={`${row.country}-${row.year}`}
-              rowData={row}
-            />
-          ))
+          <div className="min-w-full">
+            {tableRows.map((row, index) => (
+              <TableRow
+                isEven={index % 2 === 0}
+                key={`${row.country}-${row.year}`}
+                rowData={row}
+              />
+            ))}
+          </div>
         ) : (
           <div className={emptyStateClasses}>
             <div>
@@ -98,19 +97,6 @@ export const TableView: FC<TableViewProps> = ({
           </div>
         )}
       </div>
-
-      {tableRows.length > 0 && (
-        <div className={footerClasses}>
-          <span>
-            Showing {tableRows.length.toLocaleString()} of{" "}
-            {totalRows.toLocaleString()} countries
-          </span>
-          <span>
-            Year:{" "}
-            {selectedYear === LATEST_YEAR ? "Latest Available" : selectedYear}
-          </span>
-        </div>
-      )}
     </div>
   );
 };

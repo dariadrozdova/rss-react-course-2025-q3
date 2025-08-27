@@ -7,7 +7,7 @@ export const SortControls: FC = () => {
   const { setSort, state } = useTableState();
 
   const buttonBaseClasses =
-    "px-3 py-2 text-sm rounded-md transition-all duration-300";
+    "px-3 py-2 text-sm rounded-md transition-all duration-300 cursor-pointer";
   const activeClasses = "bg-neon-600/30 border-neon-500 text-neon-300";
   const inactiveClasses =
     "bg-dark-700/50 border-slate-600 text-slate-300 hover:border-neon-500/50";
