@@ -1,6 +1,6 @@
 import type { FC, ReactNode } from "react";
 
-import { classNames } from "@/utils/class-names";
+import { classNames } from "@/utils";
 
 interface AppLayoutProps {
   children: ReactNode;

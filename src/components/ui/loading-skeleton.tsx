@@ -1,6 +1,6 @@
 import type { FC } from "react";
 
-import { classNames } from "@/utils/class-names";
+import { classNames } from "@/utils";
 
 interface LoadingSkeletonProps {
   className?: string;

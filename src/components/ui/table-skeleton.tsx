@@ -1,7 +1,7 @@
 import type { FC } from "react";
 
 import { LoadingSkeleton } from "@/components/ui/loading-skeleton";
-import { classNames } from "@/utils/class-names";
+import { classNames } from "@/utils";
 
 export const TableSkeleton: FC = () => {
   const containerClasses = classNames(

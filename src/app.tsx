@@ -1,9 +1,10 @@
 import { type FC, Suspense } from "react";
 
-import { DataTable } from "@/components/data-table";
 import { ErrorBoundary } from "@/components/error-boundary";
 import { DataLoadingFallback } from "@/components/fallback/data-loading-fallback";
 import { AppLayout } from "@/components/layout";
+import { DataTable } from "@/components/table";
+import { TableProvider } from "@/contexts/table-context";
 import { useCO2Data } from "@/hooks/use-co2-data";
 
 const DataTableContainer: FC = () => {
@@ -13,13 +14,15 @@ const DataTableContainer: FC = () => {
 
 export const App: FC = () => {
   return (
-    <AppLayout>
-      <ErrorBoundary>
-        <Suspense fallback={<DataLoadingFallback />}>
-          <DataTableContainer />
-        </Suspense>
-      </ErrorBoundary>
-    </AppLayout>
+    <TableProvider>
+      <AppLayout>
+        <ErrorBoundary>
+          <Suspense fallback={<DataLoadingFallback />}>
+            <DataTableContainer />
+          </Suspense>
+        </ErrorBoundary>
+      </AppLayout>
+    </TableProvider>
   );
 };
 

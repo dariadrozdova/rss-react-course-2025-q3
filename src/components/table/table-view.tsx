@@ -1,29 +1,25 @@
-import type { FC } from "react";
+import { type FC } from "react";
 
-import { TableRow } from "@/components/data-table/table-row";
-import type { ProcessedCountryData, TableRowData } from "@/types/co2-data";
+import { TableRow } from "@/components/table";
+import type { TableRowData } from "@/types/co2-data";
 import { classNames } from "@/utils/class-names";
+import { LATEST_YEAR } from "@/utils/constants";
 
-interface DataTableProps {
-  countries: ProcessedCountryData[];
+interface TableViewProps {
+  hasSearchResults: boolean;
+  searchTerm: string;
+  selectedYear: number | typeof LATEST_YEAR;
+  tableRows: TableRowData[];
+  totalRows: number;
 }
 
-export const DataTable: FC<DataTableProps> = ({ countries }) => {
-  const tableRows: TableRowData[] = [];
-
-  for (const country of countries) {
-    for (const yearData of country.data) {
-      tableRows.push({
-        co2: yearData.co2 ?? null,
-        co2PerCapita: yearData.co2_per_capita ?? null,
-        country: country.country,
-        isoCode: country.isoCode,
-        population: country.latestPopulation,
-        year: yearData.year,
-      });
-    }
-  }
-
+export const TableView: FC<TableViewProps> = ({
+  hasSearchResults,
+  searchTerm,
+  selectedYear,
+  tableRows,
+  totalRows,
+}) => {
   const containerClasses = classNames(
     "w-full h-full flex flex-col rounded-lg border shadow-2xl",
     "bg-dark-900/90 backdrop-blur-lg border-glow-neon",
@@ -49,7 +45,6 @@ export const DataTable: FC<DataTableProps> = ({ countries }) => {
     headerCellClasses,
     "text-center",
   );
-
   const headerCellRightClasses = classNames(headerCellClasses, "text-right");
 
   const bodyClasses = classNames(
@@ -61,6 +56,13 @@ export const DataTable: FC<DataTableProps> = ({ countries }) => {
   const emptyStateClasses = classNames(
     "flex items-center justify-center py-12",
     "text-slate-400 text-center",
+  );
+
+  const footerClasses = classNames(
+    "border-glass-border border-t px-6 py-3",
+    "bg-dark-800/50 rounded-b-lg",
+    "text-center text-xs text-slate-400",
+    "flex justify-between items-center",
   );
 
   return (
@@ -86,23 +88,27 @@ export const DataTable: FC<DataTableProps> = ({ countries }) => {
         ) : (
           <div className={emptyStateClasses}>
             <div>
-              <p className="mb-2 text-lg font-medium">No data available</p>
-              <p className="text-sm">Unable to load CO₂ emissions data.</p>
+              <p className="mb-2 text-lg font-medium">No data found</p>
+              <p className="text-sm">
+                {hasSearchResults
+                  ? `No countries found matching "${searchTerm}"`
+                  : `No data available for ${selectedYear === LATEST_YEAR ? "latest year" : selectedYear}`}
+              </p>
             </div>
           </div>
         )}
       </div>
 
       {tableRows.length > 0 && (
-        <div
-          className={classNames(
-            "border-glass-border border-t px-6 py-3",
-            "bg-dark-800/50 rounded-b-lg",
-            "text-center text-xs text-slate-400",
-          )}
-        >
-          Showing {tableRows.length.toLocaleString()} data points from{" "}
-          {countries.length} countries/regions
+        <div className={footerClasses}>
+          <span>
+            Showing {tableRows.length.toLocaleString()} of{" "}
+            {totalRows.toLocaleString()} countries
+          </span>
+          <span>
+            Year:{" "}
+            {selectedYear === LATEST_YEAR ? "Latest Available" : selectedYear}
+          </span>
         </div>
       )}
     </div>

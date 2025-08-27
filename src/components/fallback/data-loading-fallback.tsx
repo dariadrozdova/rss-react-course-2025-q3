@@ -2,7 +2,7 @@ import type { FC } from "react";
 
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { TableSkeleton } from "@/components/ui/table-skeleton";
-import { classNames } from "@/utils/class-names";
+import { classNames } from "@/utils";
 
 interface DataLoadingFallbackProps {
   message?: string;

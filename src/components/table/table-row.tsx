@@ -1,7 +1,7 @@
 import type { FC } from "react";
 
 import type { TableRowData } from "@/types/co2-data";
-import { classNames } from "@/utils/class-names";
+import { classNames } from "@/utils";
 
 interface TableRowProps {
   isEven: boolean;
