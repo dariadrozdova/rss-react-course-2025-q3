@@ -1,5 +1,6 @@
 import { type RawCO2Data, RawCO2DataSchema } from "@/schemas/co2-data-schema";
 import type { ProcessedCountryData, YearlyData } from "@/types/co2-data";
+import { isCountryEntity } from "@/utils/non-country-entities";
 
 const CO2_DATA_URL =
   "https://nyc3.digitaloceanspaces.com/owid-public/data/co2/owid-co2-data.json";
@@ -36,16 +37,20 @@ export function processCountryData(
 ): ProcessedCountryData[] {
   const countries: ProcessedCountryData[] = [];
 
-  for (const [countryName, countryValue] of Object.entries(rawData)) {
-    if (countryValue.data.length === 0) {
+  for (const [entityName, entityData] of Object.entries(rawData)) {
+    if (!isCountryEntity(entityName)) {
       continue;
     }
 
-    const latestPopulation = getLatestPopulation(countryValue.data);
+    if (entityData.data.length === 0) {
+      continue;
+    }
+
+    const latestPopulation = getLatestPopulation(entityData.data);
 
     countries.push({
-      country: countryName,
-      data: countryValue.data
+      country: entityName,
+      data: entityData.data
         .map((d) => ({
           co2: d.co2 ?? null,
           co2_per_capita: d.co2_per_capita ?? null,
@@ -53,7 +58,7 @@ export function processCountryData(
           year: d.year,
         }))
         .sort((a, b) => a.year - b.year),
-      isoCode: countryValue.iso_code ?? null,
+      isoCode: entityData.iso_code ?? null,
       latestPopulation,
     });
   }
