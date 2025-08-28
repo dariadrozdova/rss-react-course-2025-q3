@@ -2,8 +2,74 @@ import { useEffect } from "react";
 
 import { useTableState } from "@/contexts/table-context";
 import { useDataHighlight } from "@/hooks/use-data-highlight";
-import type { ProcessedCountryData, TableRowData } from "@/types/co2-data";
+import type {
+  ProcessedCountryData,
+  TableRowData,
+  YearlyData,
+} from "@/types/co2-data";
 import { LATEST_YEAR } from "@/utils/constants";
+
+const getLatestYearData = (
+  countryData: ProcessedCountryData["data"],
+): YearlyData => {
+  let latestData = countryData[0];
+  for (const current of countryData) {
+    if (current.year > latestData.year) {
+      latestData = current;
+    }
+  }
+  return latestData;
+};
+
+const createTableRow = (
+  country: ProcessedCountryData,
+  yearData: ProcessedCountryData["data"][0],
+): TableRowData => ({
+  co2: yearData.co2 ?? null,
+  co2PerCapita: yearData.co2_per_capita ?? null,
+  country: country.country,
+  isoCode: country.isoCode,
+  population: yearData.population ?? null,
+  year: yearData.year,
+});
+
+const sortByPopulation = (
+  a: TableRowData,
+  b: TableRowData,
+  direction: "asc" | "desc",
+): number => {
+  const aValue = a.population;
+  const bValue = b.population;
+
+  if (aValue === null && bValue === null) {
+    return 0;
+  }
+  if (aValue === null) {
+    return 1;
+  }
+  if (bValue === null) {
+    return -1;
+  }
+
+  return direction === "asc" ? aValue - bValue : bValue - aValue;
+};
+
+const sortByName = (
+  a: TableRowData,
+  b: TableRowData,
+  direction: "asc" | "desc",
+): number => {
+  const aValue = a.country.toLowerCase();
+  const bValue = b.country.toLowerCase();
+
+  if (aValue < bValue) {
+    return direction === "asc" ? -1 : 1;
+  }
+  if (aValue > bValue) {
+    return direction === "asc" ? 1 : -1;
+  }
+  return 0;
+};
 
 export const useTableData = (
   countries: ProcessedCountryData[],
@@ -34,23 +100,12 @@ export const useTableData = (
     for (const country of countries) {
       const yearData =
         state.selectedYear === LATEST_YEAR
-          ? country.data.reduce((latest, current) =>
-              current.year > latest.year ? current : latest,
-            )
+          ? getLatestYearData(country.data)
           : country.data.find((d) => d.year === state.selectedYear);
 
-      if (!yearData) {
-        continue;
+      if (yearData) {
+        rows.push(createTableRow(country, yearData));
       }
-
-      rows.push({
-        co2: yearData.co2 ?? null,
-        co2PerCapita: yearData.co2_per_capita ?? null,
-        country: country.country,
-        isoCode: country.isoCode,
-        population: yearData.population ?? null,
-        year: yearData.year,
-      });
     }
 
     return rows;
@@ -72,25 +127,12 @@ export const useTableData = (
     }
 
     const sortedRows = [...rows];
-
     sortedRows.sort((a, b) => {
-      let aValue, bValue;
-
+      if (state.sortBy === "population") {
+        return sortByPopulation(a, b, state.sortDirection);
+      }
       if (state.sortBy === "name") {
-        aValue = a.country.toLowerCase();
-        bValue = b.country.toLowerCase();
-      } else if (state.sortBy === "population") {
-        aValue = a.population ?? 0;
-        bValue = b.population ?? 0;
-      } else {
-        return 0;
-      }
-
-      if (aValue < bValue) {
-        return state.sortDirection === "asc" ? -1 : 1;
-      }
-      if (aValue > bValue) {
-        return state.sortDirection === "asc" ? 1 : -1;
+        return sortByName(a, b, state.sortDirection);
       }
       return 0;
     });

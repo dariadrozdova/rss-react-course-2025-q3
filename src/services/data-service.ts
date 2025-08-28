@@ -49,6 +49,7 @@ export function processCountryData(
         .map((d) => ({
           co2: d.co2 ?? null,
           co2_per_capita: d.co2_per_capita ?? null,
+          population: d.population ?? null,
           year: d.year,
         }))
         .sort((a, b) => a.year - b.year),
