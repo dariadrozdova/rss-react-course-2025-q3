@@ -1,12 +1,14 @@
 import { useEffect } from "react";
 
 import { useTableState } from "@/contexts/table-context";
+import { useDataHighlight } from "@/hooks/use-data-highlight";
 import type { ProcessedCountryData, TableRowData } from "@/types/co2-data";
 import { LATEST_YEAR } from "@/utils/constants";
 
 export const useTableData = (
   countries: ProcessedCountryData[],
 ): {
+  getChangedFields: (rowData: TableRowData) => string[];
   hasSearchResults: boolean;
   searchTerm: string;
   selectedYear: null | number;
@@ -100,7 +102,10 @@ export const useTableData = (
   const filteredRows = filterRows(baseRows);
   const finalRows = sortRows(filteredRows);
 
+  const { getChangedFields } = useDataHighlight(finalRows);
+
   return {
+    getChangedFields,
     hasSearchResults: state.searchTerm.trim() !== "",
     searchTerm: state.searchTerm,
     selectedYear: state.selectedYear,

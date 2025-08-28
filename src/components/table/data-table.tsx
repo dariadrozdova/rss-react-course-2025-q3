@@ -10,13 +10,20 @@ interface DataTableProps {
 }
 
 export const DataTable: FC<DataTableProps> = ({ countries }) => {
-  const { hasSearchResults, searchTerm, selectedYear, tableRows, totalRows } =
-    useTableData(countries);
+  const {
+    getChangedFields,
+    hasSearchResults,
+    searchTerm,
+    selectedYear,
+    tableRows,
+    totalRows,
+  } = useTableData(countries);
 
   return (
     <div className="space-y-4">
       <FilterBar />
       <TableView
+        getChangedFields={getChangedFields}
         hasSearchResults={hasSearchResults}
         searchTerm={searchTerm}
         selectedYear={selectedYear}

@@ -1,7 +1,10 @@
+import type { TableRowData } from "@/types/co2-data";
 import { LATEST_YEAR } from "@/utils/constants";
 
 export interface TableState {
   availableYears: number[];
+  highlightChanges: boolean;
+  previousTableData: TableRowData[];
   searchTerm: string;
   selectedColumns: string[];
   selectedYear: number | typeof LATEST_YEAR;
@@ -14,6 +17,7 @@ export type TableAction =
   | { payload: number | typeof LATEST_YEAR; type: "SET_YEAR" }
   | { payload: string; type: "SET_SEARCH" }
   | { payload: string; type: "TOGGLE_COLUMN" }
+  | { payload: TableRowData[]; type: "SET_PREVIOUS_DATA" }
   | {
       payload: {
         direction: TableState["sortDirection"];
@@ -21,10 +25,13 @@ export type TableAction =
       };
       type: "SET_SORT";
     }
+  | { type: "CLEAR_HIGHLIGHT" }
   | { type: "RESET_FILTERS" };
 
 export const initialTableState: TableState = {
   availableYears: [],
+  highlightChanges: false,
+  previousTableData: [],
   searchTerm: "",
   selectedColumns: ["year", "population", "co2", "co2_per_capita"],
   selectedYear: LATEST_YEAR,
@@ -37,9 +44,18 @@ export const tableStateReducer = (
   action: TableAction,
 ): TableState => {
   switch (action.type) {
+    case "CLEAR_HIGHLIGHT": {
+      return {
+        ...state,
+        highlightChanges: false,
+      };
+    }
+
     case "RESET_FILTERS": {
       return {
         ...state,
+        highlightChanges: false,
+        previousTableData: [],
         searchTerm: "",
         selectedYear: LATEST_YEAR,
         sortBy: null,
@@ -50,6 +66,13 @@ export const tableStateReducer = (
     case "SET_AVAILABLE_YEARS": {
       const sortedYears = [...action.payload].sort((a, b) => b - a);
       return { ...state, availableYears: sortedYears };
+    }
+
+    case "SET_PREVIOUS_DATA": {
+      return {
+        ...state,
+        previousTableData: action.payload,
+      };
     }
 
     case "SET_SEARCH": {
@@ -70,7 +93,11 @@ export const tableStateReducer = (
     }
 
     case "SET_YEAR": {
-      return { ...state, selectedYear: action.payload };
+      return {
+        ...state,
+        highlightChanges: true,
+        selectedYear: action.payload,
+      };
     }
 
     case "TOGGLE_COLUMN": {

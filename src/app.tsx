@@ -4,7 +4,7 @@ import { ErrorBoundary } from "@/components/error-boundary";
 import { DataLoadingFallback } from "@/components/fallback/data-loading-fallback";
 import { AppLayout } from "@/components/layout";
 import { DataTable } from "@/components/table";
-import { TableProvider } from "@/contexts/table-context";
+import { TableProvider } from "@/contexts/table-provider";
 import { useCO2Data } from "@/hooks/use-co2-data";
 
 const DataTableContainer: FC = () => {

@@ -6,6 +6,7 @@ import { classNames } from "@/utils/class-names";
 import { LATEST_YEAR } from "@/utils/constants";
 
 interface TableViewProps {
+  getChangedFields: (rowData: TableRowData) => string[];
   hasSearchResults: boolean;
   searchTerm: string;
   selectedYear: number | typeof LATEST_YEAR;
@@ -14,6 +15,7 @@ interface TableViewProps {
 }
 
 export const TableView: FC<TableViewProps> = ({
+  getChangedFields,
   hasSearchResults,
   searchTerm,
   selectedYear,
@@ -78,6 +80,7 @@ export const TableView: FC<TableViewProps> = ({
           <div className="min-w-full">
             {tableRows.map((row, index) => (
               <TableRow
+                changedFields={getChangedFields(row)}
                 isEven={index % 2 === 0}
                 key={`${row.country}-${row.year}`}
                 rowData={row}
