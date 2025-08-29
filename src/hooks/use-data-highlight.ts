@@ -26,24 +26,28 @@ export const useDataHighlight = (
 
     const changedFields: string[] = [];
 
-    if (previousRow.population !== rowData.population) {
-      changedFields.push("population");
-    }
-    if (previousRow.year !== rowData.year) {
-      changedFields.push("year");
-    }
-    if (previousRow.co2 !== rowData.co2) {
-      changedFields.push("co2");
-    }
-    if (previousRow.co2PerCapita !== rowData.co2PerCapita) {
-      changedFields.push("co2PerCapita");
-    }
-    if (previousRow.isoCode !== rowData.isoCode) {
-      changedFields.push("isoCode");
+    for (const key of Object.keys(rowData)) {
+      if (key === "country") {
+        continue;
+      }
+
+      const currentValue = rowData[key];
+      const previousValue = previousRow[key];
+
+      if (currentValue !== previousValue) {
+        if (key === "co2PerCapita") {
+          changedFields.push("co2PerCapita");
+        } else if (key === "isoCode") {
+          changedFields.push("isoCode");
+        } else {
+          changedFields.push(key);
+        }
+      }
     }
 
     return changedFields;
   };
+
   useEffect(() => {
     if (currentData.length > 0 && !state.highlightChanges) {
       setPreviousData(currentData);

@@ -13,7 +13,7 @@ const handleReload = (): void => {
 
 export const ErrorFallback: FC<ErrorFallbackProps> = ({ error }) => {
   const containerClasses = classNames(
-    "flex flex-col items-center justify-center min-h-[400px]",
+    "flex flex-col items-center justify-center min-h-md",
     "text-center space-y-4 p-8",
   );
   const iconClasses = classNames("text-5xl text-red-500 opacity-70");

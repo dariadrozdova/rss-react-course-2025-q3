@@ -24,14 +24,26 @@ const getLatestYearData = (
 const createTableRow = (
   country: ProcessedCountryData,
   yearData: ProcessedCountryData["data"][0],
-): TableRowData => ({
-  co2: yearData.co2 ?? null,
-  co2PerCapita: yearData.co2_per_capita ?? null,
-  country: country.country,
-  isoCode: country.isoCode,
-  population: yearData.population ?? null,
-  year: yearData.year,
-});
+): TableRowData => {
+  const baseRow: TableRowData = {
+    co2: yearData.co2 ?? null,
+    co2PerCapita: yearData.co2_per_capita ?? null,
+    country: country.country,
+    isoCode: country.isoCode,
+    population: yearData.population ?? null,
+    year: yearData.year,
+  };
+
+  const extendedRow = { ...baseRow };
+
+  for (const key of Object.keys(yearData)) {
+    if (!(key in extendedRow) && key !== "year") {
+      extendedRow[key] = yearData[key] ?? null;
+    }
+  }
+
+  return extendedRow;
+};
 
 const sortByPopulation = (
   a: TableRowData,
