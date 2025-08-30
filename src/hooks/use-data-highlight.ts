@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 import { useTableState } from "@/contexts/table-context";
 import type { TableRowData } from "@/types/co2-data";
@@ -11,55 +11,65 @@ export const useDataHighlight = (
 } => {
   const { clearHighlight, setPreviousData, state } = useTableState();
 
-  const getChangedFields = (rowData: TableRowData): string[] => {
-    if (!state.highlightChanges || state.previousTableData.length === 0) {
-      return [];
-    }
-
-    const previousRow = state.previousTableData.find(
-      (previous) => previous.country === rowData.country,
-    );
-
-    if (!previousRow) {
-      return [];
-    }
-
-    const changedFields: string[] = [];
-
-    for (const key of Object.keys(rowData)) {
-      if (key === "country") {
-        continue;
+  const getChangedFields = useCallback(
+    (rowData: TableRowData): string[] => {
+      if (!state.highlightChanges || state.previousTableData.length === 0) {
+        return [];
       }
 
-      const currentValue = rowData[key];
-      const previousValue = previousRow[key];
+      const previousRow = state.previousTableData.find(
+        (previous) => previous.country === rowData.country,
+      );
 
-      if (currentValue !== previousValue) {
-        if (key === "co2PerCapita") {
-          changedFields.push("co2PerCapita");
-        } else if (key === "isoCode") {
-          changedFields.push("isoCode");
-        } else {
-          changedFields.push(key);
+      if (!previousRow) {
+        return [];
+      }
+
+      const changedFields: string[] = [];
+
+      for (const key of Object.keys(rowData)) {
+        if (key === "country") {
+          continue;
+        }
+
+        const currentValue = rowData[key];
+        const previousValue = previousRow[key];
+
+        if (currentValue !== previousValue) {
+          if (key === "co2PerCapita") {
+            changedFields.push("co2PerCapita");
+          } else if (key === "isoCode") {
+            changedFields.push("isoCode");
+          } else {
+            changedFields.push(key);
+          }
         }
       }
-    }
 
-    return changedFields;
-  };
+      return changedFields;
+    },
+    [state.highlightChanges, state.previousTableData],
+  );
 
   const initialized = useRef(false);
+  const previousDataReference = useRef<TableRowData[]>([]);
 
   useEffect(() => {
-    if (
-      !initialized.current &&
-      currentData.length > 0 &&
-      !state.highlightChanges
-    ) {
-      setPreviousData(currentData);
+    if (initialized.current && currentData.length > 0) {
+      const dataChanged =
+        JSON.stringify(previousDataReference.current) !==
+        JSON.stringify(currentData);
+      if (dataChanged) {
+        setPreviousData(previousDataReference.current);
+      }
+    }
+
+    previousDataReference.current = currentData;
+
+    if (!initialized.current && currentData.length > 0) {
       initialized.current = true;
     }
-  }, [currentData, setPreviousData, state.highlightChanges]);
+  }, [currentData, setPreviousData]);
 
   useEffect(() => {
     if (state.highlightChanges) {

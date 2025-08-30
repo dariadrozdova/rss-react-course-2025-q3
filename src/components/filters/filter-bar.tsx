@@ -1,4 +1,4 @@
-import { type FC, useState } from "react";
+import { type FC, memo, useCallback, useState } from "react";
 
 import { SearchBar, SortControls, YearSelector } from "@/components/filters";
 import { ColumnSelectorModal } from "@/components/filters/column-selector-modal";
@@ -6,9 +6,17 @@ import { useTableState } from "@/contexts/table-context";
 import { classNames } from "@/utils";
 import { REQUIRED_COLUMNS_COUNT } from "@/utils/constants";
 
-export const FilterBar: FC = () => {
+export const FilterBar: FC = memo(() => {
   const { resetFilters, state } = useTableState();
   const [isColumnModalOpen, setIsColumnModalOpen] = useState(false);
+
+  const handleOpenColumnModal = useCallback(() => {
+    setIsColumnModalOpen(true);
+  }, []);
+
+  const handleCloseColumnModal = useCallback(() => {
+    setIsColumnModalOpen(false);
+  }, []);
 
   const containerClasses = classNames(
     "bg-dark-800/50 backdrop-blur-sm rounded-lg p-4 mb-6",
@@ -43,9 +51,7 @@ export const FilterBar: FC = () => {
         <div className="flex items-center justify-between">
           <button
             className={columnButtonClasses}
-            onClick={() => {
-              setIsColumnModalOpen(true);
-            }}
+            onClick={handleOpenColumnModal}
           >
             <span>📊</span>
             <span>
@@ -65,10 +71,10 @@ export const FilterBar: FC = () => {
 
       <ColumnSelectorModal
         isOpen={isColumnModalOpen}
-        onClose={() => {
-          setIsColumnModalOpen(false);
-        }}
+        onClose={handleCloseColumnModal}
       />
     </>
   );
-};
+});
+
+FilterBar.displayName = "FilterBar";

@@ -1,17 +1,40 @@
-import { type FC } from "react";
+import { type FC, memo, useCallback, useRef } from "react";
 
 import { useTableState } from "@/contexts/table-context";
 import { classNames } from "@/utils/class-names";
+import { SEARCH_DEBOUNCE_DELAY } from "@/utils/constants";
 
-export const SearchBar: FC = () => {
+const useDebounce = (
+  callback: (value: string) => void,
+  delay: number,
+): ((value: string) => void) => {
+  const timeoutReference = useRef<NodeJS.Timeout | null>(null);
+
+  return useCallback(
+    (value: string) => {
+      if (timeoutReference.current) {
+        clearTimeout(timeoutReference.current);
+      }
+
+      timeoutReference.current = setTimeout(() => {
+        callback(value);
+      }, delay);
+    },
+    [callback, delay],
+  );
+};
+
+export const SearchBar: FC = memo(() => {
   const { setSearch, state } = useTableState();
 
-  const handleSearchChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ): void => {
-    // без debounce, неоптимизированная версия
-    setSearch(event.target.value);
-  };
+  const debouncedSearch = useDebounce(setSearch, SEARCH_DEBOUNCE_DELAY);
+
+  const handleSearchChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>): void => {
+      debouncedSearch(event.target.value);
+    },
+    [debouncedSearch],
+  );
 
   const inputClasses = classNames(
     "bg-dark-700/80 border border-neon-500/50 rounded-md",
@@ -31,12 +54,14 @@ export const SearchBar: FC = () => {
       </label>
       <input
         className={inputClasses}
+        defaultValue={state.searchTerm}
         id="search-input"
         onChange={handleSearchChange}
         placeholder="Type country name..."
         type="text"
-        value={state.searchTerm}
       />
     </div>
   );
-};
+});
+
+SearchBar.displayName = "SearchBar";

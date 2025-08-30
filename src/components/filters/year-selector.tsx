@@ -1,18 +1,19 @@
-import { type FC } from "react";
+import { type FC, memo, useCallback } from "react";
 
 import { useTableState } from "@/contexts/table-context";
 import { classNames } from "@/utils";
 import { LATEST_YEAR } from "@/utils/constants";
 
-export const YearSelector: FC = () => {
+export const YearSelector: FC = memo(() => {
   const { setYear, state } = useTableState();
 
-  const handleYearChange = (
-    event: React.ChangeEvent<HTMLSelectElement>,
-  ): void => {
-    const value = event.target.value;
-    setYear(value === "latest" ? LATEST_YEAR : Number.parseInt(value, 10));
-  };
+  const handleYearChange = useCallback(
+    (event: React.ChangeEvent<HTMLSelectElement>): void => {
+      const value = event.target.value;
+      setYear(value === "latest" ? LATEST_YEAR : Number.parseInt(value, 10));
+    },
+    [setYear],
+  );
 
   const selectClasses = classNames(
     "bg-dark-700/80 border border-neon-500/50 rounded-md",
@@ -66,4 +67,6 @@ export const YearSelector: FC = () => {
       </div>
     </div>
   );
-};
+});
+
+YearSelector.displayName = "YearSelector";

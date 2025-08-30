@@ -2,6 +2,8 @@ export const LATEST_YEAR = null;
 
 export const TWO_SECONDS = 2000;
 
+export const SEARCH_DEBOUNCE_DELAY = 300;
+
 export const REQUIRED_COLUMNS_COUNT = 4;
 
 export const AVAILABLE_COLUMNS = [
