@@ -1,3 +1,5 @@
+import { useMemo } from "react";
+
 import type { TableRowData } from "@/types/co2-data";
 import { classNames } from "@/utils";
 
@@ -15,6 +17,13 @@ const formatDecimal = (value: null | number | undefined): string => {
   return value.toFixed(2);
 };
 
+const formatYear = (value: null | number | undefined): string => {
+  if (value === null || value === undefined) {
+    return "N/A";
+  }
+  return value.toString();
+};
+
 const formatValue = (
   columnKey: string,
   value: null | number | string | undefined,
@@ -25,6 +34,10 @@ const formatValue = (
 
   if (typeof value === "string") {
     return value;
+  }
+
+  if (columnKey === "year") {
+    return formatYear(value);
   }
 
   if (
@@ -58,59 +71,60 @@ export const useTableRowData = ({
 } => {
   const baseCellClasses = "text-sm text-slate-300 truncate min-w-0";
 
-  const cells = allColumns.map((columnKey) => {
-    const indexableRowData: Record<string, null | number | string | undefined> =
-      rowData;
+  const cells = useMemo(() => {
+    return allColumns.map((columnKey) => {
+      const indexableRowData: Record<
+        string,
+        null | number | string | undefined
+      > = rowData;
 
-    const value = indexableRowData[columnKey];
+      const value = indexableRowData[columnKey];
 
-    const formattedValue = formatValue(columnKey, value);
-    const isChanged = changedFields.includes(columnKey);
-    const highlightedClasses = isChanged ? "text-highlight-changed" : "";
+      const formattedValue = formatValue(columnKey, value);
+      const isChanged = changedFields.includes(columnKey);
+      const highlightedClasses = isChanged ? "text-highlight-changed" : "";
 
-    let alignmentClasses = classNames(
-      baseCellClasses,
-      "font-mono text-right",
-      highlightedClasses,
-    );
+      let alignmentClasses = classNames(
+        baseCellClasses,
+        "font-mono text-right",
+        highlightedClasses,
+      );
 
-    switch (columnKey) {
-      case "country": {
-        alignmentClasses = classNames(
-          baseCellClasses,
-          "font-medium text-slate-100 transition-all duration-300 hover:text-neon-300",
-          highlightedClasses,
-        );
-
-        break;
+      switch (columnKey) {
+        case "country": {
+          alignmentClasses = classNames(
+            baseCellClasses,
+            "font-medium text-slate-100 transition-all duration-300 hover:text-neon-300",
+            highlightedClasses,
+          );
+          break;
+        }
+        case "iso_code": {
+          alignmentClasses = classNames(
+            baseCellClasses,
+            "text-azure-400 text-center font-mono",
+            highlightedClasses,
+          );
+          break;
+        }
+        case "year": {
+          alignmentClasses = classNames(
+            baseCellClasses,
+            "text-electric-400 text-center font-medium",
+            highlightedClasses,
+          );
+          break;
+        }
       }
-      case "iso_code": {
-        alignmentClasses = classNames(
-          baseCellClasses,
-          "text-azure-400 text-center font-mono",
-          highlightedClasses,
-        );
 
-        break;
-      }
-      case "year": {
-        alignmentClasses = classNames(
-          baseCellClasses,
-          "text-electric-400 text-center font-medium",
-          highlightedClasses,
-        );
-
-        break;
-      }
-    }
-
-    return {
-      className: alignmentClasses,
-      formattedValue,
-      key: columnKey,
-      title: formattedValue,
-    };
-  });
+      return {
+        className: alignmentClasses,
+        formattedValue,
+        key: columnKey,
+        title: formattedValue,
+      };
+    });
+  }, [allColumns, changedFields, rowData, baseCellClasses]);
 
   return { cells };
 };

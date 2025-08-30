@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 
 import { useTableState } from "@/contexts/table-context";
 import { useDataHighlight } from "@/hooks/use-data-highlight";
@@ -95,17 +95,21 @@ export const useTableData = (
 } => {
   const { setAvailableYears, state } = useTableState();
 
-  useEffect(() => {
+  const availableYears = useMemo(() => {
     const allYears = new Set<number>();
     for (const country of countries) {
       for (const yearData of country.data) {
         allYears.add(yearData.year);
       }
     }
-    setAvailableYears([...allYears]);
+    return [...allYears];
   }, [countries]);
 
-  const createTableRows = (): TableRowData[] => {
+  useEffect(() => {
+    setAvailableYears(availableYears);
+  }, [availableYears]);
+
+  const baseRows = useMemo((): TableRowData[] => {
     const rows: TableRowData[] = [];
 
     for (const country of countries) {
@@ -120,40 +124,51 @@ export const useTableData = (
     }
 
     return rows;
-  };
+  }, [countries, state.selectedYear]);
 
-  const filterRows = (rows: TableRowData[]): TableRowData[] => {
-    if (state.searchTerm.trim() === "") {
-      return rows;
-    }
-
-    return rows.filter((row) =>
-      row.country.toLowerCase().includes(state.searchTerm.toLowerCase()),
-    );
-  };
-
-  const sortRows = (rows: TableRowData[]): TableRowData[] => {
-    if (!state.sortBy) {
-      return rows;
-    }
-
-    const sortedRows = [...rows];
-    sortedRows.sort((a, b) => {
-      if (state.sortBy === "population") {
-        return sortByPopulation(a, b, state.sortDirection);
+  const filterRows = useCallback(
+    (rows: TableRowData[]): TableRowData[] => {
+      if (state.searchTerm.trim() === "") {
+        return rows;
       }
-      if (state.sortBy === "name") {
-        return sortByName(a, b, state.sortDirection);
+
+      const searchLower = state.searchTerm.toLowerCase();
+      return rows.filter((row) =>
+        row.country.toLowerCase().includes(searchLower),
+      );
+    },
+    [state.searchTerm],
+  );
+
+  const sortRows = useCallback(
+    (rows: TableRowData[]): TableRowData[] => {
+      if (!state.sortBy) {
+        return rows;
       }
-      return 0;
-    });
 
-    return sortedRows;
-  };
+      const sortedRows = [...rows];
+      sortedRows.sort((a, b) => {
+        if (state.sortBy === "population") {
+          return sortByPopulation(a, b, state.sortDirection);
+        }
+        if (state.sortBy === "name") {
+          return sortByName(a, b, state.sortDirection);
+        }
+        return 0;
+      });
 
-  const baseRows = createTableRows();
-  const filteredRows = filterRows(baseRows);
-  const finalRows = sortRows(filteredRows);
+      return sortedRows;
+    },
+    [state.sortBy, state.sortDirection],
+  );
+
+  const filteredRows = useMemo(() => {
+    return filterRows(baseRows);
+  }, [baseRows, filterRows]);
+
+  const finalRows = useMemo(() => {
+    return sortRows(filteredRows);
+  }, [filteredRows, sortRows]);
 
   const { getChangedFields } = useDataHighlight(finalRows);
 
