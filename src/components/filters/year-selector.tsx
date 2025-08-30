@@ -16,9 +16,12 @@ export const YearSelector: FC = () => {
 
   const selectClasses = classNames(
     "bg-dark-700/80 border border-neon-500/50 rounded-md",
-    "text-slate-200 text-sm px-3 py-2 min-w-[150px]",
+    "text-slate-200 text-sm px-3 py-2 pr-10 min-w-[150px] w-full",
     "focus:outline-none focus:ring-2 focus:ring-neon-500 focus:border-transparent",
-    "hover:border-neon-400 transition-all duration-300",
+    "hover:border-neon-400 hover:bg-neon-600/10 transition-all duration-300",
+    "scrollbar-thin appearance-none cursor-pointer",
+    "[&>option]:bg-dark-800 [&>option]:text-slate-200",
+    "[&>option:checked]:bg-neon-600 [&>option:checked]:text-neon-100",
   );
 
   return (
@@ -29,21 +32,38 @@ export const YearSelector: FC = () => {
       >
         Select Year:
       </label>
-      <select
-        className={selectClasses}
-        id="year-selector"
-        onChange={handleYearChange}
-        value={
-          state.selectedYear === LATEST_YEAR ? "latest" : state.selectedYear
-        }
-      >
-        <option value="latest">Latest Available</option>
-        {state.availableYears.map((year) => (
-          <option key={year} value={year}>
-            {year}
-          </option>
-        ))}
-      </select>
+      <div className="relative">
+        <select
+          className={selectClasses}
+          id="year-selector"
+          onChange={handleYearChange}
+          value={
+            state.selectedYear === LATEST_YEAR ? "latest" : state.selectedYear
+          }
+        >
+          <option value="latest">Latest Available</option>
+          {state.availableYears.map((year) => (
+            <option key={year} value={year}>
+              {year}
+            </option>
+          ))}
+        </select>
+        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+          <svg
+            className="text-neon-400 h-4 w-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19 9l-7 7-7-7"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+            />
+          </svg>
+        </div>
+      </div>
     </div>
   );
 };

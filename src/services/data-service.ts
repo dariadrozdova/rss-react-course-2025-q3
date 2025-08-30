@@ -51,12 +51,7 @@ export function processCountryData(
     countries.push({
       country: entityName,
       data: entityData.data
-        .map((d) => ({
-          co2: d.co2 ?? null,
-          co2_per_capita: d.co2_per_capita ?? null,
-          population: d.population ?? null,
-          year: d.year,
-        }))
+        .map((d) => ({ ...d }))
         .sort((a, b) => a.year - b.year),
       isoCode: entityData.iso_code ?? null,
       latestPopulation,

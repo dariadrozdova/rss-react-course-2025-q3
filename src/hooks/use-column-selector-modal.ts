@@ -41,6 +41,7 @@ export const useColumnSelectorModal = ({
     const handleClickOutside = (event: MouseEvent): void => {
       if (
         modalReference.current &&
+        event.target instanceof Node &&
         !modalReference.current.contains(event.target)
       ) {
         onClose();

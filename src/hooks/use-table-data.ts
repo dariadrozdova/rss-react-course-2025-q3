@@ -27,9 +27,9 @@ const createTableRow = (
 ): TableRowData => {
   const baseRow: TableRowData = {
     co2: yearData.co2 ?? null,
-    co2PerCapita: yearData.co2_per_capita ?? null,
+    co2_per_capita: yearData.co2_per_capita ?? null,
     country: country.country,
-    isoCode: country.isoCode,
+    iso_code: country.isoCode,
     population: yearData.population ?? null,
     year: yearData.year,
   };
@@ -102,9 +102,8 @@ export const useTableData = (
         allYears.add(yearData.year);
       }
     }
-    const yearsArray = [...allYears];
-    setAvailableYears(yearsArray);
-  }, [countries, setAvailableYears]);
+    setAvailableYears([...allYears]);
+  }, [countries]);
 
   const createTableRows = (): TableRowData[] => {
     const rows: TableRowData[] = [];

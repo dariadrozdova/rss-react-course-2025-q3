@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import { useTableState } from "@/contexts/table-context";
 import type { TableRowData } from "@/types/co2-data";
@@ -48,9 +48,16 @@ export const useDataHighlight = (
     return changedFields;
   };
 
+  const initialized = useRef(false);
+
   useEffect(() => {
-    if (currentData.length > 0 && !state.highlightChanges) {
+    if (
+      !initialized.current &&
+      currentData.length > 0 &&
+      !state.highlightChanges
+    ) {
       setPreviousData(currentData);
+      initialized.current = true;
     }
   }, [currentData, setPreviousData, state.highlightChanges]);
 

@@ -8,19 +8,24 @@ export const SortControls: FC = () => {
 
   const buttonBaseClasses =
     "px-3 py-2 text-sm rounded-md transition-all duration-300 cursor-pointer";
-  const activeClasses = "bg-neon-600/30 border-neon-500 text-neon-300";
+  const activeClasses =
+    "bg-neon-600/30 border-neon-500 text-neon-300 shadow-sm shadow-neon-500/20";
   const inactiveClasses =
-    "bg-dark-700/50 border-slate-600 text-slate-300 hover:border-neon-500/50";
+    "bg-dark-700/50 border-slate-600 text-slate-300 hover:border-neon-500/50 hover:bg-dark-600/50 hover:text-slate-200";
 
   const getButtonClasses = (
     sortType: "name" | "population",
     direction: "asc" | "desc",
   ): string => {
+    const isDefaultActive =
+      !state.sortBy && sortType === "name" && direction === "asc";
     const isActive =
-      state.sortBy === sortType && state.sortDirection === direction;
+      isDefaultActive ||
+      (state.sortBy === sortType && state.sortDirection === direction);
+
     return classNames(
       buttonBaseClasses,
-      "border",
+      "border font-medium",
       isActive ? activeClasses : inactiveClasses,
     );
   };

@@ -13,9 +13,9 @@ export interface ProcessedCountryData {
 export interface TableRowData {
   [key: string]: null | number | string;
   co2: null | number;
-  co2PerCapita: null | number;
+  co2_per_capita: null | number;
   country: string;
-  isoCode: null | string;
+  iso_code: null | string;
   population: null | number;
   year: number;
 }
