@@ -1,4 +1,4 @@
-import { type FC } from "react";
+import { type FC, memo, useMemo } from "react";
 
 import {
   TableBody,
@@ -19,46 +19,58 @@ interface TableViewProps {
   totalRows: number;
 }
 
-export const TableView: FC<TableViewProps> = ({
-  getChangedFields,
-  hasSearchResults,
-  searchTerm,
-  selectedYear,
-  tableRows,
-}) => {
-  const { state } = useTableState();
+export const TableView: FC<TableViewProps> = memo(
+  ({
+    getChangedFields,
+    hasSearchResults,
+    searchTerm,
+    selectedYear,
+    tableRows,
+  }) => {
+    const { state } = useTableState();
 
-  const fixedColumns = ["country", "iso_code"];
-  const selectedDataColumns = state.selectedColumns;
-  const allColumns = [...fixedColumns, ...selectedDataColumns];
-  const totalColumns = allColumns.length;
+    const { allColumns, gridTemplateColumns, minTableWidth } = useMemo(() => {
+      const fixedColumns = ["country", "iso_code"];
+      const selectedDataColumns = state.selectedColumns;
+      const allColumns = [...fixedColumns, ...selectedDataColumns];
+      const totalColumns = allColumns.length;
 
-  const minColumnWidth = 140;
-  const gridTemplateColumns = `repeat(${totalColumns}, minmax(${minColumnWidth}px, 1fr))`;
-  const minTableWidth = totalColumns * minColumnWidth;
+      const minColumnWidth = 140;
+      const gridTemplateColumns = `repeat(${totalColumns}, minmax(${minColumnWidth}px, 1fr))`;
+      const minTableWidth = totalColumns * minColumnWidth;
 
-  return (
-    <TableContainer>
-      <TableHeader
-        allColumns={allColumns}
-        gridTemplateColumns={gridTemplateColumns}
-      />
+      return {
+        allColumns,
+        gridTemplateColumns,
+        minTableWidth,
+      };
+    }, [state.selectedColumns]);
 
-      {tableRows.length > 0 ? (
-        <TableBody
+    return (
+      <TableContainer>
+        <TableHeader
           allColumns={allColumns}
-          getChangedFields={getChangedFields}
           gridTemplateColumns={gridTemplateColumns}
-          minTableWidth={minTableWidth}
-          tableRows={tableRows}
         />
-      ) : (
-        <TableEmptyState
-          hasSearchResults={hasSearchResults}
-          searchTerm={searchTerm}
-          selectedYear={selectedYear}
-        />
-      )}
-    </TableContainer>
-  );
-};
+
+        {tableRows.length > 0 ? (
+          <TableBody
+            allColumns={allColumns}
+            getChangedFields={getChangedFields}
+            gridTemplateColumns={gridTemplateColumns}
+            minTableWidth={minTableWidth}
+            tableRows={tableRows}
+          />
+        ) : (
+          <TableEmptyState
+            hasSearchResults={hasSearchResults}
+            searchTerm={searchTerm}
+            selectedYear={selectedYear}
+          />
+        )}
+      </TableContainer>
+    );
+  },
+);
+
+TableView.displayName = "TableView";

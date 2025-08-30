@@ -1,4 +1,4 @@
-import { type FC } from "react";
+import { type FC, memo } from "react";
 
 import { FilterBar } from "@/components/filters";
 import { TableView } from "@/components/table";
@@ -9,7 +9,7 @@ interface DataTableProps {
   countries: ProcessedCountryData[];
 }
 
-export const DataTable: FC<DataTableProps> = ({ countries }) => {
+export const DataTable: FC<DataTableProps> = memo(({ countries }) => {
   const {
     getChangedFields,
     hasSearchResults,
@@ -32,4 +32,6 @@ export const DataTable: FC<DataTableProps> = ({ countries }) => {
       />
     </div>
   );
-};
+});
+
+DataTable.displayName = "DataTable";
