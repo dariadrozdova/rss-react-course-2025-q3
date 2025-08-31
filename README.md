@@ -30,7 +30,7 @@ The following interactions were measured using React DevTools Profiler:
 
 When Interactions tab data is unavailable, analysis is based on Commit Duration and Flame Graph timing comparisons.
 
-#### Detailed Analysis by Action
+#### Screenshots
 
 ##### Sorting a Column
 
@@ -84,12 +84,14 @@ _Ranked Chart for column management before optimization_
 
 | Action | Commit Duration (ms) | Render Duration (ms) | Interaction Type | Improvement |
 |--------|---------------------|---------------------|------------------|-------------|
-| Sorting column | [TIME]ms | [TIME]ms | onClick | [X]% faster |
-| Searching country | [TIME]ms | [TIME]ms | onChange | [X]% faster |
-| Selecting year | [TIME]ms | [TIME]ms | onChange | [X]% faster |
-| Adding/removing columns | [TIME]ms | [TIME]ms | onClick | [X]% faster |
+| Sorting column | 1.4ms | 113.6ms | onClick | 34.5% faster |
+| Searching country | 2.4ms | 21.1ms | onChange | 61.7% faster |
+| Selecting year | 2.2ms | 133.5ms | onChange | 36.7% faster |
+| Adding/removing columns | 1.2ms | 9ms | onClick | 64.3% faster |
 
-#### Detailed Analysis by Action
+When Interactions tab data is unavailable, analysis is based on Commit Duration and Flame Graph timing comparisons.
+
+#### Screenshots
 
 ##### Sorting a Column
 
@@ -122,73 +124,3 @@ _Flame Graph for column management after optimization_
 
 ![After - Columns Ranked](./performance-screenshots/after-columns-ranked.png)
 _Ranked Chart for column management after optimization_
-
-#### Performance Improvements
-
-- **Overall commit duration reduced by:** [X]%
-- **Components with eliminated re-renders:** [List]
-- **Most improved action:** [Action] - [X]% faster
-
----
-
-## Interactions Analysis
-
-### Before Optimization
-
-![Before - Interactions](./performance-screenshots/before-interactions.png)
-_User interactions triggering renders before optimization_
-
-### After Optimization
-
-![After - Interactions](./performance-screenshots/after-interactions.png)
-_Reduced interaction complexity after optimization_
-
-**Key Improvements:**
-
-- Fewer components re-rendering on each interaction
-- Reduced cascade effects from state changes
-- Better isolation of component updates
-
----
-
-## Summary
-
-### Performance Gains
-
-- **Best improvement:** [Action] - from [X]ms to [Y]ms ([Z]% faster)
-- **Average improvement:** [X]% across all tested actions
-- **Re-render reduction:** [X]% fewer unnecessary component updates
-
-### Key Learnings
-
-- [Main insight about React performance optimization]
-- [Specific finding about your app's bottlenecks]
-- [Most effective optimization technique used]
-
-### Screenshots Location
-
-All performance screenshots are stored in `/performance-screenshots/` directory:
-
-#### Before Optimization (8 files)
-
-- `before-sorting-flame.png` - Flame Graph for sorting action
-- `before-sorting-ranked.png` - Ranked Chart for sorting action
-- `before-search-flame.png` - Flame Graph for search action
-- `before-search-ranked.png` - Ranked Chart for search action
-- `before-year-flame.png` - Flame Graph for year selection
-- `before-year-ranked.png` - Ranked Chart for year selection
-- `before-columns-flame.png` - Flame Graph for column management
-- `before-columns-ranked.png` - Ranked Chart for column management
-
-#### After Optimization (8 files)
-
-- `after-sorting-flame.png` - Flame Graph for sorting action (optimized)
-- `after-sorting-ranked.png` - Ranked Chart for sorting action (optimized)
-- `after-search-flame.png` - Flame Graph for search action (optimized)
-- `after-search-ranked.png` - Ranked Chart for search action (optimized)
-- `after-year-flame.png` - Flame Graph for year selection (optimized)
-- `after-year-ranked.png` - Ranked Chart for year selection (optimized)
-- `after-columns-flame.png` - Flame Graph for column management (optimized)
-- `after-columns-ranked.png` - Ranked Chart for column management (optimized)
-
-**Total: 16 screenshots required**
