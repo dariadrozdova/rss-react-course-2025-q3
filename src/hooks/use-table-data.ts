@@ -107,13 +107,13 @@ export const useTableData = (
 
   useEffect(() => {
     setAvailableYears(availableYears);
-  }, [availableYears]);
+  }, [availableYears, setAvailableYears]);
 
   const baseRows = useMemo((): TableRowData[] => {
     const rows: TableRowData[] = [];
 
     for (const country of countries) {
-      const yearData =
+      const yearData: undefined | YearlyData =
         state.selectedYear === LATEST_YEAR
           ? getLatestYearData(country.data)
           : country.data.find((d) => d.year === state.selectedYear);

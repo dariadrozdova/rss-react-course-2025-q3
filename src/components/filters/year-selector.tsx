@@ -1,4 +1,4 @@
-import { type FC, memo, useCallback } from "react";
+import { type FC, memo, useCallback, useMemo } from "react";
 
 import { useTableState } from "@/contexts/table-context";
 import { classNames } from "@/utils";
@@ -9,11 +9,18 @@ export const YearSelector: FC = memo(() => {
 
   const handleYearChange = useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>): void => {
-      const value = event.target.value;
-      setYear(value === "latest" ? LATEST_YEAR : Number.parseInt(value, 10));
+      const value = Number.parseInt(event.target.value, 10);
+      setYear(value);
     },
     [setYear],
   );
+
+  const selectValue = useMemo(() => {
+    if (state.selectedYear === LATEST_YEAR && state.availableYears.length > 0) {
+      return state.availableYears[0];
+    }
+    return state.selectedYear;
+  }, [state.selectedYear, state.availableYears]);
 
   const selectClasses = classNames(
     "bg-dark-700/80 border border-neon-500/50 rounded-md",
@@ -38,11 +45,8 @@ export const YearSelector: FC = memo(() => {
           className={selectClasses}
           id="year-selector"
           onChange={handleYearChange}
-          value={
-            state.selectedYear === LATEST_YEAR ? "latest" : state.selectedYear
-          }
+          value={selectValue ?? undefined}
         >
-          <option value="latest">Latest Available</option>
           {state.availableYears.map((year) => (
             <option key={year} value={year}>
               {year}

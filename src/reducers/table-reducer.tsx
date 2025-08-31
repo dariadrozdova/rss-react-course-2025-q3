@@ -57,7 +57,7 @@ export const tableStateReducer = (
         highlightChanges: false,
         previousTableData: [],
         searchTerm: "",
-        selectedYear: LATEST_YEAR,
+        selectedYear: state.availableYears[0] || LATEST_YEAR,
         sortBy: null,
         sortDirection: "asc",
       };
@@ -65,7 +65,14 @@ export const tableStateReducer = (
 
     case "SET_AVAILABLE_YEARS": {
       const sortedYears = [...action.payload].sort((a, b) => b - a);
-      return { ...state, availableYears: sortedYears };
+      return {
+        ...state,
+        availableYears: sortedYears,
+        selectedYear:
+          state.selectedYear === LATEST_YEAR && sortedYears.length > 0
+            ? sortedYears[0]
+            : state.selectedYear,
+      };
     }
 
     case "SET_PREVIOUS_DATA": {
