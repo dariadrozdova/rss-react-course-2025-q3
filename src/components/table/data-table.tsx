@@ -3,7 +3,7 @@ import { type FC, memo } from "react";
 import { FilterBar } from "@/components/filters";
 import { TableView } from "@/components/table";
 import { useTableData } from "@/hooks/use-table-data";
-import type { ProcessedCountryData } from "@/types/co2-data";
+import type { ProcessedCountryData } from "@/types/emissions-data";
 
 interface DataTableProps {
   countries: ProcessedCountryData[];

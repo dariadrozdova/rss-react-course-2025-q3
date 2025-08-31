@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef } from "react";
 
 import { useTableState } from "@/contexts/table-context";
-import type { TableRowData } from "@/types/co2-data";
+import type { TableRowData } from "@/types/emissions-data";
 import { TWO_SECONDS } from "@/utils/constants";
 
 export const useDataHighlight = (

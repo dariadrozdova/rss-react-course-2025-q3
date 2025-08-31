@@ -1,10 +1,10 @@
 ## [RS School React Course](https://rs.school/courses/reactjs): React Performance
 
-## CO2 Emissions Data Viewer
+## Environmental Emissions Dashboard
 
 ## About the project
 
-This is a React application for viewing and analyzing CO2 emissions data for countries around the world. The project was created as a learning assignment to demonstrate skills in optimizing the performance of React applications when working with large volumes of data.
+This is a React application for viewing and analyzing greenhouse gas emissions and climate data for countries around the world. The project was created as a learning assignment to demonstrate skills in optimizing the performance of React applications when working with large volumes of data.
 
 ## Performance Analysis
 
@@ -21,12 +21,12 @@ The following interactions were measured using React DevTools Profiler:
 
 #### Performance Metrics Before Optimization
 
-| Action | Commit Duration (ms) | Render Duration (ms) | Interaction Type |
-|--------|---------------------|---------------------|------------------|
-| Sorting column | 2.9ms | 173.4ms | onClick |
-| Searching country | 1.9ms | 55.1ms | onChange |
-| Selecting year | 6ms | 210.8ms | onChange |
-| Adding/removing columns |  1.3ms | 25.2ms | onClick |
+| Action                  | Commit Duration (ms) | Render Duration (ms) | Interaction Type |
+| ----------------------- | -------------------- | -------------------- | ---------------- |
+| Sorting column          | 2.9ms                | 173.4ms              | onClick          |
+| Searching country       | 1.9ms                | 55.1ms               | onChange         |
+| Selecting year          | 6ms                  | 210.8ms              | onChange         |
+| Adding/removing columns | 1.3ms                | 25.2ms               | onClick          |
 
 When Interactions tab data is unavailable, analysis is based on Commit Duration and Flame Graph timing comparisons.
 
@@ -66,28 +66,54 @@ _Ranked Chart for column management before optimization_
 
 #### Key Performance Issues
 
-- [Describe main bottlenecks found]
-- [List components causing unnecessary re-renders]
-- [Note any particularly slow operations]
+**Performance bottlenecks identified before optimization:**
+
+- **Redundant data processing:** The `data-service.ts` performed full emissions data processing on every `loadEmissionsData()` call, including unnecessary object copying and population lookup operations
+- **Lack of computation memoization:** Filtering, sorting, and searching operations were re-executed on every component re-render without caching results
+- **Unnecessary component re-renders:** Child components were re-rendering even with unchanged props due to missing memoization
+- **Non-optimized event handlers:** Functions were recreated on every render, causing unnecessary re-renders of child components
+- **Missing search debouncing:** Search operations triggered on every character input without delay optimization
 
 ---
 
-### After Optimization (React.memo & useMemo)
+### After Optimization
 
 #### Applied Optimizations
 
-- **React.memo:** Wrapped components to prevent unnecessary re-renders
-- **useMemo:** Memoized expensive calculations (filtering, sorting, data processing)
-- **useCallback:** Memoized event handlers
+**1. Computation Memoization (useMemo):**
+
+- Available years memoization in `useTableData`
+- Base table rows and filtered data memoization
+- Column calculations and styling memoization in `TableView`
+- Table cell memoization in `useTableRowData`
+- Context value memoization in `TableProvider`
+
+**2. Event Handler Memoization (useCallback):**
+
+- All functions in `TableProvider` wrapped with `useCallback`
+- Filter component event handlers memoized
+- Sorting and filtering functions memoized
+
+**3. Component Re-render Prevention (React.memo):**
+
+- Core components: `DataTable`, `TableView`, `TableHeader`, `TableBody`, `TableRow`
+- Filter components: `FilterBar`, `YearSelector`, `SearchBar`, `SortControls`
+
+**4. Additional Performance Improvements:**
+
+- **Data service caching:** Processed data caching in `data-service.ts` with `processedDataCache`
+- **Search debouncing:** 300ms delay to reduce search operation frequency
+- **Algorithm optimization:** Improved search and sorting algorithms efficiency
+- **Proper key props:** Correct key properties for lists and tables to avoid reconciliation issues
 
 #### Performance Metrics After Optimization
 
-| Action | Commit Duration (ms) | Render Duration (ms) | Interaction Type | Improvement |
-|--------|---------------------|---------------------|------------------|-------------|
-| Sorting column | 1.4ms | 113.6ms | onClick | 34.5% faster |
-| Searching country | 2.4ms | 21.1ms | onChange | 61.7% faster |
-| Selecting year | 2.2ms | 133.5ms | onChange | 36.7% faster |
-| Adding/removing columns | 1.2ms | 9ms | onClick | 64.3% faster |
+| Action                  | Commit Duration (ms) | Render Duration (ms) | Interaction Type | Improvement  |
+| ----------------------- | -------------------- | -------------------- | ---------------- | ------------ |
+| Sorting column          | 1.4ms                | 113.6ms              | onClick          | 34.5% faster |
+| Searching country       | 2.4ms                | 21.1ms               | onChange         | 61.7% faster |
+| Selecting year          | 2.2ms                | 133.5ms              | onChange         | 36.7% faster |
+| Adding/removing columns | 1.2ms                | 9ms                  | onClick          | 64.3% faster |
 
 When Interactions tab data is unavailable, analysis is based on Commit Duration and Flame Graph timing comparisons.
 

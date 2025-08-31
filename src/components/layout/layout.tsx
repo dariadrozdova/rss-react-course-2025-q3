@@ -43,9 +43,9 @@ export const AppLayout: FC<AppLayoutProps> = ({ children }) => {
     <div className={containerClasses}>
       <header className={headerClasses}>
         <div className={classNames("container mx-auto px-6 py-6")}>
-          <h1 className={titleClasses}>CO₂ Emissions Data Viewer</h1>
+          <h1 className={titleClasses}>Environmental Emissions Dashboard</h1>
           <p className={classNames("text-lg text-slate-400")}>
-            Global carbon dioxide emissions data by country and year
+            Global emissions data by country and year
           </p>
         </div>
       </header>

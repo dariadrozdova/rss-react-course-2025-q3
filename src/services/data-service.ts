@@ -1,23 +1,26 @@
-import { type RawCO2Data, RawCO2DataSchema } from "@/schemas/co2-data-schema";
-import type { ProcessedCountryData, YearlyData } from "@/types/co2-data";
+import {
+  type RawEmissionsData,
+  RawEmissionsDataSchema,
+} from "@/schemas/emissions-data-schema";
+import type { ProcessedCountryData, YearlyData } from "@/types/emissions-data";
 import { isCountryEntity } from "@/utils/non-country-entities";
 
-const CO2_DATA_URL =
+const EMISSIONS_DATA_URL =
   "https://nyc3.digitaloceanspaces.com/owid-public/data/co2/owid-co2-data.json";
 
 let processedDataCache: null | ProcessedCountryData[] = null;
 
-export async function fetchCO2Data(): Promise<RawCO2Data> {
-  const response = await fetch(CO2_DATA_URL);
+export async function fetchEmissionsData(): Promise<RawEmissionsData> {
+  const response = await fetch(EMISSIONS_DATA_URL);
 
   if (!response.ok) {
     throw new Error(
-      `Failed to fetch CO2 data: ${response.status} ${response.statusText}`,
+      `Failed to fetch emissions data: ${response.status} ${response.statusText}`,
     );
   }
 
   const json: unknown = await response.json();
-  return RawCO2DataSchema.parse(json);
+  return RawEmissionsDataSchema.parse(json);
 }
 
 function getLatestPopulation(data: YearlyData[]): null | number {
@@ -37,7 +40,7 @@ function getLatestPopulation(data: YearlyData[]): null | number {
 }
 
 export function processCountryData(
-  rawData: RawCO2Data,
+  rawData: RawEmissionsData,
 ): ProcessedCountryData[] {
   if (processedDataCache) {
     return processedDataCache;
@@ -76,11 +79,11 @@ export function processCountryData(
   return sortedCountries;
 }
 
-export async function loadCO2Data(): Promise<ProcessedCountryData[]> {
+export async function loadEmissionsData(): Promise<ProcessedCountryData[]> {
   if (processedDataCache) {
     return processedDataCache;
   }
 
-  const rawData = await fetchCO2Data();
+  const rawData = await fetchEmissionsData();
   return processCountryData(rawData);
 }

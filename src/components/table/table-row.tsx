@@ -1,7 +1,7 @@
 import { type FC, memo } from "react";
 
 import { useTableRowData } from "@/hooks/use-table-row-data";
-import type { TableRowData } from "@/types/co2-data";
+import type { TableRowData } from "@/types/emissions-data";
 import { classNames } from "@/utils";
 
 interface TableRowProps {

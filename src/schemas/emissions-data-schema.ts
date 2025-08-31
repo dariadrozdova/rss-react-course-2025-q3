@@ -27,6 +27,6 @@ export const CountryDataSchema = z.object({
   iso_code: z.string().nullable().optional(),
 });
 
-export const RawCO2DataSchema = z.record(z.string(), CountryDataSchema);
+export const RawEmissionsDataSchema = z.record(z.string(), CountryDataSchema);
 
-export type RawCO2Data = z.infer<typeof RawCO2DataSchema>;
+export type RawEmissionsData = z.infer<typeof RawEmissionsDataSchema>;

@@ -5,10 +5,10 @@ import { DataLoadingFallback } from "@/components/fallback/data-loading-fallback
 import { AppLayout } from "@/components/layout";
 import { DataTable } from "@/components/table";
 import { TableProvider } from "@/contexts/table-provider";
-import { useCO2Data } from "@/hooks/use-co2-data";
+import { useEmissionsData } from "@/hooks/use-emissions-data";
 
 const DataTableContainer: FC = () => {
-  const countries = useCO2Data();
+  const countries = useEmissionsData();
   return <DataTable countries={countries} />;
 };
 

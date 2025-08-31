@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-import type { TableRowData } from "@/types/co2-data";
+import type { TableRowData } from "@/types/emissions-data";
 import { classNames } from "@/utils";
 
 const formatNumber = (value: null | number | undefined): string => {

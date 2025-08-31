@@ -12,7 +12,7 @@ import {
   type TableState,
   tableStateReducer,
 } from "@/reducers/table-reducer";
-import type { TableRowData } from "@/types/co2-data";
+import type { TableRowData } from "@/types/emissions-data";
 import type { LATEST_YEAR } from "@/utils/constants";
 
 interface TableProviderProps {

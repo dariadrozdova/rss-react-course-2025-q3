@@ -6,7 +6,7 @@ import type {
   ProcessedCountryData,
   TableRowData,
   YearlyData,
-} from "@/types/co2-data";
+} from "@/types/emissions-data";
 import { LATEST_YEAR } from "@/utils/constants";
 
 const getLatestYearData = (

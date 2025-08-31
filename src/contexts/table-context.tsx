@@ -1,7 +1,7 @@
 import { createContext, useContext } from "react";
 
 import type { TableState } from "@/reducers/table-reducer";
-import type { TableRowData } from "@/types/co2-data";
+import type { TableRowData } from "@/types/emissions-data";
 import type { LATEST_YEAR } from "@/utils/constants";
 
 interface TableContextValue {

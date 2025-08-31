@@ -7,7 +7,7 @@ import {
   TableHeader,
 } from "@/components/table";
 import { useTableState } from "@/contexts/table-context";
-import type { TableRowData } from "@/types/co2-data";
+import type { TableRowData } from "@/types/emissions-data";
 import { LATEST_YEAR } from "@/utils/constants";
 
 interface TableViewProps {

@@ -8,7 +8,7 @@ const useDebounce = (
   callback: (value: string) => void,
   delay: number,
 ): ((value: string) => void) => {
-  const timeoutReference = useRef<NodeJS.Timeout | null>(null);
+  const timeoutReference = useRef<null | ReturnType<typeof setTimeout>>(null);
 
   return useCallback(
     (value: string) => {

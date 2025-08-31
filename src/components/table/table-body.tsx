@@ -1,7 +1,7 @@
 import { type FC, memo } from "react";
 
 import { TableRow } from "@/components/table";
-import type { TableRowData } from "@/types/co2-data";
+import type { TableRowData } from "@/types/emissions-data";
 
 interface TableBodyProps {
   allColumns: string[];

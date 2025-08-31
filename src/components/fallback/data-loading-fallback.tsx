@@ -9,7 +9,7 @@ interface DataLoadingFallbackProps {
 }
 
 export const DataLoadingFallback: FC<DataLoadingFallbackProps> = ({
-  message = "Loading CO2 emissions data...",
+  message = "Loading emissions data...",
 }) => {
   const containerClasses = classNames(
     "flex flex-col items-center justify-center",

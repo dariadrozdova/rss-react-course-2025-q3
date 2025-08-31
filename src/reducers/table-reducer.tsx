@@ -1,4 +1,4 @@
-import type { TableRowData } from "@/types/co2-data";
+import type { TableRowData } from "@/types/emissions-data";
 import { LATEST_YEAR } from "@/utils/constants";
 
 export interface TableState {

@@ -1,5 +1,5 @@
 {
-  "name": "co2-emissions-viewer",
+  "name": "emissions-viewer",
   "version": "1.0.0",
   "main": "index.js",
   "license": "ISC",
